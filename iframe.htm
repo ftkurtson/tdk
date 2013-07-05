@@ -9,7 +9,7 @@
     <html class="no-js ie8 oldie" lang="en">
 <![endif]-->
 <!--[if gt IE 8]><!-->
-    <html class="no-js" lang="{{ page.seoLang }}">
+    <html class="no-js" lang="en">
 <!--<![endif]-->
 <head>
     <meta charset="utf-8" />
@@ -20,27 +20,10 @@
     <link rel="stylesheet" href="common/template-common.css" />
     <link rel="stylesheet" href="common/responsive-columns.css" />
 
-    <link rel="stylesheet/less" type="text/css" href="all.less" />
-
-    <script type="text/javascript">
-        less = {
-            env: "development",
-            async: false,
-            relativeUrls: false,
-            poll: 500,
-            functions: {
-                image: function(url) {
-                    url.value = "url(/template" + url.value + ")";
-                    url.quote = "";
-                    return url;
-                }
-            }
-        };
-    </script>
-    <script language="javascript" type="text/javascript" src="less.js"></script>
+    <style id="styles"></style>
 
 </head>
-<body class="{{ page.backgroundClass }}">
+<body>
 
     <!-- template twig file to be injected here -->
 

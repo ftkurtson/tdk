@@ -1,9 +1,11 @@
-var profile = {
-    business: "My Business Website",
-    logo: "/template/images/logo.png",
-    header: "My Website Header",
-    strapline: "Here is the website strapline!",
-    postalcode: "BS1 2ND"
+var profile = function(template) {
+    return {
+        business: "My Business Website",
+        logo: "/templates/" + template + "/images/logo.png",
+        header: "My Website Header",
+        strapline: "Here is the website strapline!",
+        postalcode: "BS1 2ND"
+    };
 };
 
 var library = [
@@ -13,12 +15,14 @@ var library = [
 ];
 
 var properties = {
-    feature: {
-        preset: "align-center",
-        bgImg: "/template/images/feature-bg.jpg",
-        buttonText: "<span>Sign Up</span>",
-        header: "<span>My Website Header</span>",
-        strapline: "<span>Here is the website strapline!</span>"
+    feature: function(template) {
+        return {
+            preset: "align-center",
+            bgImg: "/templates/" + template + "/images/feature-bg.jpg",
+            buttonText: "<span>Sign Up</span>",
+            header: "<span>My Website Header</span>",
+            strapline: "<span>Here is the website strapline!</span>"
+        };
     },
     companyheader: {
         preset: "logo-left-align-left"
@@ -69,5 +73,20 @@ var site = [
         title: "Contact",
         type: "page",
         status: "active"
+    }
+];
+
+var templates = [
+    {
+        name: "Pearl",
+        directory: "pearl"
+    },
+    {
+        name: "Shutter",
+        directory: "shutter"
+    },
+    {
+        name: "Hatch",
+        directory: "hatch"
     }
 ];

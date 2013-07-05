@@ -27,7 +27,8 @@
         <h2>template viewer</h2>
         <div id="controls">
             Template:&nbsp;
-            <select id="template">
+            <select id="template"></select>
+            <select id="layout">
                 <option value="default.twig" selected>Default</option>
                 <option value="home.twig">Home</option>
                 <option value="about.twig">About</option>
@@ -68,6 +69,23 @@
     <script language="javascript" type="text/javascript" src="values.js"></script>
     <script language="javascript" type="text/javascript" src="main.js"></script>
     <script language="javascript" type="text/javascript" src="twig.js"></script>
+    <script type="text/javascript">
+        less = {
+            env: "development",
+            async: false,
+            relativeUrls: false,
+            poll: 500,
+            functions: {
+                image: function(url) {
+                    var template = $("#template").val() || null;
+                    url.value = "url(/templates/" + template + url.value + ")";
+                    url.quote = "";
+                    return url;
+                }
+            }
+        };
+    </script>
+    <script language="javascript" type="text/javascript" src="less.js"></script>
 
     <!-- these only included here to get the default values -->
     <script language="javascript" type="text/javascript" src="common/basekit.js"></script>

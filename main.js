@@ -1,17 +1,17 @@
 $(function() {
-    var templates = {};
+    var twigs = {};
 
     function loadTemplate(id, file, callback) {
 
         // TODO: Queue up calls for the same template id
 
         // If the template is already loaded then return it
-        if (typeof templates[id] !== "undefined") {
+        if (typeof twigs[id] !== "undefined") {
             if (typeof callback === "function") {
-                callback(templates[id]);
+                callback(twigs[id]);
             }
 
-            return templates[id];
+            return twigs[id];
         }
 
         var template = twig({
@@ -25,13 +25,14 @@ $(function() {
             }
         });
 
-        templates[id] = template;
+        twigs[id] = template;
 
         return template;
     }
 
     Twig.extendFunction("asset", function(url) {
-        return "/template/" + url;
+        var template = $("#template").val() || "none";
+        return "/templates/" + template + "/" + url;
     });
 
     Twig.extend(function(Twig) {
@@ -70,19 +71,21 @@ $(function() {
     var widgets = [];
 
     function renderWidget(type, defaults) {
+        var template = $("#template").val() || "none";
+
         // Capitalize the type to get its initial properties
         var name = type.charAt(0).toUpperCase() + type.slice(1);
         var initial = BaseKit.Widget[name + "Properties"] || {};
 
         var input = properties[type] || {};
         if (typeof input === "function") {
-            input = input();
+            input = input(template);
         }
 
         var params = $.extend(initial, defaults, input);
 
         var data = {
-            profile: profile,
+            profile: profile(template),
             data: params,
             pages: site
         };
@@ -127,7 +130,8 @@ $(function() {
     });
 
     Twig.extendFilter("expandAssetUrl", function(url) {
-        return "/template" + url;
+        var template = $("#template").val() || "none";
+        return "/templates/" + template + "/" + url;
     });
 
     Twig.extendFilter("translate", function(key, values) {
@@ -137,27 +141,55 @@ $(function() {
     var unique = 0;
 
     function renderTemplate() {
-        var iframe = $("iframe");
+        var template = $("#template").val() || "none", file = $("#layout").val() || "default.twig";
 
-        var file = $("#template").val() || "default.twig";
+        // Parse the LESS code for the selected template
+        var parser = new(less.Parser);
+        parser.parse('@import "vars.less";\n@import "presets.less";\n@import "templates/' + template + '/stylesheet.less";', function(e, tree) {
+            if (e) {
+                return console.log(e);
+            }
 
-        // Always make the id unique so we re-compile and render the template every time
-        var template = loadTemplate(file + (++unique), "template/" + file);
+            var iframe = $("iframe");
 
-        // Render the Twig template
-        var html = template.render({
-            profile: profile
+            // Always make the id unique so we re-compile and render the template every time
+            var twig = loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file);
+
+            // Render the Twig template
+            var html = twig.render({
+                profile: profile(template)
+            });
+
+            // Inject the template HTML into the iframe
+            iframe.contents().find("body").html(html);
+
+            // Inject the CSS into the iframe
+            iframe.contents().find("#styles").html(tree.toCSS());
+
+            // Get the iframe window
+            iframeWindow = iframe.get(0).contentWindow;
+
+            // Store the selected template in the top-level and iframe windows
+            iframeWindow.selectedTemplate = template;
+            window.selectedTemplate = template;
+
+            // Init the widgets in the iframe
+            iframeWindow.initWidgets(widgets);
+            widgets = [];
         });
-
-        // Inject the template HTML into the iframe
-        iframe.contents().find("body").html(html);
-
-        // Init the widgets in the iframe
-        iframe.get(0).contentWindow.initWidgets(widgets);
-        widgets = [];
     }
 
+    // Render the template when the button is clicked
     $("#render").click(renderTemplate);
 
-    setTimeout(renderTemplate, 1000);
+    templates.forEach(function(template) {
+        $("#template")
+            .append($("<option></option>")
+                .attr("value", template.directory)
+                .text(template.name)
+            );
+    });
+
+    // Wait before rendering as there are lots of resources to be loaded
+    setTimeout(renderTemplate, 500);
 });
