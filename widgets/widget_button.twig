@@ -1,0 +1,5 @@
+{% if data.icon|length > 0 %}
+	<button class="btn {{data.preset}} {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" ><i class="{{data.icon}} {% if data.iconColor %}icon-{{data.iconColor}}{% endif %}"></i> <span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.text}}</span></button>
+{% else %}
+	<button class="btn {{data.preset}} {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" ><span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.text}}</span></button>
+{% endif %}

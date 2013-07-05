@@ -1,0 +1,31 @@
+
+<div class="slideshow-widget-wrapper">
+	<div class="slideshow-widget {% if not data.albumRef %}hidden{% endif %}">
+		<div class="{% if data.showButtons == false %}hidden{% endif %} btns-move">
+			<span class="btn-prev" data-ref="{{data.album.0.prev}}">prev</span>
+			<span class="btn-next" data-ref="{{data.album.0.next}}">next</span>
+		</div>
+		
+		<span class="btn-play pause" data-ref="0" {% if data.allowPause == false %}style="display: none"{% endif %}></span>
+
+		<ul class="img-array">
+			{% for img in data.album %}
+			<li data-ref="{{img.current}}" style="background-image: url({{img.url}})"></li>
+			{% endfor %}
+		</ul>			
+	</div><!-- end slideshow -->	
+	
+	<div class="slideshow-widget-controls {% if data.showBullets == false %}hidden{% endif %}">
+		{% for img in data.album %}
+		<span data-ref="{{img.current}}" class="dot"></span>
+		{% endfor %}
+	</div><!-- end controls -->	
+
+
+	{% if not data.albumRef %}
+	<div class="slideshow-empty hidden">
+
+		<p><b>{{"widgets.slideshow.need_album_header"|translate("You have no albums")}}</b><br />{{"widgets.slideshow.need_album_text"|translate("In order to use the slideshow widget, you need an album. Please upload images under the 'Images' panel, or organize your images into albums by going to your manage section.")}}</p>
+	</div>	
+	{% endif %}
+  </div><!-- end wrapper -->

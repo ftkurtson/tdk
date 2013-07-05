@@ -1,0 +1,7 @@
+
+<div id="{{widget.id}}" class="widget {{widget.type}}{{widget.parameters.preset ? " " ~ widget.parameters.preset : ''}}">
+
+  {% include "widget_" ~ widget.type ~ ".twig" with {'data':widget.parameters} only %}
+
+</div>
+

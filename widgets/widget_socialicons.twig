@@ -1,0 +1,45 @@
+<!-- linkedIn -->
+{% if (data.linkedin == 'profile' and profile.linkedin|length > 0) or (data.linkedin != 'profile' and data.linkedin|length > 0) %}
+<span class="bk-socialicons-linkedin" >
+	<a href="{% if data.linkedin == 'profile' %}{{profile.linkedin}} {% else %} {{ data.linkedin }} {% endif %}" target="_blank">Linkedin</a>
+</span>
+{% endif %}
+
+<!-- Twitter -->
+{% if (data.twitter == 'profile' and profile.twitter|length > 0) or (data.twitter != 'profile' and data.twitter|length > 0) %}
+<span class="bk-socialicons-twitter">
+	<a href="https://twitter.com/{% if data.twitter == 'profile' %}{{profile.twitter}} {% else %} {{ data.twitter }} {% endif %}" target="_blank">Twitter</a>
+</span>
+{% endif %}
+
+<!-- Facebook -->
+{% if (data.facebook == 'profile' and profile.facebook|length > 0) or (data.facebook != 'profile' and data.facebook|length > 0) %}
+<span class="bk-socialicons-facebook">
+	<a href="{% if data.facebook == 'profile' %}{{profile.facebook}} {% else %} {{ data.facebook }} {% endif %}" target="_blank">Facebook</a>
+</span>
+{% endif %}
+
+<!-- Rss -->
+{% if (data.rss == 'profile' and profile.rss|length > 0) or (data.rss != 'profile' and data.rss|length > 0) %}
+<span class="bk-socialicons-rss">
+	<a href="{% if data.rss == 'profile' %}{{profile.rss}} {% else %} {{ data.rss }} {% endif %}" target="_blank">Rss</a>
+</span>
+{% endif %}
+
+<!-- Google+ -->
+{% if (data.googleplus == 'profile' and profile.googleplus|length > 0) or (data.googleplus != 'profile' and data.googleplus|length > 0) %}
+<span class="bk-socialicons-googleplus">
+	<a href="{% if data.googleplus == 'profile' %}{{profile.googleplus}} {% else %} {{ data.googleplus }} {% endif %}" target="_blank">Google+</a>
+</span>
+{% endif %}
+
+<!-- youtube -->
+{% if (data.youtube == 'profile' and profile.youtube|length > 0) or (data.youtube != 'profile' and data.youtube|length > 0) %}
+<span class="bk-socialicons-youtube">
+	<a href="{% if data.youtube == 'profile' %}{{profile.youtube}} {% else %} {{ data.youtube }} {% endif %}" target="_blank">Youtube</a>
+</span>
+{% endif %}
+
+{% if (((data.linkedin == 'profile' and profile.linkedin|length == 0) or data.linkedin|length == 0) and ((data.twitter == 'profile' and profile.twitter|length == 0) or data.twitter|length == 0) and ((data.facebook == 'profile' and profile.facebook|length == 0) or data.facebook|length == 0) and ((data.rss == 'profile' and profile.rss|length == 0) or data.rss|length == 0) and ((data.googleplus == 'profile' and profile.googleplus|length == 0) or data.googleplus|length == 0) and ((data.youtube == 'profile' and profile.youtube|length == 0) or data.youtube|length == 0)) %}
+<span>{{"widgets.socialicons.noicons"|translate("No social icons")}}</span>
+{% endif %}

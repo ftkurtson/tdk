@@ -1,0 +1,54 @@
+header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 78px;
+    background-color: #222;
+    border-bottom: 2px solid #f07430;
+}
+
+header img {
+    position: absolute;
+    left: 28px;
+    top: 20px;
+}
+
+header h2 {
+    position: absolute;
+    left: 81px;
+    top: 36px;
+    color: #fff;
+    font: normal 13px "Helvetica Neue",Helvetica,sans-serif;
+    letter-spacing: 1px;
+}
+
+#controls {
+    position: absolute;
+    right: 28px;
+    top: 28px;
+    color: #fff;
+    font: normal 14px "Helvetica Neue",Helvetica,sans-serif;
+}
+
+h1 {
+    color: #fff;
+    font: normal 24px "Helvetica Neue",Helvetica,sans-serif;
+    padding: 8px 8px 8px 24px;
+}
+
+section#iframe {
+    position: absolute;
+    left: 0;
+    top: 80px;
+    right: 0;
+    bottom: 0;
+}
+
+iframe {
+    position: absolute;
+    display: block;
+    border: 0;
+    height: 100%;
+    width: 100%;
+}

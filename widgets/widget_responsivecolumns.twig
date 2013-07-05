@@ -1,0 +1,37 @@
+{% if data.isEmpty == 1 %}
+	<div class="tip-message">
+		<span class="tip-message-left">
+			<b>{{"widgets.responsivecolumns.toptip"|translate("Top tip")}}:</b> 
+			{{"widgets.responsivecolumns.toptip_message"|translate("On wide web pages, columns will show as side by side. On narrow pages, they will be stacked vertically.")}}
+			</span>
+		<span class="tip-message-right">x</span>
+	</div>
+	<div id="select-columns-num" class="select-columns-num">
+		<p>{{"widgets.responsivecolumns.how_many"|translate("How many columns?")}}</p>
+		<div data-toggle="buttons-radio" class="btn-group">
+			<button title="two" class="btn" data-state="off" data-attr="2">2</button>
+			<button title="three" class="btn" data-state="off" data-attr="3">3</button>
+			<button title="four" class="btn" data-state="off" data-attr="4">4</button>
+		</div>
+		<div class="delete-columns-widget">
+			<span class="delete-span">{{"widgets.responsivecolumns.delete"|translate("Delete")}}</span>
+		</div>
+	</div>
+{% else %}
+
+	{% set zones = widget.getCollection("zones") %}
+
+	{% if (data.columns == 2) %}
+			{% include "view_zone.twig" with { zone: zones[0], zoneClass: 'columns-two-left'} only %}
+			{% include "view_zone.twig" with { zone: zones[1], zoneClass: 'columns-two-right'} only %}
+	{% elseif (data.columns == 3) %}
+			{%  include "view_zone.twig" with { zone: zones[0], zoneClass: 'columns-three-left'} only %}
+			{%  include "view_zone.twig" with { zone: zones[1], zoneClass: 'columns-three-middle'} only %}
+			{%  include "view_zone.twig" with { zone: zones[2], zoneClass: 'columns-three-right'} only %}
+	{% elseif (data.columns == 4) %}
+			{%  include "view_zone.twig" with { zone: zones[0], zoneClass: 'columns-four-first' } only %}
+			{%  include "view_zone.twig" with { zone: zones[1], zoneClass: 'columns-four-second'} only %}
+			{%  include "view_zone.twig" with { zone: zones[2], zoneClass: 'columns-four-third' } only %}
+			{%  include "view_zone.twig" with { zone: zones[3], zoneClass: 'columns-four-fourth'} only %}
+	{% endif %}
+{% endif %}

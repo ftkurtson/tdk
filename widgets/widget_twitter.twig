@@ -1,0 +1,23 @@
+<ul class="twitter">
+  {%  for data in data.tweets %}
+  <li>
+    <div class="twitter-profile-pic"> 
+      <a href="https://twitter.com/{{ data.screenName }}" target="_blank">
+        <img alt="{{ data.fullName }}" title="{{ data.fullName }}" data-screename="{{ data.screenName }}" src="{{ data.imageUrl }}">
+      </a>
+    </div>
+
+    <div class="twitter-content">
+      <span class="bk-full-name"> {{ data.fullName }} </span>
+      <p> {{ data.text|raw }} </p>
+      <time class="created_at" data-value="{{ data.createdAt }}"> {{ data.createdAt }} </time> 
+      <span> via </span>
+      <span> {{ data.source|raw }} </span>
+    </div>
+  </li>
+
+  {% else %}
+  
+  <p>{{"widgets.twitter.message"|translate("Retrieving tweets")}}.</p>
+  {% endfor %}
+</ul>

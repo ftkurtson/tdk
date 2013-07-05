@@ -1,0 +1,11 @@
+
+{% if data.icon|length > 0 %}
+<i class='{{data.icon}}'></i>
+{% endif %}
+<a href="tel:{% if data.phone == 'profile' %}{{profile.phone}} {% else %} {{data.phone}} {% endif %}" class="{% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" {% if data.fontSize|length > 0 %}style="font-size:{{data.fontSize}}px"{% endif %}>
+	{% if data.phoneText|length > 0 %}
+		{{data.phoneText}}
+	{% else %}
+		{{profile.phone}}
+	{% endif %}
+</a>

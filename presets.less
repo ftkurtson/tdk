@@ -1,0 +1,1773 @@
+body.bc{background-color:@siteBackgroundColor;}body.texture{background-color: transparent;background-repeat: @siteBackgroundRepeat;background-image: @siteBackgroundImage;}body.bgradVertical{background-image: -ms-linear-gradient(top, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: -moz-linear-gradient(top, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: -o-linear-gradient(top, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, @siteBackgroundGradientFrom), color-stop(1, @siteBackgroundGradientTo));background-image: -webkit-linear-gradient(top, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: linear-gradient(to bottom, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);}body.bgradHorizontal{background-image: -ms-linear-gradient(left, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: -moz-linear-gradient(left, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%); background-image: -o-linear-gradient(left, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: -webkit-gradient(linear, left top, right top, color-stop(0, @siteBackgroundGradientFrom), color-stop(1, @siteBackgroundGradientTo));background-image: -webkit-linear-gradient(left, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: linear-gradient(to right, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);}body.bgradCircular{background-image: -ms-radial-gradient(center, ellipse farthest-corner, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: -moz-radial-gradient(center, ellipse farthest-corner, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: -o-radial-gradient(center, ellipse farthest-corner, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: -webkit-gradient(radial, center center, 0, center center, 497, color-stop(0, @siteBackgroundGradientFrom), color-stop(1, @siteBackgroundGradientTo));background-image: -webkit-radial-gradient(center, ellipse farthest-corner, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);background-image: radial-gradient(ellipse farthest-corner at center, @siteBackgroundGradientFrom 0%, @siteBackgroundGradientTo 100%);}body.bgImageOriginal{background-image: @siteBackgroundImage;background-position: @siteBackgroundPositionX @siteBackgroundPositionY;background-repeat: @siteBackgroundRepeat;}body.bgImageFullscreen{min-height: 100%;background-position: @siteBackgroundPositionX @siteBackgroundPositionY;background-repeat: no-repeat;background-image: @siteBackgroundImage;background-attachment: fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;}
+/*
+    Document   : navigation
+    Created on : Jun 20, 2012, 5:50:52 PM
+    Author     : miriam
+    Description:
+        Navigation List
+*/
+
+.widget.navigation.nm-list
+{
+    margin: 0;
+    padding: 0;
+    padding: 0;
+    border: none;
+    margin: 0 auto;
+}
+.widget.navigation.nm-list ul
+{
+    list-style:none;
+    display:block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+/*align style*/
+.widget.navigation.nm-list ul.align-center li
+{
+    text-align:center;
+}
+.widget.navigation.nm-list ul.align-left li
+{
+    text-align:left;
+}
+.widget.navigation.nm-list ul.align-right li
+{
+    text-align:right;
+}
+/*align list*/
+.widget.navigation.nm-list ul li
+{
+    list-style: none;
+    display: block;
+    float: left;
+    width: 100%;
+    border: 1px solid lighten(@color-swatch1,20%);
+    border-bottom: none;
+    border-right: none;
+    border-left: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.widget.navigation.nm-list ul li span.text
+{
+    display:block;
+    vertical-align: middle;
+    height: 20px;
+}
+.widget.navigation.nm-list ul li span.menu-icon.active
+{
+    display:inline-block;
+    height: 14px;
+    width: 14px;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+/*button style*/
+.widget .navigation.nm-list ul li
+{
+    list-style:none;
+    display:block;
+    float:left;
+    width: 100%;
+    border: 1px solid lighten(@color-swatch1,20%);
+    border-top:none;
+    padding: 5px 10px;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+}
+.widget .navigation.nm-list ul a:first-child li
+{
+    border-top: 1px solid @color-swatch4;
+}
+/*
+    Document   : navigation
+    Created on : Jun 20, 2012, 5:50:52 PM
+    Author     : miriam
+    Description: Navigation 3 Tabs
+*/
+
+.widget.navigation.nm-3-tabs
+{
+    margin: 0;
+    padding: 0;
+    padding: 0;
+    border: none;
+    margin: 0 auto;
+}
+.widget.navigation.nm-3-tabs ul
+{
+    list-style:none;
+    display:block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color:@color-swatch2;
+    border-top: 1px solid lighten(@color-swatch1,20%);
+    border-bottom: 1px solid lighten(@color-swatch1,20%);
+}
+
+/*align style*/
+.widget.navigation.nm-3-tabs ul.align-center li
+{
+    text-align:center;
+}
+.widget.navigation.nm-3-tabs ul.align-left li
+{
+    text-align:left;
+}
+.widget.navigation.nm-3-tabs ul.align-right li
+{
+    text-align:right;
+}
+
+/*tabs style*/
+.widget.navigation.nm-3-tabs ul li
+{
+    list-style:none;
+    display:table-cell;
+    *display: block;
+    *float: left;
+    width: 33%;
+    border-right: 1px solid lighten(@color-swatch1,20%);
+    padding: 0;
+    border-left: none;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+}
+
+/*HC: the 1st, 5th, 9th etc elements have left border*/
+.widget.navigation.nm-3-tabs ul a:nth-child(3n+1) li
+{
+    border-left: 1px solid lighten(@color-swatch1,20%);
+}
+/*HC: the first 3 elements have top border*/
+.widget.navigation.nm-3-tabs ul a:nth-child(-n+3) li
+{
+    border-top: 1px solid lighten(@color-swatch1,20%);
+}
+.widget.navigation.nm-3-tabs ul li span.text
+{
+    display: block;
+    vertical-align: middle;
+    min-height: 20px;
+}
+.widget.navigation.nm-3-tabs ul li:nth-child(3n+0) {
+    border-right: none;
+    width: 34%;
+}
+.widget.navigation.nm-3-tabs ul li span.menu-icon.active
+{
+    display:inline-block;
+    min-height: 14px;
+    width: 14px;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.widget.navigation.nm-3-tabs ul li a
+{
+    padding-left:3px;
+    padding-right:3px;
+}
+/*
+    Document   : navigation
+    Created on : Jun 20, 2012, 5:50:52 PM
+    Author     : miriam
+    Description: Navigation 4 Tabs
+*/
+
+.widget.navigation.nm-4-tabs
+{
+    margin: 0;
+    padding: 0;
+    padding: 0;
+    border: none;
+    margin: 0 auto;
+}
+.widget.navigation.nm-4-tabs ul
+{
+    list-style:none;
+    display:block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color:@color-swatch2;
+    border-top: 1px solid lighten(@color-swatch1,20%);
+    border-bottom: 1px solid lighten(@color-swatch1,20%);
+}
+
+/*align style*/
+.widget.navigation.nm-4-tabs ul.align-center li
+{
+    text-align:center;
+}
+.widget.navigation.nm-4-tabs ul.align-left li
+{
+    text-align:left;
+}
+.widget.navigation.nm-4-tabs ul.align-right li
+{
+    text-align:right;
+}
+
+/*tabs style*/
+.widget.navigation.nm-4-tabs ul li
+{
+    list-style:none;
+    display:table-cell;
+    *display: block;
+    *float: left;
+    width: 25%;
+    border-right: 1px solid lighten(@color-swatch1,20%);
+    padding: 0;
+    border-left: none;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+}
+
+/*HC: the 1st, 5th, 9th etc elements have left border*/
+.widget.navigation.nm-4-tabs ul a:nth-child(4n+1) li
+{
+    border-left: 1px solid lighten(@color-swatch1,20%);
+}
+/*HC: the first 4 elements have top border*/
+.widget.navigation.nm-4-tabs ul a:nth-child(-n+4) li
+{
+    border-top: 1px solid lighten(@color-swatch1,20%);
+}
+.widget.navigation.nm-4-tabs ul li span.text
+{
+    display: block;
+    vertical-align: middle;
+}
+/*HC: the 4th, 8th, 12th etc elements have left border*/
+.widget.navigation.nm-4-tabs ul li:nth-child(4n+0)
+{
+        border-right: none;
+}
+.widget.navigation.nm-4-tabs ul li span.menu-icon.active
+{
+    display:inline-block;
+    min-height: 14px;
+    width: 14px;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+.widget.navigation.nm-4-tabs ul li a
+{
+    padding-left:3px;
+    padding-right:3px;
+}
+/* Image CSS */
+/*
+    Document   : image
+    Created on : 04-Jul-2012, 14:15:32
+    Author     : Healy
+    Description: Image Border Thick
+*/
+
+.widget.image.img-border-thick
+{
+    display:block;
+    margin:0 auto;
+    border:10px solid @color-swatch2;
+}
+/* Image CSS */
+/*
+    Document   : image
+    Created on : 04-Jul-2012, 14:15:32
+    Author     : Dom
+    Description: Image Border Thin
+*/
+
+.widget.image.img-border-thin
+{
+    display:block;
+    margin:0 auto;
+    border:3px solid @color-swatch2;
+}
+/* Twitter CSS */
+/*
+    Document   : twitter
+    Created on : 04-Jul-2012, 14:15:32
+    Author     : Dom
+    Description: Twitter Border
+*/
+
+
+.widget.twitter.tw-border {
+
+}
+
+.widget.twitter.tw-border a {
+    text-decoration: none;
+    float: right;
+}
+
+.widget.twitter.tw-border ul {
+    border:10px solid @color-swatch2;
+}
+
+.widget.twitter.tw-border ul li
+{
+    display:block;
+    list-style: none;
+    margin-bottom:15px;
+    padding-bottom:15px;
+    border-bottom:1px solid @color-swatch2;
+}
+
+.widget.twitter.tw-border ul li:last-child
+{
+    margin-bottom:0px;
+    padding-bottom:15px;
+    border-bottom:none;
+}
+
+.widget.twitter.tw-border .twitter-profile-pic {
+
+}
+
+.widget.twitter.tw-border .twitter-content span.bk-full-name {
+
+}
+
+.widget.twitter.tw-border.twitter-content bk-full-name p {
+
+}
+/* Twitter CSS */
+/*
+    Document   : twitter
+    Created on : 04-Jul-2012, 14:15:32
+    Author     : Dom
+    Description: Twitter Nopic
+*/
+
+
+.widget.twitter.tw-nopic {
+}
+
+.widget.twitter.tw-nopic ul {
+    padding: 20px;
+}
+
+.widget.twitter.tw-nopic ul li
+{
+    display:block;
+    list-style: none;
+    margin-bottom:15px;
+    padding-bottom:15px;
+    border-bottom:1px solid #ececec;
+}
+
+.widget.twitter.tw-nopic ul li:last-child
+{
+    margin-bottom:0px;
+    padding-bottom:15px;
+    border-bottom:none;
+}
+
+.widget.twitter.tw-nopic .twitter-profile-pic {
+    display: none;
+}
+
+.widget.twitter.tw-nopic .twitter-content span.bk-full-name {
+    font-size: 20px;
+}
+
+.widget.twitter.tw-nopic.twitter-content bk-full-name p {
+
+}
+/* Image CSS */
+/*
+    Document   : image
+    Created on : 04-Jul-2012, 14:15:32
+    Author     : Healy
+    Description: Image Left
+*/
+
+.widget.image.img-left img
+{
+    display:block;
+    float:left;
+}
+
+.widget.image.img-left:before,
+.widget.image.img-left:after {
+    content:"";
+    display:table;
+}
+.widget.image.img-left:after {
+    clear:both;
+}
+/* For IE 6/7 (trigger hasLayout) */
+.widget.image.img-left {
+    zoom:1;
+}
+/* Image CSS */
+/*
+    Document   : image
+    Created on : 04-Jul-2012, 14:15:32
+    Author     : Healy
+    Description: Image Left Padding
+*/
+
+.widget.image.img-left-padding img
+{
+    display:block;
+    margin:0 0 0 15px;
+    float:left;
+}
+
+.widget.image.img-left-padding:before,
+.widget.image.img-left-padding:after {
+    content:"";
+    display:table;
+}
+.widget.image.img-left-padding:after {
+    clear:both;
+}
+/* For IE 6/7 (trigger hasLayout) */
+.widget.image.img-left-padding {
+    zoom:1;
+}
+/* Image CSS */
+/*
+    Document   : image
+    Created on : 04-Jul-2012, 14:15:32
+    Author     : Healy
+    Description: Image Right
+*/
+
+.widget.image.img-right img
+{
+    display:block;
+    float:right;
+}
+
+.widget.image.img-right:before,
+.widget.image.img-right:after {
+    content:"";
+    display:table;
+}
+.widget.image.img-right:after {
+    clear:both;
+}
+/* For IE 6/7 (trigger hasLayout) */
+.widget.image.img-right {
+    zoom:1;
+}
+/* Image CSS */
+/*
+    Document   : image
+    Created on : 04-Jul-2012, 14:15:32
+    Author     : Healy
+    Description: Image Right Padding
+*/
+
+.widget.image.img-right-padding img
+{
+    display:block;
+    margin:0 15px 0 0;
+    float:right;
+}
+
+.widget.image.img-right-padding:before,
+.widget.image.img-right-padding:after {
+    content:"";
+    display:table;
+}
+.widget.image.img-right-padding:after {
+    clear:both;
+}
+/* For IE 6/7 (trigger hasLayout) */
+.widget.image.img-right-padding {
+    zoom:1;
+}
+/* Image CSS */
+/*
+    Document   : image
+    Created on : 12-Jan-2013, 14:15:32
+    Author     : Healy
+    Description: Image Shadow
+*/
+
+.widget.image.img-shadow img
+{
+    -moz-box-shadow:3px 3px 5px 6px #ccc;
+    -webkit-box-shadow:3px 3px 5px 6px #ccc;
+    box-shadow:3px 3px 5px 6px #ccc;
+}
+/*
+    Document   : navigation
+    Created on : Jun 20, 2012, 5:50:52 PM
+    Author     : miriam
+    Description:
+        Navigation Buttons
+*/
+.widget.navigation.nm-buttons ul li
+{
+    list-style:none;
+    display:block;
+    float:left;
+    width:49%;
+    border: 1px solid lighten(@color-swatch1,20%);
+    margin:3px 1% 0 0;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+.widget.navigation.nm-buttons ul li:nth-child(even)
+{
+    margin:3px 0 0 0;
+}
+
+.widget.navigation.nm-buttons ul li span.text
+{
+    display:block;
+    vertical-align: middle;
+    min-height: 20px;
+}
+
+.widget.navigation.nm-buttons ul li span.menu-icon.active
+{
+    display:inline-block;
+    height: 14px;
+    width: 14px;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+
+/* Map CSS */
+/*
+    Document   : image
+    Created on : 11-Jan-2013, 20:02:32
+    Author     : Healy
+    Description: Map Border
+*/
+
+.widget.map.map-border
+{
+    display:block;
+    border:10px solid @color-swatch2;
+}
+/* Map CSS */
+/*
+    Document   : image
+    Created on : 11-Jan-2013, 20:02:32
+    Author     : Healy
+    Description: Map Padding
+*/
+
+.widget.map.map-padding
+{
+    display:block;
+  margin:15px;
+}
+/*
+    Document   : extended navigation
+    Created on : March 11, 2013, 3:50:52 PM
+    Author     : miriam
+    Description: Extended Navigation List
+*/
+
+.widget.extendednavigation.nm-list ul {
+    padding: 0;
+    margin: 0;
+}
+
+.widget.extendednavigation.nm-list ul li {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    list-style: none;
+    width: 100%;
+}
+
+.widget.extendednavigation.nm-list ul.align-right li.folder, .widget.extendednavigation.nm-list ul.align-right li.folder a{
+
+    background-position: 20px center;
+}
+
+
+.widget.extendednavigation.nm-list ul.align-right li
+{
+    background-image: none;
+}
+
+.widget.extendednavigation.nm-list ul li a
+{
+    display: block;
+    padding: 18px 20px;
+}
+
+.widget.extendednavigation.nm-list li ul {
+    display: none;
+}
+
+.widget.extendednavigation.nm-list ul li:hover ul {
+    display: block;
+}
+
+.widget.extendednavigation.nm-list ul li:hover ul li {
+    background-image: none;
+    padding-left: 10px;
+}
+
+.widget.extendednavigation.nm-list ul li:hover ul li a {
+    background-image: none;
+}
+/*
+    Document   :  extended navigation
+    Created on : March 11, 2013, 3:50:52 PM
+    Author     : miriam
+    Description: Extended Navigation 3 Tabs
+*/
+
+.widget.extendednavigation.nm-3-tabs ul {
+    padding: 0px;
+    margin:0px;
+    display: table;
+    *display:block;
+    *float:left;
+    width: 100%;
+}
+
+.widget.extendednavigation.nm-3-tabs ul li {
+        display: table-cell;
+    *display:block;
+    *float:left;
+        width: 33%;
+        margin: 0px;
+    border-right: 1px solid;
+}
+.widget.extendednavigation.nm-3-tabs ul li:last-child{
+    border-right: none;
+}
+.widget.extendednavigation.nm-3-tabs ul li a
+{
+    display:block;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.widget.extendednavigation.nm-3-tabs li ul {
+    display:none;
+}
+
+.widget.extendednavigation.nm-3-tabs ul li:hover ul {
+    display:block;
+}
+.widget.extendednavigation.nm-3-tabs ul li:hover ul li{
+    display:block;
+    width: 100%;
+    border-top: none;
+    border-right: none;
+    padding-left: 0px;
+}
+
+.widget.extendednavigation.nm-3-tabs ul li.folder a
+{
+    background-position: center bottom;
+}
+
+.widget.extendednavigation.nm-3-tabs ul li:hover > ul {
+    display:block;
+    position:absolute;
+    top: 100%;
+     left: 0px;
+     width: 100%;
+     z-index:2;
+}
+/*
+    Document   :  extended navigation
+    Created on : March 11, 2013, 3:50:52 PM
+    Author     : miriam
+    Description: Extended Navigation 4 Tabs
+*/
+
+.widget.extendednavigation.nm-4-tabs ul {
+    padding: 0px;
+    margin:0px;
+    display: table;
+    *display:block;
+    *float:left;
+    width: 100%;
+}
+
+.widget.extendednavigation.nm-4-tabs ul li {
+        display:table-cell;
+    *display:block;
+    *float:left;
+        width: 25%;
+    border-right: 1px solid;
+}
+.widget.extendednavigation.nm-4-tabs ul li:last-child{
+    border-right: none;
+}
+
+.widget.extendednavigation.nm-4-tabs ul li a
+{
+    display:block;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.widget.extendednavigation.nm-4-tabs li ul {
+    display:none
+}
+
+.widget.extendednavigation.nm-4-tabs ul li:hover ul {
+    display:block;
+}
+.widget.extendednavigation.nm-4-tabs ul li:hover ul li{
+    width: 100%;
+    padding-left: 0px;
+    display: block;
+    border-top: none;
+    border-right: none;
+}
+
+.widget.extendednavigation.nm-4-tabs ul li:hover > ul {
+  display:block;
+  position:absolute;
+  top: 100%;
+  left:0px; /* align with respect to horizontal row */
+  width: 100%;
+  z-index:2
+}
+.widget.extendednavigation.nm-4-tabs ul li.folder a
+{
+   background-position: center bottom;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: No Logo Align Center
+*/
+
+.widget.companyheader.no-logo-align-center .logo
+{
+    display:none;
+}
+.widget.companyheader.no-logo-align-center .logo-bottom
+{
+    display:none;
+}
+.widget.companyheader.no-logo-align-center .company-name
+{
+    display:block;
+    width:100%;
+    float:none;
+}
+
+.widget.companyheader.no-logo-align-center .company-name h1
+{
+    text-align:center;
+}
+/* CompanyHeader CSS /
+/
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: No Logo Align Left
+*/
+
+.widget.companyheader.no-logo-align-left .logo
+{
+        display:none;
+}
+.widget.companyheader.no-logo-align-left .logo-bottom
+{
+        display:none;
+}
+.widget.companyheader.no-logo-align-left .company-name
+{
+    display:block;
+    width: 100%;
+    float:left;
+    text-align:left;
+}
+.widget.companyheader.no-logo-align-left .company-name h1
+{
+     text-align:left;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: No Logo Align Right
+*/
+
+.widget.companyheader.no-logo-align-right .logo
+{
+    display:none;
+}
+
+.widget.companyheader.no-logo-align-right .company-name
+{
+    display:block;
+    width:100%;
+    text-align: right;
+    float:right;
+}
+
+.widget.companyheader.no-logo-align-right .logo-bottom
+{
+    display:none;
+}
+
+.widget.companyheader.no-logo-align-right .company-name h1
+{
+    text-align:right;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Left Align Center
+*/
+.widget.companyheader.logo-left-align-center
+{
+    text-align: center;
+}
+.widget.companyheader.logo-left-align-center .logo
+{
+    display:inline-block;
+    padding-right: 10px;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-left-align-center .logo img
+{
+    display:inline;
+    max-width:100%;
+}
+
+.widget.companyheader.logo-left-align-center .logo-bottom
+{
+    display:none;
+}
+
+.widget.companyheader.logo-left-align-center .company-name
+{
+    display:inline-block;
+    float: none;
+    width: auto;
+}
+
+.widget.companyheader.logo-left-align-center .company-name h1
+{
+    display: inline-block;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Left Align Left
+*/
+.widget.companyheader.logo-left-align-left
+{
+    text-align: left;
+}
+.widget.companyheader.logo-left-align-left .logo
+{
+    display:inline-block;
+    padding-right: 10px;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-left-align-left .logo img
+{
+    display:inline;
+    max-width:100%;
+}
+
+.widget.companyheader.logo-left-align-left .logo-bottom
+{
+    display:none;
+}
+
+.widget.companyheader.logo-left-align-left .company-name
+{
+    display:inline-block;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-left-align-left .company-name h1
+{
+    display: inline-block;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Left Align Right
+*/
+.widget.companyheader.logo-left-align-right
+{
+    text-align: right;
+}
+.widget.companyheader.logo-left-align-right .logo
+{
+    display:inline-block;
+    padding-right: 10px;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-left-align-right .logo img
+{
+    display:inline;
+    max-width:100%;
+}
+
+.widget.companyheader.logo-left-align-right .logo-bottom
+{
+    display:none;
+}
+
+.widget.companyheader.logo-left-align-right .company-name
+{
+    display:inline-block;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-left-align-right .company-name h1
+{
+    display: inline-block;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Right Align Center
+*/
+.widget.companyheader.logo-right-align-center
+{
+    text-align: center;
+}
+
+.widget.companyheader.logo-right-align-center .logo
+{
+    display:none;
+}
+
+.widget.companyheader.logo-right-align-center .logo-bottom
+{
+    display:inline-block;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-right-align-center .logo-bottom img
+{
+    display:inline;
+    max-width:100%;
+}
+
+.widget.companyheader.logo-right-align-center .company-name
+{
+    display:inline-block;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-right-align-center .company-name h1
+{
+    display: inline-block;
+    padding-right: 10px;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Right Align Left
+*/
+.widget.companyheader.logo-right-align-left
+{
+    text-align: left;
+}
+
+.widget.companyheader.logo-right-align-left .logo
+{
+    display:none;
+}
+
+.widget.companyheader.logo-right-align-left .logo-bottom
+{
+    display:inline-block;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-right-align-left .logo-bottom img
+{
+    display:inline;
+    max-width:100%;
+}
+
+.widget.companyheader.logo-right-align-left .company-name
+{
+    display:inline-block;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-right-align-left .company-name h1
+{
+    display: inline-block;
+    padding-right: 10px;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Right Align Right
+*/
+.widget.companyheader.logo-right-align-right
+{
+    text-align: right;
+}
+
+.widget.companyheader.logo-right-align-right .logo
+{
+    display:none;
+}
+
+.widget.companyheader.logo-right-align-right .logo-bottom
+{
+    display:inline-block;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-right-align-right .logo-bottom img
+{
+    display:inline;
+    max-width:100%;
+}
+
+.widget.companyheader.logo-right-align-right .company-name
+{
+    display:inline-block;
+    float: none;
+        width: auto;
+}
+
+.widget.companyheader.logo-right-align-right .company-name h1
+{
+    display: inline-block;
+    padding-right: 10px;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Top Align Center
+*/
+
+.widget.companyheader.logo-top-align-center .logo
+{
+    display:block;
+    float:none;
+    width: 100%;
+    text-align: center;
+}
+.widget.companyheader.logo-top-align-center .logo-bottom
+{
+    display:none;
+}
+
+.widget.companyheader.logo-top-align-center .company-name
+{
+    float:none;
+    width:100%;
+}
+
+.widget.companyheader.logo-top-align-center .company-name h1
+{
+    text-align:center;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Top Align Left
+*/
+
+.widget.companyheader.logo-top-align-left .logo
+{
+    display:block;
+    float:left;
+    width: 100%;
+    text-align: left;
+}
+.widget.companyheader.logo-top-align-left .logo-bottom
+{
+    display:none;
+}
+
+.widget.companyheader.logo-top-align-left .company-name
+{
+    width:auto;
+}
+
+.widget.companyheader.logo-top-align-left .company-name h1
+{
+    text-align:left;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Top Align Right
+*/
+
+.widget.companyheader.logo-top-align-right .logo
+{
+    display:block;
+    float:left;
+    width: 100%;
+    text-align: right;
+}
+.widget.companyheader.logo-top-align-right .logo-bottom
+{
+    display:none
+}
+
+.widget.companyheader.logo-top-align-right .company-name
+{
+    width:100%;
+}
+
+.widget.companyheader.logo-top-align-right .company-name h1
+{
+    text-align:right;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Bottom Align Center
+*/
+
+.widget.companyheader.logo-bottom-align-center .logo-bottom
+{
+    display:block;
+    float:none;
+    width: 100%;
+    text-align: center;
+}
+.widget.companyheader.logo-bottom-align-center .logo
+{
+    display:none;
+}
+
+.widget.companyheader.logo-bottom-align-center .company-name
+{
+    float:none;
+    width:100%;
+}
+
+.widget.companyheader.logo-bottom-align-center .company-name h1
+{
+    text-align:center;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : 18-Jan-2013, 12:15:32
+    Author     : Miriam
+    Description: CompanyHeader Logo Bottom Align Left
+*/
+.widget.companyheader.logo-bottom-align-left .logo
+{
+    display:none;
+}
+.widget.companyheader.logo-bottom-align-left .logo-bottom
+{
+    display:block;
+    float:left;
+    width: 100%;
+    text-align: left;
+}
+.widget.companyheader.logo-bottom-align-left .company-name
+{
+    width: 100%;
+}
+.widget.companyheader.logo-bottom-align-left .company-name h1
+{
+    text-align: left;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Bottom Align Right
+*/
+
+.widget.companyheader.logo-bottom-align-right .logo-bottom
+{
+    display:block;
+    float:left;
+    width: 100%;
+    text-align: right;
+}
+.widget.companyheader.logo-bottom-align-right .logo
+{
+    display:none
+}
+
+.widget.companyheader.logo-bottom-align-right .company-name
+{
+    width:100%;
+}
+
+.widget.companyheader.logo-bottom-align-right .company-name h1
+{
+    text-align:right;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Only Align Center
+*/
+
+.widget.companyheader.logo-only-align-center .logo
+{
+    display:block;
+    float:none;
+    width: 100%;
+    text-align: center;
+}
+.widget.companyheader.logo-only-align-center .logo-bottom
+{
+    display:none;
+}
+
+.widget.companyheader.logo-only-align-center .company-name
+{
+    display: none;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Only Align Left
+*/
+
+.widget.companyheader.logo-only-align-left .logo
+{
+    display:block;
+    float:none;
+    width: 100%;
+    text-align: left;
+}
+.widget.companyheader.logo-only-align-left .logo-bottom
+{
+    display:none;
+}
+.widget.companyheader.logo-only-align-left .company-name
+{
+    display: none;
+}
+/* CompanyHeader CSS */
+/*
+    Document   : companyheader
+    Created on : Jan 18, 2013, 5:50:52 PM
+    Author     : miriam
+    Description: Logo Only Align Right
+*/
+
+.widget.companyheader.logo-only-align-right .logo
+{
+    display:block;
+    float:none;
+    text-align: right;
+    width:auto;
+}
+.widget.companyheader.logo-only-align-right .logo-bottom
+{
+    display:none;
+}
+.widget.companyheader.logo-only-align-right .company-name
+{
+    display: none;
+}
+/**************************/
+/* Two Columns: 50 - 50 */
+/**********************/
+.columns-two-50-50 .columns-two-left
+{
+    width: 48.5%;
+    margin-right: 1.5%;
+}
+.columns-two-50-50 .columns-two-right
+{
+    width: 48.5%;
+    margin-left: 1.5%;
+}
+
+@media only screen and (max-width: 479px)
+{
+    .columns-two-50-50 .columns-two-left
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-two-50-50 .columns-two-right
+    {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+/**************************/
+/* Two Columns: 25 - 75 */
+/**********************/
+.columns-two-25-75 .columns-two-left
+{
+    width: 25%;
+    margin-right: 3%;
+}
+.columns-two-25-75 .columns-two-right
+{
+    width: 72%;
+}
+
+@media only screen and (min-width: 480px) and (max-width: 768px)
+{
+    .columns-two-25-75 .columns-two-left
+    {
+        width: 48.5%;
+        margin-right: 1.5%;
+        margin-bottom: 7%;
+    }
+    .columns-two-25-75 .columns-two-right
+    {
+        width: 48.5%;
+        margin-left: 1.5%;
+    }
+}
+@media only screen and (max-width: 479px)
+{
+    .columns-two-25-75 .columns-two-left
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-two-25-75 .columns-two-right
+    {
+        width: 100%;
+    }
+}
+/**************************/
+/* Two Columns: 75 - 25 */
+/**********************/
+.columns-two-75-25 .columns-two-left
+{
+    width: 72%;
+    margin-right: 3%;
+}
+.columns-two-75-25 .columns-two-right
+{
+    width: 25%;
+}
+
+@media only screen and (min-width: 480px) and (max-width: 768px)
+{
+    .columns-two-75-25 .columns-two-left
+    {
+        width: 48.5%;
+        margin-right: 1.5%;
+        margin-bottom: 7%;
+    }
+    .columns-two-75-25 .columns-two-right
+    {
+        width: 48.5%;
+        margin-left: 1.5%;
+    }
+}
+@media only screen and (max-width: 479px)
+{
+    .columns-two-75-25 .columns-two-left
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-two-75-25 .columns-two-right
+    {
+        width: 100%;
+    }
+}
+/**************************/
+/* Two Columns: 34 - 66 */
+/**********************/
+.columns-two-34-66 .columns-two-left
+{
+    width: 30%;
+    margin-right: 3%;
+}
+.columns-two-34-66 .columns-two-right
+{
+    width: 66%;
+}
+
+@media only screen and (min-width: 480px) and (max-width: 768px)
+{
+    .columns-two-34-66 .columns-two-left
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-two-34-66 .columns-two-right
+    {
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 479px)
+{
+    .columns-two-34-66 .columns-two-left
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-two-34-66 .columns-two-right
+    {
+        width: 100%;
+    }
+}
+/*********************************/
+/* Three Columns: 33 - 34 - 33 */
+/*****************************/
+.columns-three-33-34-33 .columns-three-left
+{
+    width: 31%;
+    margin-right: 3%;
+    margin-bottom: 0;
+}
+.columns-three-33-34-33 .columns-three-middle
+{
+    width: 32%;
+    margin-right: 3%;
+    margin-bottom: 0;
+}
+.columns-three-33-34-33 .columns-three-right
+{
+    width: 31%;
+    margin-right: 0%;
+    margin-bottom: 0;
+}
+@media only screen and (max-width: 480px)
+{
+    .columns-three-33-34-33 .columns-three-left
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-three-33-34-33 .columns-three-middle
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-three-33-34-33 .columns-three-right
+    {
+        width: 100%;
+    }
+}
+/*********************************/
+/* Three Columns: 25 - 25 - 50 */
+/*****************************/
+.columns-three-25-25-50 .columns-three-left
+{
+    width: 22%;
+    margin-right: 3%;
+}
+.columns-three-25-25-50 .columns-three-middle
+{
+    width: 22%;
+    margin-right: 3%;
+}
+.columns-three-25-25-50 .columns-three-right
+{
+    width: 50%;
+}
+@media only screen and (max-width: 480px)
+{
+    .columns-three-25-25-50 .columns-three-left
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-three-25-25-50 .columns-three-middle
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-three-25-25-50 .columns-three-right
+    {
+        width: 100%;
+    }
+}
+/*********************************/
+/* Three Columns: 50 - 25 - 25 */
+/*****************************/
+.columns-three-50-25-25 .columns-three-left
+{
+    width: 47%;
+    margin-right: 3%;
+}
+.columns-three-50-25-25 .columns-three-middle
+{
+    width: 22%;
+    margin-right: 3%;
+}
+.columns-three-50-25-25 .columns-three-right
+{
+    width: 22%;
+    margin-right: 3%;
+}
+
+@media only screen and (max-width: 480px)
+{
+    .columns-three-50-25-25 .columns-three-left
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-three-50-25-25 .columns-three-middle
+    {
+        width: 100%;
+        margin-bottom: 7%;
+    }
+    .columns-three-50-25-25 .columns-three-right
+    {
+        width: 100%;
+    }
+}
+/************************************/
+/* Four Columns: 25 - 25 - 25 - 25*/
+/********************************/
+.columns-four-25-25-25-25 .columns-four-first
+{
+    width: 22%;
+    margin-right: 3%;
+}
+.columns-four-25-25-25-25 .columns-four-second
+{
+    width: 23.5%;
+    margin-right: 1.5%;
+}
+.columns-four-25-25-25-25 .columns-four-third
+{
+    width: 23.5%;
+    margin-left: 1.5%;
+}
+.columns-four-25-25-25-25 .columns-four-fourth
+{
+    width: 22%;
+    margin-left: 3%;
+}
+
+@media only screen and (min-width: 480px) and (max-width: 1024px)
+{
+    .columns-four-25-25-25-25 .columns-four-first
+    {
+       width: 48.5%;
+       margin-right: 1.5%;
+       margin-bottom: 5%;
+    }
+    .columns-four-25-25-25-25 .columns-four-second
+    {
+       width: 48.5%;
+       margin-left: 1.5%;
+       margin-right: 0;
+       margin-bottom: 5%;
+    }
+    .columns-four-25-25-25-25 .columns-four-third
+    {
+       width: 48.5%;
+       margin-right: 1.5%;
+       margin-left: 0;
+       margin-bottom: 5%;
+    }
+    .columns-four-25-25-25-25 .columns-four-fourth
+    {
+       width: 48.5%;
+       margin-left: 1.5%;
+       margin-right: 0;
+       margin-bottom: 5%;
+    }
+}
+@media only screen and (max-width: 479px)
+{
+    .columns-four-25-25-25-25 .columns-four-first
+    {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 7%;
+    }
+    .columns-four-25-25-25-25 .columns-four-second
+    {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 7%;
+    }
+    .columns-four-25-25-25-25 .columns-four-third
+    {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 7%;
+    }
+    .columns-four-25-25-25-25 .columns-four-fourth
+    {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 7%;
+    }
+}
+/*
+    Document   :  gallery
+    Created on : April 4, 2013, 3:50:52 PM
+    Author     : miriam
+    Description: Gallery Shrink to fit
+*/
+
+.widget.gallery.shrink ul li{
+    height: 155px;
+    width: 155px;
+    line-height: 155px;
+    vertical-align: middle;
+}
+.widget.gallery.shrink ul li img{
+    height: auto !important;
+    width: auto !important;
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+}
+/*
+    Document   :  gallery
+    Created on : April 4, 2013, 3:50:52 PM
+    Author     : miriam
+    Description: Gallery fixed aspect
+*/
+
+.widget.gallery.fixed ul li{
+    background-position:center center;
+    background-repeat:no-repeat;
+    overflow:hidden;
+    height: 155px;
+    width: 155px;
+    line-height: 155px;
+    vertical-align: middle;
+}
+.widget.gallery.fixed ul li.one-to-one
+{
+    background-size:100% 100%;
+}
+
+.widget.gallery.fixed ul li.portrait
+{
+    background-size:100% auto;
+}
+
+.widget.gallery.fixed ul li.landscape
+{
+    background-size:auto 100%;
+}
+.widget.gallery.fixed ul li img{
+    display: none;
+}
+/*
+    Document   :  gallery
+    Created on : April 4, 2013, 3:50:52 PM
+    Author     : miriam
+    Description: Gallery fixed height
+*/
+
+.widget.gallery.fixed-height ul li{
+    height: 155px;
+    width: auto;
+    line-height: 155px;
+    vertical-align: middle;
+    background-position: -9999px center;
+}
+.widget.gallery.fixed-height ul li img{
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+    width: auto;
+}
+/*
+    Document   :  gallery
+    Created on : April 4, 2013, 3:50:52 PM
+    Author     : miriam
+    Description: Gallery fixed width
+*/
+
+.widget.gallery.fixed-width ul li{
+    background-position: -9999px center;
+        height: 155px;
+    width: 155px;
+    line-height: 155px;
+    vertical-align: middle;
+}
+
+.widget.gallery.fixed-width ul li img{
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+    vertical-align: middle;
+    width: 100% ;
+    display: inline-block;
+}

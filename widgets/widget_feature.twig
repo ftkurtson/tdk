@@ -1,0 +1,12 @@
+<div class="feature">
+	<span class="bgimage" style="-moz-transform: scale({{data.zoom}}); -webkit-transform: scale({{data.zoom}}); -ms-transform: scale({{data.zoom}}); margin-left: -{{data.focalData.focusXset}}px; margin-top: -{{data.focalData.focusYset}}px">{% if data.bgImg|length > 0 %}<img src="{{data.bgImg}}" alt="{{"widgets.feature.imgAlt"|translate("feature image")}}" />{% endif %}</span>
+	<span class="content">
+		<h2>{{data.header}}</h2>
+		<h3>{{data.strapline}}</h3>
+		{% if data.icon|length > 0 %}
+			<button class="btn {{data.preset}} {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" ><i class="{{data.icon}} {% if data.color %}icon-{{data.color}}{% endif %}"></i> <span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.buttonText}}</span></button>
+		{% else %}
+			<button class="btn {{data.preset}} {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" ><span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.buttonText}}</span></button>
+		{% endif %}
+	</span>
+</div>

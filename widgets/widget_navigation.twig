@@ -1,0 +1,22 @@
+<div class="navigation">
+
+{% set i = 0 %}
+{% for page in pages %}
+	{% if (page.type == 'home' or page.type == 'page' or page.type == 'index') and page.status != 'inactive' %}
+		{% set i = i + 1 %}
+	{% endif %}
+{% endfor %}
+
+	<ul class="{{ data.align  ? ' align-' : ''}}{{ data.align }} {{i}}-items">
+		{% for page in pages %}
+			{% if (page.type == 'home' or page.type == 'page' or page.type == 'index') and page.status != 'inactive' and (page.parent_id == '0' or page.parentId == '0')%}
+				<li id="menu-item_{{ page.ref }}">
+					<a href="/{{ page.request }}">
+						<span class="{% for item in data.icons %}{% if (item.ref == page.ref) and (item.icon != 'no-icon') %}{{item.icon}}{% endif %}{% endfor %} menu-icon"></span>
+						<span class="text">{{ page.title }}</span>
+					</a>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+</div>

@@ -1,0 +1,29 @@
+{% set minWidth = '999999' %}
+{% set minHeight = '999999' %}
+
+{% if data.images.length > 0 %}
+<ul class="gallery-widget">
+
+{% for image in data.images %}
+{% if image.imageWidth == image.imageHeight %}
+{% set aspectClass = 'one-to-one' %}
+{% endif %}
+
+{% if image.imageWidth > image.imageHeight %}
+{% set aspectClass = 'landscape' %}
+{% endif %}
+
+{% if image.imageWidth < image.imageHeight %}
+{% set aspectClass = 'portrait' %}
+{% endif %}
+
+<li class="{{aspectClass}}" style="background-image:url('{{image.url}}');">
+<img src="{{image.url}}"/>
+<span class="title" {% if data.showTitle == 0%} style="display: none" {% endif %}>{{image.title}}</span>
+<span class="description" {% if data.showDescription == 0%} style="display: none" {% endif %}>{{image.description}}</span>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p><b>No albums</b><br/>You need to create image albums in order to use this widget. Go to the images panel and add images to an album or go to the manage section to manage your albums.</p>
+{% endif %}

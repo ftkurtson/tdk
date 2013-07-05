@@ -1,0 +1,48 @@
+<!doctype html>
+<!--[if lt IE 7]>
+    <html class="no-js ie6 oldie" lang="en">
+<![endif]-->
+<!--[if IE 7]>
+    <html class="no-js ie7 oldie" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+    <html class="no-js ie8 oldie" lang="en">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+    <html class="no-js" lang="{{ page.seoLang }}">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>BaseKit Template SDK</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="SHORTCUT ICON" href="favicon.ico" type="image/x-icon" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+<body>
+
+    <header>
+        <img src="bk-logo.png" width="160" />
+        <h2>template viewer</h2>
+        <div id="controls">
+            Template:&nbsp;
+            <select id="template">
+                <option value="default.twig" selected>Default</option>
+                <option value="home.twig">Home</option>
+                <option value="about.twig">About</option>
+                <option value="contact.twig">Contact</option>
+            </select>
+            <button id="render">Render</button>
+        </div>
+    </header>
+    <section id="iframe">
+        <iframe src="iframe.htm" border="0"></iframe>
+    </section>
+
+    <script language="javascript" type="text/javascript" src="jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="values.js"></script>
+    <script language="javascript" type="text/javascript" src="main.js"></script>
+    <script language="javascript" type="text/javascript" src="twig.js"></script>
+</body>
+</html>

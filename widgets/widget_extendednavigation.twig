@@ -1,0 +1,42 @@
+<div class="extendednavigation">
+{% set i = 0 %}
+{% for page in pages %}
+	{% if (page.type == 'home' or page.type == 'page' or page.type == 'index' or page.type == 'folder') and page.status != 'inactive' %}
+		{% set i = i + 1 %}
+	{% endif %}
+{% endfor %}
+
+	<ul class="{{ data.align  ? ' align-' : ''}}{{ data.align }} {{i}}-items">
+		{% for page in pages %}
+			{% if (page.type == 'home' or page.type == 'page' or page.type == 'index' or page.type == 'folder') and page.status != 'inactive' %}
+				<li id="menu-item_{{ page.ref }}" class="{{page.type}}">
+				{% if (page.type != 'folder') %} <a href="/{{ page.request }}">{% endif %}
+						<span class="{% for item in data.icons %}{% if (item.ref == page.ref) and (item.icon != 'no-icon') %}{{item.icon}}{% endif %}{% endfor %} menu-icon"></span>
+						<span class="text">{{ page.title }}</span>
+				{% if (page.type != 'folder') %}</a>{% endif %}
+					{% if (page.subPages) %}
+					
+					{% set j = 0 %}
+					{% for subPage in page.subPages %}
+						{% if subPage.status != 'inactive' %}
+							{% set j = j + 1 %}
+						{% endif %}
+					{% endfor %}
+
+					<ul class="{{j}}-items">
+						{% for subPage in page.subPages %}
+							{% if subPage.status != 'inactive' %}
+							<li id="menu-item_{{ subPage.ref }}" class="{{subPage.type}}">
+								<a href="/{{ subPage.request }}">
+								<span class="text">{{ subPage.title }}</span>
+								</a>
+							</li>
+							{% endif %}
+						{% endfor %}	
+					</ul>
+					{% endif %}
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+</div>

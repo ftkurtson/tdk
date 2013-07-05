@@ -1,0 +1,24 @@
+{% if data.title == 'assets' and asset.title %}
+	{% set title = asset.title %}
+{% elseif data.title != 'assets' %}
+	{% set title = data.title %}
+{% endif %}
+
+{% if data.description == 'assets' and asset.description %}
+	{% set description = asset.description %}
+{% elseif data.description != 'assets' %}
+	{% set description = data.description %}
+{% endif %}
+
+{% if data.action and data.action != 'none' %} <a href="{{ data.url }}" target="{{ data.target }}">{% endif %}
+	<span class="image-img">
+		<img class="image" src="{{ data.src }}" alt="{{ data.alt }}" title="{{ title }}" data-filename="{{ data.fileName }}" data-filesize="{{ data.fileSize }}" data-imagesize="{{ data.imageSize }}" width= "{{ data.imageWidth}}"></img>
+	</span>
+	{% if title %}
+	<span class="image-title">{{ title }}</span>
+	{% endif %}
+{% if data.action and data.action != 'none' %} </a> {% endif %}
+
+{% if description %}
+<span class="image-description">{{ description|nl2br }}</span>
+{% endif %}

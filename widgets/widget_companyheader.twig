@@ -1,0 +1,17 @@
+<div class="logo">
+	<img src="{% if profile.logo and profile.logo != '' %}{{profile.logo}}{% elseif data.defaultlogo and data.defaultlogo != '' %}{{data.defaultlogo}}{% else %}{{'/images/mobile/default-logo.png'|expandAssetUrl}}{% endif %}" {% if data.widthPercent and data.widthPercent != '' and profile.logo and profile.logo != '' %}style="width: {{data.widthPercent}}%" {% endif %}></img>
+</div>
+<div class="company-name">
+	<h1>
+		{% if data.business and data.business !='profile' and data.business !=''%}
+			{{data.business}}
+		{% elseif profile.business and profile.business != '' %}
+			{{profile.business}}
+		{% else %}
+			My Website
+		{% endif %}
+	</h1>
+</div>
+<div class="logo-bottom">
+	<img src="{% if profile.logo and profile.logo != '' %}{{profile.logo}}{% elseif data.defaultlogo and data.defaultlogo != '' %}{{data.defaultlogo}}{% else %}{{'/images/mobile/default-logo.png'|expandAssetUrl}}{% endif %}" {% if data.widthPercent and data.widthPercent != '' and profile.logo and profile.logo != '' %}style="width: {{data.widthPercent}}%" {% endif %}></img>
+</div>

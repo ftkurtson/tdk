@@ -1,0 +1,64 @@
+var widgets = [
+    "content",
+    "contactform"
+]
+
+var profile = {
+    business: "My Business Website",
+    logo: "/template/images/logo.png",
+    header: "My Website Header",
+    strapline: "Here is the website strapline!"
+};
+
+var library = [
+    "<p>Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass.</p>",
+    "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>",
+    "<p>Bacon ipsum dolor sit amet biltong pastrami tenderloin ball tip jowl andouille. Strip steak meatball ribeye shoulder turducken doner, swine shankle pastrami drumstick meatloaf pork. Meatball ham capicola, strip steak andouille shank chuck chicken turducken venison leberkas ball tip. Tri-tip t-bone ball tip salami. Frankfurter brisket corned beef, fatback.</p>"
+];
+
+var properties = {
+    feature: {
+        preset: "align-center",
+        bgImg: "/template/images/feature-bg.jpg",
+        buttonText: "<span>Sign Up</span>",
+        header: "<span>My Website Header</span>",
+        strapline: "<span>Here is the website strapline!</span>"
+    },
+    companyheader: {
+        preset: "logo-left-align-left"
+    },
+    content: function() {
+        return {
+            lines: "all",
+            content: library[Math.floor(Math.random() * library.length)]
+        };
+    },
+    contactform: {
+        preset: "todo",
+        text: "Submit Form"
+    }
+};
+
+var site = [
+    {
+        ref: 1,
+        request: "home",
+        title: "Home",
+        type: "page",
+        status: "active"
+    },
+    {
+        ref: 2,
+        request: "about",
+        title: "About",
+        type: "page",
+        status: "active"
+    },
+    {
+        ref: 3,
+        request: "contact",
+        title: "Contact",
+        type: "page",
+        status: "active"
+    }
+];
