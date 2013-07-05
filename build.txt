@@ -1,0 +1,8 @@
+Widget Twig files
+Widget JS files
+widgetcore.js
+component.js
+utils.js
+responsive-columns.css
+template-common.css
+google-fonts.js
