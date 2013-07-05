@@ -97,8 +97,8 @@ $(function() {
             name: name,
             params: params,
             rerender: function(properties) {
-                data.data = $.extend(data.data, properties, properties.temporary);
-                return widget.render(data);
+                // Use this to grab rerender properties
+                //console.log(properties);
             }
         });
 

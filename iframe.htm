@@ -85,7 +85,7 @@
                 el["basekitWidget" + widget.name](widget.params);
                 var object = el.data("bkob");
                 object.rerender = function() {
-                    widget.rerender(object.getProperties());
+                    return widget.rerender(object.getProperties());
                 };
             });
         };
