@@ -1,13 +1,9 @@
-var widgets = [
-    "content",
-    "contactform"
-]
-
 var profile = {
     business: "My Business Website",
     logo: "/template/images/logo.png",
     header: "My Website Header",
-    strapline: "Here is the website strapline!"
+    strapline: "Here is the website strapline!",
+    postalcode: "BS1 2ND"
 };
 
 var library = [
@@ -36,6 +32,9 @@ var properties = {
     contactform: {
         preset: "todo",
         text: "Submit Form"
+    },
+    map: {
+        height: 300
     }
 };
 
