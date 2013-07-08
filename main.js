@@ -143,39 +143,86 @@ $(function() {
     function renderTemplate() {
         var template = $("#template").val() || "none", file = $("#layout").val() || "default.twig";
 
-        // Parse the LESS code for the selected template
-        var parser = new(less.Parser);
-        parser.parse('@import "vars.less";\n@import "presets.less";\n@import "templates/' + template + '/stylesheet.less";', function(e, tree) {
-            if (e) {
-                return console.log(e);
+        // Grab the metadata.json file
+        $.getJSON("templates/" + template + "/metadata.json").done(function(data) {
+            // Build the LESS variables for this template
+
+            var varsLess = "";
+
+            if (typeof data.colourSwatches === "undefined") {
+                var error = "Template metadata.json error - can't find 'colourSwatches'";
+                alert(error);
+                throw error;
             }
 
-            var iframe = $("iframe");
+            for (var name in data.colourSwatches) {
+                var colors = data.colourSwatches[name];
 
-            // Always make the id unique so we re-compile and render the template every time
-            var twig = loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file);
+                colors.forEach(function(color, index) {
+                    varsLess += "@color-swatch" + (index + 1) + ":#" + color + ";\n";
+                });
 
-            // Render the Twig template
-            var html = twig.render({
-                profile: profile(template)
+                break;
+            }
+
+            for (var fontNumber = 1; fontNumber < 10; fontNumber++) {
+                if (typeof data.fontSwatch["font" + fontNumber] === "undefined") {
+                    var error = "Template metadata.json error - can't find 'fontSwatch.font" + fontNumber + "'";
+                    alert(error);
+                    throw error;
+                }
+
+                var font = data.fontSwatch["font" + fontNumber];
+
+                for (var attribute in font) {
+                    varsLess += "@font-swatch" + (fontNumber) + "-" + attribute + ":" + font[attribute] + ";\n";
+                }
+            }
+
+            // Parse the LESS code for the selected template
+            var parser = new(less.Parser);
+            parser.parse(varsLess + '@import "vars.less";\n@import "presets.less";\n@import "templates/' + template + '/stylesheet.less";', function(e, tree) {
+                if (e) {
+                    alert("LESS parse error - see console for more information");
+                    throw e;
+                }
+
+                var iframe = $("iframe");
+
+                // Always make the id unique so we re-compile and render the template every time
+                var twig = loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file);
+
+                // Render the Twig template
+                var html = twig.render({
+                    profile: profile(template)
+                });
+
+                // Inject the template HTML into the iframe
+                iframe.contents().find("body").html(html);
+
+                try {
+                    // Inject the CSS into the iframe
+                    iframe.contents().find("#styles").html(tree.toCSS());
+                } catch (e) {
+                    alert("LESS error - see console for more information");
+                    throw e;
+                }
+
+                // Get the iframe window
+                iframeWindow = iframe.get(0).contentWindow;
+
+                // Store the selected template in the top-level and iframe windows
+                iframeWindow.selectedTemplate = template;
+                window.selectedTemplate = template;
+
+                // Init the widgets in the iframe
+                iframeWindow.initWidgets(widgets);
+                widgets = [];
             });
-
-            // Inject the template HTML into the iframe
-            iframe.contents().find("body").html(html);
-
-            // Inject the CSS into the iframe
-            iframe.contents().find("#styles").html(tree.toCSS());
-
-            // Get the iframe window
-            iframeWindow = iframe.get(0).contentWindow;
-
-            // Store the selected template in the top-level and iframe windows
-            iframeWindow.selectedTemplate = template;
-            window.selectedTemplate = template;
-
-            // Init the widgets in the iframe
-            iframeWindow.initWidgets(widgets);
-            widgets = [];
+        }).fail(function() {
+            var error = "Template metadata.json load error - check for syntax errors";
+            alert(error);
+            throw error;
         });
     }
 
