@@ -144,7 +144,7 @@ $(function() {
 
     function renderTemplate() {
         var template = $("#template").val() || "none", file = $("#layout").val() || "default.twig";
-        var colourSwatchIndex = $("#color-swatch").val() || 0;
+        var colourSwatchIndex = $("#colour-swatch").val() || 0;
 
         if (currentTemplate != template) {
             currentTemplate = template;
@@ -159,7 +159,7 @@ $(function() {
 
             var varsLess = "";
 
-            // Check that the metadata.json file contains color and font swatches
+            // Check that the metadata.json file contains colour and font swatches
 
             if (typeof data.colourSwatches === "undefined") {
                 var error = "Template metadata.json error - can't find 'colourSwatches'";
@@ -175,18 +175,18 @@ $(function() {
 
             var colourNumber = 0;
 
-            $("#color-swatch").empty();
+            $("#colour-swatch").empty();
 
             for (var name in data.colourSwatches) {
-                var colors = data.colourSwatches[name];
+                var colours = data.colourSwatches[name];
 
                 if (colourNumber == colourSwatchIndex) {
-                    colors.forEach(function(color, index) {
-                        varsLess += "@color-swatch" + (index + 1) + ":#" + color + ";\n";
+                    colours.forEach(function(colour, index) {
+                        varsLess += "@color-swatch" + (index + 1) + ":#" + colour + ";\n";
                     });
                 }
 
-                $("#color-swatch")
+                $("#colour-swatch")
                     .append($("<option></option>")
                         .attr("value", colourNumber)
                         .text(name)
@@ -195,7 +195,7 @@ $(function() {
                 colourNumber++;
             }
 
-            $("#color-swatch").val(colourSwatchIndex);
+            $("#colour-swatch").val(colourSwatchIndex);
 
             for (var fontNumber = 1; fontNumber < 10; fontNumber++) {
                 if (typeof data.fontSwatch["font" + fontNumber] === "undefined") {
