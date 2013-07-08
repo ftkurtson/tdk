@@ -140,8 +140,18 @@ $(function() {
 
     var unique = 0;
 
+    var currentTemplate = null;
+
     function renderTemplate() {
         var template = $("#template").val() || "none", file = $("#layout").val() || "default.twig";
+        var colourSwatchIndex = $("#color-swatch").val() || 0;
+
+        if (currentTemplate != template) {
+            currentTemplate = template;
+
+            // Reset the colour swatch
+            colourSwatchIndex = 0;
+        }
 
         // Grab the metadata.json file
         $.getJSON("templates/" + template + "/metadata.json").done(function(data) {
@@ -163,15 +173,29 @@ $(function() {
                 throw error;
             }
 
+            var colourNumber = 0;
+
+            $("#color-swatch").empty();
+
             for (var name in data.colourSwatches) {
                 var colors = data.colourSwatches[name];
 
-                colors.forEach(function(color, index) {
-                    varsLess += "@color-swatch" + (index + 1) + ":#" + color + ";\n";
-                });
+                if (colourNumber == colourSwatchIndex) {
+                    colors.forEach(function(color, index) {
+                        varsLess += "@color-swatch" + (index + 1) + ":#" + color + ";\n";
+                    });
+                }
 
-                break;
+                $("#color-swatch")
+                    .append($("<option></option>")
+                        .attr("value", colourNumber)
+                        .text(name)
+                    );
+
+                colourNumber++;
             }
+
+            $("#color-swatch").val(colourSwatchIndex);
 
             for (var fontNumber = 1; fontNumber < 10; fontNumber++) {
                 if (typeof data.fontSwatch["font" + fontNumber] === "undefined") {
