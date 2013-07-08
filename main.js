@@ -149,8 +149,16 @@ $(function() {
 
             var varsLess = "";
 
+            // Check that the metadata.json file contains color and font swatches
+
             if (typeof data.colourSwatches === "undefined") {
                 var error = "Template metadata.json error - can't find 'colourSwatches'";
+                alert(error);
+                throw error;
+            }
+
+            if (typeof data.fontSwatch === "undefined") {
+                var error = "Template metadata.json error - can't find 'fontSwatch'";
                 alert(error);
                 throw error;
             }
