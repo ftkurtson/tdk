@@ -19,13 +19,14 @@ var properties = {
         return {
             preset: "align-center",
             bgImg: "/templates/" + template + "/images/feature-bg.jpg",
-            buttonText: "<span>Sign Up</span>",
-            header: "<span>My Website Header</span>",
-            strapline: "<span>Here is the website strapline!</span>"
+            buttonText: "Sign Up",
+            header: "My Website Header",
+            strapline: "Here is the website strapline!"
         };
     },
     companyheader: {
-        preset: "logo-left-align-left"
+        preset: "default",
+        showLogo: 1
     },
     content: function() {
         return {
