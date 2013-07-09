@@ -1,0 +1,49 @@
+<div class="slideshow-widget-wrapper">
+	<div class="slideshow-widget {% if not data.albumRef %}hidden{% endif %}">
+		<div class="{% if data.showButtons == false %}hidden{% endif %} btns-move">
+			<span class="btn-prev slide-ctrl" data-ref="{{plugins.assets.albums[data.albumRef]|length - 1 }}">prev</span>
+            <span class="btn-next slide-ctrl" data-ref="{% if plugins.assets.albums[data.albumRef]|length > 1%}1{% else %}0{% endif %}">next</span>
+
+		</div>
+
+		<span class="btn-play pause" data-ref="0" {% if data.allowPause == false %}style="display: none"{% endif %}></span>
+
+		<ul class="slideshow-image-list">
+            {% for key, imageRef in plugins.assets.albums[data.albumRef] %}
+
+            {% set image = plugins.assets.images[imageRef] %}
+
+			    {% if image.imageWidth is not null and image.imageHeight is not null %}
+    			    {% if image.imageWidth == image.imageHeight %}
+    			        {% set aspectClass = 'square' %}
+    			    {% endif %}
+
+    			    {% if image.imageWidth > image.imageHeight %}
+    			        {% set aspectClass = 'landscape' %}
+    			    {% endif %}
+
+    			    {% if image.imageWidth < image.imageHeight %}
+    			        {% set aspectClass = 'portrait' %}
+    			    {% endif %}
+    			{% endif %}
+
+                <li data-ref="{{key}}" class="slideshow-image-item{% if loop.index0 == 0 %} current{% endif %}">
+			        <img class="slideshow-image {{ aspectClass }}{% if data.crop == false %} no-crop{% endif %}" src="{{ image.url }}" alt="{{ image.title }}">
+			    </li>
+			{% endfor %}
+		</ul>
+	</div>
+
+	<div class="slideshow-widget-controls {% if data.showBullets == false %}hidden{% endif %}">
+        {% for key, image in plugins.assets.albums[data.albumRef] %} 
+            <span data-ref="{{key}}" class="dot slide-ctrl{% if loop.index0 == 0 %} selected{% endif %}"></span>
+		{% endfor %}
+	</div>
+
+	{% if data.albumRef is null %}
+    	<div class="slideshow-empty hidden">
+    		<p class="slideshow-empty-title">{{"widgets.slideshow.need_album_header"|translate("You have no albums")}}</p>
+    		<p class="slideshow-empty-message">{{"widgets.slideshow.need_album_text"|translate("In order to use the slideshow widget, you need an album. Please upload images under the 'Images' panel, or organize your images into albums by going to your Manage section.")|raw}}</p>
+    	</div>
+	{% endif %}
+</div>

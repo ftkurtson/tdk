@@ -15,7 +15,7 @@
 						<span class="text">{{ page.title }}</span>
 				{% if (page.type != 'folder') %}</a>{% endif %}
 					{% if (page.subPages) %}
-					
+
 					{% set j = 0 %}
 					{% for subPage in page.subPages %}
 						{% if subPage.status != 'inactive' %}
@@ -32,7 +32,7 @@
 								</a>
 							</li>
 							{% endif %}
-						{% endfor %}	
+						{% endfor %}
 					</ul>
 					{% endif %}
 				</li>

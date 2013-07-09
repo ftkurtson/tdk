@@ -41,32 +41,50 @@ button.italic .btnText
   display: none;
 }
 
-/** Feature content widget **/
-.widget.feature
+/** navigation widget **/
+/** extendednavigation widget **/
+body.edit .widget.navigation,
+body.edit .widget.extendednavigation
 {
-  position:relative;
-  width:100%;
-  height:auto;
   overflow: hidden;
 }
 
-.widget.feature .bgimage
+/** Feature content widget **/
+.widget.feature
 {
-  display:block;
-  position:absolute;
-  z-index:1;
-  -moz-transform-origin: 0px 0px; 
-  -webkit-transform-origin: 0px 0px; 
-  -ms-transform-origin: 0px 0px;
-  -o-transform-origin: 0px 0px;
+  display: table;
+  position:relative;
+  width:100%;
+  overflow: hidden;
+  height: auto;
 }
 
-.widget.feature .content
+.widget.feature .feature-bgimg
 {
-  display:block;
-  position:relative;
-  z-index:2;
+  display: table-row; 
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 100px; /* height should be in the media query*/
 }
+
+.widget.feature .content {
+  min-height: 200px; /* height should be in the media query*/
+  display: table-cell; 
+  vertical-align: middle;
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box;    
+  box-sizing: border-box;         
+}
+
+.widget.feature .content .spare {
+  display: block;
+}
+
 
 /** Youtube widget **/
 .widget.youtube .video-wrapper
@@ -81,6 +99,14 @@ button.italic .btnText
   position: absolute;
   top: 0;
   left: 0;
+}
+
+/** Companyheader widget **/
+.widget.companyheader a{
+  text-decoration: none;
+}
+.widget.companyheader img{
+  border: none;
 }
 
 /** ICONS **/
@@ -457,46 +483,67 @@ button.italic .btnText
 }
 
 /** slideshow widget **/
-.slideshow-widget-wrapper
-{
-  position: relative;
-  margin: 0px auto;
+.slideshow-widget-wrapper {
+    position: relative;
+    margin: 0 auto;
 }
 
-.slideshow-widget img
-{
-    display: none;
+/* Temporary, this will be set in the template. */
+.slideshow-image-list {
+    height: 400px;
+    height: 40vh;
 }
 
-.slideshow-widget ul.img-array
-{
+.slideshow-widget {
+    position: relative;
+    margin: 0 auto;
+}
+
+.slideshow-image-list {
     margin: 0;
     padding: 0;
     list-style-type: none;
+    position: relative;
 }
 
-.slideshow-widget
-{
-  position: relative;
-  margin: 0px auto;
-  overflow: hidden;  
+.slideshow-image-item {
+    display: none;
+    z-index: 6;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
 }
 
-.slideshow-widget ul.img-array li
-{
-  display: none;
-  position: absolute;
-  z-index: 6;
-  margin: 0;
-  padding: 0;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
+.slideshow-image-item.current {
+    z-index: 9;
+    display: block;
 }
 
-.slideshow-widget ul.img-array li.img-current
-{
-  z-index: 9;
-}  
+.slideshow-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
 
+.slideshow-image.landscape:not(.no-crop) {
+    height: 100%;
+}
 
+.slideshow-image.portrait:not(.no-crop) {
+    width: 100%;
+}
+
+.slideshow-image.no-crop {
+    max-width: 100%;
+    max-height: 100%;
+}

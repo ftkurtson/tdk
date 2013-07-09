@@ -2,10 +2,10 @@
 	<fieldset>
 		<label for="email">{{"widgets.contactform.email"|translate("Your Email")}}:</label>
 		<input type="email" class="email" placeholder="{{"widgets.contactform.emailholder"|translate("Type your Email")}}">
-		
+
 		<label for="message">{{"widgets.contactform.message"|translate("Message")}}:</label>
 		<textarea class="message"></textarea>
-		
+
 		<button class="btn btnText {{data.preset}} {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" type="submit" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.text}}</button>
 
 	</fieldset>

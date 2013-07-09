@@ -1,6 +1,18 @@
+{% set url = null %}
+{% for page in pages %}
+	{% if page.type == 'home' %}
+		{% set url = page.request %}
+	{% endif %}
+{% endfor %}
+
+{% if url|length>0 %}<a href='/{{url}}'>{% endif %}
+
+{% if (data.showLogo is null or data.showLogo == 1) and ("logo-left" in data.preset or "logo-top" in data.preset or "logo-only" in data.preset or data.preset == "default" or data.preset is null)%}
 <div class="logo">
 	<img src="{% if profile.logo and profile.logo != '' %}{{profile.logo}}{% elseif data.defaultlogo and data.defaultlogo != '' %}{{data.defaultlogo}}{% else %}{{'/images/mobile/default-logo.png'|expandAssetUrl}}{% endif %}" {% if data.widthPercent and data.widthPercent != '' and profile.logo and profile.logo != '' %}style="width: {{data.widthPercent}}%" {% endif %}></img>
 </div>
+{% endif %}
+{% if (data.showText is null or data.showText == 1) %}
 <div class="company-name">
 	<h1>
 		{% if data.business and data.business !='profile' and data.business !=''%}
@@ -12,6 +24,12 @@
 		{% endif %}
 	</h1>
 </div>
-<div class="logo-bottom">
+{% endif %}
+{% if (data.showLogo is null or data.showLogo == 1) == 1 and ("logo-right" in data.preset or "logo-bottom" in data.preset)%}
+<div class="logo">
 	<img src="{% if profile.logo and profile.logo != '' %}{{profile.logo}}{% elseif data.defaultlogo and data.defaultlogo != '' %}{{data.defaultlogo}}{% else %}{{'/images/mobile/default-logo.png'|expandAssetUrl}}{% endif %}" {% if data.widthPercent and data.widthPercent != '' and profile.logo and profile.logo != '' %}style="width: {{data.widthPercent}}%" {% endif %}></img>
 </div>
+{% endif %}
+
+{% if url|length>0 %}</a>{% endif %}
+

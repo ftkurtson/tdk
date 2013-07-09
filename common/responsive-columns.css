@@ -81,10 +81,12 @@
 {
 	width: 25%;
 	margin-right: 3%;
+    margin-left:0;
 }
 .columns-two-25-75 .columns-two-right
 {
 	width: 72%;
+    margin-left:0;
 }
 
 @media only screen and (min-width: 480px) and (max-width: 768px)
@@ -121,10 +123,12 @@
 {
 	width: 72%;
 	margin-right: 3%;
+    margin-left:0;
 }
 .columns-two-75-25 .columns-two-right
 {
 	width: 25%;
+    margin-left:0;
 }
 
 @media only screen and (min-width: 480px) and (max-width: 768px)
@@ -161,10 +165,12 @@
 {
 	width: 30%;
 	margin-right: 3%;
+    margin-left:0;
 }
 .columns-two-34-66 .columns-two-right
 {
 	width: 66%;
+    margin-left:0;
 }
 
 @media only screen and (min-width: 480px) and (max-width: 768px)
@@ -337,7 +343,7 @@
 	margin-left: 3%;
 }
 
-@media only screen and (min-width: 480px) and (max-width: 1024px)
+@media only screen and (min-width: 481px) and (max-width: 768px)
 {
 	.responsivecolumns .columns-four-first, /* default */
 	.columns-four-25-25-25-25 .columns-four-first
@@ -361,6 +367,7 @@
 	   margin-right: 1.5%;
 	   margin-left: 0;
 	   margin-bottom: 5%;
+	   clear: both;
 	}
 	.responsivecolumns .columns-four-fourth, /* default */
 	.columns-four-25-25-25-25 .columns-four-fourth
@@ -371,7 +378,7 @@
 	   margin-bottom: 5%;
 	}
 }
-@media only screen and (max-width: 479px) 
+@media only screen and (max-width: 480px)
 {
 	.responsivecolumns .columns-four-first, /* default */
 	.columns-four-25-25-25-25 .columns-four-first

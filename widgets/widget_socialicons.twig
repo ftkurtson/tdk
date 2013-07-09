@@ -8,7 +8,7 @@
 <!-- Twitter -->
 {% if (data.twitter == 'profile' and profile.twitter|length > 0) or (data.twitter != 'profile' and data.twitter|length > 0) %}
 <span class="bk-socialicons-twitter">
-	<a href="https://twitter.com/{% if data.twitter == 'profile' %}{{profile.twitter}} {% else %} {{ data.twitter }} {% endif %}" target="_blank">Twitter</a>
+	<a href="https://twitter.com/{% if data.twitter == 'profile' %}{{profile.twitter}}{% else %}{{ data.twitter }} {% endif %}" target="_blank">Twitter</a>
 </span>
 {% endif %}
 
