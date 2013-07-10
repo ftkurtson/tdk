@@ -3,6 +3,16 @@ $(function() {
 
     function loadTemplate(id, file, callback) {
 
+        var error = null;
+
+        // The only way to catch exceptions here is via window.onerror
+        // This is horrible, but a simple try / catch doesn't seem to work
+        // Probably something to do with the fact this can be called asynchronously
+        var windowOnerror = window.onerror;
+        window.onerror = function(msg) {
+            error = new Error(msg);
+        };
+
         // TODO: Queue up calls for the same template id
 
         // If the template is already loaded then return it
@@ -26,6 +36,14 @@ $(function() {
         });
 
         twigs[id] = template;
+
+        // Replace window.onerror
+        window.onerror = windowOnerror;
+
+        // Throw errors caught via window.onerror
+        if (error) {
+            throw error;
+        }
 
         return template;
     }
@@ -162,13 +180,13 @@ $(function() {
             // Check that the metadata.json file contains colour and font swatches
 
             if (typeof data.colourSwatches === "undefined") {
-                var error = "Template metadata.json error - can't find 'colourSwatches'";
+                var error = "Template Metadata Error\nNo 'colourSwatches' provided";
                 alert(error);
                 throw error;
             }
 
             if (typeof data.fontSwatch === "undefined") {
-                var error = "Template metadata.json error - can't find 'fontSwatch'";
+                var error = "Template Metadata Error\nNo 'fontSwatch' provided";
                 alert(error);
                 throw error;
             }
@@ -199,7 +217,7 @@ $(function() {
 
             for (var fontNumber = 1; fontNumber < 10; fontNumber++) {
                 if (typeof data.fontSwatch["font" + fontNumber] === "undefined") {
-                    var error = "Template metadata.json error - can't find 'fontSwatch.font" + fontNumber + "'";
+                    var error = "Template Metadata Error\nNo 'fontSwatch.font" + fontNumber + "' provided";
                     alert(error);
                     throw error;
                 }
@@ -215,15 +233,29 @@ $(function() {
             var parser = new(less.Parser);
             parser.parse(varsLess + '@import "vars.less";\n@import "presets.less";\n@import "templates/' + template + '/stylesheet.less";', function(e, tree) {
                 if (e) {
-                    alert("LESS Parse Error: " + e.message);
+                    alert("LESS Parse Error\n" + e.message);
                     console.log(e);
                     throw e;
                 }
 
                 var iframe = $("iframe");
 
-                // Always make the id unique so we re-compile and render the template every time
-                var twig = loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file);
+                try {
+                    // Always make the id unique so we re-compile and render the template every time
+                    var twig = loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file);
+                } catch (e) {
+                    if (e.message.substring(0, 9) == "Uncaught ") {
+                        e.message = e.message.substring(9);
+                    }
+
+                    if (e.message.substring(0, 15) == "TwigException: ") {
+                        e.message = e.message.substring(15);
+                    }
+
+                    alert("Twig Compile Error\n" + e.message);
+                    console.log(e.message);
+                    throw e.message;
+                }
 
                 // Render the Twig template
                 var html = twig.render({
@@ -237,7 +269,7 @@ $(function() {
                     // Inject the CSS into the iframe
                     iframe.contents().find("#styles").html(tree.toCSS());
                 } catch (e) {
-                    alert("LESS Compile Error: " + e.message + " on line " + e.line + " of " + e.filename);
+                    alert("LESS Compile Error\n" + e.message + " on line " + e.line + " of " + e.filename);
                     console.log(e);
                     throw e;
                 }
@@ -254,7 +286,7 @@ $(function() {
                 widgets = [];
             });
         }).fail(function() {
-            var error = "Template metadata.json load error - check for syntax errors";
+            var error = "Template Metadata Error\nJSON syntax error";
             alert(error);
             throw error;
         });
