@@ -215,7 +215,8 @@ $(function() {
             var parser = new(less.Parser);
             parser.parse(varsLess + '@import "vars.less";\n@import "presets.less";\n@import "templates/' + template + '/stylesheet.less";', function(e, tree) {
                 if (e) {
-                    alert("LESS parse error - see console for more information");
+                    alert("LESS Parse Error: " + e.message);
+                    console.log(e);
                     throw e;
                 }
 
@@ -236,7 +237,8 @@ $(function() {
                     // Inject the CSS into the iframe
                     iframe.contents().find("#styles").html(tree.toCSS());
                 } catch (e) {
-                    alert("LESS error - see console for more information");
+                    alert("LESS Compile Error: " + e.message + " on line " + e.line + " of " + e.filename);
+                    console.log(e);
                     throw e;
                 }
 
