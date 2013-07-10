@@ -89,5 +89,9 @@ var templates = [
     {
         name: "Hatch",
         directory: "hatch"
+    },
+    {
+        name: "Joel Money",
+        directory: "joel-money"
     }
 ];
