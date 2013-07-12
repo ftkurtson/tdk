@@ -105,7 +105,8 @@ $(function() {
         var data = {
             profile: profile(template),
             data: params,
-            pages: site
+            pages: site,
+            plugins: plugins(template)
         };
 
         var widget = loadTemplate(type, "/widgets/widget_" + type + ".twig");
@@ -259,7 +260,8 @@ $(function() {
 
                 // Render the Twig template
                 var html = twig.render({
-                    profile: profile(template)
+                    profile: profile(template),
+                    plugins: plugins(template)
                 });
 
                 // Inject the template HTML into the iframe

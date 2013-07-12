@@ -50,7 +50,40 @@ var properties = {
     },
     button: {
         text: "Click Me"
+    },
+    gallery: {
+        albumRef: 1
     }
+};
+
+var plugins = function(template) {
+    return {
+        assets: {
+            albums: {
+                1: [1, 2, 3, 4, 5, 6]
+            },
+            images: {
+                1: {
+                    url: "/templates/" + template + "/images/gallery/1.jpg"
+                },
+                2: {
+                    url: "/templates/" + template + "/images/gallery/2.jpg"
+                },
+                3: {
+                    url: "/templates/" + template + "/images/gallery/3.jpg"
+                },
+                4: {
+                    url: "/templates/" + template + "/images/gallery/4.jpg"
+                },
+                5: {
+                    url: "/templates/" + template + "/images/gallery/1.jpg"
+                },
+                6: {
+                    url: "/templates/" + template + "/images/gallery/2.jpg"
+                }
+            }
+        }
+    };
 };
 
 var site = [
@@ -74,6 +107,43 @@ var site = [
         title: "Contact",
         type: "page",
         status: "active"
+    },
+    {
+        ref: 4,
+        request: "portfolio",
+        title: "Portfolio",
+        type: "folder",
+        status: "active",
+        subPages: [
+            {
+                ref: 5,
+                request: "portfolio/web",
+                title: "Web",
+                type: "page",
+                status: "active"
+            },
+            {
+                ref: 6,
+                request: "portfolio/print",
+                title: "Print",
+                type: "page",
+                status: "active"
+            },
+            {
+                ref: 7,
+                request: "portfolio/canvas",
+                title: "Canvas",
+                type: "page",
+                status: "active"
+            }
+        ]
+    },
+    {
+        ref: 8,
+        request: "gallery",
+        title: "Gallery",
+        type: "page",
+        status: "active"
     }
 ];
 
@@ -93,5 +163,9 @@ var templates = [
     {
         name: "Joel Money",
         directory: "joel-money"
+    },
+    {
+        name: "Beta Studio",
+        directory: "betastudio"
     }
 ];
