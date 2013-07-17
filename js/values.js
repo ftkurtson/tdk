@@ -80,6 +80,9 @@ var properties = {
     },
     gallery: {
         albumRef: 1
+    },
+    extendednavigation: {
+        align: "left"
     }
 };
 
