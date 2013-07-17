@@ -95,6 +95,25 @@
                     url.value = "url(/templates/" + template + url.value + ")";
                     url.quote = "";
                     return url;
+                },
+                bkscale: function (oValue, oScale) {
+                    var value = oValue.value || '',
+                        unit = oValue.unit || '',
+                        scale = oScale.value || '',
+                        intValue = parseInt(value, 10),
+                        floatScale = parseFloat(scale),
+                        returnValue = '',
+                        newScale = null;
+
+                    if (intValue > 0 && floatScale > 0) {
+                        newScale = parseFloat(intValue * floatScale);
+                        returnValue = newScale + unit;
+                    } else {
+                        // return back the original value
+                        returnValue = value;
+                    }
+
+                    return new (less.tree.Anonymous)(returnValue);
                 }
             }
         };
