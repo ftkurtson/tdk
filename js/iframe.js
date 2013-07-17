@@ -1,4 +1,5 @@
 $(function() {
+    Server.plugins = sdkPlugins;
     sdkWidgets.forEach(function(widget) {
         var el = $("#" + widget.id);
         el["basekitWidget" + widget.name](widget.params);

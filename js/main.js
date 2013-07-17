@@ -309,6 +309,7 @@ $(function() {
                 // Construct the widgets Javascript
                 // Note that this is base64 encoded to prevent XSS protection from kicking in
                 var js = 'var sdkWidgets = ' + JSON.stringify(widgets) + ';';
+                js += 'var sdkPlugins = ' + JSON.stringify(plugins(template)) + ';';
 
                 // Submit the form to the iframe
                 $("#html").val(btoa(html));

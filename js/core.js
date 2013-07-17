@@ -31,3 +31,5 @@ var Profile = {
         return profile.key || "";
     }
 };
+
+var Server = {};
