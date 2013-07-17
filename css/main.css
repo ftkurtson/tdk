@@ -26,10 +26,19 @@ header h2 {
 #controls {
     position: absolute;
     right: 28px;
-    bottom: 18px;
+    bottom: 14px;
     color: #fff;
-    font: normal 14px "Helvetica Neue",Helvetica,sans-serif;
+    font: normal 13px "Helvetica Neue",Helvetica,sans-serif;
     white-space: nowrap !important;
+}
+
+#controls .row span {
+    width: 80px;
+    display: inline-block;
+}
+
+#controls select, #controls button {
+    font: normal 12px "Helvetica Neue",Helvetica,sans-serif;
 }
 
 h1 {
