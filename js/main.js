@@ -262,15 +262,15 @@ $(function() {
                     throw e.message;
                 }
 
-                var assetSubdomain = window.location.hostname.split("\.")[0];
-                var brand_domain = window.location.hostname.substring(assetSubdomain.length + 1);
-
                 // Render the compiled Twig template to HTML
                 try {
                     var html = twig.render({
-                        assetSubdomain: window.location.hostname.split("\.")[0],
+                        assetSubdomain: "",
+                        env: {
+                            assetSubdomain: ""
+                        },
                         brand: {
-                            domain: brand_domain
+                            domain: window.location.hostname
                         },
                         site: site,
                         page: page,
