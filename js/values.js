@@ -83,6 +83,10 @@ var properties = {
     },
     extendednavigation: {
         align: "left"
+    },
+    responsiveslideshow: {
+        preset: "default",
+        albumRef: 1
     }
 };
 
