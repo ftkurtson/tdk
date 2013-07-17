@@ -6,7 +6,7 @@
 		<label for="message">{{"widgets.contactform.message"|translate("Message")}}:</label>
 		<textarea class="message"></textarea>
 
-		<button class="btn btnText {{data.preset}} {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" type="submit" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.text}}</button>
+		<button class="btn btnText {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" type="submit" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.text}}</button>
 
 	</fieldset>
 </form>

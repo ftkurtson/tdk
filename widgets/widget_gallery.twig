@@ -9,7 +9,7 @@
     {% set image = plugins.assets.images[imageRef] %}
 
     {% if image.imageWidth == image.imageHeight %}
-    {% set aspectClass = 'one-to-one' %}
+    {% set aspectClass = 'square' %}
     {% endif %}
 
     {% if image.imageWidth > image.imageHeight %}

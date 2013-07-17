@@ -1,3 +1,6 @@
+/**
+ * User profile values
+ */ 
 var profile = function(template) {
     return {
         business: "My Business Website",
@@ -8,12 +11,36 @@ var profile = function(template) {
     };
 };
 
+/**
+ * Page setup
+ */
+var page = {
+    seoLang: "en",
+    keywords: "basekit",
+    description: "BaseKit Template SDK",
+    backgroundClass: "default"
+};
+
+/**
+ * Site data
+ */
+var site = {
+
+};
+
+/**
+ * Text for use in content widgets
+ */
 var library = [
     "<p>Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass.</p>",
     "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>",
     "<p>Bacon ipsum dolor sit amet biltong pastrami tenderloin ball tip jowl andouille. Strip steak meatball ribeye shoulder turducken doner, swine shankle pastrami drumstick meatloaf pork. Meatball ham capicola, strip steak andouille shank chuck chicken turducken venison leberkas ball tip. Tri-tip t-bone ball tip salami. Frankfurter brisket corned beef, fatback.</p>"
 ];
 
+/**
+ * Widget properties
+ * These can either be an object or a function that returns an object
+ */
 var properties = {
     feature: function(template) {
         return {
@@ -56,6 +83,10 @@ var properties = {
     }
 };
 
+/**
+ * Plugins data
+ * Albums and images are defined here
+ */
 var plugins = function(template) {
     return {
         assets: {
@@ -86,7 +117,11 @@ var plugins = function(template) {
     };
 };
 
-var site = [
+/**
+ * Site navigation
+ * Pages, folders and sub-pages can be defined for use in navigation menus
+ */
+var pages = [
     {
         ref: 1,
         request: "home",
@@ -144,28 +179,5 @@ var site = [
         title: "Gallery",
         type: "page",
         status: "active"
-    }
-];
-
-var templates = [
-    {
-        name: "Pearl",
-        directory: "pearl"
-    },
-    {
-        name: "Shutter",
-        directory: "shutter"
-    },
-    {
-        name: "Hatch",
-        directory: "hatch"
-    },
-    {
-        name: "Joel Money",
-        directory: "joel-money"
-    },
-    {
-        name: "Beta Studio",
-        directory: "betastudio"
     }
 ];

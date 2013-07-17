@@ -1,12 +1,12 @@
 (function () {
-    BaseKit.Widget.Redirecttodesktop = null;
+    BaseKit.Widget.Clicktocall = null;
 
-    BaseKit.Widget.RedirecttodesktopProperties = {
-        text: App.t('widgets.redirecttodesktop.default_text', 'Switch to desktop'),
-        url: ''
+    BaseKit.Widget.ClicktocallProperties = {
+        phone: 'profile',
+        phoneText: App.t('widgets.clicktocall.default_text', '01234 567 890')
     };
 
-    BaseKit.Widget.RedirecttodesktopMethods = {
+    BaseKit.Widget.ClicktocallMethods = {
         construct: function (el, options) {
             this.options = options;
             this.load();
@@ -19,27 +19,81 @@
 
     // Base Widget Functionality - What ever is required
     // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Redirecttodesktop = function () {
+    BaseKit.Widget.Clicktocall = function () {
         var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.RedirecttodesktopProperties,
-            methods: BaseKit.Widget.RedirecttodesktopMethods
+            properties: BaseKit.Widget.ClicktocallProperties,
+            methods: BaseKit.Widget.ClicktocallMethods
         });
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetRedirecttodesktop = function (options) {
+    $.fn.basekitWidgetClicktocall = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Redirecttodesktop(el, options));
+            $(el).data('bkob', new BaseKit.Widget.Clicktocall(el, options));
         });
     };
 }());(function () {
-    BaseKit.Widget.Space = {};
+    BaseKit.Widget.Linkedincompanyprofile = {};
 
-    BaseKit.Widget.SpaceProperties = {
-        height: '50'
+    BaseKit.Widget.LinkedincompanyprofileProperties = {
+        'linkedinID': '',
+        'source': 'companyName'
     };
 
-    BaseKit.Widget.SpaceMethods = {
+    BaseKit.Widget.LinkedincompanyprofileMethods = {
+        construct: function (el, options) {
+            this.options = options;
+
+            // check to see if we have already l;oaded the linkinin API
+            if (Site.Page.Globals.linkinInAPILoaded === undefined || Site.Page.Globals.linkinInAPILoaded === null) {
+                Site.Page.Globals.linkinInAPILoaded = false;
+            }
+
+            this.load();
+        },
+
+        load: function () {
+            var that = this;
+
+            // This dynamically injects the linkedin script into the body
+            if (Site.Page.Globals.linkinInAPILoaded === false && $('#linkedin-script').length === 0) {
+                $.getScript("http://platform.linkedin.com/in.js", function () {
+                    $(this).attr('id', 'linkedin-script');
+                    Site.Page.Globals.linkinInAPILoaded = true;
+                });
+            } else {
+                // this is needed to force the LinkedIn code to reparse any new widgets
+                if (IN && typeof IN.parse === 'function') {
+                    IN.parse();
+                }
+            }
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Linkedincompanyprofile = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.LinkedincompanyprofileProperties,
+            methods: BaseKit.Widget.LinkedincompanyprofileMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetLinkedincompanyprofile = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Linkedincompanyprofile(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Youtube = {};
+
+    BaseKit.Widget.YoutubeProperties = {
+        userInput: '', // Stores what the user enters
+        videoId: '' // Stores the video id extracted from the user input
+    };
+
+    BaseKit.Widget.YoutubeMethods = {
         construct: function (el, options) {
             this.options = options;
             this.load();
@@ -51,23 +105,61 @@
 
     // Base Widget Functionality - What ever is required
     // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Space = function () {
+    BaseKit.Widget.Youtube = function () {
         var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.SpaceProperties,
-            methods: BaseKit.Widget.SpaceMethods
+            properties: BaseKit.Widget.YoutubeProperties,
+            methods: BaseKit.Widget.YoutubeMethods
         });
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetSpace = function (options) {
+    $.fn.basekitWidgetYoutube = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Space(el, options));
+            $(el).data('bkob', new BaseKit.Widget.Youtube(el, options));
         });
     };
 }());(function () {
-    BaseKit.Widget.CompanynameProperties = {};
+    BaseKit.Widget.Gallery = null;
 
-    BaseKit.Widget.CompanynameMethods = {
+    BaseKit.Widget.GalleryProperties = {
+        widgetType: 'widget.gallery',
+        imageScale: 'original',
+        showTitle: 1,
+        showDescription: 1
+    };
+
+    BaseKit.Widget.GalleryMethods = {
+        construct: function (el, options) {
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Gallery = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.GalleryProperties,
+            methods: BaseKit.Widget.GalleryMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetGallery = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Gallery(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.CompanyheaderProperties = {
+		showLogo: 1,
+		showText: 1
+	};
+
+    BaseKit.Widget.CompanyheaderMethods = {
         construct: function (el, options) {
             this.options = options;
             this.load();
@@ -80,17 +172,19 @@
 
     // Base Widget Functionality - What ever is required
     // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Companyname = function () {
+    BaseKit.Widget.Companyheader = function () {
         var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.CompanynameProperties,
-            methods: BaseKit.Widget.CompanynameMethods
+            properties: BaseKit.Widget.CompanyheaderProperties,
+            methods: BaseKit.Widget.CompanyheaderMethods
         });
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetCompanyname = function (options) {
+    $.fn.basekitWidgetCompanyheader = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Companyname(el, options));
+            var obj = null;
+            obj = new BaseKit.Widget.Companyheader(el, options);
+            $(el).data('bkob', obj);
         });
     };
 }());(function () {
@@ -127,6 +221,112 @@
     $.fn.basekitWidgetLine = function (options) {
         this.each(function (index, el) {
             $(el).data('bkob', new BaseKit.Widget.Line(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.CompanyaddressProperties = {};
+
+    BaseKit.Widget.CompanyaddressMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Companyaddress = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.CompanyaddressProperties,
+            methods: BaseKit.Widget.CompanyaddressMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetCompanyaddress = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Companyaddress(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Socialicons = {};
+
+    BaseKit.Widget.SocialiconsProperties = {
+        'googleplus': 'profile',
+        'linkedin': 'profile',
+        'facebook': 'profile',
+        'twitter': 'profile',
+        'youtube': 'profile',
+        'rss': 'profile'
+    };
+
+    BaseKit.Widget.SocialiconsMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+        load: function () {
+            // do something if the widget needs to be loaded
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Socialicons = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.SocialiconsProperties,
+            methods: BaseKit.Widget.SocialiconsMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetSocialicons = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Socialicons(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Tweet = null;
+
+    BaseKit.Widget.TweetProperties = {
+        linkText: App.t('widgets.tweet.default_link_text', 'Tweet'),
+        tweetText: '',
+        url: 'http://www.basekit.com'
+    };
+
+    BaseKit.Widget.TweetMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
+
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Tweet = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.TweetProperties,
+            methods: BaseKit.Widget.TweetMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetTweet = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Tweet(el, options));
         });
     };
 }());(function () {
@@ -198,14 +398,46 @@
         });
     };
 }());(function () {
-    BaseKit.Widget.Youtube = {};
+    BaseKit.Widget.Navigation = null;
 
-    BaseKit.Widget.YoutubeProperties = {
-        userInput: '', // Stores what the user enters
-        videoId: '' // Stores the video id extracted from the user input
+    BaseKit.Widget.NavigationProperties = {
+        align: 'center',
+        icons: []
     };
 
-    BaseKit.Widget.YoutubeMethods = {
+    BaseKit.Widget.NavigationMethods = {
+        construct: function (el, options) {
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Navigation = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.NavigationProperties,
+            methods: BaseKit.Widget.NavigationMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetNavigation = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Navigation(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Space = {};
+
+    BaseKit.Widget.SpaceProperties = {
+        height: '50'
+    };
+
+    BaseKit.Widget.SpaceMethods = {
         construct: function (el, options) {
             this.options = options;
             this.load();
@@ -217,84 +449,37 @@
 
     // Base Widget Functionality - What ever is required
     // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Youtube = function () {
+    BaseKit.Widget.Space = function () {
         var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.YoutubeProperties,
-            methods: BaseKit.Widget.YoutubeMethods
+            properties: BaseKit.Widget.SpaceProperties,
+            methods: BaseKit.Widget.SpaceMethods
         });
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetYoutube = function (options) {
+    $.fn.basekitWidgetSpace = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Youtube(el, options));
+            $(el).data('bkob', new BaseKit.Widget.Space(el, options));
         });
     };
 }());(function () {
-    BaseKit.Widget.Linkedincompanyprofile = {};
+    BaseKit.Widget.Facebooklike = null;
 
-    BaseKit.Widget.LinkedincompanyprofileProperties = {
-        'linkedinID': '',
-        'source': 'companyName'
+    BaseKit.Widget.FacebooklikeProperties = {
+        showFaces: 'true',
+        action: 'like',
+        colorscheme: 'light',
+        layout: 'standard',
+        height: '80',
+        font: 'arial',
+        locale: 'en_US',
+        thisUrl: 'www.basekit.com' // RH: Needs to be this site domain
     };
 
-    BaseKit.Widget.LinkedincompanyprofileMethods = {
+    BaseKit.Widget.FacebooklikeMethods = {
         construct: function (el, options) {
             this.options = options;
 
-            // check to see if we have already l;oaded the linkinin API
-            if (Site.Page.Globals.linkinInAPILoaded === undefined || Site.Page.Globals.linkinInAPILoaded === null) {
-                Site.Page.Globals.linkinInAPILoaded = false;
-            }
-
-            this.load();
-        },
-
-        load: function () {
-            var that = this;
-
-            // This dynamically injects the linkedin script into the body
-            if (Site.Page.Globals.linkinInAPILoaded === false && $('#linkedin-script').length === 0) {
-                $.getScript("http://platform.linkedin.com/in.js", function () {
-                    $(this).attr('id', 'linkedin-script');
-                    Site.Page.Globals.linkinInAPILoaded = true;
-                });
-            } else {
-                // this is needed to force the LinkedIn code to reparse any new widgets
-                if (IN && typeof IN.parse === 'function') {
-                    IN.parse();
-                }
-            }
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Linkedincompanyprofile = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.LinkedincompanyprofileProperties,
-            methods: BaseKit.Widget.LinkedincompanyprofileMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetLinkedincompanyprofile = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Linkedincompanyprofile(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Tweet = null;
-
-    BaseKit.Widget.TweetProperties = {
-        linkText: App.t('widgets.tweet.default_link_text', 'Tweet'),
-        tweetText: '',
-        url: 'http://www.basekit.com'
-    };
-
-    BaseKit.Widget.TweetMethods = {
-        construct: function (el, options) {
-            this.options = options;
             this.load();
         },
 
@@ -303,32 +488,44 @@
             this.attachEvents();
         },
 
+        // attachEvents: attach the click event to the button
         attachEvents: function () {
-
+            var that = this;
         }
     };
 
     // Base Widget Functionality - What ever is required
     // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Tweet = function () {
+    BaseKit.Widget.Facebooklike = function () {
         var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.TweetProperties,
-            methods: BaseKit.Widget.TweetMethods
+            properties: BaseKit.Widget.FacebooklikeProperties,
+            methods: BaseKit.Widget.FacebooklikeMethods
         });
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetTweet = function (options) {
+    $.fn.basekitWidgetFacebooklike = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Tweet(el, options));
+            $(el).data('bkob', new BaseKit.Widget.Facebooklike(el, options));
         });
     };
 }());(function () {
-    BaseKit.Widget.CompanyaddressProperties = {};
+    BaseKit.Widget.Image = null;
 
-    BaseKit.Widget.CompanyaddressMethods = {
+    BaseKit.Widget.ImageProperties = {
+        description: '',
+        url: 'none',
+        target: 'none',
+        action: 'none',
+        scale: 'original',
+        imageWidth: 'auto',
+        alt: '',
+        title: '',
+        widgetType: 'widget.image'
+    };
+
+    BaseKit.Widget.ImageMethods = {
         construct: function (el, options) {
-            this.options = options;
             this.load();
         },
 
@@ -339,17 +536,56 @@
 
     // Base Widget Functionality - What ever is required
     // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Companyaddress = function () {
+    BaseKit.Widget.Image = function () {
         var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.CompanyaddressProperties,
-            methods: BaseKit.Widget.CompanyaddressMethods
+            properties: BaseKit.Widget.ImageProperties,
+            methods: BaseKit.Widget.ImageMethods
         });
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetCompanyaddress = function (options) {
+    $.fn.basekitWidgetImage = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Companyaddress(el, options));
+            $(el).data('bkob', new BaseKit.Widget.Image(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Responsivecolumns = null;
+
+    BaseKit.Widget.ResponsivecolumnsProperties = {
+        selectable: 0,
+        isEmpty: 1
+    };
+
+    BaseKit.Widget.ResponsivecolumnsMethods = {
+        construct: function (el, options) {
+            this.load();
+        },
+
+        load: function () {
+            this.hideEmptyColumns();
+        },
+
+        hideEmptyColumns: function () {
+            if (!$('body').hasClass('edit') && this.get('isEmpty') && this.get('isEmpty') === '1') {
+                $(this.el).find('.tip-message, #select-columns-num').hide();
+            }
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Responsivecolumns = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.ResponsivecolumnsProperties,
+            methods: BaseKit.Widget.ResponsivecolumnsMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetResponsivecolumns = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Responsivecolumns(el, options));
         });
     };
 }());(function () {
@@ -413,489 +649,6 @@
     $.fn.basekitWidgetButton = function (options) {
         this.each(function (index, el) {
             $(el).data('bkob', new BaseKit.Widget.Button(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Facebooklike = null;
-
-    BaseKit.Widget.FacebooklikeProperties = {
-        showFaces: 'true',
-        action: 'like',
-        colorscheme: 'light',
-        layout: 'standard',
-        height: '80',
-        font: 'arial',
-        locale: 'en_US',
-        thisUrl: 'www.basekit.com' // RH: Needs to be this site domain
-    };
-
-    BaseKit.Widget.FacebooklikeMethods = {
-        construct: function (el, options) {
-            this.options = options;
-
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-            this.attachEvents();
-        },
-
-        // attachEvents: attach the click event to the button
-        attachEvents: function () {
-            var that = this;
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Facebooklike = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.FacebooklikeProperties,
-            methods: BaseKit.Widget.FacebooklikeMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetFacebooklike = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Facebooklike(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Content = null;
-
-    BaseKit.Widget.ContentProperties = {
-        lines: 'all',
-        content: ''
-    };
-
-    BaseKit.Widget.ContentMethods = {
-        construct: function (el, options) {
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-            if (this.get('ref') !== null) {
-                this.showLines(this.get('lines'));
-            }
-        },
-
-        /**
-         *showLines: show content according to the lines set and attach expand event
-         *@param <string> lines - this is a content widget property, determining how many lines to show
-         */
-        showLines: function (lines) {
-            if (typeof lines !== "undefined") {
-                var contentEl = $(this.el).find('.bk-content-text'),
-                    contentElHeight = null,
-                    newheight = null;
-
-                contentEl.height('100%');
-                contentElHeight = contentEl.height();
-
-                switch (lines) {
-                case 'one':
-                    newheight = contentElHeight * 25 / 100;
-                    this.expandText(newheight, contentElHeight);
-                    break;
-                case 'two':
-                    newheight = contentElHeight * 50 / 100;
-                    this.expandText(newheight, contentElHeight);
-                    break;
-                case 'all':
-                    break;
-                }
-
-                contentEl.height(newheight);
-                contentEl.css('overflow', 'hidden');
-            }
-        },
-
-        /**
-         * expandText: expend the content
-         * @param <string> newheight - the line height to be displayed
-         * @param <string> fullheight - the whole height of the paragraph
-         */
-        expandText: function (newheight, fullheight) {
-            if (typeof newheight !== "undefined" && typeof fullheight !== "undefined") {
-                var thisEl = $(this.el),
-                    expandSpan = thisEl.find('span.expand'),
-                    contentTextEl = thisEl.find('div.bk-content-text'),
-                    h = null;
-
-                // MB: animate the text div to slide up and down
-                expandSpan.bind('click', function () {
-                    if (contentTextEl.height() === parseInt(fullheight, 10)) {
-                        thisEl.find('.more').show();
-                        thisEl.find('.less').hide();
-                        h = newheight;
-                    } else {
-                        thisEl.find('.more').hide();
-                        thisEl.find('.less').show();
-                        h = fullheight;
-                    }
-
-                    // HC: slide up and down smoothly
-                    contentTextEl.stop().animate({
-                        'height': h
-                    }, 500);
-                });
-            }
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Content = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.ContentProperties,
-            methods: BaseKit.Widget.ContentMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetContent = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Content(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Image = null;
-
-    BaseKit.Widget.ImageProperties = {
-        description: '',
-        url: 'none',
-        target: 'none',
-        action: 'none',
-        scale: 'original',
-        imageWidth: 'auto',
-        alt: '',
-        title: '',
-        widgetType: 'widget.image'
-    };
-
-    BaseKit.Widget.ImageMethods = {
-        construct: function (el, options) {
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Image = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.ImageProperties,
-            methods: BaseKit.Widget.ImageMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetImage = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Image(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Responsivecolumns = null;
-
-    BaseKit.Widget.ResponsivecolumnsProperties = {
-        selectable: 0,
-        isEmpty: 1
-    };
-
-    BaseKit.Widget.ResponsivecolumnsMethods = {
-        construct: function (el, options) {
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Responsivecolumns = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.ResponsivecolumnsProperties,
-            methods: BaseKit.Widget.ResponsivecolumnsMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetResponsivecolumns = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Responsivecolumns(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Twitter = null;
-
-    BaseKit.Widget.TwitterProperties = {
-        count: '3',
-        refreshTime: '1800000',
-        includeRts: '1',
-        searchKey: 'profile',
-        searchType: 'username',
-        defaultSearchKey: 'basekit' // HC: for the empty input
-    };
-
-    BaseKit.Widget.TwitterMethods = {
-        construct: function () {
-            this.refreshInterval = '';
-            this.load();
-        },
-
-        load: function () {
-            this.refreshTimeline();
-            this.getUpdateTwitterFeed();
-        },
-
-        /**
-         * refreshTimeline: set the interval for refreshing the timeline twitter feed
-         */
-        refreshTimeline: function () {
-            var that = this,
-                // Default to every 30 mins
-                refreshTime = (this.get('refreshTime') > 0 ? parseInt(this.get('refreshTime'), 10) : 1800000);
-
-            // clean the interval
-            if (this.refreshInterval !== '') {
-                window.clearInterval(this.refreshInterval);
-                this.refreshInterval = '';
-            }
-
-            this.refreshInterval = window.setInterval(function () {
-                try {
-                    //api get new data
-                    that.getUpdateTwitterFeed();
-                } catch (err) {
-                    clearInterval(that.refreshInterval);
-
-                    //throw error
-                    console.log(err);
-                }
-            }, refreshTime);
-        },
-
-        /**
-         * getUpdateTwitterFeed: an api call for getting the tweets and format the data to rerender the widget
-         */
-        getUpdateTwitterFeed: function () {
-            var that = this,
-                url = '/site/' + App.session.get('siteRef') + '/fetch-feed',
-                createdDate = null,
-                tweetData = [],
-                data = {
-                    'count': this.get('count') > 0 ? this.get('count') : 3,
-                    'includeRts': this.get('includeRts') !== null ? this.get('includeRts') : true,
-                    'searchKey': this.get('searchKey') === 'profile' ? Profile.get('twitter') : this.get('searchKey'),
-                    'searchType': this.get('searchKey') === 'profile' ? 'username' : this.get('searchType')
-                };
-
-            // HC: when the profile twitter or searchKey is empty we use the defaultSearchKey
-            // for retriving the tweets
-            if ((this.get('searchKey') === 'profile' && (Profile.get('twitter') === null || Profile.get('twitter').length === 0)) || (this.get('searchKey') === null || this.get('searchKey').length === 0)) {
-                data.searchKey = this.get('defaultSearchKey');
-            }
-
-            // get twitter feed
-            $.ajax({
-                url: url,
-                type: "GET",
-                data: data
-            }).done(function (response, status) {
-                if (status === 'success') {
-                    // format data
-                    $.each(response, function () {
-
-                        // format created data
-                        createdDate = this.created_at;
-                        createdDate = createdDate.split(" ");
-
-                        tweetData.push({
-                            'screenName': this.user.screen_name,
-                            'createdAt': createdDate[2] + '/' + createdDate[1] + '/' + createdDate[5],
-                            'fullName': this.user.name,
-                            'imageUrl': this.user.profile_image_url,
-                            'source': this.source,
-                            'text': this.text
-                        });
-                    });
-
-                    that.set('tweets', tweetData, true);
-
-                    // rerender widget
-                    that.rerender();
-                }
-            }).fail(function () {
-                that.set('tweets', [], true);
-
-                that.el.find('.twitter').html('<p>No tweets found!</p>');
-
-            });
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Twitter = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.TwitterProperties,
-            methods: BaseKit.Widget.TwitterMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetTwitter = function (options) {
-        this.each(function () {
-            $(this).data('bkob', new BaseKit.Widget.Twitter(this, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Contactform = null;
-
-    BaseKit.Widget.ContactformProperties = {
-        email: 'profile',
-        text: App.t('widgets.contactform.default_button_text', 'Send'),
-        formTitle: App.t('widgets.contactform.default_title', 'Contact Form')
-    };
-
-    BaseKit.Widget.ContactformMethods = {
-        construct: function (el, options) {
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-            this.attachEvents();
-        },
-
-        /**
-         * attachEvents: attach the send email event
-         */
-        attachEvents: function () {
-            var that = this,
-                thisEl = $(this.el),
-                url = '/site/' + App.session.get('siteRef') + '/submit-form',
-                data = {};
-
-            // override the submit event on the form
-            thisEl.find('form').on('submit', function (e) {
-                e.preventDefault();
-
-                // set the form data
-                data = {
-                    'emailFrom': thisEl.find('.email').val(),
-                    'message': thisEl.find('.message').val(),
-                    'useProfile': that.get('email') === "profile" ? 1 : 0,
-                    'widgetRef': that.get('ref'),
-                    'formTitle': that.get('formTitle')
-                };
-
-                // submit the form using the api
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    data: data
-
-                }).done(function (response, status, jqXHR) {
-                    if (status === 'success' && that.get('goalUrl')) {
-                        //redirect the window location
-                        window.location = that.get('goalUrl');
-                    }
-                }).fail(function (response) {
-                    // TODO: we need to handle published site errors @see Megan
-                });
-            });
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Contactform = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.ContactformProperties,
-            methods: BaseKit.Widget.ContactformMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetContactform = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Contactform(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Extendednavigation = null;
-
-    BaseKit.Widget.ExtendednavigationProperties = {
-        align: 'center',
-        icons: []
-    };
-
-    BaseKit.Widget.ExtendednavigationMethods = {
-        construct: function (el, options) {
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Extendednavigation = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.ExtendednavigationProperties,
-            methods: BaseKit.Widget.ExtendednavigationMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetExtendednavigation = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Extendednavigation(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Navigation = null;
-
-    BaseKit.Widget.NavigationProperties = {
-        align: 'center',
-        icons: []
-    };
-
-    BaseKit.Widget.NavigationMethods = {
-        construct: function (el, options) {
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Navigation = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.NavigationProperties,
-            methods: BaseKit.Widget.NavigationMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetNavigation = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Navigation(el, options));
         });
     };
 }());function mapReady() {
@@ -1137,6 +890,342 @@
             $(el).data('bkob', new BaseKit.Widget.Map(el, options));
         });
     };
+}());(function () {
+    BaseKit.Widget.CompanynameProperties = {};
+
+    BaseKit.Widget.CompanynameMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Companyname = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.CompanynameProperties,
+            methods: BaseKit.Widget.CompanynameMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetCompanyname = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Companyname(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Content = null;
+
+    BaseKit.Widget.ContentProperties = {
+        lines: 'all',
+        content: ''
+    };
+
+    BaseKit.Widget.ContentMethods = {
+        construct: function (el, options) {
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+            if (this.get('ref') !== null) {
+                this.showLines(this.get('lines'));
+            }
+        },
+
+        /**
+         *showLines: show content according to the lines set and attach expand event
+         *@param <string> lines - this is a content widget property, determining how many lines to show
+         */
+        showLines: function (lines) {
+            if (typeof lines !== "undefined") {
+                var contentEl = $(this.el).find('.bk-content-text'),
+                    contentElHeight = null,
+                    newheight = null;
+
+                contentEl.height('100%');
+                contentElHeight = contentEl.height();
+
+                switch (lines) {
+                case 'one':
+                    newheight = contentElHeight * 25 / 100;
+                    this.expandText(newheight, contentElHeight);
+                    break;
+                case 'two':
+                    newheight = contentElHeight * 50 / 100;
+                    this.expandText(newheight, contentElHeight);
+                    break;
+                case 'all':
+                    break;
+                }
+
+                contentEl.height(newheight);
+                contentEl.css('overflow', 'hidden');
+            }
+        },
+
+        /**
+         * expandText: expend the content
+         * @param <string> newheight - the line height to be displayed
+         * @param <string> fullheight - the whole height of the paragraph
+         */
+        expandText: function (newheight, fullheight) {
+            if (typeof newheight !== "undefined" && typeof fullheight !== "undefined") {
+                var thisEl = $(this.el),
+                    expandSpan = thisEl.find('span.expand'),
+                    contentTextEl = thisEl.find('div.bk-content-text'),
+                    h = null;
+
+                // MB: animate the text div to slide up and down
+                expandSpan.bind('click', function () {
+                    if (contentTextEl.height() === parseInt(fullheight, 10)) {
+                        thisEl.find('.more').show();
+                        thisEl.find('.less').hide();
+                        h = newheight;
+                    } else {
+                        thisEl.find('.more').hide();
+                        thisEl.find('.less').show();
+                        h = fullheight;
+                    }
+
+                    // HC: slide up and down smoothly
+                    contentTextEl.stop().animate({
+                        'height': h
+                    }, 500);
+                });
+            }
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Content = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.ContentProperties,
+            methods: BaseKit.Widget.ContentMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetContent = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Content(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Linkedinprofile = {};
+
+    BaseKit.Widget.LinkedinprofileProperties = {};
+
+    BaseKit.Widget.LinkedinprofileMethods = {
+        construct: function (el, options) {
+            this.options = options;
+
+            // check to see if we have already l;oaded the linkinin API
+            if (Site.Page.Globals.linkinInAPILoaded === undefined || Site.Page.Globals.linkinInAPILoaded === null) {
+                Site.Page.Globals.linkinInAPILoaded = false;
+            }
+
+            this.load();
+        },
+
+        load: function () {
+            var that = this;
+
+            // This dynamically injects the linkedin script into the body
+            if (Site.Page.Globals.linkinInAPILoaded === false && $('#linkinedin-widget-script').length === 0) {
+                $.getScript("http://platform.linkedin.com/in.js?suppressWarnings=true", function () {
+                    $(this).attr('id', 'linkinedin-widget-script');
+                    Site.Page.Globals.linkinInAPILoaded = true;
+                });
+            } else {
+                // this is needed to force the LinkedIn code to reparse any new profile url's
+                if (IN && typeof IN.parse === 'function') {
+                    IN.parse();
+                }
+            }
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Linkedinprofile = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.LinkedinprofileProperties,
+            methods: BaseKit.Widget.LinkedinprofileMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetLinkedinprofile = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Linkedinprofile(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Redirecttodesktop = null;
+
+    BaseKit.Widget.RedirecttodesktopProperties = {
+        text: App.t('widgets.redirecttodesktop.default_text', 'Switch to desktop'),
+        url: ''
+    };
+
+    BaseKit.Widget.RedirecttodesktopMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Redirecttodesktop = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.RedirecttodesktopProperties,
+            methods: BaseKit.Widget.RedirecttodesktopMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetRedirecttodesktop = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Redirecttodesktop(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Twitter = null;
+
+    BaseKit.Widget.TwitterProperties = {
+        count: '3',
+        refreshTime: '1800000',
+        includeRts: '1',
+        searchKey: 'profile',
+        searchType: 'username',
+        defaultSearchKey: 'basekit' // HC: for the empty input
+    };
+
+    BaseKit.Widget.TwitterMethods = {
+        construct: function () {
+            this.refreshInterval = '';
+            this.load();
+        },
+
+        load: function () {
+            this.refreshTimeline();
+            this.getUpdateTwitterFeed();
+        },
+
+        /**
+         * refreshTimeline: set the interval for refreshing the timeline twitter feed
+         */
+        refreshTimeline: function () {
+            var that = this,
+                // Default to every 30 mins
+                refreshTime = (this.get('refreshTime') > 0 ? parseInt(this.get('refreshTime'), 10) : 1800000);
+
+            // clean the interval
+            if (this.refreshInterval !== '') {
+                window.clearInterval(this.refreshInterval);
+                this.refreshInterval = '';
+            }
+
+            this.refreshInterval = window.setInterval(function () {
+                try {
+                    //api get new data
+                    that.getUpdateTwitterFeed();
+                } catch (err) {
+                    clearInterval(that.refreshInterval);
+
+                    //throw error
+                    console.log(err);
+                }
+            }, refreshTime);
+        },
+
+        /**
+         * getUpdateTwitterFeed: an api call for getting the tweets and format the data to rerender the widget
+         */
+        getUpdateTwitterFeed: function () {
+            var that = this,
+                url = '/site/' + App.session.get('siteRef') + '/fetch-feed',
+                createdDate = null,
+                tweetData = [],
+                data = {
+                    'count': this.get('count') > 0 ? this.get('count') : 3,
+                    'includeRts': this.get('includeRts') !== null ? this.get('includeRts') : true,
+                    'searchKey': this.get('searchKey') === 'profile' ? Profile.get('twitter') : this.get('searchKey'),
+                    'searchType': this.get('searchKey') === 'profile' ? 'username' : this.get('searchType')
+                };
+
+            // HC: when the profile twitter or searchKey is empty we use the defaultSearchKey
+            // for retriving the tweets
+            if ((this.get('searchKey') === 'profile' && (Profile.get('twitter') === null || Profile.get('twitter').length === 0)) || (this.get('searchKey') === null || this.get('searchKey').length === 0)) {
+                data.searchKey = this.get('defaultSearchKey');
+            }
+
+            // get twitter feed
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: data
+            }).done(function (response, status) {
+                if (status === 'success') {
+                    // format data
+                    $.each(response, function () {
+
+                        // format created data
+                        createdDate = this.created_at;
+                        createdDate = createdDate.split(" ");
+
+                        tweetData.push({
+                            'screenName': this.user.screen_name,
+                            'createdAt': createdDate[2] + '/' + createdDate[1] + '/' + createdDate[5],
+                            'fullName': this.user.name,
+                            'imageUrl': this.user.profile_image_url,
+                            'source': this.source,
+                            'text': this.text
+                        });
+                    });
+
+                    that.set('tweets', tweetData, true);
+
+                    // rerender widget
+                    that.rerender();
+                }
+            }).fail(function () {
+                that.set('tweets', [], true);
+
+                that.el.find('.twitter').html('<p>No tweets found!</p>');
+
+            });
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Twitter = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.TwitterProperties,
+            methods: BaseKit.Widget.TwitterMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetTwitter = function (options) {
+        this.each(function () {
+            $(this).data('bkob', new BaseKit.Widget.Twitter(this, options));
+        });
+    };
 }());(function ()
 {
 	BaseKit.Widget.EmbedProperties = {
@@ -1190,16 +1279,89 @@
 		});
 	};
 }());(function () {
-    BaseKit.Widget.Clicktocall = null;
+    BaseKit.Widget.Contactform = null;
 
-    BaseKit.Widget.ClicktocallProperties = {
-        phone: 'profile',
-        phoneText: App.t('widgets.clicktocall.default_text', '01234 567 890')
+    BaseKit.Widget.ContactformProperties = {
+        email: 'profile',
+        text: App.t('widgets.contactform.default_button_text', 'Send'),
+        formTitle: App.t('widgets.contactform.default_title', 'Contact Form')
     };
 
-    BaseKit.Widget.ClicktocallMethods = {
+    BaseKit.Widget.ContactformMethods = {
         construct: function (el, options) {
-            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+            this.attachEvents();
+        },
+
+        /**
+         * attachEvents: attach the send email event
+         */
+        attachEvents: function () {
+            var that = this,
+                thisEl = $(this.el),
+                url = '/site/' + App.session.get('siteRef') + '/submit-form',
+                data = {};
+
+            // override the submit event on the form
+            thisEl.find('form').on('submit', function (e) {
+                e.preventDefault();
+
+                // set the form data
+                data = {
+                    'emailFrom': thisEl.find('.email').val(),
+                    'message': thisEl.find('.message').val(),
+                    'useProfile': that.get('email') === "profile" ? 1 : 0,
+                    'widgetRef': that.get('ref'),
+                    'formTitle': that.get('formTitle')
+                };
+
+                // submit the form using the api
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: data
+
+                }).done(function (response, status, jqXHR) {
+                    if (status === 'success' && that.get('goalUrl')) {
+                        //redirect the window location
+                        window.location = that.get('goalUrl');
+                    }
+                }).fail(function (response) {
+                    // TODO: we need to handle published site errors @see Megan
+                });
+            });
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Contactform = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.ContactformProperties,
+            methods: BaseKit.Widget.ContactformMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetContactform = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Contactform(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Extendednavigation = null;
+
+    BaseKit.Widget.ExtendednavigationProperties = {
+        align: 'center',
+        icons: []
+    };
+
+    BaseKit.Widget.ExtendednavigationMethods = {
+        construct: function (el, options) {
             this.load();
         },
 
@@ -1210,54 +1372,17 @@
 
     // Base Widget Functionality - What ever is required
     // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Clicktocall = function () {
+    BaseKit.Widget.Extendednavigation = function () {
         var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.ClicktocallProperties,
-            methods: BaseKit.Widget.ClicktocallMethods
+            properties: BaseKit.Widget.ExtendednavigationProperties,
+            methods: BaseKit.Widget.ExtendednavigationMethods
         });
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetClicktocall = function (options) {
+    $.fn.basekitWidgetExtendednavigation = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Clicktocall(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Socialicons = {};
-
-    BaseKit.Widget.SocialiconsProperties = {
-        'googleplus': 'profile',
-        'linkedin': 'profile',
-        'facebook': 'profile',
-        'twitter': 'profile',
-        'youtube': 'profile',
-        'rss': 'profile'
-    };
-
-    BaseKit.Widget.SocialiconsMethods = {
-        construct: function (el, options) {
-            this.options = options;
-            this.load();
-        },
-        load: function () {
-            // do something if the widget needs to be loaded
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Socialicons = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.SocialiconsProperties,
-            methods: BaseKit.Widget.SocialiconsMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetSocialicons = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Socialicons(el, options));
+            $(el).data('bkob', new BaseKit.Widget.Extendednavigation(el, options));
         });
     };
 }());(function () {
@@ -1265,7 +1390,7 @@
 
     BaseKit.Widget.ResponsiveslideshowProperties = {
         aspect: 75,
-        crop: false,
+        crop: 0,
         scale: 'zoom',
         duration: 3,
         transSpeed: 1000,
@@ -1273,7 +1398,9 @@
         showButtons: true,
         showBullets: true,
         allowPause: false,
-        allowLoop: true
+        allowLoop: true,
+        showTitle: 1,
+        showDescription: 1
     };
 
     BaseKit.Widget.ResponsiveslideshowMethods = {
@@ -1284,19 +1411,11 @@
         },
 
         load: function () {
-            var firstImage = null,
-                editor = $('body').hasClass('edit'),
+            var editor = $('body').hasClass('edit'),
                 albumArray = Server.plugins.assets.albums[this.get('albumRef')];
 
-            if ((albumArray.length > 0) || this.properties.changed.album) {
+            if ((albumArray && (albumArray.length > 0)) || this.properties.changed.album) {
                 this.attachEvents();
-            }
-
-            if (this.get('crop') === '1') {
-                firstImage = $(this.el).find('.current .slideshow-image');
-                if (firstImage) {
-                    this.handleImageCropping(firstImage);
-                }
             }
 
             if (!editor) {
@@ -1310,16 +1429,7 @@
                 thisEl = $(this.el),
                 imageArray = Server.plugins.assets.albums[this.get('albumRef')];
 
-            if (this.get('crop') === '1') {
-                $(window).resize(function () {
-                    var currentImg = null;
-                    setTimeout(function () {
-                        currentImg = thisEl.find('.current .slideshow-image');
-                        that.handleImageCropping(currentImg);
-                    }, 350);
-                });
-            }
-            if (imageArray.length === 1) {
+            if (imageArray && imageArray.length === 1) {
                 thisEl.find('.btn-play').hide();
                 thisEl.find('.btn-prev').hide();
                 thisEl.find('.btn-next').hide();
@@ -1346,95 +1456,6 @@
 
                 that.handleSlideNavigation(ref);
             });
-        },
-
-        handleImageCropping: function (image) {
-            var that = this;
-
-            image = image || $(this.el).find('.current .slideshow-image');
-
-            if (this.get('crop') !== '1') {
-                return;
-            }
-
-            image = $(image)[0];
-
-            if (image.naturalHeight === 0 && image.naturalWidth === 0) {
-                $(image).on('load', function () {
-                    that.chooseCropOrientation(image);
-                });
-            } else {
-                this.chooseCropOrientation(image);
-            }
-        },
-
-        chooseCropOrientation: function (image) {
-            if (image.naturalHeight > image.naturalWidth) {
-                this.cropPortraitImage(image);
-                return;
-            }
-
-            this.cropLandscapeImage(image);
-        },
-
-        cropPortraitImage: function (image) {
-            var widgetWidth = $(this.el).find('.slideshow-image-list').width(),
-                widgetHeight = $(this.el).find('.slideshow-image-list').height(),
-                pcOfOrigSize,
-                newHeightInt,
-                newHeightPc,
-                newWidth;
-
-            if (image.naturalWidth < widgetWidth) {
-                return;
-            }
-
-            // Get new img width as % of original size, calculate height using same %.
-            newWidth = $(image).width();
-            pcOfOrigSize = newWidth / image.naturalWidth;
-            newHeightInt = image.naturalHeight * pcOfOrigSize;
-            newHeightPc = (newHeightInt / widgetHeight) * 100;
-
-            // If height will be less than 100% of container, crop both height and width.
-            if (newHeightPc < 100 && image.naturalHeight > widgetHeight) {
-                $(image).css({
-                    'height': '100%',
-                    'width': 'auto'
-                });
-                return;
-            }
-
-            $(image).css('height', newHeightPc + '%');
-        },
-
-        cropLandscapeImage: function (image) {
-            var widgetWidth = $(this.el).find('.slideshow-image-list').width(),
-                widgetHeight = $(this.el).find('.slideshow-image-list').height(),
-                newHeight,
-                pcOfOrigSize,
-                newWidthInt,
-                newWidthPc;
-
-            if (image.naturalHeight < widgetHeight) {
-                return;
-            }
-
-            // Get new img height as % of original size, calculate width using same %.
-            newHeight = $(image).height();
-            pcOfOrigSize = newHeight / image.naturalHeight;
-            newWidthInt = image.naturalWidth * pcOfOrigSize;
-            newWidthPc = (newWidthInt / widgetWidth) * 100;
-
-            // If width will be less than 100% of container, crop both height and width.
-            if (newWidthPc < 100 && image.naturalWidth > widgetWidth) {
-                $(image).css({
-                    'width': '100%',
-                    'height': 'auto'
-                });
-                return;
-            }
-
-            $(image).css('width', newWidthPc + '%');
         },
 
         handleSlideNavigation: function (ref) {
@@ -1480,7 +1501,6 @@
             newSlide.addClass('current');
             thisEl.find('.slideshow-image-item').removeAttr('style');
             this.setSlideInfo(ref);
-            this.handleImageCropping(newImage);
         },
 
         setSlideInfo: function (ref) {
@@ -1591,7 +1611,6 @@
                 t = setTimeout(function () {
                     clearTimeout(t);
                     elIn.fadeIn(timing, callbackIn);
-                    that.handleImageCropping(elInImg);
                 }, timing);
 
                 t = setTimeout(function () {
@@ -1605,7 +1624,6 @@
                 callbackOut();
                 elOut.fadeOut(timing);
                 elIn.fadeIn(timing, callbackIn);
-                this.handleImageCropping(elInImg);
                 t = setTimeout(function () {
                     clearTimeout(t);
                     elOut.removeClass('current');
@@ -1637,126 +1655,6 @@
     $.fn.basekitWidgetResponsiveslideshow = function (options) {
         this.each(function (index, el) {
             $(el).data('bkob', new BaseKit.Widget.Responsiveslideshow(el, options));
-        });
-    };
-}());
-(function () {
-    BaseKit.Widget.Linkedinprofile = {};
-
-    BaseKit.Widget.LinkedinprofileProperties = {};
-
-    BaseKit.Widget.LinkedinprofileMethods = {
-        construct: function (el, options) {
-            this.options = options;
-
-            // check to see if we have already l;oaded the linkinin API
-            if (Site.Page.Globals.linkinInAPILoaded === undefined || Site.Page.Globals.linkinInAPILoaded === null) {
-                Site.Page.Globals.linkinInAPILoaded = false;
-            }
-
-            this.load();
-        },
-
-        load: function () {
-            var that = this;
-
-            // This dynamically injects the linkedin script into the body
-            if (Site.Page.Globals.linkinInAPILoaded === false && $('#linkinedin-widget-script').length === 0) {
-                $.getScript("http://platform.linkedin.com/in.js?suppressWarnings=true", function () {
-                    $(this).attr('id', 'linkinedin-widget-script');
-                    Site.Page.Globals.linkinInAPILoaded = true;
-                });
-            } else {
-                // this is needed to force the LinkedIn code to reparse any new profile url's
-                if (IN && typeof IN.parse === 'function') {
-                    IN.parse();
-                }
-            }
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Linkedinprofile = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.LinkedinprofileProperties,
-            methods: BaseKit.Widget.LinkedinprofileMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetLinkedinprofile = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Linkedinprofile(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Gallery = null;
-
-    BaseKit.Widget.GalleryProperties = {
-        widgetType: 'widget.gallery',
-        imageScale: 'original',
-        showTitle: 1,
-        showDescription: 1
-    };
-
-    BaseKit.Widget.GalleryMethods = {
-        construct: function (el, options) {
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Gallery = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.GalleryProperties,
-            methods: BaseKit.Widget.GalleryMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetGallery = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Gallery(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.CompanyheaderProperties = {
-		showLogo: 1,
-		showText: 1
-	};
-
-    BaseKit.Widget.CompanyheaderMethods = {
-        construct: function (el, options) {
-            this.options = options;
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Companyheader = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.CompanyheaderProperties,
-            methods: BaseKit.Widget.CompanyheaderMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetCompanyheader = function (options) {
-        this.each(function (index, el) {
-            var obj = null;
-            obj = new BaseKit.Widget.Companyheader(el, options);
-            $(el).data('bkob', obj);
         });
     };
 }());

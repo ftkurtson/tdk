@@ -1,0 +1,110 @@
+<!doctype html>
+<!--[if lt IE 7]>
+	<html class="no-js ie6 oldie" lang="en">
+<![endif]-->
+<!--[if IE 7]>
+	<html class="no-js ie7 oldie" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+	<html class="no-js ie8 oldie" lang="en">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+	<html class="no-js" lang="{{ page.seoLang }}">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>{{ page.title }}</title>
+	<meta name="keywords" content="{{ page.keywords }}" />
+	<meta name="description" content="{{ page.description }}" />
+	<meta http-equiv="content-language" content="{{ page.seoLang }}" />
+
+	{% if site.favicon %}
+		<link rel="icon" href="{{ site.favicon['favicon'] }}" type="image/x-icon" />
+		<link rel="SHORTCUT ICON" href="{{ site.favicon['thumbnail'] }}?v={{ "now"|date("U") }}" type="image/x-icon" />
+	{% endif %}
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<link rel="stylesheet" href="//{{assetSubdomain}}.{{ brand.domain }}/templates/common/responsive-columns.css" />
+
+	{% include basekit.headScript %}
+</head>
+<body class="{{ page.backgroundClass }}">
+
+    <header>
+        <div class="wrapper clearfix">
+        {{widget('companyheader', 'companyheader', {"defaultlogo": asset('images/logo.png')})|raw}}
+        {{widget('extendednavigation', 'navigationheader', {})|raw}}
+        </div>
+    </header>
+
+    <section>
+        {{widget('feature', 'featurehome', {"header": "Point of interest marketing.", "strapline":"Ut urna ipsum pulvinar vitae sagittis in placerat ac nulla.", "buttonText":"LORE IPSUM", "bgImg": asset('images/feature-bg.jpg')})|raw}}
+    </section>
+
+    <section>
+        <div class="wrapper clearfix">
+            <div class="widget responsivecolumns columns-three-33-34-33">
+                <div class="column columns-three-left">
+                    {{widget('content', 'introcolumn1', {"content":"<h3>Lorem &amp; Ipsodium</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor nunc vellain livamus.</p><p><a>Lorem ipsum.</a></p>"})|raw}}
+                </div>
+                <div class="column columns-three-middle">
+                    {{widget('content', 'introcolumn2', {"content":"<h3>Lorem &amp; Ipsodium</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor nunc vellain livamus.</p><p><a>Lorem ipsum.</a></p>"})|raw}}
+                </div>
+                <div class="column columns-three-right">
+                    {{widget('content', 'introcolumn3', {"content":"<h3>Lorem &amp; Ipsodium</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor nunc vellain livamus.</p><p><a>Lorem ipsum.</a></p>"})|raw}}
+                </div>
+            </div>
+
+            <div class="main">
+                {{zone('main')|raw}}
+            </div>
+
+        </div>
+    </section>
+
+    <section class="bottom-bar">
+        <div class="wrapper clearfix">
+            <div class="widget responsivecolumns columns-two-50-50">
+                <div class="column columns-two-left">
+                    {{widget('content', 'bottomcontent1', {"content":"<h2>Aliquam sodales urna lipsum.</h2><p>Ut urna ipsum pulvinar vitae sagittis in placerat ac nulla.</p>"})|raw}}
+                </div>
+                <div class="column columns-two-right">
+                    {{widget('content', 'bottomcontent2', {"content":"<h2>Consectetur adipiscing elit.</h2><p>Aliquam sodales urna non odio egestas tempor alam ipsum so.</p>"})|raw}}
+                </div>
+            </div>
+        </div>
+    </section>  
+
+    <footer>
+        <div class="wrapper clearfix">
+            <div class="widget responsivecolumns columns-three-33-34-33">
+            <div class="column columns-three-left">
+                    {{widget('content', 'footercolumn1', {"content":"<h3>Lorem &amp; Ipsodium</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor nunc vellain livamus.</p><p><a>Lorem ipsum.</a></p>"})|raw}}
+            </div>
+            <div class="column columns-three-middle">
+                    {{widget('content', 'footercolumn2', {"content":"<h3>Lorem &amp; Ipsodium</h3><p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor nunc vellain livamus.</p><p><a>Lorem ipsum.</a></p>"})|raw}}
+            </div>
+            <div class="column columns-three-right">
+                    {{widget('content', 'footercolumn3', {"content":"<h3>Lorem &amp; Ipsodium</h3>"})|raw}}
+                    {{widget('companyaddress', 'companyaddressfooter', {})|raw}}    
+            </div>
+            </div>
+        </div>
+        <section class="footer2">
+            <div class="wrapper clearfix">
+                <div class="widget responsivecolumns columns-two-50-50">
+                    <div class="column columns-two-left">
+                        {{widget('content', 'footer2column1', {"content":"<p>Uvitae sagittis © 2013. Placerat ac Nulla.</p>"})|raw}}
+                    </div>
+                    <div class="column columns-two-right">
+                        {{widget('content', 'footer2column2', {"content":'<p style="text-align: right;">Lorem ipsum dolor sit amet consectetur.</p>'})|raw}}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+</body>
+</html>
+

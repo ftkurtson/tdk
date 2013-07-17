@@ -18,24 +18,23 @@
     <link rel="SHORTCUT ICON" href="favicon.ico" type="image/x-icon" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
 <body>
 
     <header>
-        <img src="bk-logo.png" width="160" />
+        <img src="images/bk-logo.png" width="160" />
         <h2>template viewer</h2>
         <div id="controls">
             Template:&nbsp;
             <select id="template"></select>
-            <select id="colour-swatch"></select>
             <select id="layout">
                 <option value="default.twig" selected>Default</option>
                 <option value="home.twig">Home</option>
                 <option value="about.twig">About</option>
                 <option value="contact.twig">Contact</option>
             </select>
-            <button id="render">Render</button>
+            <select id="colour-swatch"></select>
             <br/>
             Widgets:&nbsp;
             <select id="widget1">
@@ -61,17 +60,24 @@
                 <option value="youtube">YouTube</option>
             </select>
             <br/>
+            <button id="render">Render</button>
         </div>
     </header>
     <section id="iframe">
-        <iframe src="iframe.htm" border="0"></iframe>
+        <iframe name="iframe" border="0" src=""></iframe>
+        <form id="post" method="post" action="render.php" target="iframe">
+            <input id="html" type="hidden" name="html" value="" />
+            <input id="css" type="hidden" name="css" value="" />
+            <input id="js" type="hidden" name="js" value="" />
+        </form>
     </section>
 
-    <script language="javascript" type="text/javascript" src="core.js"></script>
-    <script language="javascript" type="text/javascript" src="jquery.js"></script>
-    <script language="javascript" type="text/javascript" src="values.js"></script>
-    <script language="javascript" type="text/javascript" src="main.js"></script>
-    <script language="javascript" type="text/javascript" src="twig.js"></script>
+    <script language="javascript" type="text/javascript" src="js/core.js"></script>
+    <script language="javascript" type="text/javascript" src="js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="js/values.js"></script>
+    <script language="javascript" type="text/javascript" src="js/templates.js"></script>
+    <script language="javascript" type="text/javascript" src="js/main.js"></script>
+    <script language="javascript" type="text/javascript" src="js/twig.js"></script>
     <script type="text/javascript">
         less = {
             env: "development",
@@ -88,11 +94,11 @@
             }
         };
     </script>
-    <script language="javascript" type="text/javascript" src="less.js"></script>
+    <script language="javascript" type="text/javascript" src="js/less.js"></script>
 
     <!-- these only included here to get the default values -->
-    <script language="javascript" type="text/javascript" src="common/basekit.js"></script>
-    <script language="javascript" type="text/javascript" src="common/component.js"></script>
+    <script language="javascript" type="text/javascript" src="templates/common/basekit.js"></script>
+    <script language="javascript" type="text/javascript" src="templates/common/component.js"></script>
     <script language="javascript" type="text/javascript" src="widgets/widgetcore.js"></script>
     <script language="javascript" type="text/javascript" src="widgets/widgets.js"></script>
 

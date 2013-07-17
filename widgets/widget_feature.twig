@@ -1,28 +1,36 @@
 <div class="feature-bgimg" {% if data.defaultBgImg|length > 0 or  data.bgImg|length > 0 %} style="background-image: url('{% if data.bgImg and data.bgImg != '' %}{{data.bgImg }}{% else %}{{data.defaultBgImg}}{% endif %}'); background-position: center {{data.positionTopPercentage}}%" {% endif %}>
 	<div class="content">
 		<span class="spare wrapper">
-			<h2><span>
-				{{data.header|raw}}
-				{% if data.showBtn == 1 and ("btn-top" in data.preset) %}
-				<button class="btn {{data.preset}} {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" {% if data.showBtn == false %}style='display: none'{% endif %} >{% if data.icon|length > 0 %}<i class="{{data.icon}} {% if data.color %}icon-{{data.color}}{% endif %}"></i> {% endif %}<span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.buttonText}}</span></button>
-				{% endif %}
-			</span></h2>
-				{% if data.showBtn == 1 and ("btn-middle" in data.preset) %}
-				<button class="btn {{data.preset}} {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" {% if data.showBtn == false %}style='display: none'{% endif %} >{% if data.icon|length > 0 %}<i class="{{data.icon}} {% if data.color %}icon-{{data.color}}{% endif %}"></i> {% endif %}<span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.buttonText}}</span></button>
-				{% endif %}
-			<h3><span>
-				{{data.strapline|raw}}
-				{% if data.showBtn == 1 and ("btn-bottom" in data.preset)%}
-				<button class="btn {{data.preset}} {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" {% if data.showBtn == false %}style='display: none'{% endif %} >{% if data.icon|length > 0 %}<i class="{{data.icon}} {% if data.color %}icon-{{data.color}}{% endif %}"></i> {% endif %}<span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.buttonText}}</span></button>
-				{% endif %}
-			</span></h3>
 
-			<span class="feature-btn">
-				{% if data.showBtn == 1 and (data.preset != "btn-bottom-right" and data.preset != "btn-top-right" and data.preset != "btn-middle" and data.preset != "btn-top-right-align-center" and data.preset != "btn-middle-align-center" and data.preset != "btn-bottom-right-align-center")
-					%}
-				<button class="btn {{data.preset}} {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" {% if data.showBtn == false %}style='display: none'{% endif %} >{% if data.icon|length > 0 %}<i class="{{data.icon}} {% if data.color %}icon-{{data.color}}{% endif %}"></i> {% endif %}<span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.buttonText}}</span></button>
+			{% if data.header|length > 0 or profile.companydescription|length > 0 %}
+				{% if data.header and data.header !='profile' and data.header !=''%}
+				<h2>
+					<span>{{data.header|raw}}</span>
+				</h2>
+				{% elseif profile.companydescription and profile.companydescription != '' %}
+				<h2>
+					<span>{{profile.companydescription|raw}}</span>
+				</h2>
 				{% endif %}
+			{% endif %}
+
+			{% if data.strapline|length > 0 or profile.strapline|length > 0 %}
+				{% if data.strapline and data.strapline !='profile' and data.strapline !=''%}
+				<h3>
+					<span>{{data.strapline|raw}}</span>
+				</h3>
+				{% elseif profile.strapline and profile.strapline != '' %}
+				<h3>
+					<span>{{profile.strapline|raw}}</span>
+				</h3>
+				{% endif %}
+			{% endif %}
+
+			{% if data.buttonText|length > 0 %}
+			<span class="feature-btn">
+				<button class="btn {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" {% if data.showBtn == false %}style='display: none'{% endif %} >{% if data.icon|length > 0 %}<i class="{{data.icon}} {% if data.color %}icon-{{data.color}}{% endif %}"></i> {% endif %}<span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.buttonText}}</span></button>
 			</span>
+			{% endif %}
 		</span>
 
 	</div>

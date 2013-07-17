@@ -1,7 +1,7 @@
 $(function() {
     var twigs = {};
 
-    function loadTemplate(id, file, callback) {
+    function loadTemplate(id, file, base, callback) {
 
         var error = null;
 
@@ -28,6 +28,7 @@ $(function() {
             id: id,
             href: file,
             async: false,
+            base: base || "",
             load: function(tpl) {
                 if (typeof callback === "function") {
                     callback(tpl);
@@ -105,7 +106,7 @@ $(function() {
         var data = {
             profile: profile(template),
             data: params,
-            pages: site,
+            pages: pages,
             plugins: plugins(template)
         };
 
@@ -162,6 +163,9 @@ $(function() {
     var currentTemplate = null;
 
     function renderTemplate() {
+        // Clear widgets
+        widgets = [];
+
         var template = $("#template").val() || "none", file = $("#layout").val() || "default.twig";
         var colourSwatchIndex = $("#colour-swatch").val() || 0;
 
@@ -232,7 +236,7 @@ $(function() {
 
             // Parse the LESS code for the selected template
             var parser = new(less.Parser);
-            parser.parse(varsLess + '@import "vars.less";\n@import "presets.less";\n@import "templates/' + template + '/stylesheet.less";', function(e, tree) {
+            parser.parse(varsLess + '@import "less/vars.less";\n@import "less/presets.less";\n@import "templates/' + template + '/stylesheet.less";', function(e, tree) {
                 if (e) {
                     alert("LESS Parse Error\n" + e.message);
                     console.log(e);
@@ -243,7 +247,7 @@ $(function() {
 
                 try {
                     // Always make the id unique so we re-compile and render the template every time
-                    var twig = loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file);
+                    var twig = loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file, "templates/" + template);
                 } catch (e) {
                     if (e.message.substring(0, 9) == "Uncaught ") {
                         e.message = e.message.substring(9);
@@ -258,34 +262,49 @@ $(function() {
                     throw e.message;
                 }
 
-                // Render the Twig template
-                var html = twig.render({
-                    profile: profile(template),
-                    plugins: plugins(template)
-                });
+                var assetSubdomain = window.location.hostname.split("\.")[0];
+                var brand_domain = window.location.hostname.substring(assetSubdomain.length + 1);
 
-                // Inject the template HTML into the iframe
-                iframe.contents().find("body").html(html);
-
+                // Render the compiled Twig template to HTML
                 try {
-                    // Inject the CSS into the iframe
-                    iframe.contents().find("#styles").html(tree.toCSS());
+                    var html = twig.render({
+                        assetSubdomain: window.location.hostname.split("\.")[0],
+                        brand: {
+                            domain: brand_domain
+                        },
+                        site: site,
+                        page: page,
+                        profile: profile(template),
+                        plugins: plugins(template),
+                        basekit: {
+                            headScript: "headscript.twig",
+                            bodyScript: "bodyscript.twig"
+                        }
+                    });
+                } catch (e) {
+                    alert("Twig Render Error\n" + e.message);
+                    console.log(e);
+                    throw e;
+                }
+
+                // Compile parsed LESS tree to CSS
+                try {
+                    var css = tree.toCSS();
                 } catch (e) {
                     alert("LESS Compile Error\n" + e.message + " on line " + e.line + " of " + e.filename);
                     console.log(e);
                     throw e;
                 }
 
-                // Get the iframe window
-                iframeWindow = iframe.get(0).contentWindow;
+                // Construct the widgets Javascript
+                // Note that this is base64 encoded to prevent XSS protection from kicking in
+                var js = 'var sdkWidgets = ' + JSON.stringify(widgets) + ';';
 
-                // Store the selected template in the top-level and iframe windows
-                iframeWindow.selectedTemplate = template;
-                window.selectedTemplate = template;
-
-                // Init the widgets in the iframe
-                iframeWindow.initWidgets(widgets);
-                widgets = [];
+                // Submit the form to the iframe
+                $("#html").val(btoa(html));
+                $("#css").val(btoa(css));
+                $("#js").val(btoa(js));
+                $("#post").submit();
             });
         }).fail(function() {
             var error = "Template Metadata Error\nJSON syntax error";

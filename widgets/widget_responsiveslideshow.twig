@@ -6,9 +6,8 @@
 
 		</div>
 
-		<span class="btn-play pause" data-ref="0" {% if data.allowPause == false %}style="display: none"{% endif %}></span>
-
-		<ul class="slideshow-image-list">
+		<span class="btn-play pause" data-ref="0" {% if data.allowPause == false %}style="display: none"{% endif %}>play</span>
+		<ul class="slideshow-image-list{% if data.crop == 1 %} crop{% endif %}">
             {% for key, imageRef in plugins.assets.albums[data.albumRef] %}
 
             {% set image = plugins.assets.images[imageRef] %}
@@ -28,7 +27,21 @@
     			{% endif %}
 
                 <li data-ref="{{key}}" class="slideshow-image-item{% if loop.index0 == 0 %} current{% endif %}">
-			        <img class="slideshow-image {{ aspectClass }}{% if data.crop == false %} no-crop{% endif %}" src="{{ image.url }}" alt="{{ image.title }}">
+                    <span class="inner {{ aspectClass }}"{% if data.crop == 1 %} style="background-image:url('{{ image.url }}');"{% endif %}>
+                        <div class="image-wrapper">
+                            <img class="slideshow-image" src="{{ image.url }}"{% if image.title != ''%} alt="{{ image.title }}"{% endif %}>
+                        </div>
+                        {% if image.title != empty and image.description != empty %}
+                        <div class="content-wrapper">
+                            {% if image.title != '' %}
+                            <span class="title" {% if data.showTitle == 0%} style="display: none" {% endif %}>{{image.title}}</span>
+                            {% endif %}
+                            {% if image.description != '' %}
+                            <span class="description" {% if data.showDescription == 0%} style="display: none" {% endif %}>{{image.description}}</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </span>
 			    </li>
 			{% endfor %}
 		</ul>

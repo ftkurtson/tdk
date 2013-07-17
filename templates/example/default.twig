@@ -1,0 +1,66 @@
+<!doctype html>
+<!--[if lt IE 7]>
+	<html class="no-js ie6 oldie" lang="en">
+<![endif]-->
+<!--[if IE 7]>
+	<html class="no-js ie7 oldie" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+	<html class="no-js ie8 oldie" lang="en">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+	<html class="no-js" lang="{{ page.seoLang }}">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>{{ page.title }}</title>
+	<meta name="keywords" content="{{ page.keywords }}" />
+	<meta name="description" content="{{ page.description }}" />
+	<meta http-equiv="content-language" content="{{ page.seoLang }}" />
+
+	{% if site.favicon %}
+		<link rel="icon" href="{{ site.favicon['favicon'] }}" type="image/x-icon" />
+		<link rel="SHORTCUT ICON" href="{{ site.favicon['thumbnail'] }}?v={{ "now"|date("U") }}" type="image/x-icon" />
+	{% endif %}
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<link rel="stylesheet" href="//{{assetSubdomain}}.{{ brand.domain }}/templates/common/responsive-columns.css" />
+
+	{% include basekit.headScript %}
+</head>
+<body class="{{ page.backgroundClass }}">
+
+    <header>
+        <div class="wrapper clearfix">
+        {{widget('companyheader', 'companyheader', {"defaultlogo": asset('images/logo.png')})|raw}}
+        {{widget('extendednavigation', 'navigationheader', {})|raw}}
+        </div>
+    </header>
+
+    <div class="wrapper clearfix">
+        {{zone('main')|raw}}
+    </div>  
+
+    <footer>
+        <div class="wrapper clearfix">
+            <div class="responsivecolumns columns-three-33-34-33 columns-four-25-25-25-25">
+            <div class="column columns-four-first">
+                    {{widget('content', 'footercolumn1', {"content":"<h3>LOREM IPSUM</h3><p>Pulvinar Vitae Alam</p><p>Integer Dictum Orcin</p><p>Donec Iquam Lorem</p><p>Ultricies Viverra</p>"})|raw}}
+            </div>
+            <div class="column columns-four-second">
+                    {{widget('content', 'footercolumn2', {"content":"<h3>ALAM THOAT</h3><p>Pulvinar Vitae Alam</p><p>Integer Dictum Orcin</p><p>Donec Iquam Lorem</p><p>Ultricies Viverra</p>"})|raw}}
+            </div>
+            <div class="column columns-four-third">
+                    {{widget('content', 'footercolumn3', {"content":"<h3>KAREN FROAT</h3><p>Pulvinar Vitae Alam</p><p>Integer Dictum Orcin</p><p>Donec Iquam Lorem</p><p>Ultricies Viverra</p>"})|raw}}
+            </div>
+            <div class="column columns-four-fourth">
+                    {{widget('content', 'footercolumn4', {"content":"<h3>DICTUM ORCIN</h3>"})|raw}} {{widget('companyaddress', 'companyaddressfooter', {})|raw}}
+            </div>
+            </div>
+        </div>
+    </footer>
+
+    {% include basekit.bodyScript %}
+</body>
+</html>

@@ -1,0 +1,129 @@
+{
+	"name":"Example Healy",
+	"thumbnail":"example.jpg",
+	"screenshot":"example.jpg",
+	"pageTypes":["home"],
+   "colourSwatches":
+    {
+        "Swatch 1": [
+            "ffffff",
+            "fff5f1",
+            "575d61",
+            "9d9d9d",
+            "acacac",
+            "f29771",
+            "000000"
+        ],
+        "Swatch 2": [
+            "ffffff",
+            "72d0eb",
+            "83c028",
+            "2f353e",
+            "b4bec7",
+            "434f5b",
+            "000000"
+        ],
+        "Swatch 3": [
+            "ffffff",
+            "72d0eb",
+            "83c028",
+            "2f353e",
+            "b4bec7",
+            "434f5b",
+            "000000"
+        ],
+        "Swatch 4": [
+            "ffffff",
+            "72d0eb",
+            "83c028",
+            "2f353e",
+            "b4bec7",
+            "434f5b",
+            "000000"
+        ],
+        "Swatch 5": [
+            "ffffff",
+            "72d0eb",
+            "83c028",
+            "2f353e",
+            "b4bec7",
+            "434f5b",
+            "000000"
+        ]
+    },
+    "fontSwatch": {
+       "title": "Montserrat",
+        "font1": {
+            "font-family": "Montserrat",
+            "font-size": "36px",
+            "font-weight": "inherit",
+            "line-height": "36px",
+            "color": "@color-swatch4",
+            "letter-spacing": "inherit"
+        },
+        "font2": {
+            "font-family": "Montserrat",
+            "font-size": "36px",
+            "font-weight": "inherit",
+            "line-height": "36px",
+            "color": "@color-swatch4",
+            "letter-spacing": "inherit"
+        },
+        "font3": {
+            "font-family": "Montserrat",
+            "font-size": "36px",
+            "font-weight": "inherit",
+            "line-height": "36px",
+            "color": "@color-swatch4",
+            "letter-spacing": "inherit"
+        },
+        "font4": {
+            "font-family": "Montserrat",
+            "font-size": "36px",
+            "font-weight": "inherit",
+            "line-height": "36px",
+            "color": "@color-swatch4",
+            "letter-spacing": "inherit"
+        },
+        "font5": {
+            "font-family": "Montserrat",
+            "font-size": "16px",
+            "font-weight": "inherit",
+            "line-height": "36px",
+            "color": "@color-swatch7",
+            "letter-spacing": "inherit"
+        },
+        "font6": {
+            "font-family": "Montserrat",
+            "font-size": "14px",
+            "font-weight": "inherit",
+            "line-height": "24px",
+            "color": "@color-swatch6",
+            "letter-spacing": "inherit"
+        },
+        "font7": {
+            "font-family": "Montserrat",
+            "font-size": "15px",
+            "font-weight": "inherit",
+            "line-height": "24px",
+            "color": "@color-swatch1",
+            "letter-spacing": "inherit"
+        },
+        "font8": {
+            "font-family": "Montserrat",
+            "font-size": "50px",
+            "font-weight": "inherit",
+            "line-height": "74px",
+            "color": "@color-swatch1",
+            "letter-spacing": "inherit"
+        },
+        "font9": {
+            "font-family": "Montserrat",
+            "font-size": "24px",
+            "font-weight": "inherit",
+            "line-height": "36px",
+            "color": "@color-swatch1",
+            "letter-spacing": "inherit"
+        }
+    }
+}
