@@ -949,7 +949,7 @@
                     contentElHeight = null,
                     newheight = null;
 
-                contentEl.height('100%');
+                contentEl.height('auto');
                 contentElHeight = contentEl.height();
 
                 switch (lines) {
@@ -962,6 +962,7 @@
                     this.expandText(newheight, contentElHeight);
                     break;
                 case 'all':
+                    newheight = 'atuo';
                     break;
                 }
 
@@ -1224,6 +1225,431 @@
     $.fn.basekitWidgetTwitter = function (options) {
         this.each(function () {
             $(this).data('bkob', new BaseKit.Widget.Twitter(this, options));
+        });
+    };
+}());function mapReady() {
+    Site.Page.Globals.mapsAPILoaded = true;
+}
+
+(function () {
+    BaseKit.Widget.ProfileProperties = {
+        'profileType': 'twitter',
+
+        // address properties
+        'address': 'profile',
+        'address1': 'profile',
+        'address2': 'profile',
+        'country': 'profile',
+        'addressPostalCode': 'profile',
+
+        'email': 'profile',
+        'strapline': 'profile',
+        'companydescription': 'profile',
+        'phone': 'profile',
+        'business': 'profile',
+        'copyright': 'profile',
+
+        // twitter properties
+        'twitter': 'profile',
+        'refreshtime': '1800000',
+        'defaultTwitter': 'BaseKit',
+
+        // map properties
+        'mapZoom': 12,
+        'mapHeight': 150, // MB: default height
+        'mapAddress': 'profile',
+        'latitude': '51.50959718054336',
+        'longitude': '-0.12668609619140625', // HC: in case the profile is empty
+
+        // single email form properties
+        'formText':         App.t('widgets.contactform.default_button_text', 'Send'),
+        'formTitle':        App.t('widgets.contactform.default_title', 'Contact Form'),
+
+        // social icons 
+        'socialIconsLinkedin':   'profile',
+        'socialIconsTwitter':    'profile',
+        'socialIconsFacebook':   'profile',
+        'socialIconsRss':        'profile',
+        'socialIconsGoogleplus': 'profile',
+        'socialIconsYoutube':    'profile'
+    };
+
+    BaseKit.Widget.ProfileMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            this.attachProfileEvents();
+        },
+
+        attachProfileEvents: function () {
+            switch (this.get('profileType')) {
+            case 'twitter':
+                this.initialTwitter();
+                break;
+            case 'map':
+                this.initialMap();
+                break;
+            case 'form':
+                this.initialForm();
+                break;
+            default:
+                break;
+            }
+        },
+
+        initialForm: function () {
+            var that = this,
+                thisEl = $(this.el),
+                url = '/site/' + App.session.get('siteRef') + '/submit-form',
+                data = {};
+
+            // override the submit event on the form
+            thisEl.find('form').on('submit', function (e) {
+                e.preventDefault();
+
+                // set the form data
+                data = {
+                    'emailFrom': thisEl.find('.email').val(),
+                    'message': '', // HC: we have to have the data field to make the call
+                    'useProfile': 1,
+                    'widgetRef': that.get('ref'),
+                    'formTitle': that.get('formTitle')
+                };
+
+                // submit the form using the api
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: data
+
+                }).done(function (response, status, jqXHR) {
+                    if (status === 'success' && that.get('goalUrl')) {
+                        window.location = that.get('goalUrl');
+                    }
+                }).fail(function (response) {
+                    // TODO: we need to handle published site errors @see Megan
+                });
+            });
+        },
+
+        initialMap: function () {
+
+            // stores the current map
+            this.gmap = null;
+
+            // stores the main marker
+            this.marker = null;
+
+            // set the global google map property for checking to see if the
+            // map api has been loaded
+            if (Site.Page.Globals.mapsAPILoaded === undefined || Site.Page.Globals.mapsAPILoaded === null) {
+                Site.Page.Globals.mapsAPILoaded = false;
+            }
+
+            this.loadMap();
+        },
+
+        loadMap: function () {
+            // if no maps have yet been loaded, then try to load one
+            if (Site.Page.Globals.mapsAPILoaded === false && $('#gmaps-widget-script').length === 0) {
+                // This dynamically injects the googlemaps into the body
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.id = "gmaps-widget-script";
+                script.src = "http://maps.google.com/maps/api/js?sensor=false&callback=mapReady&language=" + App.session.get('languageCode');
+
+                // append to the body
+                document.body.appendChild(script);
+            }
+
+            // do checking to see if any maps are loaded yet
+            this.isMapReady();
+        },
+
+        isMapReady: function () {
+            var that = this;
+
+            if (Site.Page.Globals.mapsAPILoaded === false) {
+                setTimeout(function () {
+                    that.isMapReady();
+                }, 100);
+            } else {
+
+                if (this.get('mapAddress') === 'profile' && Profile.get('postalcode').length > 0) {
+                    this.findAddress({
+                        source: 'profile',
+                        value: Profile.get('postalcode')
+                    }, this.postFindAddress, this);
+                } else {
+                    // reset the map display with all the other options
+                    this.findAddress({
+                        source: 'custom',
+                        value: this.get('mapAddress')
+                    }, this.postFindAddress, this);
+                }
+            }
+        },
+
+        setupMap: function () {
+            // map options
+            var mapOptions = {
+                draggable: false,
+                zoom: parseInt(this.get('mapZoom'), 10),
+                center: new google.maps.LatLng(parseFloat(this.get('latitude'), 10),
+                    parseFloat(this.get('longitude'), 10)),
+                scaleControl: false,
+                mapTypeControl: false,
+                overviewMapControl: false,
+                zoomControl: false,
+                panControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            // MB: set the map Height
+            // HC: we need to set the height before rendering the map to make sure the map is in the center
+            $(this.el).find('.map').height(this.get('mapHeight'));
+
+            // set the map
+            this.gmap = new google.maps.Map($(this.el).find('.map').get(0), mapOptions);
+
+            // refresh the map
+            this.resetMap();
+        },
+
+        /**
+         * Centres the map on the new coordinates
+         */
+        resetMap: function () {
+            var newCenter = null;
+
+            // make sure the maps has been loaded
+            if (this.gmap !== null && Site.Page.Globals.mapsAPILoaded === true) {
+                $(this.el).find('.map').height(this.get('mapHeight'));
+
+                // NOTE: Google Maps is fussy - needs parseFloat calls!
+                newCenter = new google.maps.LatLng(parseFloat(this.get('latitude'), 10),
+                    parseFloat(this.get('longitude'), 10));
+
+                // reset the map
+                this.gmap.setZoom(parseInt(this.get('mapZoom'), 10));
+                this.gmap.setCenter(newCenter);
+
+                // create  an new map marker at this point
+                this.createMapMarker(parseFloat(this.get('latitude'), 10),
+                    parseFloat(this.get('longitude'), 10));
+            }
+        },
+
+        /**
+         * createMapMarker: creates a marker on the map at the passed co-ordinates
+         * @param <integer> latitude - the latitude to position the marker
+         * @param <integer> longitude - the longitude to position the marker
+         */
+        createMapMarker: function (latitude, longitude) {
+            var icon = new google.maps.MarkerImage('//' + App.session.get('assetSubdomain') + '.' + App.session.get('domain') + '/apps/images/mobile/map-marker.png',
+                    new google.maps.Size(32, 32), null,
+                    new google.maps.Point(16, 32),
+                    new google.maps.Size(32, 32));
+
+            // add the marker if one is not yet defined
+            if (this.marker === null) {
+                // create a new marker
+                this.marker = new google.maps.Marker({
+                    icon: icon,
+                    bouncy: true,
+                    draggable: true,
+                    autoPan: true,
+                    position: new google.maps.LatLng(latitude, longitude)
+                });
+
+                // assign it to the current map
+                this.marker.setMap(this.gmap);
+            } else {
+                // remove it from the current map and update the pos
+                this.marker.setMap(null);
+                this.marker.setPosition(new google.maps.LatLng(latitude, longitude));
+
+                // assign it to the current map
+                this.marker.setMap(this.gmap);
+            }
+        },
+
+        /**
+         * tries to find the address specified
+         * @param <object> address - the address details and the type of search
+         * @param <function> callback
+         * @param <object> scope
+         */
+        findAddress: function (address, callback, scope) {
+            if (typeof address === "undefined" || typeof address !== "object") {
+                throw new Error('findAddress param address error');
+            }
+            if (typeof callback === "undefined" || typeof callback !== "function") {
+                throw new Error('findAddress param callback error');
+            }
+            if (typeof scope === "undefined" || typeof scope !== "object") {
+                throw new Error('findAddress scope callback error');
+            }
+
+            var that = this,
+                geoOptions = {
+                    'address': null,
+                    'region': "ISO 3166-1"
+                },
+                results = {};
+
+            if (!this.geocoder) {
+                this.geocoder = new google.maps.Geocoder();
+            }
+
+            geoOptions.address = address.value || '';
+
+            this.geocoder.geocode(geoOptions, function (result, status) {
+                if (status === google.maps.GeocoderStatus.OK && result.length) {
+                    results = {
+                        latitude: result[0].geometry.location.lat(),
+                        longitude: result[0].geometry.location.lng()
+                    };
+                } else {
+                    // HC: if it's a bad or empty postalcode, use the defualt one
+                    results = {
+                        latitude: that.get('latitude'),
+                        longitude: that.get('longitude')
+                    };
+                }
+
+                results.address = (address.source && address.source === 'profile') ? 'profile' : address.value;
+                results.postalcode = (address.source && address.source === 'profile') ? address.value : '';
+
+                callback.apply(scope, [results]);
+            });
+        },
+
+        /**
+         * postFindAddress: sets the valuse as temporary and resets map
+         * @param <object> results - contains lat, lng, address, postalcode(for profile)
+         */
+        postFindAddress: function (results) {
+            if (typeof results === "undefined" || typeof results !== "object") {
+                throw new Error('settingsPostFindAddress parameter error: expecting a object');
+            }
+
+            this.set('latitude', results.latitude, true);
+            this.set('longitude', results.longitude, true);
+            this.set('mapAddress', results.address, true);
+
+            this.setupMap();
+        },
+
+        /**
+         * initialTwitter: initial the twitter type profile
+         */
+        initialTwitter: function () {
+            this.refreshTimeline();
+            this.getAndUpdateTweet();
+        },
+
+        /**
+         * refreshTimeline: set the interval for refreshing the timeline twitter feed
+         */
+        refreshTimeline: function () {
+            var that = this,
+                // Default to every 30 mins
+                refreshtime = (this.get('refreshtime') > 0 ? parseInt(this.get('refreshtime'), 10) : 1800000);
+
+            // clean the interval
+            if (this.refreshInterval !== '') {
+                window.clearInterval(this.refreshInterval);
+                this.refreshInterval = '';
+            }
+
+            this.refreshInterval = window.setInterval(function () {
+                try {
+                    //api get new data
+                    that.getAndUpdateTweet();
+                } catch (err) {
+                    clearInterval(that.refreshInterval);
+
+                    //throw error
+                    console.log(err);
+                }
+            }, refreshtime);
+        },
+
+        /**
+         * getAndUpdateTweet: it gets the tweet feed and updates the view
+         */
+        getAndUpdateTweet: function () {
+            var that = this,
+                url = '/site/' + App.session.get('siteRef') + '/fetch-feed',
+                createdDate = null,
+                tweetData = [],
+                data = {
+                    'count': 1,
+                    'includeRts': true, // if we don't have settings for it then turn it on, other wise it might return nothing if the latest tweet is retweeted 
+                    'searchKey': this.get('twitter') === 'profile' ? Profile.get('twitter') : this.get('twitter'),
+                    'searchType': 'username'
+                };
+
+            // HC: when the profile twitter or searchKey is empty we use the defaultSearchKey
+            // for retriving the tweets
+            if ((this.get('twitter') === 'profile' && (Profile.get('twitter') === null || Profile.get('twitter').length === 0)) || (this.get('twitter') === null || this.get('twitter').length === 0)) {
+                data.searchKey = this.get('defaultTwitter');
+            }
+
+            // get twitter feed
+            $.ajax({
+                url: url,
+                type: "GET",
+                data: data
+            }).done(function (response, status) {
+                if (status === 'success') {
+                    // format data
+                    $.each(response, function () {
+
+                        // format created data
+                        createdDate = this.created_at;
+                        createdDate = createdDate.split(" ");
+
+                        tweetData.push({
+                            'screenName': this.user.screen_name,
+                            'createdAt': createdDate[2] + '/' + createdDate[1] + '/' + createdDate[5],
+                            'fullName': this.user.name,
+                            'imageUrl': this.user.profile_image_url,
+                            'source': this.source,
+                            'text': this.text
+                        });
+                    });
+
+                    that.set('tweets', tweetData, true);
+
+                    // rerender widget
+                    that.rerender();
+                }
+            }).fail(function () {
+                that.set('tweets', [], true);
+
+                that.el.find('.twitter').html('<p>No tweets found!</p>');
+            });
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Profile = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.ProfileProperties,
+            methods: BaseKit.Widget.ProfileMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetProfile = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Profile(el, options));
         });
     };
 }());(function ()

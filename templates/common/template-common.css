@@ -492,6 +492,11 @@ body.edit .widget.extendednavigation
     margin: 0 auto;
 }
 
+/** slideshow widget **/
+.widget.profile {
+  min-height: 28px;
+}
+
 /* Temporary, this will be set in the template. */
 .widget.responsiveslideshow .slideshow-image-list {
     height: 400px;
