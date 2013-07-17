@@ -163,6 +163,14 @@ $(function() {
     var currentTemplate = null;
 
     function renderTemplate() {
+        // Make sure that both LESS and Twig don't cache
+
+        if (typeof window.localStorage !== "undefined") {
+            localStorage.clear();
+        }
+
+        Twig.cache(false);
+
         // Clear widgets
         widgets = [];
 
