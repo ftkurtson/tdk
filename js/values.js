@@ -107,10 +107,10 @@ var plugins = function(template) {
                     url: "/templates/" + template + "/images/gallery/4.jpg"
                 },
                 5: {
-                    url: "/templates/" + template + "/images/gallery/1.jpg"
+                    url: "/templates/" + template + "/images/gallery/5.jpg"
                 },
                 6: {
-                    url: "/templates/" + template + "/images/gallery/2.jpg"
+                    url: "/templates/" + template + "/images/gallery/6.jpg"
                 }
             }
         }
