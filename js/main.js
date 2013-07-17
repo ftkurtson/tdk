@@ -266,8 +266,10 @@ $(function() {
                 try {
                     var html = twig.render({
                         assetSubdomain: "",
+                        assetDomain: window.location.hostname,
                         env: {
-                            assetSubdomain: ""
+                            assetSubdomain: "",
+                            assetDomain: window.location.hostname
                         },
                         brand: {
                             domain: window.location.hostname
