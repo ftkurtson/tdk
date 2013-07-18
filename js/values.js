@@ -42,7 +42,7 @@ var library = [
  * These can either be an object or a function that returns an object
  */
 var properties = {
-    feature: function(template) {
+    feature: function(template, defaults) {
         return {
             preset: "align-center",
             bgImg: "/templates/" + template + "/images/feature-bg.jpg",
@@ -55,11 +55,16 @@ var properties = {
         preset: "default",
         showLogo: 1
     },
-    content: function() {
-        return {
-            lines: "all",
-            content: library[Math.floor(Math.random() * library.length)]
-        };
+    content: function(template, defaults) {
+        var properties = $.extend(defaults, {
+            lines: "all"
+        });
+
+        if (typeof properties.content !== "string") {
+            properties.content = library[Math.floor(Math.random() * library.length)];
+        }
+
+        return properties;
     },
     contactform: {
         preset: "todo",

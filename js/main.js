@@ -89,7 +89,7 @@ $(function() {
 
     var widgets = [];
 
-    function renderWidget(type, defaults) {
+    function renderWidget(type, args) {
         var template = $("#template").val() || "none";
 
         // Capitalize the type to get its initial properties
@@ -98,10 +98,10 @@ $(function() {
 
         var input = properties[type] || {};
         if (typeof input === "function") {
-            input = input(template);
+            input = input(template, typeof args === "object" && args !== null ? args : {});
         }
 
-        var params = $.extend(initial, defaults, input);
+        var params = $.extend(initial, input);
 
         var data = {
             profile: profile(template),
@@ -128,8 +128,8 @@ $(function() {
         return '<div id="' + id + '" class="widget ' + type + ' ' + params.preset + '">' + html + '</div>';
     }
 
-    Twig.extendFunction("widget", function(type, id, defaults) {
-        return renderWidget(type, defaults);
+    Twig.extendFunction("widget", function(type, id, args) {
+        return renderWidget(type, args);
     });
 
     Twig.extendFunction("zone", function(name) {
