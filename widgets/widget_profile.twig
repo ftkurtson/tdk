@@ -1,0 +1,142 @@
+{# ADDRESS #}
+{% if data.profileType == 'address' %}
+<span>{% if data.address and data.address|length > 0 and data.address != 'profile' %}{{ data.address }}{% else %}{{profile.address}} {% endif %}</span>
+<span>{% if data.address1 and data.address1|length > 0 and data.address1 != 'profile' %}{{ data.address1 }}{% else %}{{profile.address1}} {% endif %}</span>
+<span>{% if data.address2 and data.address2|length > 0 and data.address2 != 'profile' %}{{ data.address2 }}{% else %}{{profile.address2}} {% endif %}</span>
+<span>{% if data.country and data.country|length > 0 and data.country != 'profile' %}{{ data.country }}{% else %}{{profile.country}} {% endif %}</span>
+<span>{% if data.addressPostalCode and data.addressPostalCode|length > 0 and data.addressPostalCode != 'profile' %}{{ data.addressPostalCode }}{% else %}{{profile.postalcode}} {% endif %}</span>
+{% endif %}
+
+{# EMAIL #}
+{% if data.profileType == 'email' %}
+<span>{% if data.email and data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}} {% endif %}</span>
+{% endif %}
+
+{# STRAP LINE #}
+{% if data.profileType == 'strapline' %}
+<span>{% if data.strapline and data.strapline|length > 0 and data.strapline != 'profile' %}{{ data.strapline }}{% else %}{{profile.strapline}} {% endif %}</span>
+{% endif %}
+
+{# COMPANY DESCRIPTION #}
+{% if data.profileType == 'companydescription' %}
+<span>{% if data.companydescription and data.companydescription|length > 0 and data.companydescription != 'profile' %}{{ data.companydescription }}{% else %}{{profile.companydescription}} {% endif %}</span>
+{% endif %}
+
+{# PHONE NUMBER #}
+{% if data.profileType == 'phone' %}
+<span>{% if data.phone and data.phone|length > 0 and data.phone != 'profile' %}{{ data.phone }}{% else %}{{profile.phone}} {% endif %}</span>
+{% endif %}
+
+{# BUSINESS NAME #}
+{% if data.profileType == 'business' %}
+<span>{% if data.business and data.business|length > 0 and data.business != 'profile' %}{{ data.business }}{% else %}{{profile.business}} {% endif %}</span>
+{% endif %}
+
+{# COPYRIGHT #}
+{% if data.profileType == 'copyright' %}
+<span>{% if data.copyright and data.copyright|length > 0 and data.copyright != 'profile' %}{{ data.copyright }}{% else %}{{profile.copyright}} {% endif %}</span>
+{% endif %}
+
+
+
+{# LATEST TWEET #}
+{% if data.profileType == 'twitter' %}
+<ul class="twitter">
+{%  for tweet in data.tweets %}
+  <li>
+    <div class="twitter-profile-pic">
+      <a href="https://twitter.com/{{ tweet.screenName }}" target="_blank">
+        <img alt="{{ tweet.fullName }}" title="{{ tweet.fullName }}" data-screename="{{ tweet.screenName }}" src="{{ tweet.imageUrl }}">
+      </a>
+    </div>
+
+    <div class="twitter-content">
+      <a href="https://twitter.com/{{ tweet.screenName }}" target="_blank">
+        <span class="bk-full-name"> {{ tweet.fullName }} </span>
+      </a>
+      <p> {{ tweet.text|raw }} </p>
+      <time class="created_at" data-value="{{ tweet.createdAt }}"> {{ tweet.createdAt }} </time>
+      <span> {{"widgets.twitter.via"|translate("via")}} </span>
+      <span> {{ tweet.source|raw }} </span>
+    </div>
+  </li>
+   {% else %}
+  <p>{{"widgets.twitter.message"|translate("Retrieving tweets")}}.</p>
+  {% endfor %}
+</ul>
+{% endif %}
+
+
+
+{# MAP #}
+{% if data.profileType == 'map' %}
+<div class="map"></div>
+{% endif %}
+
+
+{# SINGLE EMAIL FROM #}
+{% if data.profileType == 'form' %}
+<form action="" method="post">
+  <fieldset>
+    <label for="email">{{"widgets.profile.form"|translate("Your Email")}}:</label>
+    <input type="email" class="email" placeholder="{{"widgets.profile.formHolder"|translate("Type your Email")}}">
+
+    <button class="btn btnText {% if data.formItalic %}italic{% endif %} {% if data.formBold %}bold{% endif %} {{data.formAlign}}" type="submit" {% if data.formFontSize|length > 0 %}style="font-size: {{data.formFontSize}}px"{% endif %}>{{data.formText}}</button>
+  </fieldset>
+</form>
+{% endif %}
+
+
+{# SOCIAL ICONS #}
+{% if data.profileType == 'socialicons' %}
+  <!-- linkedIn -->
+  {% if (data.socialIconsLinkedin == 'profile' and profile.linkedin|length > 0) or (data.socialIconsLinkedin != 'profile' and data.socialIconsLinkedin|length > 0) %}
+  <span class="bk-socialicons-linkedin" >
+    <a href="{% if data.socialIconsLinkedin == 'profile' %}{{profile.linkedin}} {% else %} {{ data.socialIconsLinkedin }} {% endif %}" target="_blank">Linkedin</a>
+  </span>
+  {% endif %}
+
+  <!-- Twitter -->
+  {% if (data.socialIconsTwitter == 'profile' and profile.twitter|length > 0) or (data.socialIconsTwitter != 'profile' and data.socialIconsTwitter|length > 0) %}
+  <span class="bk-socialicons-twitter">
+    <a href="https://twitter.com/{% if data.socialIconsTwitter == 'profile' %}{{profile.twitter}}{% else %}{{ data.socialIconsTwitter }} {% endif %}" target="_blank">Twitter</a>
+  </span>
+  {% endif %}
+
+  <!-- Facebook -->
+  {% if (data.socialIconsFacebook == 'profile' and profile.facebook|length > 0) or (data.socialIconsFacebook != 'profile' and data.socialIconsFacebook|length > 0) %}
+  <span class="bk-socialicons-facebook">
+    <a href="{% if data.socialIconsFacebook == 'profile' %}{{profile.facebook}} {% else %} {{ data.socialIconsFacebook }} {% endif %}" target="_blank">Facebook</a>
+  </span>
+  {% endif %}
+
+  <!-- Rss -->
+  {% if (data.socialIconsRss == 'profile' and profile.rss|length > 0) or (data.socialIconsRss != 'profile' and data.socialIconsRss|length > 0) %}
+  <span class="bk-socialicons-rss">
+    <a href="{% if data.socialIconsRss == 'profile' %}{{profile.rss}} {% else %} {{ data.socialIconsRss }} {% endif %}" target="_blank">Rss</a>
+  </span>
+  {% endif %}
+
+  <!-- Google+ -->
+  {% if (data.socialIconsGoogleplus == 'profile' and profile.googleplus|length > 0) or (data.socialIconsGoogleplus != 'profile' and data.socialIconsGoogleplus|length > 0) %}
+  <span class="bk-socialicons-googleplus">
+    <a href="{% if data.socialIconsGoogleplus == 'profile' %}{{profile.googleplus}} {% else %} {{ data.socialIconsGoogleplus }} {% endif %}" target="_blank">Google+</a>
+  </span>
+  {% endif %}
+
+  <!-- youtube -->
+  {% if (data.socialIconsYoutube == 'profile' and profile.youtube|length > 0) or (data.socialIconsYoutube != 'profile' and data.socialIconsYoutube|length > 0) %}
+  <span class="bk-socialicons-youtube">
+    <a href="{% if data.socialIconsYoutube == 'profile' %}{{profile.youtube}} {% else %} {{ data.socialIconsYoutube }} {% endif %}" target="_blank">Youtube</a>
+  </span>
+  {% endif %}
+
+  {% if (((data.socialIconsLinkedin == 'profile' and profile.linkedin|length == 0) or data.socialIconsLinkedin|length == 0) and ((data.socialIconsTwitter == 'profile' and profile.twitter|length == 0) or data.socialIconsTwitter|length == 0) and ((data.socialIconsFacebook == 'profile' and profile.facebook|length == 0) or data.socialIconsFacebook|length == 0) and ((data.socialIconsRss == 'profile' and profile.rss|length == 0) or data.socialIconsRss|length == 0) and ((data.socialIconsGoogleplus == 'profile' and profile.googleplus|length == 0) or data.socialIconsGoogleplus|length == 0) and ((data.socialIconsYoutube == 'profile' and profile.youtube|length == 0) or data.socialIconsYoutube|length == 0)) %}
+  <span>{{"widgets.socialicons.noicons"|translate("No social icons")}}</span>
+  {% endif %}
+{% endif %}
+
+
+{% if data.profileType|length == 0 or (data.profileType != 'address' and data.profileType != 'email' and data.profileType != 'strapline' and data.profileType != 'companydescription' and data.profileType != 'phone' and data.profileType != 'business' and data.profileType != 'copyright' and data.profileType != 'twitter' and data.profileType != 'map' and data.profileType != 'form' and data.profileType != 'socialicons') %}
+<p> {{"widgets.profile.error"|translate("Sorry, something is wrong with this widget")}} </p>
+{% endif %}
