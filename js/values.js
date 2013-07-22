@@ -84,6 +84,7 @@ var properties = {
         text: "Click Me"
     },
     gallery: {
+        preset: "default",
         albumRef: 1
     },
     extendednavigation: {
@@ -92,6 +93,12 @@ var properties = {
     responsiveslideshow: {
         preset: "default",
         albumRef: 1
+    },
+    navigation: function(template, defaults) {
+        var properties = $.extend({
+            preset: "default",
+            align: "left"
+        }, defaults);
     }
 };
 
@@ -139,21 +146,27 @@ var pages = [
         request: "home",
         title: "Home",
         type: "page",
-        status: "active"
+        status: "active",
+        parent_id: 0,
+        parentId: 0
     },
     {
         ref: 2,
         request: "about",
         title: "About",
         type: "page",
-        status: "active"
+        status: "active",
+        parent_id: 0,
+        parentId: 0
     },
     {
         ref: 3,
         request: "contact",
         title: "Contact",
         type: "page",
-        status: "active"
+        status: "active",
+        parent_id: 0,
+        parentId: 0
     },
     {
         ref: 4,
@@ -167,21 +180,27 @@ var pages = [
                 request: "portfolio/web",
                 title: "Web",
                 type: "page",
-                status: "active"
+                status: "active",
+                parent_id: 4,
+                parentId: 4
             },
             {
                 ref: 6,
                 request: "portfolio/print",
                 title: "Print",
                 type: "page",
-                status: "active"
+                status: "active",
+                parent_id: 4,
+                parentId: 4
             },
             {
                 ref: 7,
                 request: "portfolio/canvas",
                 title: "Canvas",
                 type: "page",
-                status: "active"
+                status: "active",
+                parent_id: 4,
+                parentId: 4
             }
         ]
     },
@@ -190,6 +209,8 @@ var pages = [
         request: "gallery",
         title: "Gallery",
         type: "page",
-        status: "active"
+        status: "active",
+        parent_id: 0,
+        parentId: 0
     }
 ];
