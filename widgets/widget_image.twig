@@ -10,14 +10,14 @@
 	{% set description = data.description %}
 {% endif %}
 
-{% if data.action and data.action != 'none' %} <a href="{{ data.url }}" target="{{ data.target }}">{% endif %}
-	<span class="image-img">
-		<img class="image" src="{{ data.src }}" alt="{{ data.alt }}" title="{{ title }}" data-filename="{{ data.fileName }}" data-filesize="{{ data.fileSize }}" data-imagesize="{{ data.imageSize }}" width= "{{ data.imageWidth}}"></img>
+ <a {% if data.action and data.action != 'none' %} href="{{ data.url }}" target="{{ data.target }}" {% else %} href="#" image-href="{{data.src}}" rel="lightbox" {% endif %} title="{{ title }}">
+ 	<span class="image-img">
+		<img class="image" src="{{ data.src }}" alt="{{ data.alt }}" data-filename="{{ data.fileName }}" data-filesize="{{ data.fileSize }}" data-imagesize="{{ data.imageSize }}" width= "{{ data.imageWidth}}"></img>
 	</span>
 	{% if title %}
 	<span class="image-title">{{ title }}</span>
 	{% endif %}
-{% if data.action and data.action != 'none' %} </a> {% endif %}
+</a> 
 
 {% if description %}
 <span class="image-description">{{ description|nl2br }}</span>

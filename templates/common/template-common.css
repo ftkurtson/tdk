@@ -109,6 +109,11 @@ body.edit .widget.extendednavigation
   border: none;
 }
 
+/** Site title widget **/
+.widget.sitetitle a {
+  text-decoration:  none;
+}
+
 /** ICONS **/
 [class^="icon-"] {
   display: inline-block;

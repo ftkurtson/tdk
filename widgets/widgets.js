@@ -1812,6 +1812,36 @@
         });
     };
 }());(function () {
+    BaseKit.Widget.Sitetitle = null;
+
+    BaseKit.Widget.SitetitleProperties = {
+        business: 'profile'
+    };
+
+    BaseKit.Widget.SitetitleMethods = {
+        construct: function (el, options) {
+            this.options = options;
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Sitetitle = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.SitetitleProperties,
+            methods: BaseKit.Widget.SitetitleMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetSitetitle = function (options) {
+        this.each(function (index, el) {
+            var obj = null;
+            obj = new BaseKit.Widget.Sitetitle(el, options);
+            $(el).data('bkob', obj);
+        });
+    };
+}());(function () {
     BaseKit.Widget.Responsiveslideshow = null;
 
     BaseKit.Widget.ResponsiveslideshowProperties = {
