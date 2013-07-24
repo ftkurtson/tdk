@@ -193,7 +193,7 @@ $(function() {
             // Check that the metadata.json file contains colour and font swatches
 
             if (typeof data.colorSwatches === "undefined") {
-                var error = "Template Metadata Error\nNo 'colourSwatches' provided";
+                var error = "Template Metadata Error\nNo 'colorSwatches' provided";
                 alert(error);
                 throw error;
             }
