@@ -192,7 +192,7 @@ $(function() {
 
             // Check that the metadata.json file contains colour and font swatches
 
-            if (typeof data.colourSwatches === "undefined") {
+            if (typeof data.colorSwatches === "undefined") {
                 var error = "Template Metadata Error\nNo 'colourSwatches' provided";
                 alert(error);
                 throw error;
@@ -208,13 +208,15 @@ $(function() {
 
             $("#colour-swatch").empty();
 
-            for (var name in data.colourSwatches) {
-                var colours = data.colourSwatches[name];
+            for (var name in data.colorSwatches) {
+                var colours = data.colorSwatches[name];
 
                 if (colourNumber == colourSwatchIndex) {
-                    colours.forEach(function(colour, index) {
-                        varsLess += "@color-swatch" + (index + 1) + ":#" + colour + ";\n";
-                    });
+                    var index = 0;
+                    for (var key in colours) {
+                        varsLess += "@color-swatch" + (index + 1) + ":" + colours[key] + ";\n";
+                        index++;
+                    }
                 }
 
                 $("#colour-swatch")
