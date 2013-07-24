@@ -1,10 +1,9 @@
 /**
  * User profile values
- */ 
+ */
 var profile = function(template) {
     return {
         business: "My Business Website",
-        logo: "/templates/" + template + "/images/logo.png",
         header: "My Website Header",
         strapline: "Here is the website strapline!",
         postalcode: "BS1 2ND"
@@ -51,9 +50,13 @@ var properties = {
             strapline: "Here is the website strapline!"
         };
     },
-    companyheader: {
-        preset: "default",
-        showLogo: 1
+    companyheader: function(template, defaults) {
+        var properties = $.extend(defaults, {
+            preset: "default",
+            showLogo: 1
+        });
+console.log(properties);
+        return properties;
     },
     content: function(template, defaults) {
         var properties = $.extend(defaults, {
