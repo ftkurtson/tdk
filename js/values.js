@@ -55,7 +55,7 @@ var properties = {
             preset: "default",
             showLogo: 1
         });
-console.log(properties);
+
         return properties;
     },
     content: function(template, defaults) {

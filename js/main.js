@@ -89,7 +89,7 @@ $(function() {
 
     var widgets = [];
 
-    function renderWidget(type, args) {
+    function renderWidget(type, id, args) {
         var template = $("#template").val() || "none";
 
         // Capitalize the type to get its initial properties
@@ -113,8 +113,6 @@ $(function() {
         var widget = loadTemplate(type, "/widgets/widget_" + type + ".twig");
         var html = widget.render(data);
 
-        var id = "id" + (++idCount);
-
         widgets.push({
             id: id,
             name: name,
@@ -129,7 +127,7 @@ $(function() {
     }
 
     Twig.extendFunction("widget", function(type, id, args) {
-        return renderWidget(type, args);
+        return renderWidget(type, id, args);
     });
 
     Twig.extendFunction("zone", function(name) {
