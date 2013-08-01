@@ -1,0 +1,35 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+ <header>
+    <div class="wrapper clearfix">
+       {{widget('companyheader', 'companyheader', {"defaultlogo": asset('images/logo.png')})|raw}}
+       {{widget('extendednavigation', 'navigationheader', {})|raw}}
+    </div>
+</header>
+
+<section>
+    {{widget('feature', 'featurehome', {"header": "CREATIVE IDEAS. COMMON RESULTS.", "strapline":"GET INVOLVED TODAY. LET US BUILD YOUR FUTURE - THE PEARL WAY.", "buttonText":"Find out more today →","defaultBgImg": asset('images/feature-bg.jpg'), 'positionTopPercentage': '50','showBtn': true})|raw}}
+</section>
+
+<div class="main wrapper clearfix">
+    {{zone('main')|raw}}
+</div>
+
+<footer>
+    <div class="wrapper clearfix">
+        <div class="responsivecolumns columns-two-50-50">
+            <div class="column columns-two-left">
+                {{widget('content', 'footercolumn1', {"content":"<h2>Lorem Ip Soda</h2><p>Integer a Tortor Dui. Nullam nec ante mi. Morbi sodales urna sit amet mauris elementum quis rutrum lacus gravida. Proin feugia libero quis.</p>"})|raw}}
+            </div>
+            <div class="column columns-two-right">
+                {{widget('content', 'footercolumn2', {"content":"<h2>Aliquam Sodales</h2><p>Copyright &copy; 2013. All Rights Reserved.</p>"})|raw}}
+
+                {{widget('socialicons', 'socialicons', {'googleplus': 'https://plus.google.com/101946323226233111530', 'linkedin':'http://www.linkedin.com/company/basekit', 'facebook': 'https://www.facebook.com/TeamBaseKit', 'twitter': 'https://twitter.com/basekit', 'youtube': 'https://www.youtube.com/user/TeamBaseKit', 'rss': 'http://blogdiseno.basekit.es/feed/'})|raw}}
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}
