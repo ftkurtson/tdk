@@ -44,7 +44,7 @@ var properties = {
     feature: function(template, defaults) {
         return {
             preset: "align-center",
-            bgImg: "/templates/" + template + "/images/feature-bg.jpg",
+            bgImg: "templates/" + template + "/images/feature-bg.jpg",
             buttonText: "Sign Up",
             header: "My Website Header",
             strapline: "Here is the website strapline!"
@@ -117,22 +117,22 @@ var plugins = function(template) {
             },
             images: {
                 1: {
-                    url: "/templates/" + template + "/images/gallery/1.jpg"
+                    url: "templates/" + template + "/images/gallery/1.jpg"
                 },
                 2: {
-                    url: "/templates/" + template + "/images/gallery/2.jpg"
+                    url: "templates/" + template + "/images/gallery/2.jpg"
                 },
                 3: {
-                    url: "/templates/" + template + "/images/gallery/3.jpg"
+                    url: "templates/" + template + "/images/gallery/3.jpg"
                 },
                 4: {
-                    url: "/templates/" + template + "/images/gallery/4.jpg"
+                    url: "templates/" + template + "/images/gallery/4.jpg"
                 },
                 5: {
-                    url: "/templates/" + template + "/images/gallery/5.jpg"
+                    url: "templates/" + template + "/images/gallery/5.jpg"
                 },
                 6: {
-                    url: "/templates/" + template + "/images/gallery/6.jpg"
+                    url: "templates/" + template + "/images/gallery/6.jpg"
                 }
             }
         }

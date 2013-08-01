@@ -51,7 +51,7 @@ $(function() {
 
     Twig.extendFunction("asset", function(url) {
         var template = $("#template").val() || "none";
-        return "/templates/" + template + "/" + url;
+        return "templates/" + template + "/" + url;
     });
 
     Twig.extend(function(Twig) {
@@ -110,7 +110,7 @@ $(function() {
             plugins: plugins(template)
         };
 
-        var widget = loadTemplate(type, "/widgets/widget_" + type + ".twig");
+        var widget = loadTemplate(type, "widgets/widget_" + type + ".twig");
         var html = widget.render(data);
 
         widgets.push({
@@ -149,7 +149,7 @@ $(function() {
 
     Twig.extendFilter("expandAssetUrl", function(url) {
         var template = $("#template").val() || "none";
-        return "/templates/" + template + "/" + url;
+        return "templates/" + template + "/" + url;
     });
 
     Twig.extendFilter("translate", function(key, values) {

@@ -92,7 +92,7 @@
             functions: {
                 image: function(url) {
                     var template = $("#template").val() || null;
-                    url.value = "url(/templates/" + template + url.value + ")";
+                    url.value = "url(templates/" + template + url.value + ")";
                     url.quote = "";
                     return url;
                 },
