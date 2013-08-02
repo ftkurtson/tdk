@@ -3,7 +3,7 @@
 
     BaseKit.Widget.ClicktocallProperties = {
         phone: 'profile',
-        phoneText: App.t('widgets.clicktocall.default_text', '01234 567 890')
+        phoneText: App.t('widgets.clicktocall.default_text', 'Click to call')
     };
 
     BaseKit.Widget.ClicktocallMethods = {
@@ -125,7 +125,9 @@
         widgetType: 'widget.gallery',
         imageScale: 'original',
         showTitle: 1,
-        showDescription: 1
+        showDescription: 1,
+        albumRef: 0,
+        images: []
     };
 
     BaseKit.Widget.GalleryMethods = {
@@ -554,7 +556,8 @@
 
     BaseKit.Widget.ResponsivecolumnsProperties = {
         selectable: 0,
-        isEmpty: 1
+        isEmpty: 1,
+        columns: 0
     };
 
     BaseKit.Widget.ResponsivecolumnsMethods = {
@@ -708,7 +711,17 @@
                     that.isMapReady();
                 }, 100);
             } else {
-                this.setupMap();
+                if (this.get('address') === 'profile' && Profile.get('postalcode').length > 0) {
+                    this.findAddress({
+                        source: 'profile',
+                        value: Profile.get('postalcode')
+                    }, this.postFindAddress, this);
+                } else {
+                    this.findAddress({
+                        source: 'custom',
+                        value: this.get('address')
+                    }, this.postFindAddress, this);
+                }
             }
         },
 
@@ -734,15 +747,7 @@
             // set the map
             this.gmap = new google.maps.Map($(this.el).find('.map').get(0), mapOptions);
 
-            if (this.get('address') === 'profile' && Profile.get('postalcode').length > 0) {
-                this.findAddress({
-                    source: 'profile',
-                    value: Profile.get('postalcode')
-                }, this.postFindAddress, this);
-            } else {
-                // reset the map display with all the other options
-                this.resetMap();
-            }
+            this.resetMap();
         },
 
         /**
@@ -775,9 +780,7 @@
          * @param <integer> longitude - the longitude to position the marker
          */
         createMapMarker: function (latitude, longitude) {
-            var that = this,
-                marker = null,
-                icon = new google.maps.MarkerImage('//' + App.session.get('assetSubdomain') + '.' + App.session.get('domain') + '/apps/images/mobile/map-marker.png',
+            var icon = new google.maps.MarkerImage('//' + App.session.get('assetSubdomain') + '.' + App.session.get('domain') + '/apps/images/mobile/map-marker.png',
                     new google.maps.Size(32, 32), null,
                     new google.maps.Point(16, 32),
                     new google.maps.Size(32, 32));
@@ -870,8 +873,8 @@
             this.set('longitude', results.longitude, true);
             this.set('address', results.address, true);
 
-            // refresh the map
-            this.resetMap();
+            // HC: now sets up the map with the location data
+            this.setupMap();
         }
     };
 
@@ -891,16 +894,87 @@
         });
     };
 }());(function () {
-    BaseKit.Widget.CompanynameProperties = {};
+    BaseKit.Widget.Signupform = null;
 
-    BaseKit.Widget.CompanynameMethods = {
+    BaseKit.Widget.SignupformProperties = {
+        email: 'profile',
+        label: App.t('widgets.signupform.email', 'Your Email'),
+        text: App.t('widgets.signupform.default_button_text', 'Send'),
+        formTitle: App.t('widgets.signupform.default_title', 'Signup Form')
+    };
+
+    BaseKit.Widget.SignupformMethods = {
         construct: function (el, options) {
-            this.options = options;
             this.load();
         },
 
         load: function () {
             //do something if the widget needs to be loaded!
+            this.attachEvents();
+        },
+
+        /**
+         * attachEvents: attach the send email event
+         */
+        attachEvents: function () {
+            var that = this,
+                thisEl = $(this.el),
+                url = '/site/' + App.session.get('siteRef') + '/submit-form',
+                data = {};
+
+            // override the submit event on the form
+            thisEl.find('form').on('submit', function (e) {
+                e.preventDefault();
+
+                // set the form data
+                data = {
+                    'emailFrom': thisEl.find('.email').val(),
+                    'useProfile': that.get('email') === "profile" ? 1 : 0,
+                    'widgetRef': that.get('ref'),
+                    'formTitle': that.get('formTitle')
+                };
+
+                // submit the form using the api
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: data
+
+                }).done(function (response, status, jqXHR) {
+                    if (status === 'success' && that.get('goalUrl')) {
+                        //redirect the window location
+                        window.location = that.get('goalUrl');
+                    }
+                });
+            });
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Signupform = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.SignupformProperties,
+            methods: BaseKit.Widget.SignupformMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetSignupform = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Signupform(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Companyname = null;
+
+    BaseKit.Widget.CompanynameProperties = {
+        business: 'profile'
+    };
+
+    BaseKit.Widget.CompanynameMethods = {
+        construct: function (el, options) {
+            this.options = options;
         }
     };
 
@@ -916,7 +990,9 @@
     // JQuery plugin so that a widget can be attached to an element
     $.fn.basekitWidgetCompanyname = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Companyname(el, options));
+            var obj = null;
+            obj = new BaseKit.Widget.Companyname(el, options);
+            $(el).data('bkob', obj);
         });
     };
 }());(function () {
@@ -1158,7 +1234,7 @@
          */
         getUpdateTwitterFeed: function () {
             var that = this,
-                url = '/site/' + App.session.get('siteRef') + '/fetch-feed',
+                url = '/site/fetch-feed',
                 createdDate = null,
                 tweetData = [],
                 data = {
@@ -1227,7 +1303,8 @@
             $(this).data('bkob', new BaseKit.Widget.Twitter(this, options));
         });
     };
-}());function mapReady() {
+}());
+function mapReady() {
     Site.Page.Globals.mapsAPILoaded = true;
 }
 
@@ -1243,6 +1320,7 @@
         'addressPostalCode': 'profile',
 
         'email': 'profile',
+        'headline': 'profile',
         'strapline': 'profile',
         'companydescription': 'profile',
         'phone': 'profile',
@@ -1584,7 +1662,7 @@
          */
         getAndUpdateTweet: function () {
             var that = this,
-                url = '/site/' + App.session.get('siteRef') + '/fetch-feed',
+                url = '/site/fetch-feed',
                 createdDate = null,
                 tweetData = [],
                 data = {
@@ -1652,7 +1730,8 @@
             $(el).data('bkob', new BaseKit.Widget.Profile(el, options));
         });
     };
-}());(function ()
+}());
+(function ()
 {
 	BaseKit.Widget.EmbedProperties = {
 	};
@@ -1779,6 +1858,42 @@
         });
     };
 }());(function () {
+    BaseKit.Widget.Logo = null;
+
+    BaseKit.Widget.LogoProperties = {
+        logo: 'profile',
+        widthPercent: '100'
+    };
+
+    BaseKit.Widget.LogoMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Logo = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.LogoProperties,
+            methods: BaseKit.Widget.LogoMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetLogo = function (options) {
+        this.each(function (index, el) {
+            var obj = null;
+            obj = new BaseKit.Widget.Logo(el, options);
+            $(el).data('bkob', obj);
+        });
+    };
+}());(function () {
     BaseKit.Widget.Extendednavigation = null;
 
     BaseKit.Widget.ExtendednavigationProperties = {
@@ -1812,36 +1927,6 @@
         });
     };
 }());(function () {
-    BaseKit.Widget.Sitetitle = null;
-
-    BaseKit.Widget.SitetitleProperties = {
-        business: 'profile'
-    };
-
-    BaseKit.Widget.SitetitleMethods = {
-        construct: function (el, options) {
-            this.options = options;
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Sitetitle = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.SitetitleProperties,
-            methods: BaseKit.Widget.SitetitleMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetSitetitle = function (options) {
-        this.each(function (index, el) {
-            var obj = null;
-            obj = new BaseKit.Widget.Sitetitle(el, options);
-            $(el).data('bkob', obj);
-        });
-    };
-}());(function () {
     BaseKit.Widget.Responsiveslideshow = null;
 
     BaseKit.Widget.ResponsiveslideshowProperties = {
@@ -1856,7 +1941,9 @@
         allowPause: false,
         allowLoop: true,
         showTitle: 1,
-        showDescription: 1
+        showDescription: 1,
+        albumRef: 0,
+        images: []
     };
 
     BaseKit.Widget.ResponsiveslideshowMethods = {
@@ -1868,7 +1955,7 @@
 
         load: function () {
             var editor = $('body').hasClass('edit'),
-                albumArray = Server.plugins.assets.albums[this.get('albumRef')];
+                albumArray = this.get('albumRef') > 0 ? Server.plugins.assets.albums[this.get('albumRef')] : this.get('images');
 
             if ((albumArray && (albumArray.length > 0)) || this.properties.changed.album) {
                 this.attachEvents();
@@ -1880,10 +1967,11 @@
         },
 
         attachEvents: function () {
+
             var that = this,
                 ref = $(this).data('ref'),
                 thisEl = $(this.el),
-                imageArray = Server.plugins.assets.albums[this.get('albumRef')];
+                imageArray = this.get('albumRef') > 0 ? Server.plugins.assets.albums[this.get('albumRef')] : this.get('images');
 
             if (imageArray && imageArray.length === 1) {
                 thisEl.find('.btn-play').hide();
@@ -1961,7 +2049,7 @@
 
         setSlideInfo: function (ref) {
             var el = $(this.el),
-                imageArray = Server.plugins.assets.albums[this.get('albumRef')],
+                imageArray = this.get('albumRef') > 0 ? Server.plugins.assets.albums[this.get('albumRef')] : this.get('images'),
                 lastImg = imageArray.length - 1,
                 next = ref + 1,
                 prev = ref - 1;
@@ -2010,7 +2098,7 @@
         setNextSlide: function (currentSlide) {
             var that = this,
                 duration = this.get('duration') * 1000,
-                imageArray = Server.plugins.assets.albums[this.get('albumRef')],
+                imageArray = this.get('albumRef') > 0 ? Server.plugins.assets.albums[this.get('albumRef')] : this.get('images'),
                 lastImg = imageArray.length - 1,
                 t = null;
 
@@ -2034,7 +2122,7 @@
                 t,
                 elInImg,
                 next = slideFromRef + 1,
-                imageArray = Server.plugins.assets.albums[this.get('albumRef')];
+                imageArray = this.get('albumRef') > 0 ? Server.plugins.assets.albums[this.get('albumRef')] : this.get('images');
 
             if (this.stopSlide || this.paused) {
                 return;

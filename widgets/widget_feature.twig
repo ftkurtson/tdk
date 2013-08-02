@@ -2,14 +2,14 @@
 	<div class="content">
 		<span class="spare wrapper">
 
-			{% if data.header|length > 0 or profile.companydescription|length > 0 %}
+			{% if data.header|length > 0 or profile.headline|length > 0 %}
 				{% if data.header and data.header !='profile' and data.header !=''%}
 				<h2>
 					<span>{{data.header|raw}}</span>
 				</h2>
-				{% elseif profile.companydescription and profile.companydescription != '' %}
+				{% elseif profile.headline and profile.headline != '' %}
 				<h2>
-					<span>{{profile.companydescription|raw}}</span>
+					<span>{{profile.headline|raw}}</span>
 				</h2>
 				{% endif %}
 			{% endif %}

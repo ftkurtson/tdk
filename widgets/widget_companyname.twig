@@ -1,1 +1,18 @@
-<h1>{{profile.business}}</h1>
+{% set url = null %}
+{% for page in pages %}
+    {% if page.type == 'home' %}
+        {% set url = page.request %}
+    {% endif %}
+{% endfor %}
+
+{% if url|length>0 %}<a href='/{{url}}'>{% endif %}
+<h1>
+    {% if data.business and data.business !='profile' and data.business !=''%}
+        {{data.business}}
+    {% elseif profile.business and profile.business != '' %}
+        {{profile.business}}
+    {% else %}
+        My Website
+    {% endif %}
+</h1>
+{% if url|length>0 %}</a>{% endif %}

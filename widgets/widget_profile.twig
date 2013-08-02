@@ -12,6 +12,11 @@
 <span>{% if data.email and data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}} {% endif %}</span>
 {% endif %}
 
+{# HEADLINE #}
+{% if data.profileType == 'headline' %}
+<span>{% if data.headline and data.headline|length > 0 and data.headline != 'profile' %}{{ data.headline }}{% else %}{{profile.headline}} {% endif %}</span>
+{% endif %}
+
 {# STRAP LINE #}
 {% if data.profileType == 'strapline' %}
 <span>{% if data.strapline and data.strapline|length > 0 and data.strapline != 'profile' %}{{ data.strapline }}{% else %}{{profile.strapline}} {% endif %}</span>

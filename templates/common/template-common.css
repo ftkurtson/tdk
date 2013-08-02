@@ -114,6 +114,11 @@ body.edit .widget.extendednavigation
   text-decoration:  none;
 }
 
+/** Site Logo widget **/
+.widget.sitelogo img{
+  border: none;
+}
+
 /** ICONS **/
 [class^="icon-"] {
   display: inline-block;
