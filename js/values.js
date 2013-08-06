@@ -3,10 +3,21 @@
  */
 var profile = function(template) {
     return {
-        business: "My Business Website",
-        header: "My Website Header",
-        strapline: "Here is the website strapline!",
-        postalcode: "BS1 2ND"
+        business: "Smart Inc.",
+        header: "",
+        strapline: "",
+        address1: "123 Example Street",
+        address2: "Block Number One",
+        postalcode: "BS1 2ND",
+        phone: "(020) 123 456 789",
+        email: "defaultemail@provider.com",
+        twitter: "twitter.com",
+        facebook: "facebook.com",
+        linkedin: "linkedin.com",
+        youtube: "youtube.com",
+        googleplus: "googleplus.com",
+        rss: "rss.com",
+        copyright: "Copyright © 2013. All Rights Reserved."
     };
 };
 
@@ -24,7 +35,7 @@ var page = {
  * Site data
  */
 var site = {
-
+    'ref': 12345
 };
 
 /**
@@ -87,7 +98,7 @@ var properties = {
     },
     twitter: {
         // @todo: change this for something more visual
-        tweets: [{"screenName":"simonbest","createdAt":"06/Mar/2013","fullName":"simonbest","imageUrl":"http://a0.twimg.com/sticky/default_profile_images/default_profile_0_normal.png","source":"web","text":"RT @seedcamp: Announcing the first 5 locations for Mini Seedcamps: Belgrade, Kiev, Istanbul, Tel Aviv and Stockholm! http://t.co/eXcDDnQvdW"},{"screenName":"simonbest","createdAt":"21/Dec/2012","fullName":"simonbest","imageUrl":"http://a0.twimg.com/sticky/default_profile_images/default_profile_0_normal.png","source":"<a href=\"http://twitter.com/tweetbutton\" rel=\"nofollow\">Tweet Button</a>","text":"Applications for Seedcamp London are open until the 8th of January. Apply now! #seedcamp http://t.co/Vi4t8UKL"},{"screenName":"simonbest","createdAt":"12/Dec/2012","fullName":"simonbest","imageUrl":"http://a0.twimg.com/sticky/default_profile_images/default_profile_0_normal.png","source":"<a href=\"http://twitter.com/tweetbutton\" rel=\"nofollow\">Tweet Button</a>","text":"Low Cost Christmas [Infographic] http://t.co/di6yYR6M via @BaseKit"}]
+        tweets: [{"text": "How To Get Big-Brand Search Visibility","created_at": "Thu Aug 01 11:30:49 +0000 2013","source": "href=\"http://www.tweetdeck.com\" rel=\"nofollow\"TweetDeck","user": {"name": "BaseKit.Com","screen_name": "basekit","profile_image_url": "http://a0.twimg.com/profile_images/2388265742/8pkr9i1jj6x3wtu4h9j4_normal.jpeg","protected": false}}]
     },
     youtube: {
         videoId: "yfCdflc3x8U"
@@ -105,6 +116,11 @@ var properties = {
     responsiveslideshow: {
         preset: "default",
         albumRef: 1
+    },
+    profile: function(template, defaults) {
+        var properties = $.extend(defaults, {});
+
+        return properties;
     },
     navigation: function(template, defaults) {
         var properties = $.extend({
