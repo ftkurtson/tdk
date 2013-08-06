@@ -117,6 +117,11 @@ var properties = {
         preset: "default",
         albumRef: 1
     },
+    image: function(template, defaults) {
+        var properties = $.extend(defaults, {});
+
+        return properties;
+    },
     profile: function(template, defaults) {
         var properties = $.extend(defaults, {});
 
