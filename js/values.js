@@ -122,6 +122,16 @@ var properties = {
 
         return properties;
     },
+    gallery: function(template, defaults) {
+        var properties = $.extend(defaults, {});
+
+        return properties;
+    },
+    responsiveslideshow: function(template, defaults) {
+        var properties = $.extend(defaults, {});
+
+        return properties;
+    },
     profile: function(template, defaults) {
         var properties = $.extend(defaults, {});
 
