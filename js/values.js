@@ -97,7 +97,7 @@ var properties = {
         height: 300
     },
     twitter: {
-        // @todo: change this for something more visual
+        type: 'widget.twitter',
         tweets: [{"text": "How To Get Big-Brand Search Visibility","created_at": "Thu Aug 01 11:30:49 +0000 2013","source": "href=\"http://www.tweetdeck.com\" rel=\"nofollow\"TweetDeck","user": {"name": "BaseKit.Com","screen_name": "basekit","profile_image_url": "http://a0.twimg.com/profile_images/2388265742/8pkr9i1jj6x3wtu4h9j4_normal.jpeg","protected": false}}]
     },
     youtube: {
@@ -135,6 +135,9 @@ var properties = {
     profile: function(template, defaults) {
         var properties = $.extend(defaults, {});
 
+        if (properties.profileType !== undefined && properties.profileType === 'twitter') {
+            properties.type = 'widget.profile';
+        }
         return properties;
     },
     navigation: function(template, defaults) {

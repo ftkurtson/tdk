@@ -1,1 +1,1 @@
-Header add Content-Type application/json
+DefaultType application/json

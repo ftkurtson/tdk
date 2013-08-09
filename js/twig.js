@@ -1835,12 +1835,11 @@ var Twig = (function (Twig) {
                             index += 1;
                         }
                     };
-
-                if (result instanceof Array) {
+                    
+                if (Array.isArray(result) || result instanceof Array) {
                     len = result.length;
                     result.forEach(function (value) {
                         var key = index;
-
                         loop(key, value);
                     });
                 } else if (result instanceof Object) {

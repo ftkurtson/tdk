@@ -9,7 +9,9 @@
 
 {# EMAIL #}
 {% if data.profileType == 'email' %}
-<span>{% if data.email and data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}} {% endif %}</span>
+<div class='bk-profile-email'>
+  <a href="mailto:{% if data.email and data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}} {% endif %}">{% if data.email and data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}} {% endif %}</a>
+</div>
 {% endif %}
 
 {# HEADLINE #}
@@ -47,7 +49,9 @@
 {# LATEST TWEET #}
 {% if data.profileType == 'twitter' %}
 <ul class="twitter">
-{%  for tweet in data.tweets %}
+
+{% if data.tweets.length > 0 %}
+  {%  set tweet = data.tweets[0] %}
   <li>
     <div class="twitter-profile-pic">
       <a href="https://twitter.com/{{ tweet.screenName }}" target="_blank">
@@ -64,12 +68,13 @@
       <span> {{"widgets.twitter.via"|translate("via")}} </span>
       <span> {{ tweet.source|raw }} </span>
     </div>
-  </li>
-   {% else %}
-  <p>{{"widgets.twitter.message"|translate("Retrieving tweets")}}.</p>
-  {% endfor %}
+  </li>  
 </ul>
+{% else %}
+<p>{{"widgets.twitter.message"|translate("Retrieving tweets")}}.</p>
 {% endif %}
+{% endif %}
+
 
 
 
@@ -94,51 +99,54 @@
 
 {# SOCIAL ICONS #}
 {% if data.profileType == 'socialicons' %}
-  <!-- linkedIn -->
-  {% if (data.socialIconsLinkedin == 'profile' and profile.linkedin|length > 0) or (data.socialIconsLinkedin != 'profile' and data.socialIconsLinkedin|length > 0) %}
-  <span class="bk-socialicons-linkedin" >
-    <a href="{% if data.socialIconsLinkedin == 'profile' %}{{profile.linkedin}} {% else %} {{ data.socialIconsLinkedin }} {% endif %}" target="_blank">Linkedin</a>
-  </span>
-  {% endif %}
+<div class='bk-profile-socialicons'>
+    <!-- linkedIn -->
+    {% if (data.socialIconsLinkedin == 'profile' and profile.linkedin|length > 0) or (data.socialIconsLinkedin != 'profile' and data.socialIconsLinkedin|length > 0) %}
+    <span class="bk-socialicons-linkedin" >
+      <a href="{% if data.socialIconsLinkedin == 'profile' %}{{profile.linkedin}} {% else %} {{ data.socialIconsLinkedin }} {% endif %}" target="_blank">Linkedin</a>
+    </span>
+    {% endif %}
 
-  <!-- Twitter -->
-  {% if (data.socialIconsTwitter == 'profile' and profile.twitter|length > 0) or (data.socialIconsTwitter != 'profile' and data.socialIconsTwitter|length > 0) %}
-  <span class="bk-socialicons-twitter">
-    <a href="https://twitter.com/{% if data.socialIconsTwitter == 'profile' %}{{profile.twitter}}{% else %}{{ data.socialIconsTwitter }} {% endif %}" target="_blank">Twitter</a>
-  </span>
-  {% endif %}
+    <!-- Twitter -->
+    {% if (data.socialIconsTwitter == 'profile' and profile.twitter|length > 0) or (data.socialIconsTwitter != 'profile' and data.socialIconsTwitter|length > 0) %}
+    <span class="bk-socialicons-twitter">
+      <a href="https://twitter.com/{% if data.socialIconsTwitter == 'profile' %}{{profile.twitter}}{% else %}{{ data.socialIconsTwitter }} {% endif %}" target="_blank">Twitter</a>
+    </span>
+    {% endif %}
 
-  <!-- Facebook -->
-  {% if (data.socialIconsFacebook == 'profile' and profile.facebook|length > 0) or (data.socialIconsFacebook != 'profile' and data.socialIconsFacebook|length > 0) %}
-  <span class="bk-socialicons-facebook">
-    <a href="{% if data.socialIconsFacebook == 'profile' %}{{profile.facebook}} {% else %} {{ data.socialIconsFacebook }} {% endif %}" target="_blank">Facebook</a>
-  </span>
-  {% endif %}
+    <!-- Facebook -->
+    {% if (data.socialIconsFacebook == 'profile' and profile.facebook|length > 0) or (data.socialIconsFacebook != 'profile' and data.socialIconsFacebook|length > 0) %}
+    <span class="bk-socialicons-facebook">
+      <a href="{% if data.socialIconsFacebook == 'profile' %}{{profile.facebook}} {% else %} {{ data.socialIconsFacebook }} {% endif %}" target="_blank">Facebook</a>
+    </span>
+    {% endif %}
 
-  <!-- Rss -->
-  {% if (data.socialIconsRss == 'profile' and profile.rss|length > 0) or (data.socialIconsRss != 'profile' and data.socialIconsRss|length > 0) %}
-  <span class="bk-socialicons-rss">
-    <a href="{% if data.socialIconsRss == 'profile' %}{{profile.rss}} {% else %} {{ data.socialIconsRss }} {% endif %}" target="_blank">Rss</a>
-  </span>
-  {% endif %}
+    <!-- Rss -->
+    {% if (data.socialIconsRss == 'profile' and profile.rss|length > 0) or (data.socialIconsRss != 'profile' and data.socialIconsRss|length > 0) %}
+    <span class="bk-socialicons-rss">
+      <a href="{% if data.socialIconsRss == 'profile' %}{{profile.rss}} {% else %} {{ data.socialIconsRss }} {% endif %}" target="_blank">Rss</a>
+    </span>
+    {% endif %}
 
-  <!-- Google+ -->
-  {% if (data.socialIconsGoogleplus == 'profile' and profile.googleplus|length > 0) or (data.socialIconsGoogleplus != 'profile' and data.socialIconsGoogleplus|length > 0) %}
-  <span class="bk-socialicons-googleplus">
-    <a href="{% if data.socialIconsGoogleplus == 'profile' %}{{profile.googleplus}} {% else %} {{ data.socialIconsGoogleplus }} {% endif %}" target="_blank">Google+</a>
-  </span>
-  {% endif %}
+    <!-- Google+ -->
+    {% if (data.socialIconsGoogleplus == 'profile' and profile.googleplus|length > 0) or (data.socialIconsGoogleplus != 'profile' and data.socialIconsGoogleplus|length > 0) %}
+    <span class="bk-socialicons-googleplus">
+      <a href="{% if data.socialIconsGoogleplus == 'profile' %}{{profile.googleplus}} {% else %} {{ data.socialIconsGoogleplus }} {% endif %}" target="_blank">Google+</a>
+    </span>
+    {% endif %}
 
-  <!-- youtube -->
-  {% if (data.socialIconsYoutube == 'profile' and profile.youtube|length > 0) or (data.socialIconsYoutube != 'profile' and data.socialIconsYoutube|length > 0) %}
-  <span class="bk-socialicons-youtube">
-    <a href="{% if data.socialIconsYoutube == 'profile' %}{{profile.youtube}} {% else %} {{ data.socialIconsYoutube }} {% endif %}" target="_blank">Youtube</a>
-  </span>
-  {% endif %}
+    <!-- youtube -->
+    {% if (data.socialIconsYoutube == 'profile' and profile.youtube|length > 0) or (data.socialIconsYoutube != 'profile' and data.socialIconsYoutube|length > 0) %}
+    <span class="bk-socialicons-youtube">
+      <a href="{% if data.socialIconsYoutube == 'profile' %}{{profile.youtube}} {% else %} {{ data.socialIconsYoutube }} {% endif %}" target="_blank">Youtube</a>
+    </span>
+    {% endif %}
 
-  {% if (((data.socialIconsLinkedin == 'profile' and profile.linkedin|length == 0) or data.socialIconsLinkedin|length == 0) and ((data.socialIconsTwitter == 'profile' and profile.twitter|length == 0) or data.socialIconsTwitter|length == 0) and ((data.socialIconsFacebook == 'profile' and profile.facebook|length == 0) or data.socialIconsFacebook|length == 0) and ((data.socialIconsRss == 'profile' and profile.rss|length == 0) or data.socialIconsRss|length == 0) and ((data.socialIconsGoogleplus == 'profile' and profile.googleplus|length == 0) or data.socialIconsGoogleplus|length == 0) and ((data.socialIconsYoutube == 'profile' and profile.youtube|length == 0) or data.socialIconsYoutube|length == 0)) %}
-  <span>{{"widgets.socialicons.noicons"|translate("No social icons")}}</span>
-  {% endif %}
+    {% if (((data.socialIconsLinkedin == 'profile' and profile.linkedin|length == 0) or data.socialIconsLinkedin|length == 0) and ((data.socialIconsTwitter == 'profile' and profile.twitter|length == 0) or data.socialIconsTwitter|length == 0) and ((data.socialIconsFacebook == 'profile' and profile.facebook|length == 0) or data.socialIconsFacebook|length == 0) and ((data.socialIconsRss == 'profile' and profile.rss|length == 0) or data.socialIconsRss|length == 0) and ((data.socialIconsGoogleplus == 'profile' and profile.googleplus|length == 0) or data.socialIconsGoogleplus|length == 0) and ((data.socialIconsYoutube == 'profile' and profile.youtube|length == 0) or data.socialIconsYoutube|length == 0)) %}
+    <span>{{"widgets.socialicons.noicons"|translate("No social icons")}}</span>
+    {% endif %}
+
+</div>
 {% endif %}
 
 

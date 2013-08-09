@@ -18,7 +18,13 @@ WebFontConfig = {
             'Open+Sans::latin',
             'Old+Standard+TT::latin',
             'Merriweather::latin',
-            'Montserrat:400,700:latin'
+            'Montserrat:400,700:latin',
+            'Roboto::latin',
+            'Titillium+Web::latin',
+            'Karla::latin',
+            'Oswald::latin',
+            'Glegoo::latin',
+            'Vollkorn::latin'
         ]
     }
 };

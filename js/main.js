@@ -1,54 +1,4 @@
 $(function() {
-    var twigs = {};
-
-    function loadTemplate(id, file, base, callback) {
-
-        var error = null;
-
-        // The only way to catch exceptions here is via window.onerror
-        // This is horrible, but a simple try / catch doesn't seem to work
-        // Probably something to do with the fact this can be called asynchronously
-        var windowOnerror = window.onerror;
-        window.onerror = function(msg) {
-            error = new Error(msg);
-        };
-
-        // TODO: Queue up calls for the same template id
-
-        // If the template is already loaded then return it
-        if (typeof twigs[id] !== "undefined") {
-            if (typeof callback === "function") {
-                callback(twigs[id]);
-            }
-
-            return twigs[id];
-        }
-
-        var template = twig({
-            id: id,
-            href: file,
-            async: false,
-            base: base || "",
-            load: function(tpl) {
-                if (typeof callback === "function") {
-                    callback(tpl);
-                }
-            }
-        });
-
-        twigs[id] = template;
-
-        // Replace window.onerror
-        window.onerror = windowOnerror;
-
-        // Throw errors caught via window.onerror
-        if (error) {
-            throw error;
-        }
-
-        return template;
-    }
-
     Twig.extendFunction("asset", function(url) {
         var template = $("#template").val() || "none";
         return "templates/" + template + "/" + url;
@@ -101,7 +51,7 @@ $(function() {
             input = input(template, typeof args === "object" && args !== null ? args : {});
         }
 
-        var params = $.extend(initial, input);
+        var params = $.extend(initial.data, input);
 
         var data = {
             profile: profile(template),
@@ -110,17 +60,14 @@ $(function() {
             plugins: plugins(template)
         };
 
-        var widget = loadTemplate(type, "widgets/widget_" + type + ".twig");
+        var widget = Util.loadTemplate(type, "widgets/widget_" + type + ".twig");
         var html = widget.render(data);
 
         widgets.push({
             id: id,
             name: name,
-            params: params,
-            rerender: function(properties) {
-                // Use this to grab rerender properties
-                //console.log(properties);
-            }
+            type: type,
+            params: params
         });
 
         return '<div id="' + id + '" class="widget ' + type + ' ' + params.preset + '">' + html + '</div>';
@@ -255,7 +202,7 @@ $(function() {
 
                 try {
                     // Always make the id unique so we re-compile and render the template every time
-                    var twig = loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file, "templates/" + template);
+                    var twig = Util.loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file, "templates/" + template);
                 } catch (e) {
                     if (e.message.substring(0, 9) == "Uncaught ") {
                         e.message = e.message.substring(9);

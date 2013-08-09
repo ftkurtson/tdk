@@ -4,8 +4,10 @@ $(function() {
         var el = $("#" + widget.id);
         el["basekitWidget" + widget.name](widget.params);
         var object = el.data("bkob");
-        object.rerender = function() {
-            return widget.rerender(object.getProperties());
+        object.scope.properties.data = widget.params;
+        object.rerender = function () {
+            var properties = object.getProperties('current');
+            object.el.html(App.fakeRender(properties.type, properties));
         };
     });
 });

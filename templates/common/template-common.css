@@ -101,24 +101,6 @@ body.edit .widget.extendednavigation
   left: 0;
 }
 
-/** Companyheader widget **/
-.widget.companyheader a{
-  text-decoration: none;
-}
-.widget.companyheader img{
-  border: none;
-}
-
-/** Site title widget **/
-.widget.sitetitle a {
-  text-decoration:  none;
-}
-
-/** Site Logo widget **/
-.widget.sitelogo img{
-  border: none;
-}
-
 /** ICONS **/
 [class^="icon-"] {
   display: inline-block;

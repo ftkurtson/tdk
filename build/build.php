@@ -1,7 +1,7 @@
 <?php
 
-$basekitDir = '/var/www/basekit';
-$sdkDir = '/var/www/sdk';
+$basekitDir = '/usr/local/zend/apache2/htdocs/basekitv7';
+$sdkDir = '/usr/local/zend/apache2/htdocs/emulator';
 
 // Copy widget Twig files
 
