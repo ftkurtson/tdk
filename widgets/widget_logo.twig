@@ -7,7 +7,7 @@
 
 {% if url|length>0 %}<a href='/{{url}}'>{% endif %}
 <div class="logo">
-    <img src="{% if profile.logo and profile.logo != '' %}{{profile.logo}}{% elseif data.defaultlogo and data.defaultlogo != '' %}{{data.defaultlogo}}{% else %}{{'/images/mobile/default-logo.png'|expandAssetUrl}}{% endif %}" {% if data.widthPercent and data.widthPercent != '' and profile.logo and profile.logo != '' %}style="width: {{data.widthPercent}}%" {% endif %}></img>
+    <img src="{% if profile.logo and profile.logo != '' %}{{profile.logo}}{% elseif data.defaultlogo and data.defaultlogo != '' %}{{data.defaultlogo}}{% else %}{{'/images/logo.png'|expandAssetUrl}}{% endif %}" {% if data.widthPercent and data.widthPercent != '' and profile.logo and profile.logo != '' %}style="width: {{data.widthPercent}}%" {% endif %}></img>
 </div>
 
 {% if url|length>0 %}</a>{% endif %}
