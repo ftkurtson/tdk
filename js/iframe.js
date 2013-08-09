@@ -6,8 +6,8 @@ $(function() {
         var object = el.data("bkob");
         object.scope.properties.data = widget.params;
         object.rerender = function () {
-            var properties = object.getProperties('current');
-            object.el.html(App.fakeRender(properties.type, properties));
+            var properties = this.getProperties('current');
+            this.el.html(App.fakeRender(properties.type, properties));
         };
     });
 });

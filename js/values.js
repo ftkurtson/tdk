@@ -4,8 +4,8 @@
 var profile = function(template) {
     return {
         business: "Smart Inc.",
-        header: "",
-        strapline: "",
+        header: "My Website Header",
+        strapline: "Here is the website strapline!",
         address1: "123 Example Street",
         address2: "Block Number One",
         postalcode: "BS1 2ND",
@@ -17,7 +17,7 @@ var profile = function(template) {
         youtube: "youtube.com",
         googleplus: "googleplus.com",
         rss: "rss.com",
-        copyright: "Copyright © 2013. All Rights Reserved."
+        copyright: "Copyright 2013. All Rights Reserved."
     };
 };
 
@@ -133,12 +133,9 @@ var properties = {
         return properties;
     },
     profile: function(template, defaults) {
-        var properties = $.extend(defaults, {});
+        $.extend(defaults, {});
 
-        if (properties.profileType !== undefined && properties.profileType === 'twitter') {
-            properties.type = 'widget.profile';
-        }
-        return properties;
+        return defaults;
     },
     navigation: function(template, defaults) {
         var properties = $.extend({

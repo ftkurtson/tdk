@@ -44,6 +44,7 @@ $(function() {
 
         // Capitalize the type to get its initial properties
         var name = type.charAt(0).toUpperCase() + type.slice(1);
+
         var initial = BaseKit.Widget[name + "Properties"] || {};
 
         var input = properties[type] || {};
@@ -51,7 +52,8 @@ $(function() {
             input = input(template, typeof args === "object" && args !== null ? args : {});
         }
 
-        var params = $.extend(initial.data, input);
+        initial.type = type;
+        var params = $.extend({}, initial, input);
 
         var data = {
             profile: profile(template),
@@ -70,7 +72,7 @@ $(function() {
             params: params
         });
 
-        return '<div id="' + id + '" class="widget ' + type + ' ' + params.preset + '">' + html + '</div>';
+        return '<div id="' + id + '" class="widget ' + type + '">' + html + '</div>';
     }
 
     Twig.extendFunction("widget", function(type, id, args) {

@@ -2124,7 +2124,6 @@
                 data: data
             }).done(function (response, status) {
                 if (status === 'success') {
-                    console.log(JSON.stringify(response));
                     // format data
                     $.each(response, function () {
 
