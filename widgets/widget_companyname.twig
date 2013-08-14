@@ -6,13 +6,13 @@
 {% endfor %}
 
 {% if url|length>0 %}<a href='/{{url}}'>{% endif %}
-<h1>
-    {% if data.business and data.business !='profile' and data.business !=''%}
-        {{data.business}}
-    {% elseif profile.business and profile.business != '' %}
-        {{profile.business}}
-    {% else %}
-        My Website
-    {% endif %}
-</h1>
+
+{% if data.business and data.business !='profile' and data.business !=''%}
+    {{data.business}}
+{% elseif profile.business and profile.business != '' %}
+    {{profile.business}}
+{% else %}
+    My Website
+{% endif %}
+
 {% if url|length>0 %}</a>{% endif %}

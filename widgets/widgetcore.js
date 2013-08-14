@@ -80,7 +80,6 @@
                 rerender: function () {
                     var properties = this.getProperties('current');
                     this.el.html('');
-                    console.log(properties.type, properties, true);
                     this.renderTemplate(properties.type, properties, true);
                 },
 
