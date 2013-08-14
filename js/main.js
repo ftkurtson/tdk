@@ -39,6 +39,10 @@ $(function() {
 
     var widgets = [];
 
+    function defaultProperties(template, defaults) {
+        return defaults;
+    }
+
     function renderWidget(type, id, args) {
         var template = $("#template").val() || "none";
 
@@ -47,7 +51,8 @@ $(function() {
 
         var initial = BaseKit.Widget[name + "Properties"] || {};
 
-        var input = properties[type] || {};
+        var input = properties[type] || defaultProperties;
+
         if (typeof input === "function") {
             input = input(template, typeof args === "object" && args !== null ? args : {});
         }
