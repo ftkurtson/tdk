@@ -177,7 +177,7 @@ $(function() {
 
             $("#colour-swatch").val(colourSwatchIndex);
 
-            for (var fontNumber = 1; fontNumber < 10; fontNumber++) {
+            for (var fontNumber = 1; fontNumber < 11; fontNumber++) {
                 if (typeof data.fontSwatch["font" + fontNumber] === "undefined") {
                     var error = "Template Metadata Error\nNo 'fontSwatch.font" + fontNumber + "' provided";
                     alert(error);
