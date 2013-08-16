@@ -1,4 +1,10 @@
-<div class="bk-content-text">{{ data.content|raw }}</div>
+<div class="bk-content-text">
+{% if debugMode %}
+{{ data.content }}
+{% else %}
+{{ data.content|raw }}
+{% endif %}
+</div>
 
 <span class="expand" {% if data.lines|length == 0 or data.lines == 'all' %} style="display: none" {% endif %}>
 	<span class="more">{{"widgets.content.more"|translate("more")}}...</span>

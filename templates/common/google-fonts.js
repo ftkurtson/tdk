@@ -3,28 +3,28 @@
 WebFontConfig = {
     google: {
         families: [
-            'Droid+Sans::latin',
-            'Arvo::latin',
-            'Corben::latin',
+            'Droid+Sans:400,700:latin',
+            'Arvo:400,700:latin',
+            'Corben:400,700:latin',
             'Lobster::latin',
             'Droid+Serif::latin',
-            'Raleway:100:latin',
+            'Raleway:300,400,700:latin',
             'Goudy+Bookletter+1911::latin',
             'Abril+Fatface::latin',
             'Yanone+Kaffeesatz:400,700:latin',
             'Hammersmith+One::latin',
-            'Lato::latin',
-            'PT+Sans+Narrow::latin',
-            'Open+Sans::latin',
-            'Old+Standard+TT::latin',
-            'Merriweather::latin',
+            'Lato:300,400,700:latin',
+            'PT+Sans+Narrow:400,700:latin',
+            'Open+Sans:300,400,700:latin',
+            'Old+Standard+TT:400,700:latin',
+            'Merriweather:300,400,700:latin',
             'Montserrat:400,700:latin',
-            'Roboto::latin',
-            'Titillium+Web::latin',
-            'Karla::latin',
-            'Oswald::latin',
+            'Roboto:300,400,700:latin',
+            'Titillium+Web:300,400,700:latin',
+            'Karla:400,700:latin',
+            'Oswald:300,400,700:latin',
             'Glegoo::latin',
-            'Vollkorn::latin'
+            'Vollkorn:400,700:latin'
         ]
     }
 };

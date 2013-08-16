@@ -29,7 +29,7 @@
 
         <li class="{{aspectClass}}">
             <span class="inner" style="background-image:url('{{image.url}}');">
-                <a class="" href="#" image-href="{{image.url}}" data-lightbox="set-{{image.albumRef}}" title="{{image.title}}">
+                <a class="" href="#" image-href="{{image.url}}" data-lightbox="set-{{ref}}" title="{{image.title}}">
                     <img src="{{image.url}}"/>
                     {% if image.title != '' %}
                     <span class="title" {% if data.showTitle == 0%} style="display: none" {% endif %}>{{image.title}}</span>

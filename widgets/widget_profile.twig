@@ -150,6 +150,6 @@
 {% endif %}
 
 
-{% if data.profileType|length == 0 or (data.profileType != 'address' and data.profileType != 'email' and data.profileType != 'strapline' and data.profileType != 'companydescription' and data.profileType != 'phone' and data.profileType != 'business' and data.profileType != 'copyright' and data.profileType != 'twitter' and data.profileType != 'map' and data.profileType != 'form' and data.profileType != 'socialicons') %}
+{% if data.profileType|length == 0 or (data.profileType != 'address' and data.profileType != 'email' and data.profileType != 'strapline' and data.profileType != 'companydescription' and data.profileType != 'phone' and data.profileType != 'business' and data.profileType != 'copyright' and data.profileType != 'twitter' and data.profileType != 'map' and data.profileType != 'form' and data.profileType != 'socialicons' and data.profileType != 'headline') %}
 <p> {{"widgets.profile.error"|translate("Sorry, something is wrong with this widget")}} </p>
 {% endif %}

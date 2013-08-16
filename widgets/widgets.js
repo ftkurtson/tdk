@@ -383,11 +383,14 @@
 			if (typeof(code) !== 'undefined' && code !== null &&  code.length > 0)
 			{
 				thisEl.find('.embed-default').hide();
-				thisEl.find('.content').show().writeCapture().html(code,
-				{
-					proxyGetElementById: true,
-					writeOnGetElementById: true
-				});
+
+                if (this.get('debugMode') !== true) {
+                    thisEl.find('.content').show().writeCapture().html(code,
+                    {
+                        proxyGetElementById: true,
+                        writeOnGetElementById: true
+                    });
+                }
 			}
 			else
 			{
@@ -415,7 +418,8 @@
 			$(el).data('bkob', new BaseKit.Widget.Embed(el, options));
 		});
 	};
-}());(function () {
+}());
+(function () {
     BaseKit.Widget.Extendednavigation = null;
 
     BaseKit.Widget.ExtendednavigationProperties = {
@@ -784,7 +788,8 @@
 
     BaseKit.Widget.LogoProperties = {
         logo: 'profile',
-        widthPercent: '100'
+        width: '100%',
+        originalWidth: null
     };
 
     BaseKit.Widget.LogoMethods = {
