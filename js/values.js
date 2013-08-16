@@ -1,5 +1,8 @@
 /**
- * User profile values
+ * User Profile Values
+ *
+ * Widget properties with the value "profile" will use the corresponding profile value.
+ * Text in templates should use the profile wherever possible.
  */
 var profile = function(template) {
     return {
@@ -22,24 +25,10 @@ var profile = function(template) {
 };
 
 /**
- * Page setup
- */
-var page = {
-    seoLang: "en",
-    keywords: "basekit",
-    description: "BaseKit Template SDK",
-    backgroundClass: "default"
-};
-
-/**
- * Site data
- */
-var site = {
-    'ref': 12345
-};
-
-/**
- * Text for use in content widgets
+ * Text Widget Content
+ *
+ * This will only be used where there is no default content specified in a widget.
+ * Template text widgets should always have a default value, so this content should only appear within the main zone.
  */
 var library = [
     // Lorem Ipsum
@@ -57,26 +46,26 @@ var library = [
 ];
 
 /**
- * Widget properties
- * These can either be an object or a function that returns an object
+ * Widget Properties
+ *
+ * These can either be an object or a function that returns an object.
+ * You should always extend the default properties (via the defaults argument).
  */
 var properties = {
     feature: function(template, defaults) {
-        return {
+        return $.extend(defaults, {
             preset: "align-center",
             bgImg: "templates/" + template + "/images/feature-bg.jpg",
             buttonText: "Sign Up",
             header: "My Website Header",
             strapline: "Here is the website strapline!"
-        };
+        });
     },
     companyheader: function(template, defaults) {
-        var properties = $.extend(defaults, {
+        return $.extend(defaults, {
             preset: "default",
             showLogo: 1
         });
-
-        return properties;
     },
     content: function(template, defaults) {
         var properties = $.extend(defaults, {
@@ -89,56 +78,52 @@ var properties = {
 
         return properties;
     },
-    contactform: {
-        preset: "todo",
-        text: "Submit Form"
+    contactform: function(template, defaults) {
+        return $.extend(defaults, {
+            preset: "todo",
+            text: "Submit Form"
+        });
     },
-    map: {
-        height: 300
+    map: function(template, defaults) {
+        return $.extend(defaults, {
+            height: 300
+        });
     },
-    twitter: {
-        type: 'widget.twitter',
-        tweets: [{"text": "How To Get Big-Brand Search Visibility","created_at": "Thu Aug 01 11:30:49 +0000 2013","source": "href=\"http://www.tweetdeck.com\" rel=\"nofollow\"TweetDeck","user": {"name": "BaseKit.Com","screen_name": "basekit","profile_image_url": "http://a0.twimg.com/profile_images/2388265742/8pkr9i1jj6x3wtu4h9j4_normal.jpeg","protected": false}}]
+    twitter: function(template, defaults) {
+        return $.extend(defaults, {
+            type: 'widget.twitter',
+            tweets: [{"text": "How To Get Big-Brand Search Visibility","created_at": "Thu Aug 01 11:30:49 +0000 2013","source": "href=\"http://www.tweetdeck.com\" rel=\"nofollow\"TweetDeck","user": {"name": "BaseKit.Com","screen_name": "basekit","profile_image_url": "http://a0.twimg.com/profile_images/2388265742/8pkr9i1jj6x3wtu4h9j4_normal.jpeg","protected": false}}]
+        });
     },
-    youtube: {
-        videoId: "yfCdflc3x8U"
+    youtube: function(template, defaults) {
+        return $.extend(defaults, {
+            videoId: "yfCdflc3x8U"
+        });
     },
-    button: {
-        text: "Click Me"
-    },
-    gallery: {
-        preset: "default",
-        albumRef: 1
-    },
-    extendednavigation: {
-        align: "left"
-    },
-    responsiveslideshow: {
-        preset: "default",
-        albumRef: 1
-    },
-    image: function(template, defaults) {
-        var properties = $.extend(defaults, {});
-
-        return properties;
+    button: function(template, defaults) {
+        return $.extend(defaults, {
+            text: "Click Me"
+        });
     },
     gallery: function(template, defaults) {
-        var properties = $.extend(defaults, {});
-
-        return properties;
+        return $.extend(defaults, {
+            preset: "default",
+            albumRef: 1
+        });
+    },
+    extendednavigation: function(template, defaults) {
+        return $.extend(defaults, {
+            align: "left"
+        });
     },
     responsiveslideshow: function(template, defaults) {
-        var properties = $.extend(defaults, {});
-
-        return properties;
-    },
-    profile: function(template, defaults) {
-        $.extend(defaults, {});
-
-        return defaults;
+        return $.extend(defaults, {
+            preset: "default",
+            albumRef: 1
+        });
     },
     navigation: function(template, defaults) {
-        var properties = $.extend({
+        return $.extend({
             preset: "default",
             align: "left"
         }, defaults);
@@ -146,8 +131,10 @@ var properties = {
 };
 
 /**
- * Plugins data
- * Albums and images are defined here
+ * Plugins Data
+ *
+ * Albums and images are defined here for use in templates.
+ * To make use of these, include six images in the images/gallery directory with filenames 1.jpg, 2.jpg, 3.jpg, etc.
  */
 var plugins = function(template) {
     return {
@@ -180,8 +167,9 @@ var plugins = function(template) {
 };
 
 /**
- * Site navigation
- * Pages, folders and sub-pages can be defined for use in navigation menus
+ * Site Navigation
+ *
+ * Pages, folders and sub-pages can be defined for use in navigation menus.
  */
 var pages = [
     {
@@ -257,3 +245,20 @@ var pages = [
         parentId: 0
     }
 ];
+
+/**
+ * Page Setup
+ */
+var page = {
+    seoLang: "en",
+    keywords: "basekit",
+    description: "BaseKit Template SDK",
+    backgroundClass: "default"
+};
+
+/**
+ * Site Data
+ */
+var site = {
+    'ref': 12345
+};
