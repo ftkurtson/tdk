@@ -2,10 +2,15 @@
 
 {% block content %}
 
- <header>
+<div class="bk-pt-default">
+
+<header>
     <div class="wrapper clearfix">
-       {{widget('companyheader', 'companyheader', {"defaultlogo": asset('images/logo.png')})|raw}}
-       {{widget('extendednavigation', 'navigationheader', {})|raw}}
+        <div class="companyheader clearfix">
+            {{widget('logo', 'logo', {"defaultlogo": asset('images/logo.png')})|raw}}
+            {{widget('companyname', 'companyname', {"business": "Pearl"})|raw}}
+        </div>
+        {{widget('extendednavigation', 'navigationheader', {})|raw}}
     </div>
 </header>
 
@@ -17,15 +22,19 @@
     <div class="wrapper clearfix">
         <div class="responsivecolumns columns-two-50-50">
             <div class="column columns-two-left">
-                {{widget('content', 'footercolumn1', {"content":"<h2>Lorem Ip Soda</h2><p>Integer a Tortor Dui. Nullam nec ante mi. Morbi sodales urna sit amet mauris elementum quis rutrum lacus gravida. Proin feugia libero quis.</p>"})|raw}}
+                {{widget('content', 'footercolumn1content1', {"content":"<h2>Lorem Ip Soda</h2><p>Integer a Tortor Dui. Nullam nec ante mi. Morbi sodales urna sit amet mauris elementum quis rutrum lacus gravida. Proin feugia libero quis.</p>"})|raw}}
+                {{widget('profile', 'footercolumn1profilesocialicons', { 'profileType':'socialicons', 'socialicons':'profile'})|raw}}
             </div>
             <div class="column columns-two-right">
-                {{widget('content', 'footercolumn2', {"content":"<h2>Aliquam Sodales</h2><p>Copyright &copy; 2013. All Rights Reserved.</p>"})|raw}}
-
-                {{widget('socialicons', 'socialicons', {'googleplus': 'https://plus.google.com/101946323226233111530', 'linkedin':'http://www.linkedin.com/company/basekit', 'facebook': 'https://www.facebook.com/TeamBaseKit', 'twitter': 'https://twitter.com/basekit', 'youtube': 'https://www.youtube.com/user/TeamBaseKit', 'rss': 'http://blogdiseno.basekit.es/feed/'})|raw}}
+                {{widget('content', 'footercolumn2content1', {"content":"<h2>Aliquam Sodales</h2>"})|raw}}
+                {{widget('profile', 'footercolumn2profiletwitter', { 'profileType':'twitter', 'twitter':'profile'})|raw}}
+                {{widget('profile', 'footercolumn2profilecopyright', { 'profileType':'copyright', 'copyright':'profile'})|raw}}
+                
             </div>
         </div>
     </div>
 </footer>
+
+</div>
 
 {% endblock %}

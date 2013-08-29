@@ -253,12 +253,14 @@ var page = {
     seoLang: "en",
     keywords: "basekit",
     description: "BaseKit Template SDK",
-    backgroundClass: "default"
+    backgroundClass: "default",
+    request: "home"
 };
 
 /**
  * Site Data
  */
 var site = {
-    'ref': 12345
+    'ref': 12345,
+    colorSwatch: null
 };

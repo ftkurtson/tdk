@@ -135,6 +135,8 @@ $(function() {
             // Reset the colour swatch
             colourSwatchIndex = 0;
         }
+        
+        site.colorSwatch = 'swatch-' + (parseInt(colourSwatchIndex, 10) + 1);
 
         // Grab the metadata.json file
         $.getJSON("templates/" + template + "/metadata.json").done(function(data) {
