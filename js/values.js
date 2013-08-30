@@ -61,6 +61,11 @@ var properties = {
             strapline: "Here is the website strapline!"
         });
     },
+    companyname: function(template, defaults) {
+        return $.extend(defaults, {
+            url:"/"
+        });
+    },
     companyheader: function(template, defaults) {
         return $.extend(defaults, {
             preset: "default",
