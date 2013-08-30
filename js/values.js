@@ -63,7 +63,7 @@ var properties = {
     },
     companyname: function(template, defaults) {
         return $.extend(defaults, {
-            url:"/"
+            url:"home"
         });
     },
     companyheader: function(template, defaults) {
@@ -181,7 +181,7 @@ var pages = [
         ref: 1,
         request: "home",
         title: "Home",
-        type: "page",
+        type: "home",
         status: "active",
         parent_id: 0,
         parentId: 0
