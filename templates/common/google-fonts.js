@@ -16,6 +16,7 @@ WebFontConfig = {
             'Lato:300,400,700:latin',
             'PT+Sans+Narrow:400,700:latin',
             'Open+Sans:300,400,700:latin',
+            'Open+Sans+Condensed:300,700:latin',
             'Old+Standard+TT:400,700:latin',
             'Merriweather:300,400,700:latin',
             'Montserrat:400,700:latin',
@@ -24,7 +25,9 @@ WebFontConfig = {
             'Karla:400,700:latin',
             'Oswald:300,400,700:latin',
             'Glegoo::latin',
-            'Vollkorn:400,700:latin'
+            'Vollkorn:400,700:latin',
+            'Courgette:400:latin',
+            'Abel:400:latin'
         ]
     }
 };

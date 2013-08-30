@@ -12,26 +12,41 @@ header, footer
 }
 
 /** ALIGNMENT **/
-ul.align-center li, button.justifycenter, button.justifyfull
+ul.align-center li, button.justifycenter, button.justifyfull, .widget-align-center
 {
     text-align: center;
 }
-ul.align-left li, button.justifyleft
+ul.align-left li, button.justifyleft, .widget-align-left
 {
-     text-align: left;
+    text-align: left;
 }
-ul.align-right li, button.justifyright
+ul.align-right li, button.justifyright, .widget-align-right
 {
 	text-align: right;
 }
 
+img.widget-align-left {
+    display:block;
+    margin:0 auto 0 0;
+}
+
+img.widget-align-center {
+    display:block;
+    margin:0 auto;
+}
+
+img.widget-align-right {
+    display:block;
+    margin:0 0 0 auto;
+}
+
 /** FORMAT **/
-button.bold .btnText
+button.bold.btnText
 {
   font-weight: bold;
 }
 
-button.italic .btnText
+button.italic.btnText
 {
   font-style: italic;
 }
@@ -99,6 +114,66 @@ body.edit .widget.extendednavigation
   position: absolute;
   top: 0;
   left: 0;
+}
+
+/** Contact form/ profile widget **/
+/** profile widget **/
+/** sign up widget **/
+/** forget password widget **/
+
+.widget.contactform .overlay,
+.widget.profile .overlay,
+.widget.signupform .overlay,
+.widget.forgottenpassword .overlay,
+.widget.resetpassword .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.5);
+  display:table;
+  text-align: center;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+
+.widget.contactform .overlay .message-box,
+.widget.profile .overlay .message-box,
+.widget.signupform .overlay .message-box,
+.widget.forgottenpassword .overlay .message-box,
+.widget.resetpassword .overlay .message-box {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.widget.contactform .overlay .message-text,
+.widget.profile .overlay .message-text,
+.widget.signupform .overlay .message-text,
+.widget.forgottenpassword .overlay .message-text,
+.widget.resetpassword .overlay .message-text {
+  font-size: 14px;
+  line-height: 20px;
+  height: 30px;
+  width: 90%;
+  display: block;
+  padding-top: 9px;
+  margin: 0 auto;
+  background: #dff0d8;
+  color: #468847;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+
+.widget.contactform .overlay.fail .message-text,
+.widget.profile .overlay.fail .message-text,
+.widget.signupform .overlay.fail .message-text,
+.widget.forgottenpassword .overlay.fail .message-text,
+.widget.resetpassword .overlay.fail .message-text {
+  background: #f2dede;
+  color: #b94a48;
 }
 
 /** ICONS **/

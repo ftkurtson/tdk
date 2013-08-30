@@ -10,15 +10,16 @@
 	{% set description = data.description %}
 {% endif %}
 
- <a {% if data.action and data.action != 'none' %} href="{{ data.url }}" target="{{ data.target }}" {% else %} href="#" image-href="{{data.src}}" rel="lightbox" {% endif %} title="{{ title }}">
+<a {% if data.action and data.action != 'none' %} href="{{ data.url }}" target="{{ data.target }}" {% else %} href="#" image-href="{{data.src}}" rel="lightbox" {% endif %} title="{{ title }}">
  	<span class="image-img">
-		<img class="image" src="{{ data.src }}" alt="{{ data.alt }}" data-filename="{{ data.fileName }}" data-filesize="{{ data.fileSize }}" data-imagesize="{{ data.imageSize }}" width= "{{ data.imageWidth}}"></img>
+		<img class="image{% if data.align %} {{data.align}}{% endif %}" src="{{ data.src }}" alt="{{ data.alt }}" data-filename="{{ data.fileName }}" data-filesize="{{ data.fileSize }}" data-imagesize="{{ data.imageSize }}" width= "{{ data.imageWidth}}"></img>
 	</span>
 	{% if title %}
 	<span class="image-title">{{ title }}</span>
 	{% endif %}
+    {% if description %}
+    <span class="image-description">{{ description|nl2br }}</span>
+    {% endif %}
 </a> 
 
-{% if description %}
-<span class="image-description">{{ description|nl2br }}</span>
-{% endif %}
+

@@ -1,50 +1,104 @@
 {# ADDRESS #}
 {% if data.profileType == 'address' %}
-<span>{% if data.address and data.address|length > 0 and data.address != 'profile' %}{{ data.address }}{% else %}{{profile.address}} {% endif %}</span>
-<span>{% if data.address1 and data.address1|length > 0 and data.address1 != 'profile' %}{{ data.address1 }}{% else %}{{profile.address1}} {% endif %}</span>
-<span>{% if data.address2 and data.address2|length > 0 and data.address2 != 'profile' %}{{ data.address2 }}{% else %}{{profile.address2}} {% endif %}</span>
-<span>{% if data.country and data.country|length > 0 and data.country != 'profile' %}{{ data.country }}{% else %}{{profile.country}} {% endif %}</span>
-<span>{% if data.addressPostalCode and data.addressPostalCode|length > 0 and data.addressPostalCode != 'profile' %}{{ data.addressPostalCode }}{% else %}{{profile.postalcode}} {% endif %}</span>
+  {% if (data.address != 'profile' and data.address|length > 0) or (profile.address|length > 0) %}
+    <span>{% if data.address|length > 0 and data.address != 'profile' %}{{ data.address }}{% else %}{{profile.address}} {% endif %}</span>
+  {% else %}
+    {% set noAddress = true %}
+  {% endif %}
+
+  {% if (data.address1 != 'profile' and data.address1|length > 0) or (profile.address1|length > 0) %}
+    <span>{% if data.address1|length > 0 and data.address1 != 'profile' %}{{ data.address1 }}{% else %}{{profile.address1}} {% endif %}</span>
+  {% else %}
+    {% set noAddress1 = true %}
+  {% endif %}
+
+  {% if (data.address2 != 'profile' and data.address2|length > 0) or (profile.address2|length > 0) %}
+    <span>{% if data.address2|length > 0 and data.address2 != 'profile' %}{{ data.address2 }}{% else %}{{profile.address2}} {% endif %}</span>
+  {% else %}
+    {% set noAddress2 = true %}
+  {% endif %}
+
+  {% if (data.country != 'profile' and data.country|length > 0) or (profile.country|length > 0) %}
+    <span>{% if data.country|length > 0 and data.country != 'profile' %}{{ data.country }}{% else %}{{profile.country}} {% endif %}</span>
+  {% else %}
+    {% set noCountry = true %}
+  {% endif %}
+
+  {% if (data.addressPostalCode != 'profile' and data.addressPostalCode|length > 0) or (profile.postalcode|length > 0) %}
+    <span>{% if data.addressPostalCode|length > 0 and data.addressPostalCode != 'profile' %}{{ data.addressPostalCode }}{% else %}{{profile.postalcode}} {% endif %}</span>
+  {% else %}
+    {% set noPostalcode = true %}
+  {% endif %}
+
+  {% if noAddress and noAddress1 and noAddress2 and noCountry and noPostalcode %}
+    <span>{{"widgets.profile.noaddress"|translate("No address")}}</span>
+  {% endif %}
 {% endif %}
 
 {# EMAIL #}
 {% if data.profileType == 'email' %}
 <div class='bk-profile-email'>
-  <a href="mailto:{% if data.email and data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}} {% endif %}">{% if data.email and data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}} {% endif %}</a>
+  {% if (data.email != 'profile' and data.email|length > 0) or (profile.email|length > 0) %}
+    <a href="mailto:{% if data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}}{% endif %}">{% if data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}}{% endif %}</a>
+  {% else %}
+    <span>{{"widgets.profile.noemail"|translate("No email")}}</span>
+  {% endif %}
 </div>
 {% endif %}
 
 {# HEADLINE #}
 {% if data.profileType == 'headline' %}
-<span>{% if data.headline and data.headline|length > 0 and data.headline != 'profile' %}{{ data.headline }}{% else %}{{profile.headline}} {% endif %}</span>
+  {% if (data.headline != 'profile' and data.headline|length > 0) or (profile.headline|length > 0) %}
+    <span>{% if data.headline|length > 0 and data.headline != 'profile' %}{{ data.headline }}{% else %}{{profile.headline}} {% endif %}</span>
+  {% else %}
+    <span>{{"widgets.profile.noheadline"|translate("No headline")}}</span>
+  {% endif %}
 {% endif %}
 
 {# STRAP LINE #}
 {% if data.profileType == 'strapline' %}
-<span>{% if data.strapline and data.strapline|length > 0 and data.strapline != 'profile' %}{{ data.strapline }}{% else %}{{profile.strapline}} {% endif %}</span>
+  {% if (data.strapline != 'profile' and data.strapline|length > 0) or (profile.strapline|length > 0) %}
+    <span>{% if data.strapline|length > 0 and data.strapline != 'profile' %}{{ data.strapline }}{% else %}{{profile.strapline}} {% endif %}</span>
+  {% else %}
+    <span>{{"widgets.profile.nostrapline"|translate("No strapline")}}</span>
+  {% endif %}
 {% endif %}
 
 {# COMPANY DESCRIPTION #}
 {% if data.profileType == 'companydescription' %}
-<span>{% if data.companydescription and data.companydescription|length > 0 and data.companydescription != 'profile' %}{{ data.companydescription }}{% else %}{{profile.companydescription}} {% endif %}</span>
+  {% if (data.companydescription != 'profile' and data.companydescription|length > 0) or (profile.companydescription|length > 0) %}
+    <span>{% if data.companydescription|length > 0 and data.companydescription != 'profile' %}{{ data.companydescription }}{% else %}{{profile.companydescription}} {% endif %}</span>
+  {% else %}
+    <span>{{"widgets.profile.nocompanydescription"|translate("No company description")}}</span>
+  {% endif %}
 {% endif %}
 
 {# PHONE NUMBER #}
 {% if data.profileType == 'phone' %}
-<span>{% if data.phone and data.phone|length > 0 and data.phone != 'profile' %}{{ data.phone }}{% else %}{{profile.phone}} {% endif %}</span>
+  {% if (data.phone != 'profile' and data.phone|length > 0) or (profile.phone|length > 0) %}
+    <span>{% if data.phone|length > 0 and data.phone != 'profile' %}{{ data.phone }}{% else %}{{profile.phone}} {% endif %}</span>
+  {% else %}
+    <span>{{"widgets.profile.nophone"|translate("No phone number")}}</span>
+  {% endif %}
 {% endif %}
 
 {# BUSINESS NAME #}
 {% if data.profileType == 'business' %}
-<span>{% if data.business and data.business|length > 0 and data.business != 'profile' %}{{ data.business }}{% else %}{{profile.business}} {% endif %}</span>
+  {% if (data.business != 'profile' and data.business|length > 0) or (profile.business|length > 0) %}
+    <span>{% if data.business|length > 0 and data.business != 'profile' %}{{ data.business }}{% else %}{{profile.business}} {% endif %}</span>
+  {% else %}
+    <span>{{"widgets.profile.nobusiness"|translate("No business")}}</span>
+  {% endif %}
 {% endif %}
 
 {# COPYRIGHT #}
 {% if data.profileType == 'copyright' %}
-<span>{% if data.copyright and data.copyright|length > 0 and data.copyright != 'profile' %}{{ data.copyright }}{% else %}{{profile.copyright}} {% endif %}</span>
+  {% if (data.copyright != 'profile' and data.copyright|length > 0) or (profile.copyright|length > 0) %}
+    <span>{% if data.copyright|length > 0 and data.copyright != 'profile' %}{{ data.copyright }}{% else %}{{profile.copyright}} {% endif %}</span>
+  {% else %}
+    <span>{{"widgets.profile.nocopyright"|translate("No copyright")}}</span>
+  {% endif %}
 {% endif %}
-
-
 
 {# LATEST TWEET #}
 {% if data.profileType == 'twitter' %}
@@ -76,8 +130,6 @@
 {% endif %}
 
 
-
-
 {# MAP #}
 {% if data.profileType == 'map' %}
 <div class="map"></div>
@@ -91,7 +143,7 @@
     <label for="email">{{"widgets.profile.form"|translate("Your Email")}}:</label>
     <input type="email" class="email" placeholder="{{"widgets.profile.formHolder"|translate("Type your Email")}}">
 
-    <button class="btn btnText {% if data.formItalic %}italic{% endif %} {% if data.formBold %}bold{% endif %} {{data.formAlign}}" type="submit" {% if data.formFontSize|length > 0 %}style="font-size: {{data.formFontSize}}px"{% endif %}>{{data.formText}}</button>
+    <button class="btn btnText {% if data.formItalic %}italic{% endif %} {% if data.formBold %}bold{% endif %} {{data.formAlign}}" type="submit" {% if data.formFontSize|length > 0 %}style="font-size: {{data.formFontSize}}px"{% endif %}>{% if data.formText %}{{data.formText}}{% else %}{{"widgets.profile.default_button_text"|translate("Send")}}{% endif %}</button>
   </fieldset>
 </form>
 {% endif %}
@@ -101,48 +153,60 @@
 {% if data.profileType == 'socialicons' %}
 <div class='bk-profile-socialicons'>
     <!-- linkedIn -->
-    {% if (data.socialIconsLinkedin == 'profile' and profile.linkedin|length > 0) or (data.socialIconsLinkedin != 'profile' and data.socialIconsLinkedin|length > 0) %}
+    {% if (data.socialIconsLinkedin != 'profile' and data.socialIconsLinkedin|length > 0) or (profile.linkedin|length > 0) %}
     <span class="bk-socialicons-linkedin" >
-      <a href="{% if data.socialIconsLinkedin == 'profile' %}{{profile.linkedin}} {% else %} {{ data.socialIconsLinkedin }} {% endif %}" target="_blank">Linkedin</a>
+      <a href="{% if data.socialIconsLinkedin|length > 0 and data.socialIconsLinkedin != 'profile' %}{{ data.socialIconsLinkedin }}{% else %}{{profile.linkedin}}{% endif %}" target="_blank">Linkedin</a>
     </span>
+    {% else %}
+      {% set noLinkedIn = true %}
     {% endif %}
 
     <!-- Twitter -->
-    {% if (data.socialIconsTwitter == 'profile' and profile.twitter|length > 0) or (data.socialIconsTwitter != 'profile' and data.socialIconsTwitter|length > 0) %}
+    {% if (data.socialIconsTwitter != 'profile' and data.socialIconsTwitter|length > 0) or (profile.twitter|length > 0) %}
     <span class="bk-socialicons-twitter">
-      <a href="https://twitter.com/{% if data.socialIconsTwitter == 'profile' %}{{profile.twitter}}{% else %}{{ data.socialIconsTwitter }} {% endif %}" target="_blank">Twitter</a>
+      <a href="{% if data.socialIconsTwitter|length > 0 and data.socialIconsTwitter != 'profile' %}{{ data.socialIconsTwitter }}{% else %}{{profile.twitter}}{% endif %}" target="_blank">Twitter</a>
     </span>
+    {% else %}
+      {% set noTwitter = true %}
     {% endif %}
 
     <!-- Facebook -->
-    {% if (data.socialIconsFacebook == 'profile' and profile.facebook|length > 0) or (data.socialIconsFacebook != 'profile' and data.socialIconsFacebook|length > 0) %}
+    {% if (data.socialIconsFacebook != 'profile' and data.socialIconsFacebook|length > 0) or (profile.facebook|length > 0) %}
     <span class="bk-socialicons-facebook">
-      <a href="{% if data.socialIconsFacebook == 'profile' %}{{profile.facebook}} {% else %} {{ data.socialIconsFacebook }} {% endif %}" target="_blank">Facebook</a>
+      <a href="{% if data.socialIconsFacebook|length > 0 and data.socialIconsFacebook != 'profile' %}{{ data.socialIconsFacebook }}{% else %}{{profile.facebook}}{% endif %}" target="_blank">Facebook</a>
     </span>
+    {% else %}
+      {% set noFacebook = true %}
     {% endif %}
 
     <!-- Rss -->
-    {% if (data.socialIconsRss == 'profile' and profile.rss|length > 0) or (data.socialIconsRss != 'profile' and data.socialIconsRss|length > 0) %}
+    {% if (data.socialIconsRss != 'profile' and data.socialIconsRss|length > 0) or (profile.rss|length > 0) %}
     <span class="bk-socialicons-rss">
-      <a href="{% if data.socialIconsRss == 'profile' %}{{profile.rss}} {% else %} {{ data.socialIconsRss }} {% endif %}" target="_blank">Rss</a>
+      <a href="{% if data.socialIconsRss|length > 0 and data.socialIconsRss != 'profile' %}{{ data.socialIconsRss }}{% else %}{{profile.rss}}{% endif %}" target="_blank">Rss</a>
     </span>
+    {% else %}
+      {% set noRss = true %}
     {% endif %}
 
     <!-- Google+ -->
-    {% if (data.socialIconsGoogleplus == 'profile' and profile.googleplus|length > 0) or (data.socialIconsGoogleplus != 'profile' and data.socialIconsGoogleplus|length > 0) %}
+    {% if (data.socialIconsGoogleplus != 'profile' and data.socialIconsGoogleplus|length > 0) or (profile.googleplus|length > 0) %}
     <span class="bk-socialicons-googleplus">
-      <a href="{% if data.socialIconsGoogleplus == 'profile' %}{{profile.googleplus}} {% else %} {{ data.socialIconsGoogleplus }} {% endif %}" target="_blank">Google+</a>
+      <a href="{% if data.socialIconsGoogleplus|length > 0 and data.socialIconsGoogleplus != 'profile' %}{{ data.socialIconsGoogleplus }}{% else %}{{profile.googleplus}}{% endif %}" target="_blank">Google+</a>
     </span>
+    {% else %}
+      {% set noGoogleplus = true %}
     {% endif %}
 
     <!-- youtube -->
-    {% if (data.socialIconsYoutube == 'profile' and profile.youtube|length > 0) or (data.socialIconsYoutube != 'profile' and data.socialIconsYoutube|length > 0) %}
+    {% if (data.socialIconsYoutube != 'profile' and data.socialIconsYoutube|length > 0) or (profile.youtube|length > 0) %}
     <span class="bk-socialicons-youtube">
-      <a href="{% if data.socialIconsYoutube == 'profile' %}{{profile.youtube}} {% else %} {{ data.socialIconsYoutube }} {% endif %}" target="_blank">Youtube</a>
+      <a href="{% if data.socialIconsYoutube|length > 0 and data.socialIconsYoutube != 'profile' %}{{ data.socialIconsYoutube }}{% else %}{{profile.youtube}}{% endif %}" target="_blank">Youtube</a>
     </span>
+    {% else %}
+      {% set noYoutube = true %}
     {% endif %}
 
-    {% if (((data.socialIconsLinkedin == 'profile' and profile.linkedin|length == 0) or data.socialIconsLinkedin|length == 0) and ((data.socialIconsTwitter == 'profile' and profile.twitter|length == 0) or data.socialIconsTwitter|length == 0) and ((data.socialIconsFacebook == 'profile' and profile.facebook|length == 0) or data.socialIconsFacebook|length == 0) and ((data.socialIconsRss == 'profile' and profile.rss|length == 0) or data.socialIconsRss|length == 0) and ((data.socialIconsGoogleplus == 'profile' and profile.googleplus|length == 0) or data.socialIconsGoogleplus|length == 0) and ((data.socialIconsYoutube == 'profile' and profile.youtube|length == 0) or data.socialIconsYoutube|length == 0)) %}
+    {% if noLinkedIn and noTwitter and noFacebook and noRss and noGoogleplus and noYoutube %}  
     <span>{{"widgets.socialicons.noicons"|translate("No social icons")}}</span>
     {% endif %}
 
@@ -150,6 +214,6 @@
 {% endif %}
 
 
-{% if data.profileType|length == 0 or (data.profileType != 'address' and data.profileType != 'email' and data.profileType != 'strapline' and data.profileType != 'companydescription' and data.profileType != 'phone' and data.profileType != 'business' and data.profileType != 'copyright' and data.profileType != 'twitter' and data.profileType != 'map' and data.profileType != 'form' and data.profileType != 'socialicons' and data.profileType != 'headline') %}
+{% if data.profileType|length == 0 or (data.profileType != 'address' and data.profileType != 'email' and data.profileType != 'headline' and data.profileType != 'strapline' and data.profileType != 'companydescription' and data.profileType != 'phone' and data.profileType != 'business' and data.profileType != 'copyright' and data.profileType != 'twitter' and data.profileType != 'map' and data.profileType != 'form' and data.profileType != 'socialicons') %}
 <p> {{"widgets.profile.error"|translate("Sorry, something is wrong with this widget")}} </p>
 {% endif %}

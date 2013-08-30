@@ -6,7 +6,8 @@
         action: 'none',
         text: App.t('widgets.button.default_text', 'Button'),
         url: '',
-        target: 'New'
+        target: 'New',
+        align: ''
     };
 
     BaseKit.Widget.ButtonMethods = {
@@ -66,6 +67,7 @@
 
     BaseKit.Widget.ClicktocallProperties = {
         phone: 'profile',
+        align: '',
         phoneText: App.t('widgets.clicktocall.default_text', 'Click to call')
     };
 
@@ -233,17 +235,71 @@
                 $.ajax({
                     url: url,
                     type: "POST",
-                    data: data
-
-                }).done(function (response, status, jqXHR) {
-                    if (status === 'success' && that.get('goalUrl')) {
-                        //redirect the window location
-                        window.location = that.get('goalUrl');
+                    data: data,
+                    beforeSend: function () {
+                        that.showMessageBox();
+                    },
+                    success: function () {
+                        if (that.get('goalUrl')) {
+                            //redirect the window location
+                            window.location = that.get('goalUrl');
+                        } else {
+                            that.showText(true);
+                            that.removeMessageBox();
+                        }
+                    },
+                    error: function () {
+                        that.showText();
+                        that.removeMessageBox();
                     }
-                }).fail(function (response) {
-                    // TODO: we need to handle published site errors @see Megan
                 });
             });
+        },
+
+        /**
+         * showText: shows the message text depends on the status
+         * @param <boolean>  isSuccess
+         */
+        showText: function (isSuccess) {
+            var message = null,
+                thisEl = $(this.el),
+                className = null;
+
+            if (thisEl.find('.message-box').length > 0) {
+                thisEl.find('.message-box').remove();
+            }
+
+            if (isSuccess) {
+                message = App.t('widgets.form.success', 'Message sent successfully.');
+                className = 'success';
+            } else {
+                message = App.t('widgets.form.failed', 'Submit failed.');
+                className = 'fail';
+            }
+
+            thisEl.find('.overlay').addClass(className).append('<div class="message-box"><span class="message-text">'+ message +'</span></div>');
+        },
+
+        showMessageBox: function () {
+            var thisEl = $(this.el),
+                overlay = $('<div class="overlay"></div>').height(thisEl.outerHeight(true)).width(thisEl.outerWidth(true));
+
+            if (thisEl.find('.overlay').length === 0) {
+                thisEl.append(overlay);
+            }
+        },
+
+        removeMessageBox: function () {
+            var thisEl = $(this.el),
+                t = null;
+
+            t = setTimeout(function () {
+                clearTimeout(t);
+                thisEl.find('.overlay').fadeOut(function() {
+                    thisEl.find('.email, .message').val('');
+                    $(this).remove();
+                });
+            }, 3000);
         }
     };
 
@@ -568,6 +624,138 @@
         });
     };
 }());(function () {
+    BaseKit.Widget.ForgottenpasswordProperties = {
+        passwordResetPage: 'home',
+        label: App.t('widgets.forgottenpassword.email', 'Email'),
+        text: App.t('widgets.forgottenpassword.button_text', 'Send')
+    };
+
+    BaseKit.Widget.ForgottenpasswordMethods = {
+        construct: function (el, options) {
+            this.load();
+        },
+
+        load: function () {
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
+            var that = this,
+                thisEl = $(this.el);
+
+            thisEl.find('form').on('submit', function (e) {
+                e.preventDefault();
+
+                // return if the email address is empty
+                if (thisEl.find('.email').val().length === 0) {
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'site/api/auth-token',
+                    async: false,
+                }).done(function (response) {
+                    var data = {
+                        token : response.token,
+                        email : thisEl.find('.email').val(),
+                        passwordResetPage : that.get('passwordResetPage')
+                    };
+
+                    $.ajax({
+                        url: 'site/api/forgotten-password',
+                        type: 'POST',
+                        data: data,
+                        beforeSend: function () {
+                            that.showMessageBox();
+                        }
+                    }).always(function () {
+                        that.removeMessageBox();
+                    }).done(function (response) {
+                        var message = App.t('widgets.forgottenpassword.success', 'Reset password email sent successfully.');
+                        that.showText(true, message);
+                    }).fail(function (response) {
+                        var errors = App.getErrorsFromResponse(response),
+                            message = null;
+
+                        $.each(errors, function (i, value) {
+                            if (value.field === 'email') {
+                                message = value.message;
+                                return;
+                            }
+                        })
+
+                        if (message) {
+                            that.showText(false, message);
+                        } else {
+                            that.showText(false, App.t('widgets.forgottenpassword.failed', 'Submit failed.'));
+                        }
+                    });
+                }).fail(function (response) {
+                    var message = App.t('widgets.forgottenpassword.auth_fail', 'Failed to get authentication token');
+                    that.showText(true, message);
+                });
+            });
+        },
+
+        /**
+         * showText: shows the message text depends on the status
+         * @param <boolean>  isSuccess
+         */
+        showText: function (isSuccess, message) {
+            var thisEl = $(this.el),
+                className = null;
+
+            if (thisEl.find('.message-box').length > 0) {
+                thisEl.find('.message-box').remove();
+            }
+
+            if (isSuccess) {
+                className = 'success';
+            } else {
+                className = 'fail';
+            }
+
+            thisEl.find('.overlay').addClass(className).append('<div class="message-box"><span class="message-text">' + message + '</span></div>');
+        },
+
+        showMessageBox: function () {
+            var thisEl = $(this.el),
+                overlay = $('<div class="overlay"></div>').height(thisEl.outerHeight(true)).width(thisEl.outerWidth(true));
+
+            if (thisEl.find('.overlay').length === 0) {
+                thisEl.append(overlay);
+            }
+        },
+
+        removeMessageBox: function () {
+            var thisEl = $(this.el),
+                t = null;
+
+            t = setTimeout(function () {
+                clearTimeout(t);
+                thisEl.find('.overlay').fadeOut(function () {
+                    thisEl.find('.email, .message').val('');
+                    $(this).remove();
+                });
+            }, 3000);
+        }
+    };
+
+    BaseKit.Widget.Forgottenpassword = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.ForgottenpasswordProperties,
+            methods: BaseKit.Widget.ForgottenpasswordMethods
+        });
+    };
+
+    $.fn.basekitWidgetForgottenpassword = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Forgottenpassword(el, options));
+        });
+    };
+}());
+(function () {
     BaseKit.Widget.Gallery = null;
 
     BaseKit.Widget.GalleryProperties = {
@@ -616,7 +804,8 @@
         imageWidth: 'auto',
         alt: '',
         title: '',
-        widgetType: 'widget.image'
+        widgetType: 'widget.image',
+        align: null
     };
 
     BaseKit.Widget.ImageMethods = {
@@ -829,6 +1018,7 @@
 
     BaseKit.Widget.MapProperties = {
         zoom: 12,
+        zoomControl: true,
         height: 150, // MB: default height
         address: 'profile',
         latitude: '51.50959718054336',
@@ -853,6 +1043,20 @@
         },
 
         load: function () {
+            var t = false,
+                that = this;
+
+            // get around the map is not centering on changing the device orientation
+            this.onResize = function() {
+                if (t !== false) {
+                    clearTimeout(t);
+                }
+                t = setTimeout(function () {
+                    that.resetMap();
+                }, 300);
+            }
+            $(window).on('resize', this.onResize);
+
             // if no maps have yet been loaded, then try to load one
             if (Site.Page.Globals.mapsAPILoaded === false && $('#gmaps-widget-script').length === 0) {
                 // This dynamically injects the googlemaps into the body
@@ -901,7 +1105,10 @@
                 scaleControl: false,
                 mapTypeControl: false,
                 overviewMapControl: false,
-                zoomControl: false,
+                zoomControl: !!(this.get('zoomControl')),
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.DEFAULT
+                },
                 panControl: false,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
@@ -912,7 +1119,6 @@
 
             // set the map
             this.gmap = new google.maps.Map($(this.el).find('.map').get(0), mapOptions);
-
             this.resetMap();
         },
 
@@ -1092,6 +1298,46 @@
             $(el).data('bkob', new BaseKit.Widget.Navigation(el, options));
         });
     };
+}());(function () {
+    BaseKit.Widget.Paypalbuynow = null;
+
+    BaseKit.Widget.PaypalbuynowProperties = {
+        paypalbuynow_text: App.t('widgets.paypalbuynow.text', 'Buy Now'),
+        paypalbuynow_purchaseurl: '',
+        paypalbuynow_businessemail: Profile.get('paypalbuynow_businessemail'),
+        paypalbuynow_currency: Profile.get('paypalbuynow_currency'),
+        paypalbuynow_productname: App.t('widgets.paypalbuynow.productname_default', 'My awesome product'),
+        paypalbuynow_productprice: 0.00,
+        paypalbuynow_shipping: 0.00,
+        paypalbuynow_languagecode: 'en'
+    };
+
+    BaseKit.Widget.PaypalbuynowMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Paypalbuynow = function () {
+        BaseKit.Widget.PaypalbuynowProperties.paypalbuynow_purchaseurl = App.session.get('paypalUrl');
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.PaypalbuynowProperties,
+            methods: BaseKit.Widget.PaypalbuynowMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetPaypalbuynow = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Paypalbuynow(el, options));
+        });
+    };
 }());function mapReady() {
     Site.Page.Globals.mapsAPILoaded = true;
 }
@@ -1189,16 +1435,71 @@
                 $.ajax({
                     url: url,
                     type: "POST",
-                    data: data
-
-                }).done(function (response, status, jqXHR) {
-                    if (status === 'success' && that.get('goalUrl')) {
-                        window.location = that.get('goalUrl');
+                    data: data,
+                    beforeSend: function () {
+                        that.showMessageBox();
+                    },
+                    success: function () {
+                        if (that.get('goalUrl')) {
+                            //redirect the window location
+                            window.location = that.get('goalUrl');
+                        } else {
+                            that.showText(true);
+                            that.removeMessageBox();
+                        }
+                    },
+                    error: function () {
+                        that.showText();
+                        that.removeMessageBox();
                     }
-                }).fail(function (response) {
-                    // TODO: we need to handle published site errors @see Megan
                 });
             });
+        },
+
+        /**
+         * showText: shows the message text depends on the status
+         * @param <boolean>  isSuccess
+         */
+        showText: function (isSuccess) {
+            var message = null,
+                thisEl = $(this.el),
+                className = null;
+
+            if (thisEl.find('.message-box').length > 0) {
+                thisEl.find('.message-box').remove();
+            }
+
+            if (isSuccess) {
+                message = App.t('widgets.form.success', 'Message sent successfully.');
+                className = 'success';
+            } else {
+                message = App.t('widgets.form.failed', 'Submit failed.');
+                className = 'fail';
+            }
+
+            thisEl.find('.overlay').addClass(className).append('<div class="message-box"><span class="message-text">'+ message +'</span></div>');
+        },
+
+        showMessageBox: function () {
+            var thisEl = $(this.el),
+                overlay = $('<div class="overlay"></div>').height(thisEl.outerHeight(true)).width(thisEl.outerWidth(true));
+
+            if (thisEl.find('.overlay').length === 0) {
+                thisEl.append(overlay);
+            }
+        },
+
+        removeMessageBox: function () {
+            var thisEl = $(this.el),
+                t = null;
+
+            t = setTimeout(function () {
+                clearTimeout(t);
+                thisEl.find('.overlay').fadeOut(function() {
+                    thisEl.find('.email').val('');
+                    $(this).remove();
+                });
+            }, 3000);
         },
 
         initialMap: function () {
@@ -1554,6 +1855,165 @@
         });
     };
 }());(function () {
+    BaseKit.Widget.Resetpassword = null;
+
+    BaseKit.Widget.ResetpasswordProperties = {
+        text: App.t('widgets.resetpassword.save_new_password', 'Save'),
+        label: App.t('widgets.resetpassword.new_password', 'Choose your new password')
+    };
+
+    BaseKit.Widget.ResetpasswordMethods = {
+        construct: function (el, options) {
+            this.load();
+        },
+
+        load: function () {
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
+            var that = this,
+                thisEl = $(this.el);
+
+            this.toggleShowHidePassword();
+
+            thisEl.find('form').on('submit', function (e) {
+                e.preventDefault();
+
+                // return if the password is empty
+                if (thisEl.find('.password').val().length === 0) {
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'site/api/auth-token',
+                    async: false,
+                }).done(function (response) {
+                    var data = {
+                        hash: App.getParam('h'),
+                        password: thisEl.find('.password').val(),
+                        token: response.token
+                    };
+
+                    $.ajax({
+                        url: '/site/api/reset-password',
+                        type: 'POST',
+                        data: data,
+                        beforeSend: function () {
+                            that.showMessageBox();
+                        }
+                    }).always(function () {
+                        that.removeMessageBox();
+                    }).done(function (response) {
+                        var message = App.t('widgets.resetpassword.success', 'Password successfully changed.'),
+                            onTimeout;
+
+                        onTimeout = function () {
+                            window.location = '/' + that.get('completionPage');
+                        };
+
+                        that.showText(true, message);
+                        setTimeout(onTimeout, 2000);
+                    }).fail(function (response) {
+                        var errors = App.getErrorsFromResponse(response),
+                            message = null;
+
+                        $.each(errors, function (i, value) {
+                            if (value.field === 'hash') {
+                                message = value.message;
+                                return;
+                            }
+                        })
+
+                        if (message) {
+                            that.showText(false, message);
+                        } else {
+                            that.showText(false, App.t('widgets.resetpassword.failed', 'Submit failed.'));
+                        }
+                    });
+                }).fail(function (response) {
+                    message = App.t('widgets.resetpassword.auth_fail', 'Failed to get authentication token');
+                    that.showText(true, message);
+                });
+            });
+        },
+
+        toggleShowHidePassword: function () {
+            var thisEl = $(this.el),
+                passwordInputEl = thisEl.find('.password');
+
+            thisEl.find('.password-mask-toggle').on('click', function () {
+                if (passwordInputEl[0].type === 'password') {
+                    passwordInputEl[0].type = 'text';
+                    passwordInputEl.attr('autocapitalize', 'off').attr('autocorrect', 'off').attr('spellcheck', 'false');
+                    $(this).text(App.t('widgets.resetpassword.hide', 'Hide'));
+                } else {
+                    passwordInputEl[0].type = 'password';
+                    passwordInputEl.removeAttr('autocapitalize').removeAttr('autocorrect').removeAttr('spellcheck');
+                    $(this).text(App.t('widgets.resetpassword.show', 'Show'));
+                }
+            });
+        },
+
+        /**
+         * showText: shows the message text depends on the status
+         * @param <boolean>  isSuccess
+         */
+        showText: function (isSuccess, message) {
+            var thisEl = $(this.el),
+                className = null;
+
+            if (thisEl.find('.message-box').length > 0) {
+                thisEl.find('.message-box').remove();
+            }
+
+            if (isSuccess) {
+                className = 'success';
+            } else {
+                className = 'fail';
+            }
+
+            thisEl.find('.overlay').addClass(className).append('<div class="message-box"><span class="message-text">' + message + '</span></div>');
+        },
+
+        showMessageBox: function () {
+            var thisEl = $(this.el),
+                overlay = $('<div class="overlay"></div>').height(thisEl.outerHeight(true)).width(thisEl.outerWidth(true));
+
+            if (thisEl.find('.overlay').length === 0) {
+                thisEl.append(overlay);
+            }
+        },
+
+        removeMessageBox: function () {
+            var thisEl = $(this.el),
+                t = null;
+
+            t = setTimeout(function () {
+                clearTimeout(t);
+                thisEl.find('.overlay').fadeOut(function () {
+                    thisEl.find('.email, .message').val('');
+                    $(this).remove();
+                });
+            }, 3000);
+        }
+    };
+
+    BaseKit.Widget.Resetpassword = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.ResetpasswordProperties,
+            methods: BaseKit.Widget.ResetpasswordMethods
+        });
+    };
+
+    $.fn.basekitWidgetResetpassword = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Resetpassword(el, options));
+        });
+    };
+}());
+(function () {
     BaseKit.Widget.Responsivecolumns = null;
 
     BaseKit.Widget.ResponsivecolumnsProperties = {
@@ -1914,15 +2374,71 @@
                 $.ajax({
                     url: url,
                     type: "POST",
-                    data: data
-
-                }).done(function (response, status, jqXHR) {
-                    if (status === 'success' && that.get('goalUrl')) {
-                        //redirect the window location
-                        window.location = that.get('goalUrl');
+                    data: data,
+                    beforeSend: function () {
+                        that.showMessageBox();
+                    },
+                    success: function () {
+                        if (that.get('goalUrl')) {
+                            //redirect the window location
+                            window.location = that.get('goalUrl');
+                        } else {
+                            that.showText(true);
+                            that.removeMessageBox();
+                        }
+                    },
+                    error: function () {
+                        that.showText();
+                        that.removeMessageBox();
                     }
                 });
             });
+        },
+
+        /**
+         * showText: shows the message text depends on the status
+         * @param <boolean>  isSuccess
+         */
+        showText: function (isSuccess) {
+            var message = null,
+                thisEl = $(this.el),
+                className = null;
+
+            if (thisEl.find('.message-box').length > 0) {
+                thisEl.find('.message-box').remove();
+            }
+
+            if (isSuccess) {
+                message = App.t('widgets.form.success', 'Message sent successfully.');
+                className = 'success';
+            } else {
+                message = App.t('widgets.form.failed', 'Submit failed.');
+                className = 'fail';
+            }
+
+            thisEl.find('.overlay').addClass(className).append('<div class="message-box"><span class="message-text">'+ message +'</span></div>');
+        },
+
+        showMessageBox: function () {
+            var thisEl = $(this.el),
+                overlay = $('<div class="overlay"></div>').height(thisEl.outerHeight(true)).width(thisEl.outerWidth(true));
+
+            if (thisEl.find('.overlay').length === 0) {
+                thisEl.append(overlay);
+            }
+        },
+
+        removeMessageBox: function () {
+            var thisEl = $(this.el),
+                t = null;
+
+            t = setTimeout(function () {
+                clearTimeout(t);
+                thisEl.find('.overlay').fadeOut(function() {
+                    thisEl.find('.email').val('');
+                    $(this).remove();
+                });
+            }, 3000);
         }
     };
 
@@ -1946,6 +2462,7 @@
     BaseKit.Widget.Socialicons = {};
 
     BaseKit.Widget.SocialiconsProperties = {
+        'align': '',
         'googleplus': 'profile',
         'linkedin': 'profile',
         'facebook': 'profile',
@@ -2017,6 +2534,7 @@
     BaseKit.Widget.TweetProperties = {
         linkText: App.t('widgets.tweet.default_link_text', 'Tweet'),
         tweetText: '',
+        align: '',
         url: 'http://www.basekit.com'
     };
 
@@ -2112,8 +2630,8 @@
                 data = {
                     'count': this.get('count') > 0 ? this.get('count') : 3,
                     'includeRts': this.get('includeRts') !== null ? this.get('includeRts') : true,
-                    'searchKey': this.get('searchKey') === 'profile' ? Profile.get('twitter') : this.get('searchKey'),
-                    'searchType': this.get('searchKey') === 'profile' ? 'username' : this.get('searchType')
+                    'searchKey': this.get('searchType') === 'username' ? Profile.get('twitter') : this.get('searchKey'),
+                    'searchType': this.get('searchType')
                 };
 
             // HC: when the profile twitter or searchKey is empty we use the defaultSearchKey
@@ -2177,6 +2695,397 @@
     };
 }());
 (function () {
+    BaseKit.Widget.Userlogin = null;
+
+    BaseKit.Widget.UserloginProperties = {
+        align: '',
+        email: 'profile',
+        text: App.t('widgets.userlogin.default_button_text', 'Login')
+    };
+
+    BaseKit.Widget.UserloginMethods = {
+        construct: function (el, options) {
+            this.load();
+        },
+
+        load: function () {
+            this.attachEvents();
+        },
+
+        /**
+         * showOverlay: shows an overlay that is styled by the template
+         * @param <string> message the message to display in the overlay
+         */
+        showOverlay: function (message) {
+
+            message = message || 'message';
+            var overlay = $('#overlay');
+            if (overlay.length === 0) {
+                overlay = '<div id="page-overlay" class="overlay"><div class="inner">' +
+                          '<div class="message">'+message+'</div></div></div>';
+                $('body').append(overlay).show();
+            } else {
+                overlay.find(".message").html(message);
+                overlay.show();
+            }
+            $(this.el).find("form button.userregistrationbtn").attr('disabled', true);
+        },
+
+        /**
+         * hideOverlay: hides the overlay
+         */
+        hideOverlay: function () {
+            var overlay = $('#overlay');
+            if (overlay.length) {
+                overlay.find(".message").empty();
+                overlay.hide();
+            }
+            $(this.el).find("form button.userregistrationbtn").attr('disabled', false);
+        },
+
+        /**
+         * attachEvents: attach the send email event
+         */
+        attachEvents: function () {
+            var that = this,
+                thisEl = $(this.el),
+                errors = [],
+                postData = {};
+
+            // override the submit event on the form
+            thisEl.find('form').on('submit', function (e) {
+                e.preventDefault();
+
+                errors = [];
+                postData = {
+                    'email':        thisEl.find("input[type='email']").val(),
+                    'password':     thisEl.find("input[type='password']").val(),
+                    'auth_token':   null
+                };
+                thisEl.find("p.error").empty().hide();
+
+                // basic js validation before sending to the api
+                if (postData.password !== undefined) {
+                    if (postData.password.trim().length === 0) {
+                        errors.push({
+                            'element' : 'password',
+                            'error' : App.t('widgets.userlogin.error.missing_password', 'Please provide a password.')
+                        });
+                    } else if (postData.password.trim().length < 7 || postData.password.trim().length > 19) {
+                        errors.push({
+                            'element' : 'password',
+                            'error' : App.t('widgets.userlogin.error.invalid_password', 'Please provide a password greater than 7 characters but less than 19.')
+                        });
+                    }
+                }
+
+                if (postData.email !== undefined) {
+                    if (postData.email.trim().length < 5 && postData.email.indexOf('@') === -1) {
+                        errors.push({
+                            'element' : 'email',
+                            'error' : App.t('widgets.userlogin.error.wrong_email_format', 'Please enter an email address.')
+                        });
+                    }
+                }
+
+                $.each(errors, function() {
+                    var element = thisEl.find("p.error." + this.element);
+                    if (element.length) {
+                        element.html(this.error).show();
+                    }
+                });
+
+                // only submit if we have no errors
+                if (!errors.length) {
+                    $.ajax({
+                        url: '/site/api/auth-token',
+                        type: "POST",
+                        processData: false
+                    }).done(function (response, status, jqXHR) {
+                        if (response.token !== undefined) {
+                            postData.auth_token = response.token;
+                            that.login(postData);
+                        }
+                    });
+                }
+            });
+        },
+
+        /**
+         * create the user account
+         * @param  <object> postData data sent to the api
+         */
+        login: function (postData) {
+            var that = this,
+                thisEl = $(this.el);
+
+            $.ajax({
+                url: '/site/api/user-login',
+                type: "POST",
+                data: postData,
+                beforeSend: function() {
+                    var message = App.t(
+                            "widgets.userlogin.login_process",
+                            "Logging into your account, Please wait..."
+                        );
+                    that.showOverlay(message);
+                }
+            }).always(function () {
+                that.hideOverlay();
+            }).done(function (response, status, jqXHR) {
+                if (status === 'success' && response.url !== undefined) {
+                    document.location = response.url;
+                } else {
+                    var error = App.t("widgets.userlogin.error.unknown_error",
+                                      "An unknown error has occurred, please try again"
+                                );
+                    thisEl.find("p.error.submission").html(error).show();
+                }
+            }).fail(function (response) {
+                var apiErrors = that.formatResponseErrors(response);
+                thisEl.find("p.error.submission").html(apiErrors).show();
+            });
+        },
+
+        /**
+         * a quick method that tries to extract any errors sent back form the api
+         * @param  <object> response response object sent back from an ajax call
+         * @return <string>          flat list of errors
+         */
+        formatResponseErrors: function (response) {
+            var errors = [];
+
+            if (response.responseJSON === undefined || response.responseJSON === null) {
+                return errors;
+            }
+
+            response = (typeof response.responseJSON === 'object') ? response.responseJSON
+                                                                   : jQuery.parseJSON(response.responseJSON);
+            if (response.messageTemplates) {
+                $.each(response.messageTemplates, function (type, properties) {
+                    $.each(properties.templates, function (template, value) {
+                        var args = ['widget.userregistration.error.' + template.toLowerCase(), value];
+                        errors.push(App.t.apply(App, args));
+                    });
+                });
+            } else {
+                errors.push(App.t("widgets.userlogin.error.unknown_error",
+                                  "An unknown error has occurred, please try again.")
+                            );
+            }
+            return errors.join('');
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Userlogin = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.UserloginProperties,
+            methods: BaseKit.Widget.UserloginMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetUserlogin = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Userlogin(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Userregistration = null;
+
+    BaseKit.Widget.UserregistrationProperties = {
+        align: '',
+        email: 'profile',
+        text: App.t('widgets.userregistration.default_button_text', 'Register')
+    };
+
+    BaseKit.Widget.UserregistrationMethods = {
+        construct: function (el, options) {
+            this.load();
+        },
+
+        load: function () {
+            this.attachEvents();
+        },
+
+        /**
+         * showOverlay: shows an overlay that is styled by the template
+         * @param <string> message the message to display in the overlay
+         */
+        showOverlay: function (message) {
+
+            message = message || 'message';
+            var overlay = $('#overlay');
+            if (overlay.length === 0) {
+                overlay = '<div id="page-overlay" class="overlay"><div class="inner">' +
+                          '<div class="message">'+message+'</div></div></div>';
+                $('body').append(overlay).show();
+            } else {
+                overlay.find(".message").html(message);
+                overlay.show();
+            }
+            $(this.el).find("form button.userregistrationbtn").attr('disabled', true);
+        },
+
+        /**
+         * hideOverlay: hides the overlay
+         */
+        hideOverlay: function () {
+            var overlay = $('#overlay');
+            if (overlay.length) {
+                overlay.find(".message").empty();
+                overlay.hide();
+            }
+            $(this.el).find("form button.userregistrationbtn").attr('disabled', false);
+        },
+
+        /**
+         * attachEvents: attach the send email event
+         */
+        attachEvents: function () {
+            var that = this,
+                thisEl = $(this.el),
+                errors = [],
+                postData = {};
+
+            // override the submit event on the form
+            thisEl.find('form').on('submit', function (e) {
+                e.preventDefault();
+
+                errors = [];
+                postData = {
+                    'brandRef':     App.session.get('brandRef'),
+                    'brandDomain':  App.session.get('domain'),
+                    'email':        thisEl.find("input[type='email']").val(),
+                    'password':     thisEl.find("input[type='password']").val(),
+                    'widgetId':     thisEl.attr('id'),
+                    'languageCode': 'en',
+                    'auth_token':   null
+                };
+                thisEl.find("p.error").empty().hide();
+
+                // basic js validation before sending to the api
+                if (postData.password !== undefined && (postData.password.trim().length < 7 || postData.password.trim().length > 9)) {
+                    errors.push({
+                        'element' : 'password',
+                        'error' : App.t('widgets.userregistration.error.invalid_password', 'Please provide a password greater than 7 characters but less than 19.')
+                    });
+                }
+
+                if (postData.email !== undefined && postData.email.trim().length < 5 && postData.email.indexOf('@') === -1) {
+                    errors.push({
+                        'element' : 'email',
+                        'error' : App.t('widgets.userregistration.error.wrong_email_format', 'Please enter an email address.')
+                    });
+                }
+
+                $.each(errors, function() {
+                    var element = thisEl.find("p.error." + this.element);
+                    if (element.length) {
+                        element.html(this.error).show();
+                    }
+                });
+
+                // only submit if we have no errors
+                if (!errors.length) {
+                    $.ajax({
+                        url: '/site/api/auth-token',
+                        type: "POST",
+                        processData: false
+                    }).done(function (response, status, jqXHR) {
+                        if (response.token !== undefined) {
+                            postData.auth_token = response.token;
+                            that.createAccount(postData);
+                        }
+                    });
+                }
+            });
+        },
+
+        /**
+         * create the user account
+         * @param  <object> postData data sent to the api
+         */
+        createAccount: function (postData) {
+            var that = this,
+                thisEl = $(this.el);
+
+            $.ajax({
+                url: '/site/api/user-registration',
+                type: "POST",
+                data: postData,
+                beforeSend: function() {
+                    var message = App.t(
+                            "widgets.userregistration.creating_account",
+                            "Creating your account, Please wait..."
+                        );
+                    that.showOverlay(message);
+                }
+            }).always(function () {
+                that.hideOverlay();
+            }).done(function (response, status, jqXHR) {
+                if (status === 'success' && response.url !== undefined) {
+                    document.location = response.url;
+                } else {
+                    var error = App.t("widgets.userregistration.error.unknown_error",
+                                      "An unknown error has occurred, please try again"
+                                );
+                    thisEl.find("p.error.submission").html(error).show();
+                }
+            }).fail(function (response) {
+                var apiErrors = that.formatResponseErrors(response);
+                thisEl.find("p.error.submission").html(apiErrors).show();
+            });
+        },
+
+        /**
+         * a quick method that tries to extract any errors sent back form the api
+         * @param  <object> response response object sent back from an ajax call
+         * @return <string>          flat list of errors
+         */
+        formatResponseErrors: function (response) {
+            var errors = [];
+
+            if (response.responseJSON === undefined || response.responseJSON === null) {
+                return errors;
+            }
+
+            response = (typeof response.responseJSON === 'object') ? response.responseJSON
+                                                                   : jQuery.parseJSON(response.responseJSON);
+            if (response.messageTemplates) {
+                $.each(response.messageTemplates, function (type, properties) {
+                    $.each(properties.templates, function (template, value) {
+                        var args = ['widget.userregistration.error.' + template.toLowerCase(), value];
+                        errors.push(App.t.apply(App, args));
+                    });
+                });
+            } else {
+                errors.push(App.t("widgets.userregistration.error.unknown_error",
+                                  "An unknown error has occurred, please try again.")
+                            );
+            }
+            return errors.join('');
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Userregistration = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.UserregistrationProperties,
+            methods: BaseKit.Widget.UserregistrationMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetUserregistration = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Userregistration(el, options));
+        });
+    };
+}());(function () {
     BaseKit.Widget.Youtube = {};
 
     BaseKit.Widget.YoutubeProperties = {

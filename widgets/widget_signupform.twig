@@ -2,6 +2,6 @@
 	<fieldset>
 		<label for="email" class="label">{{ data.label }}:</label>
 		<input type="email" class="email" placeholder="{{"widgets.signup.emailholder"|translate("Type your Email")}}">
-		<button class="btn btnText {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.align}}" type="submit" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.text}}</button>
+        <button class="btn btnText {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %}" type="submit" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.text}}</button>
 	</fieldset>
 </form>

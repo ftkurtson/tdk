@@ -1,0 +1,17 @@
+{% if data.paypalbuynow_businessemail|length > 0 and data.paypalbuynow_currency|length > 0 %}
+    <div class="ctc-wrap{% if data.align %} {{data.align}}{% endif %}">
+        <form name="paypalbuynow" action="{{data.paypalbuynow_purchaseurl}}" method="post">
+            <input type="hidden" name="cmd" value="_xclick">
+            <input type="hidden" name="business" value="{{data.paypalbuynow_businessemail}}">
+            <input type="hidden" name="currency_code" value="{{data.paypalbuynow_currency}}">
+            <input type="hidden" name="item_name" value="{{data.paypalbuynow_productname}}">
+            <input type="hidden" name="amount" value="{{data.paypalbuynow_productprice}}">
+            <input type="hidden" name="shipping" value="{{data.paypalbuynow_shipping}}">
+            <input type="hidden" name="lc" value="{{data.paypalbuynow_languagecode}}">
+            <input value="{{data.paypalbuynow_text}}" type="submit" name="submit" class="widget button paypal">
+        </form>
+    </div>
+{% else %}
+    <p><b>{{"widgets.paypalbuynow.profile_not_set"|translate("No Business email or Currency detected")}}</b></p>
+    <p>{{"widgets.paypalbuynow.profile_not_set_text"|translate("In order to use the PayPal Buy Now widget, you need to set a Business Email and a Currency.")|raw}}</p>
+{% endif %}

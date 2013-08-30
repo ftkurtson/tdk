@@ -18,14 +18,14 @@
 
 					{% set j = 0 %}
 					{% for subPage in page.subPages %}
-						{% if subPage.status != 'inactive' %}
+						{% if subPage.status != 'inactive' and subPage.hiddenFromNavigation != '1' %}
 							{% set j = j + 1 %}
 						{% endif %}
 					{% endfor %}
 
 					<ul class="{{j}}-items">
 						{% for subPage in page.subPages %}
-							{% if subPage.status != 'inactive' %}
+							{% if subPage.status != 'inactive' and subPage.hiddenFromNavigation != '1' %}
 							<li id="menu-item_{{ subPage.ref }}" class="{{subPage.type}}">
 								<a href="/{{ subPage.request }}">
 								<span class="text">{{ subPage.title }}</span>
