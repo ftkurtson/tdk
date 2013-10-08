@@ -1,6 +1,7 @@
 {% set minWidth = '999999' %}
 {% set minHeight = '999999' %}
 {% set images = [] %}
+{% set resizerUrl = app.resizerUrl %}
 
 {% if data.albumRef != 0 and plugins.assets.albums[data.albumRef]|length > 0 %}
     {% set images = plugins.assets.albums[data.albumRef] %}
@@ -27,15 +28,19 @@
             {% set aspectClass = 'portrait' %}
         {% endif %}
 
+        {% if image.ref|length > 0 %}
+            {% set image = plugins.assets.images[image.ref] %}
+        {% endif %}
+
         <li class="{{aspectClass}}">
-            <span class="inner" style="background-image:url('{{image.url}}');">
-                <a class="" href="#" image-href="{{image.url}}" data-lightbox="set-{{ref}}" title="{{image.title}}">
-                    <img src="{{image.url}}"/>
-                    {% if image.title != '' %}
-                    <span class="title" {% if data.showTitle == 0%} style="display: none" {% endif %}>{{image.title}}</span>
+            <span class="inner" style="background-image:url('{{ resizerUrl }}/{{image.path}}?w=960');">
+                <a class="" href="#" image-href="{{ resizerUrl }}/{{image.path}}?w=960" data-lightbox="set-{{ref}}" title="{{image.title}}">
+                    <img src="{{ resizerUrl }}/{{image.path}}?w=960"/>
+                    {% if image.title|length > 0 and data.showTitle == 1 %}
+                    <span class="title">{{image.title}}</span>
                     {% endif %}
-                    {% if image.description != '' %}
-                    <span class="description" {% if data.showDescription == 0%} style="display: none" {% endif %}>{{image.description}}</span>
+                    {% if image.description|length > 0 and data.showDescription == 1 %}
+                    <span class="description">{{image.description}}</span>
                     {% endif %}
                 </a>
             </span>

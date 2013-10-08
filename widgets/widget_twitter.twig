@@ -15,11 +15,12 @@
       <time class="created_at" data-value="{{ data.createdAt }}"> {{ data.createdAt }} </time>
       <span> {{"widgets.twitter.via"|translate("via")}} </span>
       <span> {{ data.source|raw }} </span>
+      {% if data.retweetUser is not null %}
+        <p>{{"widgets.twitter.retweeted_by"|translate("Retweeted by %1", data.retweetUser)}}</p>
+      {% endif %}
     </div>
   </li>
-
   {% else %}
-
-  <p>{{"widgets.twitter.message"|translate("Retrieving tweets")}}.</p>
+    <li>{{"widgets.twitter.no_tweets"|translate("No tweets found")}}</li>
   {% endfor %}
 </ul>

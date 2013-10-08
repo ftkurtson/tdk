@@ -140,8 +140,8 @@
 {% if data.profileType == 'form' %}
 <form action="" method="post">
   <fieldset>
-    <label for="email">{{"widgets.profile.form"|translate("Your Email")}}:</label>
-    <input type="email" class="email" placeholder="{{"widgets.profile.formHolder"|translate("Type your Email")}}">
+    <label for="email">{{"widgets.profile.formtitle"|translate("Your email")}}:</label>
+    <input type="email" class="email" placeholder="{{"widgets.profile.formholder"|translate("Type your email")}}">
 
     <button class="btn btnText {% if data.formItalic %}italic{% endif %} {% if data.formBold %}bold{% endif %} {{data.formAlign}}" type="submit" {% if data.formFontSize|length > 0 %}style="font-size: {{data.formFontSize}}px"{% endif %}>{% if data.formText %}{{data.formText}}{% else %}{{"widgets.profile.default_button_text"|translate("Send")}}{% endif %}</button>
   </fieldset>
@@ -164,7 +164,7 @@
     <!-- Twitter -->
     {% if (data.socialIconsTwitter != 'profile' and data.socialIconsTwitter|length > 0) or (profile.twitter|length > 0) %}
     <span class="bk-socialicons-twitter">
-      <a href="{% if data.socialIconsTwitter|length > 0 and data.socialIconsTwitter != 'profile' %}{{ data.socialIconsTwitter }}{% else %}{{profile.twitter}}{% endif %}" target="_blank">Twitter</a>
+      <a href="https://twitter.com/{% if data.socialIconsTwitter|length > 0 and data.socialIconsTwitter != 'profile' %}{{ data.socialIconsTwitter }}{% else %}{{profile.twitter}}{% endif %}" target="_blank">Twitter</a>
     </span>
     {% else %}
       {% set noTwitter = true %}

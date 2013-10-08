@@ -76,7 +76,7 @@ body.edit .widget.extendednavigation
 
 .widget.feature .feature-bgimg
 {
-  display: table-row; 
+  display: table-row;
   width: 100%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -89,17 +89,21 @@ body.edit .widget.extendednavigation
 
 .widget.feature .content {
   min-height: 200px; /* height should be in the media query*/
-  display: table-cell; 
+  display: table-cell;
   vertical-align: middle;
-  -webkit-box-sizing: border-box; 
-  -moz-box-sizing: border-box;    
-  box-sizing: border-box;         
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .widget.feature .content .spare {
   display: block;
 }
 
+/** Logo widget **/
+.widget.logo img {
+  border: none;
+}
 
 /** Youtube widget **/
 .widget.youtube .video-wrapper
@@ -120,8 +124,10 @@ body.edit .widget.extendednavigation
 /** profile widget **/
 /** sign up widget **/
 /** forget password widget **/
+/** blog comments widget **/
 
 .widget.contactform .overlay,
+.widget.blogcomments .overlay,
 .widget.profile .overlay,
 .widget.signupform .overlay,
 .widget.forgottenpassword .overlay,
@@ -139,6 +145,7 @@ body.edit .widget.extendednavigation
   -moz-border-radius: 2px;
 }
 
+.widget.blogcomments .overlay .message-box,
 .widget.contactform .overlay .message-box,
 .widget.profile .overlay .message-box,
 .widget.signupform .overlay .message-box,
@@ -148,6 +155,7 @@ body.edit .widget.extendednavigation
   vertical-align: middle;
 }
 
+.widget.blogcomments .overlay .message-text,
 .widget.contactform .overlay .message-text,
 .widget.profile .overlay .message-text,
 .widget.signupform .overlay .message-text,
@@ -167,6 +175,7 @@ body.edit .widget.extendednavigation
   -moz-border-radius: 2px;
 }
 
+.widget.blogcomments .overlay.fail .message-text,
 .widget.contactform .overlay.fail .message-text,
 .widget.profile .overlay.fail .message-text,
 .widget.signupform .overlay.fail .message-text,
@@ -189,7 +198,7 @@ body.edit .widget.extendednavigation
   background-image: url(glyphicons-halflings-white.png);
 }
 .icon-glass {
-  background-position: 0      0;
+  background-position: 0 0;
 }
 .icon-music {
   background-position: -24px 0;
@@ -576,7 +585,7 @@ body.edit .widget.extendednavigation
     position: relative;
 }
 
-.widget.responsiveslideshow .slideshow-image-list.crop  span.inner {
+.widget.responsiveslideshow .slideshow-image-list.crop span.inner {
     background-position:center center;
     background-repeat:no-repeat;
 }
@@ -606,6 +615,8 @@ body.edit .widget.extendednavigation
     position: absolute;
     top: 50%;
     left: 50%;
+    max-width: 100%;
+    max-height: 100%;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -616,7 +627,7 @@ body.edit .widget.extendednavigation
 .widget.responsiveslideshow .slideshow-image-list.crop span.inner.square,
 .widget.responsiveslideshow .slideshow-image-list.crop span.inner.portrait,
 .widget.responsiveslideshow .slideshow-image-list.crop span.inner.landscape {
-    x§background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-position: center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -628,11 +639,11 @@ body.edit .widget.extendednavigation
     display:none;
 }
 
-.widget.responsiveslideshow .slideshow-widget .btn-prev, 
+.widget.responsiveslideshow .slideshow-widget .btn-prev,
 .widget.responsiveslideshow .slideshow-widget .btn-next {
     position: absolute;
     width: 14%;
-    height: 14%; 
+    height: 14%;
     top: 43%;
     display: block;
     cursor: pointer;
@@ -680,8 +691,8 @@ body.edit .widget.extendednavigation
     background-color:#ffffff;
 }
 
-.widget.responsiveslideshow .btn-prev.disabled, 
-.widget.responsiveslideshow .btn-next.disabled, 
+.widget.responsiveslideshow .btn-prev.disabled,
+.widget.responsiveslideshow .btn-next.disabled,
 .widget.responsiveslideshow .btn-play.disabled
 {
   opacity:0.4;

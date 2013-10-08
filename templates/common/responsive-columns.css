@@ -79,13 +79,13 @@
 /**********************/
 .columns-two-25-75 .columns-two-left
 {
-	width: 25%;
+	width: 22%;
 	margin-right: 3%;
     margin-left:0;
 }
 .columns-two-25-75 .columns-two-right
 {
-	width: 72%;
+	width: 75%;
     margin-left:0;
 }
 
@@ -121,13 +121,13 @@
 /**********************/
 .columns-two-75-25 .columns-two-left
 {
-	width: 72%;
+	width: 75%;
 	margin-right: 3%;
     margin-left:0;
 }
 .columns-two-75-25 .columns-two-right
 {
-	width: 25%;
+	width: 22%;
     margin-left:0;
 }
 
@@ -163,7 +163,7 @@
 /**********************/
 .columns-two-34-66 .columns-two-left
 {
-	width: 30%;
+	width: 31%;
 	margin-right: 3%;
     margin-left:0;
 }
@@ -173,24 +173,13 @@
     margin-left:0;
 }
 
-@media only screen and (min-width: 480px) and (max-width: 768px)
-{
-	.columns-two-34-66 .columns-two-left
-	{
-		width: 100%;
-		margin-bottom: 7%;
-	}
-	.columns-two-34-66 .columns-two-right
-	{
-		width: 100%;
-	}
-}
 @media only screen and (max-width: 479px) 
 {
 	.columns-two-34-66 .columns-two-left
 	{
 		width: 100%;
 		margin-bottom: 7%;
+		margin-right: 0px;
 	}
 	.columns-two-34-66 .columns-two-right
 	{
@@ -209,32 +198,23 @@
 }
 .columns-two-66-34 .columns-two-right
 {
-	width: 30%;
+	width: 31%;
     margin-left: 1.5%;
 }
 
-@media only screen and (min-width: 480px) and (max-width: 768px)
-{
-	.columns-two-66-34 .columns-two-left
-	{
-		width: 100%;
-		margin-bottom: 7%;
-	}
-	.columns-two-66-34 .columns-two-right
-	{
-		width: 100%;
-	}
-}
+
 @media only screen and (max-width: 479px) 
 {
 	.columns-two-66-34 .columns-two-left
 	{
 		width: 100%;
 		margin-bottom: 7%;
+		margin-right: 0px;
 	}
 	.columns-two-66-34 .columns-two-right
 	{
 		width: 100%;
+		margin-left: 0px;
 	}
 }
 
@@ -293,12 +273,12 @@
 }
 .columns-three-25-25-50 .columns-three-middle
 {
-	width: 22%;
+	width: 23.5%;
 	margin-right: 3%;
 }
 .columns-three-25-25-50 .columns-three-right
 {
-	width: 50%;
+	width: 48.5%;
 }
 @media only screen and (max-width: 480px) 
 {
@@ -323,18 +303,18 @@
 /*****************************/
 .columns-three-50-25-25 .columns-three-left
 {
-	width: 47%;
+	width: 48.5%;
 	margin-right: 3%;
 }
 .columns-three-50-25-25 .columns-three-middle
 {
-	width: 22%;
+	width: 23.5%;
 	margin-right: 3%;
 }
 .columns-three-50-25-25 .columns-three-right
 {
 	width: 22%;
-	margin-right: 3%;
+	margin-right: 0;
 }
 
 @media only screen and (max-width: 480px) 

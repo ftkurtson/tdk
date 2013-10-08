@@ -1,0 +1,35 @@
+{% for comment in data.blogCommentsData %}
+<div class='bk-blog-comment'>
+    <img style='width:25px;' src={{ comment.gravitar }} />
+    <span>{{comment.name}}</span>
+    
+    {% if data.showWebsite %} 
+    <a href={{ comment.website }}>{{ comment.website }}</a> 
+    {% endif %}
+    
+    {% if data.showTime %} 
+    <time>{{ comment.time }}</time>
+    {% endif %}
+    
+    <div>{{ comment.comment }}</div>
+</div>
+{% endfor %}
+
+<form action method='post'>
+    <fieldset>
+        <label for="name">{{"widgets.blogcomments.name"|translate("Name")}}:</label>
+        <input class="name" name='name' maxlength="50" type='text'></input>
+
+        <label for="email">{{"widgets.blogcomments.email"|translate("Email")}}:</label>
+        <input class="email" name='email' type='email'></input>
+        
+        {% if data.showWebsite %} 
+        <label for="website">{{"widgets.blogcomments.website"|translate("Website")}}:</label>
+        <input class="website" name='website' type='url'></input>
+        {% endif %}
+
+        <label for="comment">{{"widgets.blogcomments.comment"|translate("Comment")}}:</label>
+        <textarea class="comment" name='comment' maxlength="2500"></textarea>
+        <button class="btn btnText {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %}" type="submit" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.submitText}}</button>
+    </fieldset>
+</form>

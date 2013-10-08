@@ -20,6 +20,10 @@
                         $.extend(true, scope, options.methods);
                     }
 
+                    if (typeof options.properties === 'object') {
+                        $.extend(true, scope.properties.data, options.properties);
+                    }
+                    
                     // extend the basic properties
                     if (args[1] && typeof args[1] === 'object') {
                         $.extend(true, scope.properties, args[1]);

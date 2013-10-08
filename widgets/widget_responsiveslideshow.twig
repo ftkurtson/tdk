@@ -57,22 +57,24 @@
                     {% set aspectClass = 'portrait' %}
                 {% endif %}
             {% endif %}
+            
+            {% if image.ref|length > 0 %}
+                {% set image = plugins.assets.images[image.ref] %}
+            {% endif %}
 
             <li data-ref="{{key}}" class="slideshow-image-item{% if loop.index0 == 0 %} current{% endif %}">
             <span class="inner {{ aspectClass }}"{% if data.crop == 1 %} style="background-image:url('{{ image.url }}');"{% endif %}>
                 <div class="image-wrapper">
                     <img class="slideshow-image" src="{{ image.url }}"{% if image.title != ''%} alt="{{ image.title }}"{% endif %}>
                 </div>
-                {% if image.title != empty and image.description != empty %}
                 <div class="content-wrapper">
-                    {% if image.title != '' %}
-                    <span class="title" {% if data.showTitle == 0%} style="display: none" {% endif %}>{{image.title}}</span>
+                    {% if image.title|length > 0 and data.showTitle == 1 %}
+                    <span class="title">{{image.title}}</span>
                     {% endif %}
-                    {% if image.description != '' %}
-                    <span class="description" {% if data.showDescription == 0%} style="display: none" {% endif %}>{{image.description}}</span>
+                    {% if image.description|length > 0 and data.showDescription == 1 %}
+                    <span class="description">{{image.description}}</span>
                     {% endif %}
                 </div>
-                {% endif %}
             </span>
             </li>
 

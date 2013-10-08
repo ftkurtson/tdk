@@ -9,7 +9,7 @@
 
 	<ul class="{{ data.align  ? ' align-' : ''}}{{ data.align }} {{i}}-items">
 		{% for page in pages %}
-			{% if (page.type == 'home' or page.type == 'page' or page.type == 'index') and page.status != 'inactive' and (page.parent_id == '0' or page.parentId == '0') and page.hiddenFromNavigation != '1' %}
+			{% if (page.type == 'home' or page.type == 'page' or page.type == 'index') and page.status != 'inactive' and page.parentId == '0' and page.hiddenFromNavigation != '1' %}
 				<li id="menu-item_{{ page.ref }}">
 					<a href="/{{ page.request }}">
 						<span class="{% for item in data.icons %}{% if (item.ref == page.ref) and (item.icon != 'no-icon') %}{{item.icon}}{% endif %}{% endfor %} menu-icon"></span>
