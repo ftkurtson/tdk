@@ -1,6 +1,6 @@
 $(function() {
     Server.plugins = sdkPlugins;
-    // only turn selected widgets to be functional
+    // only choose selected widgets to be functional
     var allowedWidgets = ['map'];
     sdkWidgets.forEach(function(widget) {
         if ($.inArray(widget.type, allowedWidgets) === -1) {
