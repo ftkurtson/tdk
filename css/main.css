@@ -3,21 +3,21 @@ header {
     left: 0;
     top: 0;
     right: 0;
-    height: 98px;
+    height: 60px;
     background-color: #222;
     border-bottom: 2px solid #f07430;
 }
 
 header img {
     position: absolute;
-    left: 28px;
-    top: 20px;
+    left: 15px;
+    top: 10px;
 }
 
 header h2 {
     position: absolute;
-    left: 81px;
-    top: 36px;
+    left: 70px;
+    top: 25px;
     color: #fff;
     font: normal 13px "Helvetica Neue",Helvetica,sans-serif;
     letter-spacing: 1px;
@@ -25,29 +25,24 @@ header h2 {
 
 #controls {
     position: absolute;
-    right: 28px;
-    bottom: 14px;
+    right: 15px;
+    bottom: 13px;
     color: #fff;
     font: normal 13px "Helvetica Neue",Helvetica,sans-serif;
-    white-space: nowrap !important;
 }
 
 #controls .col {
     display: inline-block;
-    vertical-align: top;
+    margin-right: 10px;
 }
 
-#controls .row span {
-    width: 80px;
+#controls .col:last-of-type {
+    margin-right: 0;
+}
+
+#controls .col span {
+    margin-right: 5px;
     display: inline-block;
-}
-
-#controls select, #controls button {
-    font: normal 12px "Helvetica Neue",Helvetica,sans-serif;
-}
-
-#controls select {
-    width: 80px;
 }
 
 #controls #render {
@@ -69,7 +64,7 @@ h1 {
 section#iframe {
     position: absolute;
     left: 0;
-    top: 100px;
+    top: 62px;
     right: 0;
     bottom: 0;
 }
