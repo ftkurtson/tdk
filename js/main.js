@@ -50,8 +50,16 @@ $(function() {
         var name = type.charAt(0).toUpperCase() + type.slice(1);
 
         var initial = BaseKit.Widget[name + "Properties"] || {};
+        var widgetProperties = properties[type];
 
-        var input = properties[type] || defaultProperties;
+        if (type === 'profile') {
+            if (properties[args.profileType])
+            {
+                widgetProperties = properties[args.profileType];
+            }
+        }
+
+        var input = widgetProperties || defaultProperties;
 
         if (typeof input === "function") {
             input = input(template, typeof args === "object" && args !== null ? args : {});
@@ -67,7 +75,7 @@ $(function() {
             plugins: plugins(template)
         };
 
-        var widget = Util.loadTemplate(type, "widgets/widget_" + type + ".twig");
+        var widget = Util.loadTemplate(id, "widgets/widget_" + type + ".twig");
         var html = widget.render(data);
 
         widgets.push({
@@ -89,8 +97,14 @@ $(function() {
 
         switch (name) {
             case "main":
-                html += renderWidget($("#widget1").val());
-                html += renderWidget($("#widget2").val());
+                html += renderWidget('content', 'maincontent1');
+                html += renderWidget('contactform', 'maincontactform1');
+                html += renderWidget('twitter', 'maintwitter1');
+                html += renderWidget('line', 'mainline1');
+                html += renderWidget('button', 'mainbutton1');
+                html += renderWidget('socialicons', 'mainsocialicons1');
+                html += renderWidget('youtube', 'mainyoutube1');
+                html += renderWidget('map', 'mainmap1');
                 break;
         }
 
@@ -142,18 +156,18 @@ $(function() {
         $.getJSON("templates/" + template + "/metadata.json").done(function(data) {
             // Build the LESS variables for this template
 
-            var varsLess = "";
+            var error, varsLess = "";
 
             // Check that the metadata.json file contains colour and font swatches
 
             if (typeof data.colorSwatches === "undefined") {
-                var error = "Template Metadata Error\nNo 'colorSwatches' provided";
+                error = "Template Metadata Error\nNo 'colorSwatches' provided";
                 alert(error);
                 throw error;
             }
 
             if (typeof data.fontSwatch === "undefined") {
-                var error = "Template Metadata Error\nNo 'fontSwatch' provided";
+                error = "Template Metadata Error\nNo 'fontSwatch' provided";
                 alert(error);
                 throw error;
             }
@@ -186,7 +200,7 @@ $(function() {
 
             for (var fontNumber = 1; fontNumber < 11; fontNumber++) {
                 if (typeof data.fontSwatch["font" + fontNumber] === "undefined") {
-                    var error = "Template Metadata Error\nNo 'fontSwatch.font" + fontNumber + "' provided";
+                    error = "Template Metadata Error\nNo 'fontSwatch.font" + fontNumber + "' provided";
                     alert(error);
                     throw error;
                 }
@@ -199,7 +213,7 @@ $(function() {
             }
 
             // Parse the LESS code for the selected template
-            var parser = new(less.Parser);
+            var parser = new(less.Parser)();
             parser.parse(varsLess + '@import "less/vars.less";\n@import "less/presets.less";\n@import "templates/' + template + '/stylesheet.less";', function(e, tree) {
                 if (e) {
                     alert("LESS Parse Error\n" + e.message);

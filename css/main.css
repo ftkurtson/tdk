@@ -32,6 +32,11 @@ header h2 {
     white-space: nowrap !important;
 }
 
+#controls .col {
+    display: inline-block;
+    vertical-align: top;
+}
+
 #controls .row span {
     width: 80px;
     display: inline-block;
@@ -39,6 +44,20 @@ header h2 {
 
 #controls select, #controls button {
     font: normal 12px "Helvetica Neue",Helvetica,sans-serif;
+}
+
+#controls select {
+    width: 80px;
+}
+
+#controls #render {
+    background: #659D32;
+    height: 35px;
+    cursor: pointer;
+    border: 1px solid #3B5323;
+    border-radius: 15px;
+    margin-top: 15px;
+    color: #FFF;
 }
 
 h1 {

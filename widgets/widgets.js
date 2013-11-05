@@ -1146,7 +1146,8 @@
         height: 150, // MB: default height
         address: 'profile',
         latitude: '51.50959718054336',
-        longitude: '-0.12668609619140625' // HC: in case the profile is empty
+        longitude: '-0.12668609619140625', // HC: in case the profile is empty
+        markerPath: '/apps/images/mobile/map-marker.png'
     };
 
     BaseKit.Widget.MapMethods = {
@@ -1283,7 +1284,7 @@
          * @param <integer> longitude - the longitude to position the marker
          */
         createMapMarker: function (latitude, longitude) {
-            var icon = new google.maps.MarkerImage(App.session.get('assetBaseUrl') + '/apps/images/mobile/map-marker.png',
+            var icon = new google.maps.MarkerImage(App.session.get('assetBaseUrl') + this.get('markerPath'),
                     new google.maps.Size(32, 32), null,
                     new google.maps.Point(16, 32),
                     new google.maps.Size(32, 32));
