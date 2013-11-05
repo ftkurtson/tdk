@@ -15,7 +15,7 @@
         {% if data.albumRef != 0 and plugins.assets.albums[data.albumRef]|length > 0 %}
             {% set image = plugins.assets.images[image] %}
         {% endif %}
-       
+        
         {% if image.imageWidth == image.imageHeight %}
             {% set aspectClass = 'square' %}
         {% endif %}
@@ -33,9 +33,9 @@
         {% endif %}
 
         <li class="{{aspectClass}}">
-            <span class="inner" style="background-image:url('{{ resizerUrl }}/{{image.path}}?w=960');">
-                <a class="" href="#" image-href="{{ resizerUrl }}/{{image.path}}?w=960" data-lightbox="set-{{ref}}" title="{{image.title}}">
-                    <img src="{{ resizerUrl }}/{{image.path}}?w=960"/>
+            <span class="inner" style="background-image:url('{% if image.url|length > 0 %}{{image.url}}{% else %}{{ resizerUrl }}/{{image.path}}?w=960{% endif %}');">
+                <a class="" href="#" image-href="{% if image.url|length > 0 %}{{image.url}}{% else %}{{ resizerUrl }}/{{image.path}}?w=960{% endif %}" data-lightbox="set-{{ref}}" title="{{image.title}}">
+                    <img src="{% if image.url|length > 0 %}{{image.url}}{% else %}{{ resizerUrl }}/{{image.path}}?w=960{% endif %}"/>
                     {% if image.title|length > 0 and data.showTitle == 1 %}
                     <span class="title">{{image.title}}</span>
                     {% endif %}

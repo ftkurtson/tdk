@@ -149,6 +149,24 @@ var properties = {
             preset: "default",
             align: "left"
         }, defaults);
+    },
+    image: function(template, defaults) {
+        return $.extend(defaults, {
+            src: "templates/" + template + "/images/image-widget-default.jpg"
+        });
+    },
+    paypalbuynow: function(template, defaults) {
+        return $.extend(defaults, {
+            paypalbuynow_businessemail: "test@test.com",
+            paypalbuynow_currency: "GDP",
+            paypalbuynow_text: "Buy Me Now"
+        });
+    },
+    dropbox: function(template, defaults) {
+        return $.extend(defaults, {
+            showFileName: 1,
+            fileName: "test.file"
+        });
     }
 };
 

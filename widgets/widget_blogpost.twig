@@ -1,3 +1,7 @@
 <div>
-{{ plugins.blog.posts|first.content|raw }}
+    {% if plugins.blog.posts %}
+        {{ plugins.blog.posts|first.content|raw }}
+    {% else %}
+        {{"shared_views.blog.no-post"|translate("You have no post")}}
+    {% endif %}
 </div>

@@ -1,0 +1,86 @@
+<form class="widget-buynow-container">
+    <ul class="widget-buynow-container-list">
+        <li>
+            <span class="widget-buynow-title">{{"widgets.buynow.your_detials"|translate("Your details")}}</span>
+
+            {% if data.showNames == true %}
+                <div>
+                    <label title="{{"widgets.buynow.first_name"|translate("First name")}}">{{"widgets.buynow.first_name"|translate("First name")}}</label>
+                    <input type="text" name="firstname" class="widget-buynow-first-name" title={{"widgets.buynow.first_name"|translate("First name")}} placeholder="{{"widgets.buynow.first_name"|translate("First name")}}">
+                    <span class='filed-error-firstName errors'></span>
+                </div>
+                <div>
+                    <label title="{{"widgets.buynow.last_name"|translate("Last name")}}">{{"widgets.buynow.last_name"|translate("Last name")}}</label>
+                    <input type="text" name="lastname" class="widget-buynow-last-name" title="{{"widgets.buynow.last_name"|translate("Last name")}}" placeholder="{{"widgets.buynow.last_name"|translate("Last name")}}">
+                    <span class='filed-error-lastName errors'></span>
+                </div>
+            {% endif %}
+
+            <div>
+                <label title="{{"widgets.buynow.account"|translate("Account")}}">{{"widgets.buynow.account"|translate("Account")}}</label>
+                <input type="email" name="Account" class="widget-buynow-email bk-standard-input" title="{{"widgets.buynow.account"|translate("Account")}}" placeholder="me@example.com">
+                <span class='filed-error-email errors'></span>
+            </div>
+            <div>
+                <label title="{{"widgets.buynow.password"|translate("Password")}}">{{"widgets.buynow.password"|translate("Password")}}</label>
+                <input type="password" class="password" title="{{"widgets.buynow.password"|translate("Password")}}" placeholder={{"widgets.buynow.password"|translate("Password")}}>
+                <span class='filed-error-password errors'></span>
+                <button class="password-mask-toggle" type="button" aria-controls="password">{{"widgets.buynow.show"|translate("Show")}}</button>
+            </div>
+        </li>
+
+        <li>
+        {% if data.paymentMethods and data.paymentMethods|length > 0 %}
+            <span class="widget-buynow-title">{{"widgets.buynow.payment_methods"|translate("Methods of payment")}}</span>
+            <ul class="widget-buynow-paymentMethods">
+
+            {% for ref, name in data.paymentMethods %}
+                <li class="payment-method">
+                    <label title="{{ name }}" name="paymentMethods">{{ name }}
+                        <input type="radio" class="{{ name }}" name="paymentMethods" value="{{ ref }}" title="{{ name }}" {% if loop.first %}checked{% endif %}>
+                    </label>
+                </li>
+            {% endfor %}
+
+            </ul>
+        {% else %}
+            {% set noPaymentMethods = true %}
+            <span>{{"widgets.buynow.no_payment_methods"|translate("No payment methods found")}}.</span>
+        {% endif %}
+        </li>
+
+        <li>
+            <span class="widget-buynow-title">{{"widgets.buynow.package_title"|translate("You are about to purchase")}}:</span>
+            {% if data.packageData and data.packageData|length > 0 %}
+                <div class='widget-buynow-package'>
+                    <span class="widget-buynow-package-name" data-ref="{{ data.packageData.ref }}">{{ data.packageData.name }}</span>
+                    <span class="widget-buynow-package-price" data-annually="" data-monthly="">{{ data.packageData.price }}</span>
+                </div>
+
+                <ul>
+                    <li class="pay-period">
+                        <label title="Pay: Annually" name="paymentPeriod">{{"widgets.buynow.package_pay_annually"|translate("Pay: Annually")}}
+                            <input type="radio" class="payment-period-annually" name="paymentPeriod" value="12" checked="checked" title="Pay: Annually">
+                        </label>
+                    </li>
+                    <li class="">
+                        <label title="Pay: Monthly" name="paymentPeriod">{{"widgets.buynow.package_pay_monthly"|translate("Pay: Monthly")}}
+                            <input type="radio" class="payment-period-monthly" name="paymentPeriod" value="1" title="Pay: Monthly">
+                        </label>
+                    </li>
+                </ul>
+            {% else %}
+                {% set noPackageInfo = true %}
+                <span>{{"widgets.buynow.no_package"|translate("No package information found")}}.</span>
+            {% endif %}
+        </li>
+    </ul>
+
+    <div>
+        <label class="widget-buynow-newsletter-text">{{"widgets.buynow.newsletter_des"|translate("Please don't send me BaseKit news by email or contact me by telephone")}}
+            <input type="checkbox" class="widget-buynow-newsletter" name="newsletter" title={{"widgets.buynow.newsletter"|translate("newsletter")}}>
+        </label>
+    </div>
+
+    <button class="widget-buynow-make-payment" title="{{'widgets.buynow.submit'|translate('Make a payment using your selected package options')}}" type="submit" {% if noPaymentMethods or noPackageInfo %} disabled {% endif %}>{{"widgets.buynow.buy_now"|translate("Buy now")}}</button>
+</form>

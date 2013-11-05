@@ -23,7 +23,7 @@
                     if (typeof options.properties === 'object') {
                         $.extend(true, scope.properties.data, options.properties);
                     }
-                    
+
                     // extend the basic properties
                     if (args[1] && typeof args[1] === 'object') {
                         $.extend(true, scope.properties, args[1]);
@@ -105,6 +105,66 @@
                         properties.data = $.extend(true, properties.data, properties.temporary);
                     }
                     return properties;
+                },
+
+                getErrorsFromResponse: function (response) {
+                    var errors = [],
+                        responseObj;
+
+                    if (response.responseText) {
+                        responseObj = jQuery.parseJSON(response.responseText);
+
+                        if (responseObj.messageTemplates) {
+                            $.each(responseObj.messageTemplates, function (field, errorTemplates) {
+                                $.each(errorTemplates.templates, function (type, template) {
+                                    errors.push({
+                                        field: field,
+                                        type: type
+                                    });
+                                });
+                            });
+                        }
+                    }
+
+                    return errors;
+                },
+
+                getRegistrationMessageAndFieldFromErrors: function (errors) {
+                    var message = null,
+                        field = null;
+
+                    $.each(errors, function (i, value) {
+                        if (value.field === 'email' && value.type === 'duplicateEmail') {
+                            field = 'email';
+                            message = App.t('global_v7.error_registration.duplicate_email', 'It looks like that email is already in use. Are you sure you don’t already have an account?');
+                            return false;
+                        }
+                        if (value.field === 'email') {
+                            field = 'email';
+                            message = App.t('global_v7.error_registration.incorrect_email_format', 'Please enter a valid email address.');
+                            return false;
+                        }
+                        if (value.field === 'password') {
+                            field = 'password';
+                            message = App.t('global_v7.error_registration.invalid_password', 'Please provide a password greater than 7 characters but less than 19.');
+                            return false;
+                        }
+                        if (value.field === 'firstName') {
+                            field = 'firstName';
+                            message = App.t('global_v7.error_registration.empty_firstname', 'Please provide your first name');
+                            return false;
+                        }
+                        if (value.field === 'lastName') {
+                            field = 'lastName';
+                            message = App.t('global_v7.error_registration.empty_lastname', 'Please provide your last name');
+                            return false;
+                        }
+                    });
+
+                    return {
+                        message: message,
+                        field: field
+                    };
                 }
             }
         });

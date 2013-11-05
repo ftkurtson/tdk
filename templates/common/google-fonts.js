@@ -27,7 +27,11 @@ WebFontConfig = {
             'Glegoo::latin',
             'Vollkorn:400,700:latin',
             'Courgette:400:latin',
-            'Abel:400:latin'
+            'Abel:400:latin',
+            'Sniglet:400:latin',
+            'Ubuntu:300,400,700:latin',
+            'PT+Sans:400,700:latin',
+            'PT+Serif:400,700:latin'
         ]
     }
 };

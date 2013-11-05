@@ -1,0 +1,7 @@
+<div>
+    {% for post in plugins.blog.posts %}
+        <h2>{{ post.title|raw }}</h2>
+    {% else %}
+        {{"shared_views.blog-list.no-content"|translate("You have no post")}}
+    {% endfor%}
+</div>

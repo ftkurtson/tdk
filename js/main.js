@@ -53,6 +53,10 @@ $(function() {
                 html += renderWidget('socialicons', 'mainsocialicons1');
                 html += renderWidget('youtube', 'mainyoutube1');
                 html += renderWidget('map', 'mainmap1');
+                html += renderWidget('image', 'mainimage1');
+                html += renderWidget('paypalbuynow', 'mainpaypalbuynow1');
+                html += renderWidget('tweet', 'maintweet1');
+                html += renderWidget('dropbox', 'maindropbox1');
                 break;
         }
 
