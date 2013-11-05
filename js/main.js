@@ -1,8 +1,4 @@
 $(function() {
-    Twig.extendFunction("asset", function(url) {
-        var template = $("#template").val() || "none";
-        return "templates/" + template + "/" + url;
-    });
 
     Twig.extend(function(Twig) {
         Twig.exports.extendTag({
@@ -35,58 +31,10 @@ $(function() {
         });
     });
 
-    idCount = 0;
-
-    var widgets = [];
-
-    function defaultProperties(template, defaults) {
-        return defaults;
-    }
-
-    function renderWidget(type, id, args) {
+    Twig.extendFunction("asset", function(url) {
         var template = $("#template").val() || "none";
-
-        // Capitalize the type to get its initial properties
-        var name = type.charAt(0).toUpperCase() + type.slice(1);
-
-        var initial = BaseKit.Widget[name + "Properties"] || {};
-        var widgetProperties = properties[type];
-
-        if (type === 'profile') {
-            if (properties[args.profileType])
-            {
-                widgetProperties = properties[args.profileType];
-            }
-        }
-
-        var input = widgetProperties || defaultProperties;
-
-        if (typeof input === "function") {
-            input = input(template, typeof args === "object" && args !== null ? args : {});
-        }
-
-        initial.type = type;
-        var params = $.extend({}, initial, input);
-
-        var data = {
-            profile: profile(template),
-            data: params,
-            pages: pages,
-            plugins: plugins(template)
-        };
-
-        var widget = Util.loadTemplate(id, "widgets/widget_" + type + ".twig");
-        var html = widget.render(data);
-
-        widgets.push({
-            id: id,
-            name: name,
-            type: type,
-            params: params
-        });
-
-        return '<div id="' + id + '" class="widget ' + type + '">' + html + '</div>';
-    }
+        return "templates/" + template + "/" + url;
+    });
 
     Twig.extendFunction("widget", function(type, id, args) {
         return renderWidget(type, id, args);
@@ -124,9 +72,108 @@ $(function() {
         return $.isArray(values) ? values[0] : values;
     });
 
-    var unique = 0;
+    var unique = 0,
+        currentTemplate = null,
+        widgets = [];
 
-    var currentTemplate = null;
+    function loadTemplate(id, file, base, callback, scope) {
+
+        var error = null;
+
+        scope = scope || parent.window
+
+        // The only way to catch exceptions here is via window.onerror
+        // This is horrible, but a simple try / catch doesn't seem to work
+        // Probably something to do with the fact this can be called asynchronously
+        var windowOnerror = window.onerror;
+        window.onerror = function(msg) {
+            error = new Error(msg);
+        };
+
+        // TODO: Queue up calls for the same template id
+
+        // If the template is already loaded then return it
+        if (typeof scope.Util.twigs[id] !== "undefined") {
+            if (typeof callback === "function") {
+                callback(scope.Util.twigs[id]);
+            }
+
+            return scope.Util.twigs[id];
+        }
+
+        var template = scope.twig({
+            id: id,
+            href: file,
+            async: false,
+            base: base || "",
+            load: function(tpl) {
+                if (typeof callback === "function") {
+                    callback(tpl);
+                }
+            }
+        });
+
+        scope.Util.twigs[id] = template;
+
+        // Replace window.onerror
+        scope.onerror = windowOnerror;
+
+        // Throw errors caught via window.onerror
+        if (error) {
+            throw error;
+        }
+
+        return template;
+    }
+
+    function defaultProperties(template, defaults) {
+        return defaults;
+    }
+
+    function renderWidget(type, id, args) {
+        var template = $("#template").val() || "none";
+
+        // Capitalize the type to get its initial properties
+        var name = type.charAt(0).toUpperCase() + type.slice(1);
+
+        var initial = BaseKit.Widget[name + "Properties"] || {};
+        var widgetProperties = properties[type];
+
+        if (type === 'profile') {
+            if (properties[args.profileType])
+            {
+                widgetProperties = properties[args.profileType];
+            }
+        }
+
+        var input = widgetProperties || defaultProperties;
+
+        if (typeof input === "function") {
+            input = input(template, typeof args === "object" && args !== null ? args : {});
+        }
+
+        initial.type = type;
+        var params = $.extend({}, initial, input);
+
+        var data = {
+            profile: profile(template),
+            data: params,
+            pages: pages,
+            plugins: plugins(template)
+        };
+
+        var widget = loadTemplate(id, "widgets/widget_" + type + ".twig");
+        var html = widget.render(data);
+
+        widgets.push({
+            id: id,
+            name: name,
+            type: type,
+            params: params
+        });
+
+        return '<div id="' + id + '" class="widget ' + type + '">' + html + '</div>';
+    }
 
     function renderTemplate() {
         // Make sure that both LESS and Twig don't cache
@@ -149,7 +196,7 @@ $(function() {
             // Reset the colour swatch
             colourSwatchIndex = 0;
         }
-        
+
         site.colorSwatch = 'swatch-' + (parseInt(colourSwatchIndex, 10) + 1);
 
         // Grab the metadata.json file
@@ -225,7 +272,7 @@ $(function() {
 
                 try {
                     // Always make the id unique so we re-compile and render the template every time
-                    var twig = Util.loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file, "templates/" + template);
+                    var twig = loadTemplate(template + "/" + file + (++unique), "templates/" + template + "/" + file, "templates/" + template);
                 } catch (e) {
                     if (e.message.substring(0, 9) == "Uncaught ") {
                         e.message = e.message.substring(9);
@@ -294,7 +341,6 @@ $(function() {
         });
     }
 
-    // Render the template when the button is clicked
     $("#render").click(renderTemplate);
 
     templates.forEach(function(template) {
@@ -305,6 +351,7 @@ $(function() {
             );
     });
 
-    // Wait before rendering as there are lots of resources to be loaded
-    setTimeout(renderTemplate, 500);
+    $(document).ready(function () {
+        renderTemplate();
+    });
 });
