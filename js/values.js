@@ -91,13 +91,30 @@ var properties = {
     },
     map: function(template, defaults) {
         return $.extend(defaults, {
-            height: 300
+            height: 300,
+            markerPath: '/images/map-marker.png'
         });
     },
     twitter: function(template, defaults) {
         return $.extend(defaults, {
-            type: 'widget.twitter',
-            tweets: [{"text": "How To Get Big-Brand Search Visibility","created_at": "Thu Aug 01 11:30:49 +0000 2013","source": "href=\"http://www.tweetdeck.com\" rel=\"nofollow\"TweetDeck","user": {"name": "BaseKit.Com","screen_name": "basekit","profile_image_url": "http://a0.twimg.com/profile_images/2388265742/8pkr9i1jj6x3wtu4h9j4_normal.jpeg","protected": false}}]
+            tweets: [
+                {
+                    "text": "How To Get Big-Brand Search Visibility",
+                    "createdAt": "Thu Aug 01 11:30:49 +0000 2013",
+                    "source": "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+                    "fullName": "BaseKit.Com",
+                    "screenName": "basekit",
+                    "imageUrl": "http://a0.twimg.com/profile_images/2388265742/8pkr9i1jj6x3wtu4h9j4_normal.jpeg"
+                },
+                {
+                    "text": "Check out the 10 companies that control the internet ",
+                    "createdAt": "Thu Aug 01 10:30:49 +0000 2013",
+                    "source": "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
+                    "fullName": "BaseKit.Com",
+                    "screenName": "basekit",
+                    "imageUrl": "http://a0.twimg.com/profile_images/2388265742/8pkr9i1jj6x3wtu4h9j4_normal.jpeg"
+                }
+            ]
         });
     },
     youtube: function(template, defaults) {
