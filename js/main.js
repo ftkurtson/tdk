@@ -57,6 +57,9 @@ $(function() {
                 html += renderWidget('paypalbuynow', 'mainpaypalbuynow1');
                 html += renderWidget('tweet', 'maintweet1');
                 html += renderWidget('dropbox', 'maindropbox1');
+                html += renderWidget('clicktocall', 'mainclicktocall1');
+                html += renderWidget('gallery', 'maingallery1');
+                html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1');
                 break;
         }
 
