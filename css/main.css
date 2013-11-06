@@ -1,20 +1,25 @@
+body {
+    margin: 0;
+    font: normal 13px "Helvetica Neue",Helvetica,sans-serif;
+}
 header {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
+    width: 100%;
     height: 60px;
     background-color: #222;
     border-bottom: 2px solid #f07430;
+    padding: 0 15px;
+    box-sizing: border-box;
 }
 
-header img {
-    position: absolute;
-    left: 15px;
-    top: 10px;
+#logo {
+    float: left;
 }
 
-header h2 {
+#logo img {
+    margin-top: 10px;
+}
+
+#logo h2 {
     position: absolute;
     left: 70px;
     top: 25px;
@@ -24,11 +29,8 @@ header h2 {
 }
 
 #controls {
-    position: absolute;
-    right: 15px;
-    bottom: 13px;
+    float: right;
     color: #fff;
-    font: normal 13px "Helvetica Neue",Helvetica,sans-serif;
 }
 
 #controls .col {
@@ -77,12 +79,43 @@ iframe {
     width: 100%;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     header {
-        height: 178px;
+        height: 110px;
     }
 
     section#iframe {
-        top: 180px;
+        top: 112px;
+    }
+
+    #controls {
+        clear: left;
+        float: left;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    header {
+        height: 200px;
+    }
+
+    section#iframe {
+        top: 202px;
+    }
+
+    #controls {
+        margin-top: 15px;
+    }
+
+    #controls .col {
+        display: block;
+    }
+
+    #controls span {
+        width: 60px;
+    }
+
+    #controls select {
+        width: 80px;
     }
 }
