@@ -60,6 +60,7 @@ $(function() {
                 html += renderWidget('clicktocall', 'mainclicktocall1');
                 html += renderWidget('gallery', 'maingallery1');
                 html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1');
+                html += renderWidget('signupform', 'mainsignupform1');
                 break;
         }
 
