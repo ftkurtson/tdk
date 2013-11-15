@@ -128,10 +128,10 @@ var properties = {
         });
     },
     gallery: function(template, defaults) {
-        return $.extend(defaults, {
+        return $.extend({
             preset: "default",
             albumRef: 1
-        });
+        }, defaults);
     },
     extendednavigation: function(template, defaults) {
         return $.extend(defaults, {
@@ -141,7 +141,7 @@ var properties = {
     responsiveslideshow: function(template, defaults) {
         return $.extend(defaults, {
             preset: "default",
-            albumRef: 1
+            albumRef: 0
         });
     },
     navigation: function(template, defaults) {
@@ -151,9 +151,9 @@ var properties = {
         }, defaults);
     },
     image: function(template, defaults) {
-        return $.extend(defaults, {
-            src: "templates/" + template + "/images/image-widget-default.jpg"
-        });
+        return $.extend({
+            src: "http://placehold.it/250x250"
+        }, defaults);
     },
     paypalbuynow: function(template, defaults) {
         return $.extend(defaults, {
@@ -184,22 +184,22 @@ var plugins = function(template) {
             },
             images: {
                 1: {
-                    url: "templates/" + template + "/images/gallery/1.jpg"
+                    url: "http://placehold.it/250x250"
                 },
                 2: {
-                    url: "templates/" + template + "/images/gallery/2.jpg"
+                    url: "http://placehold.it/250x250"
                 },
                 3: {
-                    url: "templates/" + template + "/images/gallery/3.jpg"
+                    url: "http://placehold.it/250x250"
                 },
                 4: {
-                    url: "templates/" + template + "/images/gallery/4.jpg"
+                    url: "http://placehold.it/250x250"
                 },
                 5: {
-                    url: "templates/" + template + "/images/gallery/5.jpg"
+                    url: "http://placehold.it/250x250"
                 },
                 6: {
-                    url: "templates/" + template + "/images/gallery/6.jpg"
+                    url: "http://placehold.it/250x250"
                 }
             }
         }
