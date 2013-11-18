@@ -61,6 +61,12 @@ $(function() {
                 html += renderWidget('gallery', 'maingallery1');
                 html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1');
                 html += renderWidget('signupform', 'mainsignupform1');
+                html += renderWidget('blogtitle', 'mainblogtitle1');
+                html += renderWidget('blogpostauthor', 'mainblogpostauthor1');
+                html += renderWidget('blogpost', 'mainblogpost1');
+                html += renderWidget('blogpostmetadata', 'mainblogpostmetadata1');
+                html += renderWidget('blogdate', 'mainblogdate1');
+                html += renderWidget('blogcomments', 'mainblogcomments1');
                 break;
         }
 
@@ -69,6 +75,11 @@ $(function() {
 
     Twig.extendFilter("raw", function(input) {
         return input;
+    });
+    
+    // TODO - format not used, but it should convert date to `international`, `european` and `us`
+    Twig.extendFilter("formatBlogDate", function(date, format) {
+        return date;
     });
 
     Twig.extendFilter("expandAssetUrl", function(url) {

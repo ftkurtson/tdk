@@ -202,7 +202,16 @@ var plugins = function(template) {
                     url: "http://placehold.it/250x250"
                 }
             }
-        }
+        },
+        blog: {
+            posts:[
+                {
+                    "title":"Detect post",
+                    "author":"test 1811103531",
+                    "content":"<p>\r\n\tDetect post\r\n<\/p>"
+                }
+             ]
+         }
     };
 };
 
