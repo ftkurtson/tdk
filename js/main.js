@@ -45,22 +45,7 @@ $(function() {
 
         switch (name) {
             case "main":
-                html += renderWidget('content', 'maincontent1');
-                html += renderWidget('contactform', 'maincontactform1');
-                html += renderWidget('twitter', 'maintwitter1');
-                html += renderWidget('line', 'mainline1');
-                html += renderWidget('button', 'mainbutton1');
-                html += renderWidget('socialicons', 'mainsocialicons1');
-                html += renderWidget('youtube', 'mainyoutube1');
-                html += renderWidget('map', 'mainmap1');
-                html += renderWidget('image', 'mainimage1');
-                html += renderWidget('paypalbuynow', 'mainpaypalbuynow1');
-                html += renderWidget('tweet', 'maintweet1');
-                html += renderWidget('dropbox', 'maindropbox1');
-                html += renderWidget('clicktocall', 'mainclicktocall1');
                 html += renderWidget('gallery', 'maingallery1');
-                html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1');
-                html += renderWidget('signupform', 'mainsignupform1');
                 html += renderWidget('blogtitle', 'mainblogtitle1');
                 html += renderWidget('blogpostauthor', 'mainblogpostauthor1');
                 html += renderWidget('blogpost', 'mainblogpost1');

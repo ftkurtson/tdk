@@ -180,7 +180,7 @@ var plugins = function(template) {
     return {
         assets: {
             albums: {
-                1: [1, 2, 3, 4, 5, 6]
+                1: [1, 2, 3]
             },
             images: {
                 1: {
@@ -191,24 +191,15 @@ var plugins = function(template) {
                 },
                 3: {
                     url: "http://placehold.it/250x250"
-                },
-                4: {
-                    url: "http://placehold.it/250x250"
-                },
-                5: {
-                    url: "http://placehold.it/250x250"
-                },
-                6: {
-                    url: "http://placehold.it/250x250"
                 }
             }
         },
         blog: {
             posts:[
                 {
-                    "title":"Detect post",
-                    "author":"test 1811103531",
-                    "content":"<p>\r\n\tDetect post\r\n<\/p>"
+                    "title":"Visiting Seattle",
+                    "author":"By Jonathan Appleseed",
+                    "content":"<p><br>Donec auctor lectus eget diam dapibus porta. Vivamus a tortor dignissim, commodo felis et, mattis mauris. Sed a quam turpis. Pellentesque at consequat enim. Etiam pharetra, ipsum vitae tincidunt condimentum, eros felis pharetra velit, sit amet rhoncus nunc elit sed lectus. Morbi ullamcorper bibendum libero egestas aliquet. Aenean sit amet pulvinar urna, nec aliquet dolor. Donec vitae lorem consectetur, pellentesque nulla at, lobortis sapien. Morbi at ipsum felis.<br><br>Ipsum vitae tincidunt condimentum, eros felis pharetra velit, sit amet rhoncus nunc elit sed lectus. Morbi ullamcorper bibendum libero egestas aliquet. Aenean sit amet pulvinar urna, nec aliquet dolor. Donec vitae lorem consectetur, pellentesque nulla at, lobortis sapien. Morbi at ipsum felis.</p>"
                 }
              ]
          }
