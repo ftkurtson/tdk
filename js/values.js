@@ -6,8 +6,8 @@
  */
 var profile = function(template) {
     return {
-        business: "Smart Inc.",
-        header: "My Website Header",
+        business: "Kai's Adventure Blog",
+        header: "Follow M Adventure Around the West Coast",
         strapline: "Here is the website strapline!",
         address1: "123 Example Street",
         address2: "Block Number One",
@@ -56,9 +56,9 @@ var properties = {
         return $.extend(defaults, {
             preset: "align-center",
             bgImg: "templates/" + template + "/images/feature-bg.jpg",
-            buttonText: "Sign Up",
-            header: "My Website Header",
-            strapline: "Here is the website strapline!"
+            buttonText: "Contact Me",
+            header: "Travel Journal 2013",
+            strapline: "Follow My Adventures Through The West Coast"
         });
     },
     companyname: function(template, defaults) {
@@ -184,13 +184,13 @@ var plugins = function(template) {
             },
             images: {
                 1: {
-                    url: "http://placehold.it/250x250"
+                   url: "templates/" + template + "/images/gallery/1.jpg"
                 },
                 2: {
-                    url: "http://placehold.it/250x250"
+                   url: "templates/" + template + "/images/gallery/2.jpg"
                 },
                 3: {
-                    url: "http://placehold.it/250x250"
+                   url: "templates/" + template + "/images/gallery/3.jpg"
                 }
             }
         },
@@ -198,7 +198,7 @@ var plugins = function(template) {
             posts:[
                 {
                     "title":"Visiting Seattle",
-                    "author":"By Jonathan Appleseed",
+                    "author":"By Kai Close-Phoenix",
                     "content":"<p><br>Donec auctor lectus eget diam dapibus porta. Vivamus a tortor dignissim, commodo felis et, mattis mauris. Sed a quam turpis. Pellentesque at consequat enim. Etiam pharetra, ipsum vitae tincidunt condimentum, eros felis pharetra velit, sit amet rhoncus nunc elit sed lectus. Morbi ullamcorper bibendum libero egestas aliquet. Aenean sit amet pulvinar urna, nec aliquet dolor. Donec vitae lorem consectetur, pellentesque nulla at, lobortis sapien. Morbi at ipsum felis.<br><br>Ipsum vitae tincidunt condimentum, eros felis pharetra velit, sit amet rhoncus nunc elit sed lectus. Morbi ullamcorper bibendum libero egestas aliquet. Aenean sit amet pulvinar urna, nec aliquet dolor. Donec vitae lorem consectetur, pellentesque nulla at, lobortis sapien. Morbi at ipsum felis.</p>"
                 }
              ]
@@ -241,8 +241,8 @@ var pages = [
     },
     {
         ref: 4,
-        request: "portfolio",
-        title: "Portfolio",
+        request: "latest posts",
+        title: "latest posts",
         type: "folder",
         status: "active",
         subPages: [
