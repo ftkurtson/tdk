@@ -1,40 +1,109 @@
 {% extends "layout.twig" %}
-
 {% block content %}
 
 <header>
-    <div class="wrapper clearfix">
-        <div class="companyheader clearfix">
-            {{widget('logo', 'logo', {"defaultlogo": asset('images/logo.png')})|raw}}
-            {{widget('companyname', 'companyname', {"business": "profile"})|raw}}
-        </div>
-        {{widget('extendednavigation', 'navigationheader', {})|raw}}
-    </div>
+   <div class="wrapper clearfix">
+      <div class="companyheader clearfix">
+         {{widget('logo', 'logo', {"defaultlogo": asset('images/logo.png')})|raw}}
+         {{widget('companyname', 'companyname', {"business": "profile"})|raw}}
+      </div>
+      {{widget('extendednavigation', 'navigationheader', {})|raw}}
+   </div>
 </header>
-
 <section>
-    {{widget('feature', 'featurehome', {"header": "profile", "strapline":"profile", "buttonText":"Lorem Ipsum","defaultBgImg": asset('images/feature-bg.jpg'), 'positionTopPercentage': '50','showBtn': true})|raw}}
+   {{widget('feature', 'featurehome', {"header": "profile", "strapline":"profile", "buttonText":"Lorem Ipsum","defaultBgImg": asset('images/feature-bg.jpg'), 'positionTopPercentage': '50','showBtn': true})|raw}}
 </section>
 
+
+
 <div class="main wrapper clearfix">
-    {{zone('main')|raw}}
+   <div class="widget blogtitle">
+   <h2>Visiting Seattle</h2>
+<div id="mainblogpostauthor1" class="widget blogpostauthor">
+   <div class="blog-post-author ">
+      <span>By Kai Close-Phoenix</span>
+   </div>
+</div>
+<div class="widget blogpost">
+   <div>
+      <p><br>Donec auctor lectus eget diam dapibus porta. Vivamus a tortor dignissim, commodo felis et, mattis mauris. Sed a quam turpis. Pellentesque at consequat enim. Etiam pharetra, ipsum vitae tincidunt condimentum, eros felis pharetra velit, sit amet rhoncus nunc elit sed lectus. Morbi ullamcorper bibendum libero egestas aliquet. Aenean sit amet pulvinar urna, nec aliquet dolor. Donec vitae lorem consectetur, pellentesque nulla at, lobortis sapien. Morbi at ipsum felis.<br><br>Ipsum vitae tincidunt condimentum, eros felis pharetra velit, sit amet rhoncus nunc elit sed lectus. Morbi ullamcorper bibendum libero egestas aliquet. Aenean sit amet pulvinar urna, nec aliquet dolor. Donec vitae lorem consectetur, pellentesque nulla at, lobortis sapien. Morbi at ipsum felis.</p>
+   </div>
+</div>
+<div class="widget blogpostmetadata">
+   <div class="blog-metadata ">
+      <div class="blog-category">
+         <span>Category title</span>
+      </div>
+      <div class="blog-tags">
+         <span class="tag">tag1,</span>
+         <span class="tag">tag2,</span>
+         <span class="tag">tag3</span>
+      </div>
+   </div>
+
+
+<div class="widget blogcomments"><div class="bk-blog-comment">
+    <img style="width:25px;" src="http://basekit-image.s3.amazonaws.com/development37_a14d05ce9f9c40ca8f785992a2022f77.jpg">
+    <span>Tom</span>
+    
+     
+    <a href="http://basekit.com">http://basekit.com</a> 
+        
+     
+    <time>05/Sep/13 4:11 PM</time>
+        
+    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pharetra dapibus pharetra. Donec interdum eros eu turpis pharetra et hendrerit est ornare. Etiam eu nulla sapien. Nullam ultricies posuere nunc, eget mollis nulla malesuada quis.</div>
+</div>
+<div class="bk-blog-comment">
+    <img style="width:25px;" src="http://basekit-image.s3.amazonaws.com/development37_a14d05ce9f9c40ca8f785992a2022f77.jpg">
+    <span>Jim</span>
+    
+     
+    <a href="http://basekit.com">http://basekit.com</a> 
+        
+     
+    <time>06/Sep/13 4:11 PM</time>
+        
+    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pharetra dapibus pharetra. Donec interdum eros eu turpis pharetra et hendrerit est ornare. Etiam eu nulla sapien. Nullam ultricies posuere nunc, eget mollis nulla malesuada quis.</div>
 </div>
 
-<footer>
-    <div class="wrapper clearfix">
-        <div class="responsivecolumns columns-two-50-50">
-            <div class="column columns-two-left">
-                {{widget('content', 'footercolumn1content1', {"content":"<h2>Lorem Ip Soda</h2><p>Integer a Tortor Dui. Nullam nec ante mi. Morbi sodales urna sit amet mauris elementum quis rutrum lacus gravida. Proin feugia libero quis.</p>"})|raw}}
-                {{widget('profile', 'footercolumn1profilesocialicons', { 'profileType':'socialicons', 'socialicons':'profile'})|raw}}
-            </div>
-            <div class="column columns-two-right">
-                {{widget('content', 'footercolumn2content1', {"content":"<h2>Aliquam Sodales</h2>"})|raw}}
-                {{widget('profile', 'footercolumn2profiletwitter', { 'profileType':'twitter', 'twitter':'profile'})|raw}}
-                {{widget('profile', 'footercolumn2profilecopyright', { 'profileType':'copyright', 'copyright':'profile'})|raw}}
-                
-            </div>
-        </div>
-    </div>
-</footer>
+<form action="" method="post">
+    <fieldset>
+        <label for="name">Name:</label>
+        <input class="name" name="name" maxlength="50" type="text">
 
+        <label for="email">Email:</label>
+        <input class="email" name="email" type="email">
+        
+         
+        <label for="website">Website:</label>
+        <input class="website" name="website" type="url">
+        
+        <label for="comment">Comment:</label>
+        <textarea class="comment" name="comment" maxlength="2500"></textarea>
+        <button class="btn btnText  " type="submit">Submit</button>
+    </fieldset>
+</form></div>
+
+
+
+
+</div>
+</div>
+</div>
+<footer>
+   <div class="wrapper clearfix">
+      <div class="responsivecolumns columns-two-50-50">
+         <div class="column columns-two-left">
+            {{widget('content', 'footercolumn1content1', {"content":"<h2>Lorem Ip Soda</h2><p>Integer a Tortor Dui. Nullam nec ante mi. Morbi sodales urna sit amet mauris elementum quis rutrum lacus gravida. Proin feugia libero quis.</p>"})|raw}}
+            {{widget('profile', 'footercolumn1profilesocialicons', { 'profileType':'socialicons', 'socialicons':'profile'})|raw}}
+         </div>
+         <div class="column columns-two-right">
+            {{widget('content', 'footercolumn2content1', {"content":"<h2>Aliquam Sodales</h2>"})|raw}}
+            {{widget('profile', 'footercolumn2profiletwitter', { 'profileType':'twitter', 'twitter':'profile'})|raw}}
+            {{widget('profile', 'footercolumn2profilecopyright', { 'profileType':'copyright', 'copyright':'profile'})|raw}}
+         </div>
+      </div>
+   </div>
+</footer>
 {% endblock %}

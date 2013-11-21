@@ -1,0 +1,35 @@
+/* ===============================
+   TITLE, AUTHOR, DATE
+   =============================== */
+
+ 	 <h2>{{ plugins.blog.posts[0].title|raw }}</h2>
+
+  	 <div class="blog-post-author {% if data.align %}{{data.align}}{% endif %}">
+     <span>{{ plugins.blog.posts[0].author|raw }}</span>
+	</div>
+
+	<div class="blog-post-date {% if data.align %}{{data.align}}{% endif %}">
+     <span>{{ data.post_date|formatBlogDate(data.format) }}</span>
+	</div>
+
+   /* ===============================
+   BLOG POST
+   =============================== */
+
+
+   <div class="blog-metadata {% if data.align %}{{data.align}}{% endif %}">
+    {% if data.showCategory and data.category|length %}
+    <div class="blog-category">
+        <span>{{ data.category }}</span>
+    </div>
+    {% endif %}
+    {% if data.showTags and data.tags|length %}
+    <div class="blog-tags">
+        {% set count = 0 %}
+        {% for tag in data.tags %}
+        {% set count = count + 1 %}
+        <span class="tag">{{ tag }}{% if count < data.tags|length %},{% endif %}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
