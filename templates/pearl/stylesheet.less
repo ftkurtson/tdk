@@ -203,6 +203,94 @@ footer span {
   color: @color-swatch1;
 }
 
+
+
+/* ===============================
+   SEARCH
+   =============================== */
+
+.widget.search {
+  background-color: #f4f6f7;
+  padding: 0;
+}
+
+.widget.search form {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.widget.search fieldset {
+  border: none;
+  padding: 10px 0;
+  margin: 0;
+}
+
+.widget.search fieldset label {
+  display: none;
+}
+
+.widget.search fieldset input {
+  background-image: image('/images/search-icon.png');
+  background-repeat: no-repeat;
+  background-position: left center;
+  border: 1px solid #F3F0F0;
+  -webkit-border-radius: 2px;
+   -moz-border-radius: 2px;
+    border-radius: 2px;
+  font-family:@font-swatch5-font-family;
+  font-size:@font-swatch5-font-size;
+  font-weight: @font-swatch5-font-weight;
+  line-height:@font-swatch5-line-height;
+  color:@font-swatch5-color;
+  letter-spacing: @font-swatch5-letter-spacing;
+  padding: 0 10px 0 22px;
+  margin: 0;
+}
+
+.widget.search fieldset input:focus {
+    outline: none;
+    box-shadow: 0 0 5px @color-swatch5;
+}
+
+.widget.search button {
+    padding: 0px 8px;
+    margin: 0;
+    border: 0;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 0px rgba(0,0,0,0.3);
+    font-family:@font-swatch7-font-family;
+    font-size:@font-swatch7-font-size;
+    font-weight: @font-swatch7-font-weight;
+    line-height:@font-swatch7-line-height;
+    color:@font-swatch7-color;
+    letter-spacing: @font-swatch7-letter-spacing;
+    background-color: @font-swatch7-background-color;
+    text-decoration: none;
+    position: relative;
+    top: -1px;
+}
+  
+.widget.search button:hover {
+   background-color: @font-swatch7-background-color-hover;
+  cursor: pointer;
+}
+
+/* SEARCH IN IPAD */
+
+@media only screen and (max-width: 768px) {
+
+  .widget.search form {
+    width: 90%;
+    margin: 0 5%;
+  }
+
+}
+
+
+
 /* ===============================
    STANDARD NAVIGATION
    =============================== */
