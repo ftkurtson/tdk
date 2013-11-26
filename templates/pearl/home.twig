@@ -12,6 +12,16 @@
 </header>
 <section>
    {{widget('feature', 'featurehome', {"header": "profile", "strapline":"profile", "buttonText":"Lorem Ipsum","defaultBgImg": asset('images/feature-bg.jpg'), 'positionTopPercentage': '50','showBtn': true})|raw}}
+   <div class="widget search">
+      <form>
+          <fieldset>
+            <label for="search" class="label">Search:</label>
+            <input type="search" name="blogsearch" placeholder="Search...">
+            <button type="btn btnText" type="submit">Go</button>
+          </fieldset>
+      </form>
+   </div>
+
 </section>
 
 
