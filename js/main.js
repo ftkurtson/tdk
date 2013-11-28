@@ -227,6 +227,10 @@ $(function() {
                 throw error;
             }
 
+            // Add the templateCommon & templateLocal strings into the mix
+            varsLess += '@templateCommon: "/templates/common";';
+            varsLess += '@templateLocal: "/templates/' + template + '";';
+
             var colourNumber = 0;
 
             $("#colour-swatch").empty();
