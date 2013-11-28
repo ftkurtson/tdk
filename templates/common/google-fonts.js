@@ -31,7 +31,8 @@ WebFontConfig = {
             'Sniglet:400:latin',
             'Ubuntu:300,400,700:latin',
             'PT+Sans:400,700:latin',
-            'PT+Serif:400,700:latin'
+            'PT+Serif:400,700:latin',
+            'PT+Mono::latin'
         ]
     }
 };
