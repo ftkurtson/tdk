@@ -3443,7 +3443,7 @@
         showOverlay: function (message) {
 
             message = message || 'message';
-            var overlay = $('#overlay');
+            var overlay = $('#page-overlay');
             if (overlay.length === 0) {
                 overlay = '<div id="page-overlay" class="overlay"><div class="inner">' +
                           '<div class="message">' + message + '</div></div></div>';
@@ -3459,7 +3459,7 @@
          * hideOverlay: hides the overlay
          */
         hideOverlay: function () {
-            var overlay = $('#overlay');
+            var overlay = $('#page-overlay');
             if (overlay.length) {
                 overlay.find(".message").empty();
                 overlay.hide();
@@ -3626,7 +3626,8 @@
             $(el).data('bkob', new BaseKit.Widget.Userlogin(el, options));
         });
     };
-}());(function () {
+}());
+(function () {
     BaseKit.Widget.Userregistration = null;
 
     BaseKit.Widget.UserregistrationProperties = {
@@ -3651,7 +3652,7 @@
         showOverlay: function (message) {
 
             message = message || 'message';
-            var overlay = $('#overlay');
+            var overlay = $('#page-overlay');
             if (overlay.length === 0) {
                 overlay = '<div id="page-overlay" class="overlay"><div class="inner">' +
                           '<div class="message">' + message + '</div></div></div>';
@@ -3667,7 +3668,7 @@
          * hideOverlay: hides the overlay
          */
         hideOverlay: function () {
-            var overlay = $('#overlay');
+            var overlay = $('#page-overlay');
             if (overlay.length) {
                 overlay.find(".message").empty();
                 overlay.hide();
@@ -3701,7 +3702,7 @@
                 thisEl.find("p.error").empty().hide();
 
                 // basic js validation before sending to the api
-                if (postData.password !== undefined && (postData.password.trim().length < 7 || postData.password.trim().length > 9)) {
+                if (postData.password !== undefined && (postData.password.trim().length < 7 || postData.password.trim().length > 19)) {
                     errors.push({
                         'element' : 'password',
                         'error' : App.t('widgets.userregistration.error.invalid_password', 'Please provide a password greater than 7 characters but less than 19.')
