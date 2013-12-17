@@ -341,9 +341,9 @@ $(function() {
                 js += 'var sdkPlugins = ' + JSON.stringify(plugins(template)) + ';';
 
                 // Submit the form to the iframe
-                $("#html").val(btoa(html));
-                $("#css").val(btoa(css));
-                $("#js").val(btoa(js));
+                $("#html").val(B64.encode(html));
+                $("#css").val(B64.encode(css));
+                $("#js").val(B64.encode(js));
                 $("#post").submit();
             });
         }).fail(function() {
