@@ -1,0 +1,46 @@
+<li class="menu-item{% if item.promoted %} menu-item-promoted{% endif %}">
+    <div class="inner-item">
+        <h3 class="menu-item-name">{{ item.title }}</h3>
+
+       {% if item.imageURL is not null %}
+        <img class="menu-item-image" alt="" src="{{ item.imageURL }}">
+       {% endif %}
+
+        {% if item.prices|length %}
+            <ol class="menu-item-prices">
+                {% for price in item.prices %}
+                    <li class="menu-item-price">
+                        {% if price.name == '' %}
+                            <p class="standard-price">{{ price.price }}</p>
+                        {% else %}
+                            <p class="variant-price">{{ price.name }} {{ price.price }}</p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+
+        {% if item.description is not null %}
+            <p class="menu-item-description">{{ item.description }}</p>
+        {% endif %}
+
+        {% if item.nutritionalProperties|length %}
+            <h4 class="menu-item-nutritional-title">Nutritional information</h4>
+            <ul class="menu-item-nutritional-props">
+                {% for prop in item.nutritionalProperties %}
+                    <li class="menu-item-nutritional-prop"><p>{{ prop }}</p></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if item.dietaryInfo|length %}
+            <div class="menu-section-item-dietary-props">
+                {% for key, value in item.dietaryInfo %}
+                    {% if value == 1 %}
+                        <span class="{{ key }}-icon dietary-icon"></span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div><!--end inner-item-->
+</li>

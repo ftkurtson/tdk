@@ -1,0 +1,27 @@
+<li class="menu-section{% if section.promoted %} menu-item-promoted{% endif %}">
+    <div class="menu-section-header">
+        <h2 class="menu-section-name">{{ section.title }}</h2>
+        {% if section.availability is not null %}
+            <p class="menu-sub-section-availability">{{ section.availability }}</p>
+        {% endif %}
+        {% if section.description is not null %}
+            <p class="menu-sub-section-description">{{ section.description }}</p>
+        {% endif %}
+    </div>
+
+    {% if section.items|length %}
+        <ol class="menu-items">
+            {% for item in section.items %}
+
+                {% if item.menuType == 'item' %}
+                    {% include "widgets/widget_menu_item.twig" with {'item': item} only %}
+                {% endif %}
+
+                {% if item.menuType == 'section' %}
+                    {% include "widgets/widget_menu_section.twig" with {'section': item} only %}
+                {% endif %}
+
+            {% endfor %}
+        </ol>
+    {% endif %}
+</li>

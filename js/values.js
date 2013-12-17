@@ -203,440 +203,278 @@ var plugins = function(template) {
                 }
             }
         },
-        menu: {
-           "ref":1,
-           "name":"Breakfast",
-           "availability":"Served until 12",
-           "created":"2013-10-25 14:24:32",
-           "updated":"2013-10-25 14:24:32",
-           "description":null,
-           "note":"Please note that our airport locations offer a slightly different menu which you can download from their location pages.",
-           "category":null,
-           "active":1,
-           "slug":"breakfast",
-           "sections":[
-              {
-                 "ref":3,
-                 "name":"$5 Good Morning Brekkie",
-                 "availability":null,
-                 "created":"2013-10-25 14:24:32",
-                 "updated":"2013-10-25 14:24:32",
-                 "description":"One of these dishes and a regular hot drink for just $5, Monday - Friday until noon (excluding bank holidays). Not available in airports.",
-                 "note":null,
-                 "category":null,
-                 "active":1,
-                 "sections":[
 
-                 ],
-                 "items":[
+        menu: [
+            {
+                title: 'Breakfast',
+                menuType: 'section',
+                ref: 1,
+                parentRef : 0,
+                displayOrder: 0,
+                availability: 'Server until 12', // not in the table yet
+                discription: 'The toplevel Breakfast',
+                dietaryInfoKeys:[
+                    "vegetarian",
+                    "glutenFree"
+                ],
+                note: "Please note that our airport locations offer a slightly different menu which you can download from their location pages.",
+                items: [
                     {
-                       "name":"Ultimate Superfoods Rude Health Muesli",
-                       "description":"Wheat free & totally organic blend of oats, apricots, barley & rye flakes, apple, sultanas, dates, golden linseed, seeds & raisins ",
-                       "imageURL":null,
-                       "promoted":0,
-                       "prices":[
-                          {
-                             "name":"Add natural yoghurt & fresh fruit",
-                             "price":"$1.50"
-                          }
-                       ],
-                       "dietaryInfo":{
-                          "vegetarian":1,
-                          "vegan":0,
-                          "nuts":0,
-                          "glutenFree":0,
-                          "calories":null
-                       },
-                       "nutritionalProperties":[
-                          "Contains gluten",
-                          "Contains seeds & kittens",
-                          "Contains dairy"
-                       ]
+                        title: 'Breakfast item 1',
+                        menuType: 'item',
+                        sectionRef : 1,
+                        displayOrder: 0,
+                        promoted: 0,
+                        prices: [{ // don't know how it's stored in db
+                            price: '1',
+                            name: 'offer'
+                        },{
+                            price: '2',
+                            name: 'standard'
+                        }],
+                        nutritionalProperties: ['VA', 'VB'],
+                        dietaryInfo: {
+                            vegetarian: 1,
+                            vegan: 1,
+                            nuts: 1,
+                            glutenFree: 1,
+                            calories: 1
+                        },
+                        ref: 23
                     },
                     {
-                       "name":"BBQ Beans & Egg on Sourdough Toast",
-                       "description":"Homemade smoky bbq baked beans with chorizo & fried free range egg",
-                       "imageURL":null,
-                       "promoted":0,
-                       "prices":[
-
-                       ],
-                       "dietaryInfo":{
-                          "vegetarian":0,
-                          "vegan":0,
-                          "nuts":0,
-                          "glutenFree":0,
-                          "calories":null
-                       },
-                       "nutritionalProperties":[
-                          "Contains gluten",
-                          "Contains garlic",
-                          "Contains eggs"
-                       ]
+                        title: 'Breakfast item 2',
+                        menuType: 'item',
+                        sectionRef : 1,
+                        displayOrder: 1,
+                        promoted: 1,
+                        prices: [{
+                            price: '1',
+                            name: 'offer'
+                        },{
+                            price: '2',
+                            name: 'standard'
+                        }],
+                        nutritionalProperties: ['VA', 'VB'],
+                        dietaryInfo: {
+                            vegetarian: 1,
+                            vegan: 1,
+                            nuts: 1,
+                            glutenFree: 1,
+                            calories: 1
+                        },
+                        ref: 24
                     },
                     {
-                       "name":"Granola Breakfast Sundae",
-                       "description":"Granola, natural yoghurt, fresh fruit & honey",
-                       "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/4b5dfbf1783630eef780dea56c935f2c.jpg&w=260&h=200&q=90&a=crop",
-                       "promoted":0,
-                       "prices":[
-
-                       ],
-                       "dietaryInfo":{
-                          "vegetarian":1,
-                          "vegan":0,
-                          "nuts":0,
-                          "glutenFree":0,
-                          "calories":null
-                       },
-                       "nutritionalProperties":[
-                          "Contains gluten",
-                          "Contains garlic",
-                          "Contains eggs"
-                       ]
+                        title: '$5 Good Morning Brekkie',
+                        menuType: 'section',
+                        description: 'One of these dishes and a regular hot drink for just $5, Monday - Friday until noon (excluding bank holidays). Not available in airports.',
+                        parentRef : 1,
+                        displayOrder: 2,
+                        promoted: 1, // we need promoted for section
+                        ref: 7,
+                        items: [
+                            {
+                                title: 'Ultimate Superfoods Rude Health Muesli',
+                                menuType: 'item',
+                                discription: 'Wheat free & totally organic blend of oats, apricots, barley & rye flakes, apple, sultanas, dates, golden linseed, seeds & raisins',
+                                sectionRef : 7,
+                                displayOrder: 0,
+                                promoted: 1,
+                                prices: [{
+                                    price: '$1.50',
+                                    name: 'Add natural yoghurt & fresh fruit'
+                                },{
+                                    price: '$2',
+                                    name: 'standard'
+                                }],
+                                nutritionalProperties: [
+                                    "Contains gluten",
+                                    "Contains seeds & kittens",
+                                    "Contains dairy"
+                                ],
+                                dietaryInfo: {
+                                    vegetarian: 1,
+                                    vegan: 1,
+                                    nuts: 1,
+                                    glutenFree: 1,
+                                    calories: 1
+                                },
+                                ref: 12
+                            },
+                            {
+                                title: 'BBQ Beans & Egg on Sourdough Toast',
+                                menuType: 'item',
+                                discription: 'Homemade smoky bbq baked beans with chorizo & fried free range egg',
+                                sectionRef : 7,
+                                displayOrder: 1,
+                                promoted: 0,
+                                prices: [{
+                                    price: '1',
+                                    name: 'offer'
+                                },{
+                                    price: '2',
+                                    name: 'standard'
+                                }],
+                                nutritionalProperties: [
+                                    "Contains gluten",
+                                    "Contains garlic",
+                                    "Contains eggs"
+                                ],
+                                dietaryInfo: {
+                                    vegetarian: 1,
+                                    vegan: 1,
+                                    nuts: 1,
+                                    glutenFree: 1,
+                                    calories: 1
+                                },
+                                ref: 13
+                            },
+                            {
+                                title: 'Granola Breakfast Sundae',
+                                menuType: 'item',
+                                discription: 'Granola, natural yoghurt, fresh fruit & honey',
+                                imageURL: 'http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/4b5dfbf1783630eef780dea56c935f2c.jpg&w=260&h=200&q=90&a=crop',
+                                sectionRef : 7,
+                                displayOrder: 2,
+                                promoted: 0,
+                                prices: [{
+                                    price: '1',
+                                    name: 'offer'
+                                },{
+                                    price: '2',
+                                    name: 'standard'
+                                }],
+                                nutritionalProperties: ['VA', 'VB'],
+                                dietaryInfo: {
+                                    vegetarian: 1,
+                                    vegan: 1,
+                                    nuts: 1,
+                                    glutenFree: 1,
+                                    calories: 1
+                                },
+                                ref: 25
+                            },
+                            {
+                                title: 'Sepcial Offer',
+                                menuType: 'section',
+                                displayOrder: 3,
+                                promoted: 0,
+                                parentRef : 7,
+                                ref: 13,
+                                items: [
+                                    {
+                                        title: 'Rise & Shine Waffle',
+                                        discription: 'Topped with vanilla yoghurt, blueberry compote, strawberries, banana & orange blossom honey',
+                                        ref: 26,
+                                        menuType: 'item',
+                                        promoted: 0,
+                                        sectionRef : 13,
+                                        prices: [{
+                                            price: '1',
+                                            name: 'offer'
+                                        },{
+                                            price: '2',
+                                            name: 'standard'
+                                        }],
+                                        nutritionalProperties: [
+                                            "Contains gluten",
+                                            "Contains dairy",
+                                            "Contains eggs"
+                                        ],
+                                        dietaryInfo: {
+                                            vegetarian: 1,
+                                            vegan: 1,
+                                            nuts: 1,
+                                            glutenFree: 1,
+                                            calories: 1
+                                        },
+                                        displayOrder: 0
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Empty Section',
+                                menuType: 'section',
+                                promoted: 0,
+                                parentRef : 7,
+                                displayOrder: 4,
+                                ref: 14,
+                                items: []
+                            }
+                        ]
                     },
                     {
-                       "name":"Rise & Shine Waffle",
-                       "description":"Topped with vanilla yoghurt, blueberry compote, strawberries, banana & orange blossom honey ",
-                       "imageURL":null,
-                       "promoted":0,
-                       "prices":[
-
-                       ],
-                       "dietaryInfo":{
-                          "vegetarian":1,
-                          "vegan":0,
-                          "nuts":0,
-                          "glutenFree":0,
-                          "calories":null
-                       },
-                       "nutritionalProperties":[
-                          "Contains gluten",
-                          "Contains dairy",
-                          "Contains eggs"
-                       ]
-                    },
-                    {
-                       "name":"Free Range Eggs on Toasted Focaccia",
-                       "description":"Scrambled, fried or poached free range eggs with roasted cherry tomatoes",
-                       "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/14a457dab9bb6aef884358b469632ffe.jpg&w=260&h=200&q=90&a=crop",
-                       "promoted":0,
-                       "prices":[
-
-                       ],
-                       "dietaryInfo":{
-                          "vegetarian":1,
-                          "vegan":0,
-                          "nuts":0,
-                          "glutenFree":0,
-                          "calories":null
-                       },
-                       "nutritionalProperties":[
-                          "Contains gluten",
-                          "Contains dairy",
-                          "Contains eggs"
-                       ]
-                    },
-                    {
-                       "name":"Bacon & Eggs on Sourdough Toast",
-                       "description":"Smoky bacon with either fried, scrambled or poached free range eggs",
-                       "imageURL":null,
-                       "promoted":0,
-                       "prices":[
-
-                       ],
-                       "dietaryInfo":{
-                          "vegetarian":0,
-                          "vegan":0,
-                          "nuts":0,
-                          "glutenFree":0,
-                          "calories":null
-                       },
-                       "nutritionalProperties":[
-                          "Contains gluten",
-                          "Contains dairy",
-                          "Contains eggs"
-                       ]
+                        title: 'Cereals',
+                        menuType: 'section',
+                        parentRef : 1,
+                        promoted: 0,
+                        displayOrder: 3,
+                        ref: 8,
+                        items: [
+                            {
+                                title: 'Free Range Eggs on Toasted Focaccia',
+                                menuType: 'item',
+                                discription: 'Scrambled, fried or poached free range eggs with roasted cherry tomatoes',
+                                imageURL: 'http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/14a457dab9bb6aef884358b469632ffe.jpg&w=260&h=200&q=90&a=crop',
+                                promoted: 0,
+                                sectionRef : 8,
+                                displayOrder: 0,
+                                prices: [{
+                                    price: '1',
+                                    name: 'offer'
+                                },{
+                                    price: '2',
+                                    name: 'standard'
+                                }],
+                                nutritionalProperties: [
+                                    "Contains gluten",
+                                    "Contains dairy",
+                                    "Contains eggs"
+                                ],
+                                dietaryInfo: {
+                                    vegetarian: 1,
+                                    vegan: 1,
+                                    nuts: 1,
+                                    glutenFree: 1,
+                                    calories: 1
+                                },
+                                ref: 14
+                            },
+                            {
+                                title: 'Bacon & Eggs on Sourdough Toast',
+                                discription: 'Smoky bacon with either fried, scrambled or poached free range eggs',
+                                menuType: 'item',
+                                promoted: 0,
+                                displayOrder: 1,
+                                sectionRef : 8,
+                                prices: [{
+                                    price: '1',
+                                    name: 'offer'
+                                },{
+                                    price: '2',
+                                    name: 'standard'
+                                }],
+                                nutritionalProperties: [
+                                    "Contains gluten",
+                                    "Contains dairy",
+                                    "Contains eggs"
+                                ],
+                                dietaryInfo: {
+                                    vegetarian: 1,
+                                    vegan: 1,
+                                    nuts: 1,
+                                    glutenFree: 1,
+                                    calories: 1
+                                },
+                                ref: 15
+                            }
+                        ]
                     }
-                 ]
-              }
-           ],
-           "items":[
-              {
-                 "name":"Daily Oats Organic Rude Health Porridge",
-                 "description":"This porridge will have you feeling rudely healthy all day. we top ours with honey, fresh strawberries & bananas",
-                 "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/b4601db1a9da86163ad7b91cd4815de8.jpg&w=260&h=200&q=90&a=crop",
-                 "promoted":0,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$4.15"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":1,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":1,
-                    "calories":"589"
-                 },
-                 "nutritionalProperties":[
-                    "Contains gluten",
-                    "Contains seeds & kernels",
-                    "Contains dairy"
-                 ]
-              },
-              {
-                 "name":"Stacked Blueberry & Banana Pancakes",
-                 "description":"With maple syrup. 50p from every Pancake Stack goes to Rays of Sunshine Children's Charity which grants wishes for seriously ill children across the UK",
-                 "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/6d3c07c9bdc1521091addc89550907c2.jpg&w=260&h=200&q=90&a=crop",
-                 "promoted":1,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$6.95"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":1,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":1,
-                    "calories":"589"
-                 },
-                 "nutritionalProperties":[
-                    "Contains gluten",
-                    "Contains seeds & kernels",
-                    "Contains dairy"
-                 ]
-              },
-              {
-                 "name":"Full Brunch Plate",
-                 "description":"Free range fried, poached or scrambled eggs, smoky bacon, Heinz baked beans, sausage, chunky potato wedges & toasted artisan sourdough",
-                 "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/92181a0b21c43c568476c1fabbef3c40.jpg&w=260&h=200&q=90&a=crop",
-                 "promoted":0,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$8.50"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":0,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":1,
-                    "calories":589
-                 },
-                 "nutritionalProperties":[
-                    "Contains gluten",
-                    "Contains eggs",
-                    "Contains dairy"
-                 ]
-              },
-              {
-                 "name":"Smoked Salmon & Egg Scramble",
-                 "description":"On toasted rye bread with cherry tomatoes",
-                 "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/01ce34db7b9c0fc587026dc6496c2be7.jpg&w=260&h=200&q=90&a=crop",
-                 "promoted":0,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$7.50"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":0,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":1,
-                    "calories":null
-                 },
-                 "nutritionalProperties":[
-                    "Contains gluten",
-                    "Contains eggs",
-                    "Contains dairy"
-                 ]
-              },
-              {
-                 "name":"Veggie Brunch Plate",
-                 "description":"Free range fried, poached or scrambled eggs, veggie sausages, Heinz baked beans, mushrooms & avocado with toasted artisan sourdough",
-                 "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/bb401118d8274d9557eec826e8955654.jpg&w=260&h=200&q=90&a=crop",
-                 "promoted":0,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$8.25"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":1,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":1,
-                    "calories":null
-                 },
-                 "nutritionalProperties":[
-                    "Contains gluten",
-                    "Contains eggs",
-                    "Contains dairy"
-                 ]
-              },
-              {
-                 "name":"Daybreaker Omelette",
-                 "description":"Egg white omelette served with cherry tomato & avocado salsa",
-                 "imageURL":null,
-                 "promoted":0,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$5.95"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":1,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":1,
-                    "calories":237
-                 },
-                 "nutritionalProperties":[
-                    "Contains garlic",
-                    "Contains eggs"
-                 ]
-              },
-              {
-                 "name":"Huevos Rancheros Mexican Breakfast",
-                 "description":"Free range fried or scrambled eggs, chorizo sausage, black beans, melting cheese, adobe sauce, avocado & tomato salsa on a warm soft corn tortilla",
-                 "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/57fb3a391b903d6af86eb4755a495f60.jpg&w=260&h=200&q=90&a=crop",
-                 "promoted":0,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$8.25"
-                    },
-                    {
-                       "name":"Vegetarian option with roasted mushrooms",
-                       "price":"$7.95"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":0,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":0,
-                    "calories":237
-                 },
-                 "nutritionalProperties":[
-                    "Contains garlic",
-                    "Contains gluten",
-                    "Contains dairy",
-                    "Contains eggs"
-                 ]
-              },
-              {
-                 "name":"The Western Omelette",
-                 "description":"Three egg omelette with roasted vegetables & manchego, served with cherry tomato & avocado salsa",
-                 "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/3aeca6039a9d0d3a0fa65029525b9df2.jpg&w=260&h=200&q=90&a=crop",
-                 "promoted":1,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$5.95"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":1,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":0,
-                    "calories":424
-                 },
-                 "nutritionalProperties":[
-                    "Contains garlic",
-                    "Contains dairy",
-                    "Contains eggs"
-                 ]
-              },
-              {
-                 "name":"Fresh Fruit Bowl",
-                 "description":"With greek yoghurt, orange blossom honey & seeds",
-                 "imageURL":null,
-                 "promoted":0,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$3.95"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":1,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":0,
-                    "calories":null
-                 },
-                 "nutritionalProperties":[
-                    "Contains seeds & kernels",
-                    "Contains dairy"
-                 ]
-              },
-              {
-                 "name":"Deluxe Toastie",
-                 "description":"Artisan sourdough toast filled with crispy bacon, fried egg, melting cheddar, lettuce, tomato & mustard mayo",
-                 "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/d6ea55aa9728d27dd0a8abf13b3ed351.jpg&w=260&h=200&q=90&a=crop",
-                 "promoted":0,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$4.95"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":1,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":0,
-                    "calories":null
-                 },
-                 "nutritionalProperties":[
-                    "Contains gluten",
-                    "Contains dairy",
-                    "Contains eggs"
-                 ]
-              },
-              {
-                 "name":"Avocado, Hummus & Roasted Cherry Tomatoes",
-                 "description":"On toasted artisan sourdough with basil oil",
-                 "imageURL":null,
-                 "promoted":0,
-                 "prices":[
-                    {
-                       "name":"",
-                       "price":"$5.95"
-                    }
-                 ],
-                 "dietaryInfo":{
-                    "vegetarian":1,
-                    "vegan":0,
-                    "nuts":0,
-                    "glutenFree":0,
-                    "calories":null
-                 },
-                 "nutritionalProperties":[
-                    "Contains gluten",
-                    "Contains seeds & kittens",
-                    "Contains dairy",
-                    "Contains eggs"
-                 ]
-              }
-           ],
-           "dietaryInfoKeys":[
-              "vegetarian",
-              "glutenFree"
-           ]
-        }
-    }
+                ]
+            }
+        ]
+    };
 };
 
 /**
