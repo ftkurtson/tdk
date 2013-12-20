@@ -353,7 +353,42 @@ $(function() {
         });
     }
 
+    function validateTemplate() {
+        var template = $("#template").val(),
+            iFrame = $("#iframe"),
+            overlay = '',
+            message = '',
+            errors = '',
+            status = '';
+
+        iFrame.find('.overlay').remove();
+
+        $.ajax({
+            url: "validate/validate.php?templateName=" + template
+        }).done(function (response) {
+            status = response.success;
+            if (status === true) {
+                message = "<div class='validation-success-header'>The template validated correctly!</div>";
+            } else {
+                message = "<div class='validation-failure-header'>Validation failed! The following errors occurred:<br /><br /></div>";
+                errors = "<div class='validation-failure-body'>";
+                $.each(response.errors, function (index, value) {
+                    errors += value + '<br />';
+                });
+                errors += '</div>'
+            }
+            overlay = $('<div class="overlay"><div class="message-box"><span class="overlay-close">x</span><span class="message-text">' + message + errors + '</span></div></div>');
+            iFrame.append(overlay);
+            iFrame.find('.overlay-close').off('.click').on('click', function() {
+                $("#iframe").find('.overlay').remove();
+            });
+        }).fail(function (response) {
+            console.log(response); 
+        });;
+    }
+
     $("#render").click(renderTemplate);
+    $("#validate").click(validateTemplate);
 
     templates.forEach(function(template) {
         $("#template")
