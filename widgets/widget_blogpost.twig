@@ -1,7 +1,42 @@
-<div>
-    {% if plugins.blog.posts %}
-        {{ plugins.blog.posts[0].content|raw }}
-    {% else %}
-        {{"shared_views.blog.no-post"|translate("You have no post")}}
+{% if plugins.blog.posts %}
+    <h2 class='blog-title'>{{ plugins.blog.posts[0].title|raw }}</h2>
+
+    <div class="blog-post-author">
+         <span>{{ plugins.blog.posts[0].author|raw }}</span>
+    </div>
+
+    {% if plugins.blog.posts[0].publishedDate %}
+    <div class="blog-post-date">
+        <span>{{ plugins.blog.posts[0].publishedDate.date|formatBlogDate(data.dateFormat) }}</span>
+    </div>
     {% endif %}
-</div>
+
+    <div class="blog-post">
+        {{ plugins.blog.posts[0].content|raw }}
+    </div>
+
+    <div class="blog-metadata">
+
+        {% if plugins.blog.posts[0].category|length %}
+        <div class="blog-category">
+            <label>{{"shared_views.blog.category"|translate("Category")}}</label>
+            <span>{{ plugins.blog.posts[0].category }}</span>
+        </div>
+        {% endif %}
+
+        {% if plugins.blog.posts[0].tags|length %}
+        <label>{{"shared_views.blog.tags"|translate("Tags")}}</label>
+        <ol class="blog-tags">
+            {% set tags = plugins.blog.posts[0].tags %}
+            {% set count = 0 %}
+            {% for tag in tags %}
+                {% set count = count + 1 %}
+                <li class="tag">{{ tag }}</li>
+            {% endfor %}
+        </ol>
+        {% endif %}
+
+    </div>
+{% else %}
+    <p>{{"shared_views.blog.no-post"|translate("You have no post")}}</p>
+{% endif %}

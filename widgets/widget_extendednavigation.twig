@@ -8,9 +8,10 @@
 
 	<ul class="{{ data.align  ? ' align-' : ''}}{{ data.align }} {{i}}-items">
 		{% for page in pages %}
+            {% set pageRequest = (page.type == 'home') ? '' : page.request %}
 			{% if (page.type == 'home' or page.type == 'page' or page.type == 'index' or page.type == 'folder') and page.status != 'inactive' and page.hiddenFromNavigation != '1' %}
 				<li id="menu-item_{{ page.ref }}" class="{{page.type}}">
-				{% if (page.type != 'folder') %} <a href="/{{ page.request }}">{% endif %}
+				{% if (page.type != 'folder') %} <a href="{{ relativeUrlPrefix }}/{{ pageRequest }}">{% endif %}
 						<span class="{% for item in data.icons %}{% if (item.ref == page.ref) and (item.icon != 'no-icon') %}{{item.icon}}{% endif %}{% endfor %} menu-icon"></span>
 						<span class="text">{{ page.title }}</span>
 				{% if (page.type != 'folder') %}</a>{% endif %}
@@ -27,7 +28,7 @@
 						{% for subPage in page.subPages %}
 							{% if subPage.status != 'inactive' and subPage.hiddenFromNavigation != '1' %}
 							<li id="menu-item_{{ subPage.ref }}" class="{{subPage.type}}">
-								<a href="/{{ subPage.request }}">
+								<a href="{{ relativeUrlPrefix }}/{{ subPage.request }}">
 								<span class="text">{{ subPage.title }}</span>
 								</a>
 							</li>

@@ -1,7 +1,21 @@
-<div>
-    {% for post in plugins.blog.posts %}
-        <h2>{{ post.title|raw }}</h2>
-    {% else %}
-        {{"shared_views.blog-list.no-content"|translate("You have no post")}}
-    {% endfor%}
-</div>
+{% if plugins.blog.posts|length %}
+    <ol class="blog-post-list">
+        {% for post in plugins.blog.posts %}
+            <li class="blog-post-item">
+                <a href="/{{ plugins.blog.directory }}/{{ post.slug }}">
+                    <h2 class="blog-post-title">{{ post.title|raw }}</h2>
+                    <p class="blog-post-summary">{{ post.summary }}</p>
+                </a>
+            </li>
+        {% endfor%}
+    </ol>
+    {% if plugins.blog.currentPage > 1 and plugins.blog.currentPage <= plugins.blog.totalPages %}
+        <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage - 1) }}" class="paginate-newer blog-post-pagination-page">{{ "shared_views.blog-list.newer"|translate("Newer") }}</a>
+    {% endif %}
+
+    {% if plugins.blog.totalPages > 1 and plugins.blog.currentPage != plugins.blog.totalPages and plugins.blog.currentPage <= plugins.blog.totalPages %}
+        <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage + 1) }}" class="paginate-older blog-post-pagination-page">{{ "shared_views.blog-list.older"|translate("Older") }}</a>
+    {% endif %}
+{% else %}
+    <p>{{"shared_views.blog-list.no-content"|translate("There aren't any posts to display.")}}</p>
+{% endif %}

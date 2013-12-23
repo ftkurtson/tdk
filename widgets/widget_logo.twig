@@ -5,10 +5,16 @@
     {% endif %}
 {% endfor %}
 
-{% if url|length>0 %}<a href='/{{url}}'>{% endif %}
+{% set logo = null %}
+{% if data.useTemplate != 1 and profile.logo and profile.logo != '' %}
+    {% set logo = profile.logo %}
+{% elseif data.defaultlogo and data.defaultlogo != '' %}
+    {% set logo = data.defaultlogo %}
+{% endif %}
+
+{% if url|length>0 %}<a href='{{ relativeUrlPrefix }}/{{ url }}'>{% endif %}
 <div class="logo">
-    <img src="{% if profile.logo and profile.logo != '' %}{{profile.logo}}{% elseif data.defaultlogo and data.defaultlogo != '' %}{{data.defaultlogo}}{% else %}{{'/images/mobile/default-logo.png'|expandAssetUrl}}{% endif %}" {% if data.width and data.width != '' and profile.logo and profile.logo != '' %}style="width: {{data.width}}" {% endif %}></img>
+    <img src="{% if logo and logo|length > 0 %}{{logo}}{% else %}{{'/images/mobile/default-logo.png'|expandAssetUrl}}{% endif %}" {% if data.width and data.width != '' and profile.logo and profile.logo != '' and data.useTemplate != 1 %}style="width: {{data.width}}" {% endif %}></img>
 </div>
 
 {% if url|length>0 %}</a>{% endif %}
-

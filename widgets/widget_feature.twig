@@ -1,4 +1,10 @@
-<div class="feature-bgimg" {% if data.defaultBgImg|length > 0 or  data.bgImg|length > 0 %} style="background-image: url('{% if data.bgImg and data.bgImg != '' %}{{data.bgImg }}{% else %}{{data.defaultBgImg}}{% endif %}'); background-position: center {{data.positionTopPercentage}}%" {% endif %}>
+{% if data.useTemplate != 1 and data.bgImg and data.bgImg != '' %}
+    {% set bgImg = data.bgImg %}
+{% else %}
+    {% set bgImg = data.defaultBgImg %}
+{% endif %}
+
+<div class="feature-bgimg" {% if data.defaultBgImg|length > 0 or  data.bgImg|length > 0 %} style="background-image: url('{{bgImg}}'); background-position: center {{data.positionTopPercentage}}%" {% endif %}>
 	<div class="content">
 		<span class="spare wrapper">
 
@@ -38,5 +44,5 @@
 
 <!-- this is for getting the background image naturalWidth and naturalHeight -->
 {% if data.defaultBgImg|length > 0 or  data.bgImg|length > 0 %}
-<img src="{% if data.bgImg and data.bgImg != '' %}{{data.bgImg }}{% else %}{{data.defaultBgImg}}{% endif %}" style="display:none;" alt="{{"widgets.feature.imgAlt"|translate("feature image")}}"/>
+<img src="{{bgImg}}" style="display:none;" alt="{{"widgets.feature.imgAlt"|translate("feature image")}}"/>
 {% endif %}

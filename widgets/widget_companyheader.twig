@@ -5,7 +5,7 @@
 	{% endif %}
 {% endfor %}
 
-{% if url|length>0 %}<a href='/{{url}}'>{% endif %}
+{% if url|length>0 %}<a href='{{ relativeUrlPrefix }}/{{ url }}'>{% endif %}
 
 {% if (data.showLogo is null or data.showLogo == 1) %}
 <div class="logo">

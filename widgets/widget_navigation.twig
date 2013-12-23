@@ -11,7 +11,8 @@
 		{% for page in pages %}
 			{% if (page.type == 'home' or page.type == 'page' or page.type == 'index') and page.status != 'inactive' and page.parentId == '0' and page.hiddenFromNavigation != '1' %}
 				<li id="menu-item_{{ page.ref }}">
-					<a href="/{{ page.request }}">
+                    {% set pageRequest = (page.type == 'home') ? '' : page.request %}
+					<a href="{{ relativeUrlPrefix }}/{{ pageRequest }}">
 						<span class="{% for item in data.icons %}{% if (item.ref == page.ref) and (item.icon != 'no-icon') %}{{item.icon}}{% endif %}{% endfor %} menu-icon"></span>
 						<span class="text">{{ page.title }}</span>
 					</a>

@@ -634,3 +634,12 @@ body.edit .widget.extendednavigation
   cursor: default;
 }
 
+/* We don’t want the placeholder message being displayed to site visitors and bots. */
+.widget.disqus .empty-message {
+    display: none;
+}
+
+body.edit .widget.disqus .empty-message {
+    display: block;
+}
+

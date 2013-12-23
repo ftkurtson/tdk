@@ -5,7 +5,7 @@
     {% endif %}
 {% endfor %}
 
-{% if url|length>0 %}<a href='/{{url}}'>{% endif %}
+{% if url|length>0 %}<a href='{{ relativeUrlPrefix }}/{{ url }}'>{% endif %}
 
 {% if data.business and data.business !='profile' and data.business !=''%}
     {{data.business}}

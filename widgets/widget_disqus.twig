@@ -1,0 +1,24 @@
+{% if profile.disqus_shortname|length %}
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_shortname = '{{ profile.disqus_shortname }}';
+        {% if plugins.blog|length and plugins.blog.isPostPage %}
+            var disqus_identifier = '{{ 'blog_post_' ~ plugins.blog.posts[0].ref }}';
+        {% else %}
+            var disqus_url = '{{ data.url }}';
+        {% endif %}
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>
+        <p>{{ 'widgets.disqus.no_script'|translate('Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>')|raw }}</p>
+    </noscript>
+    <a href="http://disqus.com" class="dsq-brlink">{{ 'widgets.disqus.footer'|translate('blog comments powered by <span class="logo-disqus">Disqus</span>')|raw }}</a>
+{% else %}
+    <p class="empty-message">{{ 'widgets.disqus.no_shortname'|translate('To use the Disqus widget you’ll need to sign up for a Disqus account. When you’ve got your account, grab your site’s ‘shortname’ from <strong>Admin</strong> > <strong>Settings</strong> > <strong>General</strong> > <strong>Site Identity</strong> on the Disqus website and save it in the widget settings.')|raw }}</p>
+{% endif %}
+

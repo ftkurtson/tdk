@@ -1,0 +1,61 @@
+{% if plugins.menu and plugins.menu.items %}
+    {% for topSection in plugins.menu.items %}
+        <!-- gets the first top level section -->
+        <div class="main wrapper clearfix {% if loop.first %}selected{% endif %}" id="menu-section-{{topSection.ref}}">
+            <div class="menu-header">
+                <div class="menu-name-background">
+                    <h1 class="menu-name">{{ topSection.title }}</h1>
+                </div>
+
+                {% if topSection.description is not null %}
+                    <p class="menu-description">{{ topSection.description }}</p>
+                {% endif %}
+
+                {% if topSection.availability %}
+                    <p class="menu-availability">{{ topSection.availability }}</p>
+                {% endif %}
+            </div>
+
+            {% if topSection.items|length %}
+                <ol class="menu-items">
+                    {% for item in topSection.items %}
+
+                        {% if item.menuType == 'item' %}
+                            {% include "widgets/widget_menu_item.twig" with {'item': item} only %}
+                        {% endif %}
+
+                        {% if item.menuType == 'section' %}
+                            {% include "widgets/widget_menu_section.twig" with {'section': item} only %}
+                        {% endif %}
+
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            <!-- the menu also has note property, now we use the section note but might need to be changed later -->
+            <div class="menu-info">
+                {% if topSection.note is not null %}
+                    <p class="menu-note">{{ topSection.note }}</p>
+                {% endif %}
+
+                {% if topSection.dietaryInfoKeys|length %}
+                    {% for key in topSection.dietaryInfoKeys %}
+                        {% if key == 'vegetarian' %}
+                            <dl class="menu-dietary-key">
+                                <dt class="vegetarian-icon dietary-icon"></dt>
+                                <dd>Suitable for vegetarians</dd>
+                            </dl>
+                        {% elseif key == 'glutenFree' %}
+                            <dl class="menu-dietary-key">
+                                <dt class="glutenFree-icon dietary-icon"></dt>
+                                <dd>Gluten free</dd>
+                            </dl>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>{{"shared_views.menu.no-menu"|translate("You have no menu")}}</p>
+{% endif %}

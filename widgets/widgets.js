@@ -1,176 +1,4 @@
 (function () {
-    BaseKit.Widget.BlogcommentsProperties = {
-        'submitText': App.t('widgets.blogcomments.submit', 'Submit'),
-        'showTime': 1,
-        'showWebsite': 1,
-
-        // blogCommentsData is fake data! Might need to be temporary
-        'blogCommentsData' : [{
-            'name': 'Tom',
-            'time': '05/Sep/13 4:11 PM',
-            'website': 'http://basekit.com',
-            'email': 'hao.chang@basekit.com',
-            'gravitar': 'http://basekit-image.s3.amazonaws.com/development37_a14d05ce9f9c40ca8f785992a2022f77.jpg',
-            'comment': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pharetra dapibus pharetra. Donec interdum eros eu turpis pharetra et hendrerit est ornare. Etiam eu nulla sapien. Nullam ultricies posuere nunc, eget mollis nulla malesuada quis.'
-        }, {
-            'email': 'hao.chang@basekit.com',
-            'website': 'http://basekit.com',
-            'time': '06/Sep/13 4:11 PM',
-            'name': 'Jim',
-            'gravitar': 'http://basekit-image.s3.amazonaws.com/development37_a14d05ce9f9c40ca8f785992a2022f77.jpg',
-            'comment': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pharetra dapibus pharetra. Donec interdum eros eu turpis pharetra et hendrerit est ornare. Etiam eu nulla sapien. Nullam ultricies posuere nunc, eget mollis nulla malesuada quis.'
-        }]
-    };
-
-    BaseKit.Widget.BlogcommentsMethods = {
-        construct: function (el, options) {
-            this.options = options;
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-            this.attachEvents();
-        },
-
-        attachEvents: function () {
-            // fetch comments comes here
-            this.commentsSubmit();
-        },
-
-        commentsSubmit: function () {
-            var that = this,
-                thisEl = $(this.el),
-                url = '',
-                oPostData = {};
-
-            thisEl.find('form').on('submit', function (e) {
-                e.preventDefault();
-
-                oPostData = {
-                    'commnetEmail': thisEl.find('.email').val(),
-                    'commnetWebsite': thisEl.find('.website').val(),
-                    'commentName': thisEl.find('.name').val(),
-                    'comment': thisEl.find('.comment').val(),
-                    'widgetId': thisEl.attr('id')
-                };
-
-                // submit the form using the api
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    data: oPostData,
-                    beforeSend: function () {
-                        that.showMessageBox();
-                    }
-                }).done(function () {
-                    that.showText(true);
-                    that.removeMessageBox();
-
-                    // deals with the comment data - get gravitar image, format time and save it?
-                    // update the comments list 
-                }).fail(function () {
-                    that.showText();
-                    that.removeMessageBox();
-                });
-            });
-        },
-
-        /**
-         * showText: shows the message text depends on the status
-         * @param <boolean>  isSuccess
-         */
-        showText: function (isSuccess) {
-            var message = null,
-                thisEl = $(this.el),
-                className = null;
-
-            if (thisEl.find('.message-box').length > 0) {
-                thisEl.find('.message-box').remove();
-            }
-
-            if (isSuccess) {
-                message = App.t('widgets.blogcomments.success', 'Comment is waiting for approval.');
-                className = 'success';
-            } else {
-                message = App.t('widgets.form.failed', 'Submit failed.');
-                className = 'fail';
-            }
-
-            thisEl.find('.overlay').addClass(className).append('<div class="message-box"><span class="message-text">' + message + '</span></div>');
-        },
-
-        showMessageBox: function () {
-            var thisEl = $(this.el),
-                overlay = $('<div class="overlay"></div>');
-
-            if (thisEl.find('.overlay').length === 0) {
-                thisEl.append(overlay);
-            }
-        },
-
-        removeMessageBox: function () {
-            var thisEl = $(this.el),
-                t = null;
-
-            t = setTimeout(function () {
-                clearTimeout(t);
-                thisEl.find('.overlay').fadeOut(function () {
-                    thisEl.find('.email, .message').val('');
-                    $(this).remove();
-                });
-            }, 3000);
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Blogcomments = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.BlogcommentsProperties,
-            methods: BaseKit.Widget.BlogcommentsMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetBlogcomments = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Blogcomments(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Blogdate = null;
-
-    BaseKit.Widget.BlogdateProperties = {
-        post_date: '2013-10-22',
-        format: 'international'
-    };
-
-    BaseKit.Widget.BlogdateMethods = {
-        construct: function (el, options) {
-            this.load();
-        },
-
-        load: function () {
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Blogdate = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.BlogdateProperties,
-            methods: BaseKit.Widget.BlogdateMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetBlogdate = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Blogdate(el, options));
-        });
-    };
-}());(function () {
 
     BaseKit.Widget.Bloglistposts = null;
 
@@ -205,6 +33,7 @@
     };
 }());(function () {
     BaseKit.Widget.BlogpostProperties = {
+        dateFormat: 'international'
     };
 
     BaseKit.Widget.BlogpostMethods = {
@@ -234,104 +63,55 @@
         });
     };
 }());(function () {
-    BaseKit.Widget.Blogpostauthor = null;
+    BaseKit.Widget.Blogsearch = {};
 
-    BaseKit.Widget.BlogpostauthorProperties = {
-        align: '',
-        author: 'Blog author'
-    };
+    BaseKit.Widget.BlogsearchProperties = {};
 
-    BaseKit.Widget.BlogpostauthorMethods = {
-        construct: function (el, options) {
-            this.load();
-        },
-
-        load: function () {
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Blogpostauthor = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.BlogpostauthorProperties,
-            methods: BaseKit.Widget.BlogpostauthorMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetBlogpostauthor = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Blogpostauthor(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.Blogpostmetadata = null;
-
-    BaseKit.Widget.BlogpostmetadataProperties = {
-        align: '',
-        showCategory: true,
-        showTags: true,
-        tags: ['tag1', 'tag2', 'tag3'],
-        category: 'Category title'
-    };
-
-    BaseKit.Widget.BlogpostmetadataMethods = {
-        construct: function (el, options) {
-            this.load();
-        },
-
-        load: function () {
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Blogpostmetadata = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.BlogpostmetadataProperties,
-            methods: BaseKit.Widget.BlogpostmetadataMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetBlogpostmetadata = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Blogpostmetadata(el, options));
-        });
-    };
-}());(function () {
-    BaseKit.Widget.BlogtitleProperties = {
-        blogtitle: App.t('widgets.blogtitle.default_text', 'Blog title')
-    };
-
-    BaseKit.Widget.BlogtitleMethods = {
+    BaseKit.Widget.BlogsearchMethods = {
         construct: function (el, options) {
             this.options = options;
             this.load();
         },
 
         load: function () {
-            //do something if the widget needs to be loaded!
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
+            var that = this;
+
+            $(this.el).find('.blog-search-form').on('submit', function (evt) {
+                that.submitSearch(evt);
+            });
+        },
+
+        submitSearch: function (evt) {
+            var value = $(this.el).find('.blog-search-input').val();
+
+            evt.preventDefault();
+
+            if (!value.length) {
+                return;
+            }
+
+            window.location.href = Server.plugins.blog.searchUrl + encodeURIComponent(value);
         }
     };
 
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Blogtitle = function () {
+    BaseKit.Widget.Blogsearch = function () {
         var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.BlogtitleProperties,
-            methods: BaseKit.Widget.BlogtitleMethods
+            properties: BaseKit.Widget.BlogsearchProperties,
+            methods: BaseKit.Widget.BlogsearchMethods
         });
     };
 
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetBlogtitle = function (options) {
+    $.fn.basekitWidgetBlogsearch = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Blogtitle(el, options));
+            $(el).data('bkob', new BaseKit.Widget.Blogsearch(el, options));
         });
     };
-}());(function () {
+}());
+(function () {
     BaseKit.Widget.ButtonProperties = {
         iconPosition: 'left',
         iconColor: 'black',
@@ -1060,6 +840,32 @@
         });
     };
 }());(function () {
+    BaseKit.Widget.Disqus = {};
+
+    BaseKit.Widget.DisqusProperties = {
+        url: ''
+    };
+
+    BaseKit.Widget.DisqusMethods = {
+        construct: function (el, options) {
+            this.options = options;
+        }
+    };
+
+    BaseKit.Widget.Disqus = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.DisqusProperties,
+            methods: BaseKit.Widget.DisqusMethods
+        });
+    };
+
+    $.fn.basekitWidgetDisqus = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Disqus(el, options));
+        });
+    };
+}());
+(function () {
 
     BaseKit.Widget.DropboxProperties = {
         iconColor: 'black',
@@ -1615,7 +1421,7 @@
 
             // This dynamically injects the linkedin script into the body
             if (Site.Page.Globals.linkinInAPILoaded === false && $('#linkedin-script').length === 0) {
-                $.getScript("http://platform.linkedin.com/in.js", function () {
+                $.getScript("//platform.linkedin.com/in.js", function () {
                     $(this).attr('id', 'linkedin-script');
                     Site.Page.Globals.linkinInAPILoaded = true;
                 });
@@ -1643,7 +1449,8 @@
             $(el).data('bkob', new BaseKit.Widget.Linkedincompanyprofile(el, options));
         });
     };
-}());(function () {
+}());
+(function () {
     BaseKit.Widget.Linkedinprofile = {};
 
     BaseKit.Widget.LinkedinprofileProperties = {};
@@ -1665,7 +1472,7 @@
 
             // This dynamically injects the linkedin script into the body
             if (Site.Page.Globals.linkinInAPILoaded === false && $('#linkinedin-widget-script').length === 0) {
-                $.getScript("http://platform.linkedin.com/in.js?suppressWarnings=true", function () {
+                $.getScript("//platform.linkedin.com/in.js?suppressWarnings=true", function () {
                     $(this).attr('id', 'linkinedin-widget-script');
                     Site.Page.Globals.linkinInAPILoaded = true;
                 });
@@ -1693,7 +1500,8 @@
             $(el).data('bkob', new BaseKit.Widget.Linkedinprofile(el, options));
         });
     };
-}());(function () {
+}());
+(function () {
     BaseKit.Widget.Logo = null;
 
     BaseKit.Widget.LogoProperties = {
@@ -1989,6 +1797,93 @@
     };
 }());
 (function () {
+    BaseKit.Widget.MenuProperties = {
+    };
+
+    BaseKit.Widget.MenuMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Menu = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.MenuProperties,
+            methods: BaseKit.Widget.MenuMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetMenu = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Menu(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.MenusectionsProperties = {
+    };
+
+    BaseKit.Widget.MenusectionsMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
+            var that = this,
+                thisEl = $(this.el),
+                anchorEl = thisEl.find('a'),
+                menuEl = $(document).find('.widget.menu');
+
+            anchorEl.on('click.selectSection', function (e) {
+                if (menuEl.length > 0) {
+                    that.updateMenuSectionClass($(this).attr('href'));
+                }
+            });
+        },
+
+        updateMenuSectionClass: function (sectionId) {
+            var menuEl = $(document).find('.widget.menu'),
+                sectionEls = menuEl.find('.main');
+
+            if (sectionEls.length > 0) {
+                $.each(sectionEls, function (index, item) {
+                    $(item).removeClass('selected');
+                });
+            }
+
+            menuEl.find(sectionId).addClass('selected');
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Menusections = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.MenusectionsProperties,
+            methods: BaseKit.Widget.MenusectionsMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetMenusections = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Menusections(el, options));
+        });
+    };
+}());(function () {
     BaseKit.Widget.Navigation = null;
 
     BaseKit.Widget.NavigationProperties = {
