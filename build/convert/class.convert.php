@@ -1,41 +1,59 @@
 <?php
-// base class with member properties and methods
+include 'class.zip.php';
+
 class Convert {
 
     var $strictMode;
     var $htmlDir;
-    var $templateDir;
+    var $templatesDir;
     var $metadata;
+    var $workingDirectory = "/tmp/";
 
     var $cssFileList = array();
     var $pageTypeList = array();
 
-    function Convert($strictMode = true, $htmlDir="", $templateDir="", $metadata) {
+    private $templateDestination;
+    private $templateName;
+
+    function setStrictMode($strictMode) {
         $this->strictMode = $strictMode;
+    }
+
+    function setHtmlDir($htmlDir) {
         $this->htmlDir = $htmlDir;
-        $this->templateDir = $templateDir;
+    }
+
+    function setTemplatesDir($templatesDir) {
+        $this->templatesDir = $templatesDir;
+    }
+
+    function setMetaData($metadata) {
         $this->metadata = $metadata;
     }
 
-    function destroy_dir($dir) { 
+    function setWorkingDirectory($dir) {
+        $this->workingDirectory = $dir;
+    }
+
+    private function destroyDir($dir) { 
     if (!is_dir($dir) || is_link($dir)) return unlink($dir); 
         foreach (scandir($dir) as $file) { 
             if ($file == '.' || $file == '..') continue; 
-            if (!destroy_dir($dir . DIRECTORY_SEPARATOR . $file)) { 
+            if (!destroyDir($dir . DIRECTORY_SEPARATOR . $file)) { 
                 chmod($dir . DIRECTORY_SEPARATOR . $file, 0777); 
-                if (!destroy_dir($dir . DIRECTORY_SEPARATOR . $file)) return false; 
+                if (!destroyDir($dir . DIRECTORY_SEPARATOR . $file)) return false; 
             }; 
         } 
         return rmdir($dir); 
     }
 
-    function recurse_copy($src, $dst) {
+    private function recurseCopy($src, $dst) {
         $dir = opendir($src);
         @mkdir($dst); 
         while(false !== ( $file = readdir($dir)) ) { 
             if (( $file != '.' ) && ( $file != '..' )) { 
                 if ( is_dir($src . '/' . $file) ) { 
-                    $this->recurse_copy($src . '/' . $file, $dst . '/' . $file); 
+                    $this->recurseCopy($src . '/' . $file, $dst . '/' . $file); 
                 } else { 
                     // Check for css files
                     $fileLocation = $src . '/' . $file;
@@ -47,12 +65,12 @@ class Convert {
 
                         array_push($this->cssFileList, str_replace($this->htmlDir, '', $src . '/' . $file));
                         $css = file_get_contents($fileLocation);
-                        $css = $this->add_image_to_css($css);
+                        $css = $this->addImageToCss($css);
                         file_put_contents($fileDestination, $css);
                     } else if(strpos($file, '.css')) {
 
                         $html = file_get_contents($fileLocation);
-                        $html = $this->add_asset_to_html($html);
+                        $html = $this->addImageToHtml($html);
                         file_put_contents($fileDestination, $html);
                     } else {
                         copy($fileLocation, $fileDestination);
@@ -64,7 +82,7 @@ class Convert {
         closedir($dir); 
     }
 
-    function add_asset_to_html($html) {
+    private function addImageToHtml($html) {
         // Add asset for IMG tags
         $html = preg_replace('/(<img\b.+?src=\")(?!http)([^\"]*)(\".*?\/?>)/', '$1{{asset(\'$2\')}}$3', $html);
 
@@ -100,7 +118,7 @@ HTML;
         return $html;
     }
 
-    function add_image_to_css($css) {
+    private function addImageToCss($css) {
         // path traversal doesn't work in BaseKit templates, remove them
         $css = str_replace("../", "/", $css);
 
@@ -115,17 +133,63 @@ HTML;
         return $css;
     }
 
-    function process () {
-        $exploded = explode('/', $this->htmlDir);
-        $templateName = end($exploded);
-        $templateDestination = $this->templateDir . '/' . $templateName;
+    private function downloadAsZip() {
+        try {
+            $finalSrc = $this->templatesDir . '/' . $this->templateName . '/';
+            $tmpDest = $this->workingDirectory . $this->templateName . "-" .time() . ".zip";
+            App_File_Zip::CreateFromFilesystem($finalSrc, $tmpDest);
+            
+            // Destroy the final src
+            destroyDir($finalSrc);
 
-        // It removes the directory if it exists
-        if (is_dir($templateDestination)) {
-            $this->destroy_dir($templateDestination);
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($tmpDest).'"');
+            header('Content-Length: ' . filesize($tmpDest));
+            readfile($tmpDest);
+
+            // Remove the unpacks directory 
+            destroyDir($this->workingDirectory . $this->templateName);
+
+            // Remove zip from the tmp dir
+            unlink($tmpDest);
+
+        } catch (App_File_Zip_Exception $e) {
+            // Zip file was not created.
+            destroyDir($finalSrc);
+        }
+    }
+
+    private function createMetaDataFile(){
+        // make metajson.less
+        $this->metadata['name'] = $this->templateName;
+        $this->metadata['screenshot'] = $this->templateName . '.png';
+        $this->metadata['thumbnail'] = $this->templateName . '.png';
+        $this->metadata['pageTypes'] = $this->pageTypeList;
+        file_put_contents($this->templateDestination . '/metadata.json', json_encode($this->metadata, JSON_PRETTY_PRINT));
+    }
+
+    private function createLessFile() {
+        $css = "";
+        foreach ($this->cssFileList as $cssFile) {
+            $css .= '@import "@{templateLocal}' . $cssFile . '";' . PHP_EOL;
         }
 
-        mkdir($templateDestination);
+        file_put_contents($this->templateDestination . '/stylesheet.less', $css);
+    }
+
+    private function createScreenshot() {
+        // Add image with template name
+        copy('screenshot.png', $this->templateDestination . '/' . $this->metadata['thumbnail']);
+    }
+
+    private function transferHtmlFilesToBKFormat() {
+
+        // It removes the directory if it exists
+        if (is_dir($this->templateDestination)) {
+            $this->destroyDir($this->templateDestination);
+        }
+
+        mkdir($this->templateDestination);
 
         foreach (new DirectoryIterator($this->htmlDir) as $fileInfo) {
             if ($fileInfo->isDot()) {
@@ -135,10 +199,10 @@ HTML;
             $filename = $fileInfo->getFilename();
             $extension = $fileInfo->getExtension();
             $from = $this->htmlDir . '/' . $filename;
-            $to = $templateDestination . '/' . $filename;
+            $to = $this->templateDestination . '/' . $filename;
 
             if ($fileInfo->isDir()) {
-                $this->recurse_copy($from, $to);
+                $this->recurseCopy($from, $to);
             } else if ($fileInfo->isFile() && in_array($extension, array('html','htm')) ) {
 
                 $filename = str_replace(array('html', 'htm'), 'twig', $filename);
@@ -147,10 +211,10 @@ HTML;
                 array_push($this->pageTypeList, str_replace('.twig', '', $filename));
 
                 // Over the the to varialbe now that we've changed the file name
-                $to = $templateDestination . '/' . $filename;
+                $to = $this->templateDestination . '/' . $filename;
 
                 $html = file_get_contents($from);
-                $html = $this->add_asset_to_html($html);
+                $html = $this->addImageToHtml($html);
                 file_put_contents($to, $html);
             } else if ($fileInfo->isFile() && in_array($extension, array('css','less')) ) {
                 
@@ -159,32 +223,28 @@ HTML;
                 array_push($this->cssFileList, '/' . $filename);
 
                 // Over the the to varialbe now that we've changed the file name
-                $to = $templateDestination . '/' . $filename;
+                $to = $this->templateDestination . '/' . $filename;
 
                 $css = file_get_contents($from);
-                $css = $this->add_image_to_css($css);
+                $css = $this->addImageToCss($css);
 
                 file_put_contents($to, $css);
             }
         }
+    }
 
+    public function process($zip = false) {
+        $exploded = explode('/', $this->htmlDir);
+        $this->templateName = end($exploded);
+        $this->templateDestination = $this->templatesDir . '/' . $this->templateName;
 
-        // make metajson.less
-        $this->metadata['name'] = $templateName;
-        $this->metadata['screenshot'] = $templateName . '.png';
-        $this->metadata['thumbnail'] = $templateName . '.png';
-        $this->metadata['pageTypes'] = $this->pageTypeList;
-        file_put_contents($templateDestination . '/metadata.json', json_encode($this->metadata, JSON_PRETTY_PRINT));
+        $this->transferHtmlFilesToBKFormat();
+        $this->createMetaDataFile();
+        $this->createLessFile();
+        $this->createScreenshot();
 
-        // make stylesheet.less
-        $css = "";
-        foreach ($this->cssFileList as $cssFile) {
-            $css .= '@import "@{templateLocal}' . $cssFile . '";' . PHP_EOL;
+        if($zip === true) {
+            $this->downloadAsZip();
         }
-
-        file_put_contents($templateDestination . '/stylesheet.less', $css);
-
-        // Add image with template name
-        copy('screenshot.png', $this->templateDir . '/' . $templateName . '/' . $this->metadata['thumbnail']);
     }
 } 

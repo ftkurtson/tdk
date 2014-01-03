@@ -1,5 +1,5 @@
 <?php 
-$metadata = array (
+$metaData = array (
   'name' => '',
   'thumbnail' => '',
   'screenshot' => '',

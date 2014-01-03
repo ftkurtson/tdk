@@ -2,18 +2,20 @@
 include 'metadata.php';
 include 'class.convert.php';
 
+$conversionResult = 'install'; // (string) 'zip' or  'install'
+$installTemplateDir = '../../templates'; // only needed if $conversionResult = 'install'
+$uploadDir = '/tmp';
 $strictMode = true;
 $error = "";
 $message = "";
 
-
-function destroy_dir($dir) { 
+function destroyDir($dir) { 
 if (!is_dir($dir) || is_link($dir)) return unlink($dir); 
     foreach (scandir($dir) as $file) { 
         if ($file == '.' || $file == '..') continue; 
-        if (!destroy_dir($dir . DIRECTORY_SEPARATOR . $file)) { 
+        if (!destroyDir($dir . DIRECTORY_SEPARATOR . $file)) { 
             chmod($dir . DIRECTORY_SEPARATOR . $file, 0777); 
-            if (!destroy_dir($dir . DIRECTORY_SEPARATOR . $file)) return false; 
+            if (!destroyDir($dir . DIRECTORY_SEPARATOR . $file)) return false; 
         }; 
     } 
     return rmdir($dir); 
@@ -24,8 +26,6 @@ if(isset($_FILES["zip"])) {
     $source = $_FILES["zip"]["tmp_name"];
     $type = $_FILES["zip"]["type"];
     
-    $templateDir = '../../templates'; //$_POST['destination'];
-
     $name = explode(".", $filename);
     $accepted_types = array('application/zip', 'application/x-zip-compressed', 'multipart/x-zip', 'application/x-compressed');
     foreach($accepted_types as $mime_type) {
@@ -41,26 +41,37 @@ if(isset($_FILES["zip"])) {
         $error = "The file you are trying to upload is not a .zip file. Please try again.";
     }
 
-    $target_path = "/tmp/".$filename;  // change this to the correct site path
+    $targetPath = $uploadDir . '/' . $filename;
     $folderName = current(explode('.', $filename));
-    if(move_uploaded_file($source, $target_path)) {
+    if(move_uploaded_file($source, $targetPath)) {
         $zip = new ZipArchive();
-        $x = $zip->open($target_path);
-        if ($x === true) {
+        $exists = $zip->open($targetPath);
+        if ($exists === true) {
             // It removes the directory if it exists
-            if (is_dir('/tmp/' . $folderName)) {
-                destroy_dir('/tmp/' . $folderName);
+            if (is_dir($uploadDir . '/' . $folderName)) {
+                destroyDir($uploadDir . '/' . $folderName);
             }
 
-            mkdir('/tmp/'.$folderName);
-            $zip->extractTo('/tmp/'.$folderName); // change this to the correct site path
+            mkdir($uploadDir . '/' . $folderName);
+            $zip->extractTo($uploadDir . '/' . $folderName); 
 
-            $process = new Convert($strictMode, '/tmp/'.$folderName, $templateDir, $metadata);
-            $process->process();
+            // New Convert Process
+            $process = new Convert();
+            $process->setStrictMode($strictMode);
+            $process->setHtmlDir($uploadDir . '/' . $folderName);
+            $process->setTemplatesDir($installTemplateDir);
+            $process->setMetaData($metaData);
+            $process->process($conversionResult == 'zip' ? true : false);
 
             $zip->close();
-    
-            unlink($target_path);
+            
+            // Remove the uploaded zip
+            unlink($targetPath);
+
+            // As the file is being downloaded, exit;
+            if($conversionResult == 'zip' ? true : false) {
+                exit;
+            }
         }
         $message = "Your .zip file was uploaded and unpacked.";
     } else {    
@@ -101,13 +112,6 @@ if(isset($_FILES["zip"])) {
                 <label for="zip">Filename</label>
                 <input type="file" name="zip" id="zip">
               </div>
-<!--
-              <div class="form-group">
-                <label for="destination">Destination</label>
-                <input type="text" class="form-control" name="destination" id="destination">
-                <p class="help-block">Destination directory: /usr/local/apache/emulator/templates/</p>
-              </div>
--->
               <button type="submit" class="btn btn-default">Submit</button>
             </form>
         </div>

@@ -4,7 +4,11 @@ include 'config.php';
 include 'metadata.php';
 include 'class.convert.php';
 
-$process = new Convert(true, $htmlDir, $templateDir, $metadata);
-$process->process();
+$process = new Convert();
+$process->setStrictMode(true);
+$process->setHtmlDir($htmlDir);
+$process->setTemplatesDir($templateDir);
+$process->setMetaData($metaData);
+$process->process(false); // no zip download
 
 
