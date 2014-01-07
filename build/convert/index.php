@@ -3,7 +3,7 @@ include 'metadata.php';
 include 'class.convert.php';
 
 $conversionResult = 'install'; // (string) 'zip' or  'install'
-$installTemplateDir = '../../templates'; // only needed if $conversionResult = 'install'
+$installTemplateDir = '../../templates'; 
 $uploadDir = '/tmp';
 $strictMode = true;
 $error = "";
@@ -60,6 +60,7 @@ if(isset($_FILES["zip"])) {
             $process->setStrictMode($strictMode);
             $process->setHtmlDir($uploadDir . '/' . $folderName);
             $process->setTemplatesDir($installTemplateDir);
+            $process->setWorkingDirectory($uploadDir);
             $process->setMetaData($metaData);
             $process->process($conversionResult == 'zip' ? true : false);
 

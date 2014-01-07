@@ -136,14 +136,15 @@ HTML;
     private function downloadAsZip() {
         try {
             $finalSrc = $this->templatesDir . '/' . $this->templateName . '/';
-            $tmpDest = $this->workingDirectory . $this->templateName . "-" .time() . ".zip";
+            $zipName = $this->templateName . "-" .time() . ".zip";
+            $tmpDest = $this->workingDirectory . $zipName;
             App_File_Zip::CreateFromFilesystem($finalSrc, $tmpDest);
             
             // Destroy the final src
             destroyDir($finalSrc);
 
             header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="'.basename($tmpDest).'"');
+            header('Content-Disposition: attachment; filename="'.basename($zipName).'"');
             header('Content-Length: ' . filesize($tmpDest));
             readfile($tmpDest);
 
