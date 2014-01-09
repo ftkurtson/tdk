@@ -327,8 +327,8 @@ $(function() {
                         profile: profile(template),
                         plugins: plugins(template),
                         basekit: {
-                            headScript: "headscript.twig",
-                            bodyScript: "bodyscript.twig"
+                            headScript: "../../twig/headscript.twig",
+                            bodyScript: "../../twig/bodyscript.twig"
                         }
                     });
                 } catch (e) {
