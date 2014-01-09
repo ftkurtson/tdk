@@ -183,7 +183,7 @@ $(function() {
         return '<div id="' + id + '" class="widget ' + type + '">' + html + '</div>';
     }
 
-    function renderTemplate() {
+    function renderTemplate(useFile, previouslyRequestedFile) {
         // Make sure that both LESS and Twig don't cache
 
         if (typeof window.localStorage !== "undefined") {
@@ -195,7 +195,7 @@ $(function() {
         // Clear widgets
         widgets = [];
 
-        var template = $("#template").val() || "none", file = $("#layout").val() || "default.twig";
+        var template = $("#template").val() || "none", file = (typeof useFile === 'string' ? useFile : $("#layout").val()) || "default.twig";
         var colourSwatchIndex = $("#colour-swatch").val() || 0;
 
         if (currentTemplate != template) {
@@ -301,6 +301,18 @@ $(function() {
 
                 // Render the compiled Twig template to HTML
                 try {
+                    // add template type of the page data
+                    console.log(previouslyRequestedFile);
+                    fileStringToProcess = (typeof previouslyRequestedFile === 'string' ? previouslyRequestedFile : file);
+                    page.templateType = fileStringToProcess.replace('.twig','');
+
+                    // if twig is null then requested file can't be found.
+                    // fallback to default.twig
+                    if(twig === null){
+                        renderTemplate('default.twig', file);
+                        return;
+                    }
+
                     var html = twig.render({
                         assetSubdomain: "",
                         assetDomain: window.location.hostname,

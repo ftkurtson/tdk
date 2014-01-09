@@ -598,7 +598,8 @@ var page = {
     keywords: "basekit",
     description: "BaseKit Template SDK",
     backgroundClass: "default",
-    request: "home"
+    request: "home",
+    templateType: 'default'
 };
 
 /**
