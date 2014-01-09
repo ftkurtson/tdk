@@ -16,11 +16,11 @@
                     {% if item.active == 1 %}
 
                         {% if item.menuType == 'item' %}
-                            {% include "widget_menu_item.twig" with {'item': item} only %}
+                            {% include "widgets/widget_menu_item.twig" with {'item': item} only %}
                         {% endif %}
 
                         {% if item.menuType == 'section' %}
-                            {% include "widget_menu_section.twig" with {'section': item} only %}
+                            {% include "widgets/widget_menu_section.twig" with {'section': item} only %}
                         {% endif %}
                     {% endif %}
                 {% endfor %}
