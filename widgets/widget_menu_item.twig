@@ -26,11 +26,7 @@
 
         {% if item.nutritionalProperties|length %}
             <h4 class="menu-item-nutritional-title">Nutritional information</h4>
-            <ul class="menu-item-nutritional-props">
-                {% for prop in item.nutritionalProperties %}
-                    <li class="menu-item-nutritional-prop"><p>{{ prop }}</p></li>
-                {% endfor %}
-            </ul>
+            <div class="menu-item-nutritional-prop"> {{ item.nutritionalProperties }} </div>
         {% endif %}
 
         {% if item.dietaryInfo|length %}

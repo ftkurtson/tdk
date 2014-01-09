@@ -1,11 +1,9 @@
-{% if plugins.menu and plugins.menu.items %}
-
+{% if plugins.menu and plugins.menu.items and plugins.menu.items|length > 0 %}
     <ul class='menu-section-list'>
         {% for topSection in plugins.menu.items %}
         <li><a href='#menu-section-{{topSection.ref}}'>{{ topSection.title }}</a></li>
         {% endfor %}
     </ul>
-    
 {% else %}
     <p>{{"shared_views.menu.no-menu"|translate("You have no menu")}}</p>
 {% endif %}

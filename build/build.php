@@ -67,7 +67,7 @@ $rules = array(
     $basekitDir . '/assets/public/apps/js/framework/basekit.js' => $sdkDir . '/templates/common/basekit.js',
     $basekitDir . '/templates/common/responsive-columns.css' => $sdkDir . '/templates/common/responsive-columns.css',
     $basekitDir . '/templates/common/template-common.css' => $sdkDir . '/templates/common/template-common.css',
-    $basekitDir . '/assets/public/libs/google-fonts.js' => $sdkDir . '/templates/common/google-fonts.js'
+    $basekitDir . '/assets/public/libs/google-fonts-latin.js' => $sdkDir . '/templates/common/google-fonts.js'
 );
 
 foreach ($rules as $from => $to) {

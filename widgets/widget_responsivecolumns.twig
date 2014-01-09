@@ -23,17 +23,17 @@
         {% set zones = widget.getCollection("zones") %}
 
         {% if (data.columns == 2) %}
-                {% include "view_zone.twig" with { zone: zones[0], zoneClass: 'columns-two-left'} only %}
-                {% include "view_zone.twig" with { zone: zones[1], zoneClass: 'columns-two-right'} only %}
+                {% include "widgets/view_zone.twig" with { zone: zones[0], zoneClass: 'columns-two-left'} only %}
+                {% include "widgets/view_zone.twig" with { zone: zones[1], zoneClass: 'columns-two-right'} only %}
         {% elseif (data.columns == 3) %}
-                {%  include "view_zone.twig" with { zone: zones[0], zoneClass: 'columns-three-left'} only %}
-                {%  include "view_zone.twig" with { zone: zones[1], zoneClass: 'columns-three-middle'} only %}
-                {%  include "view_zone.twig" with { zone: zones[2], zoneClass: 'columns-three-right'} only %}
+                {%  include "widgets/view_zone.twig" with { zone: zones[0], zoneClass: 'columns-three-left'} only %}
+                {%  include "widgets/view_zone.twig" with { zone: zones[1], zoneClass: 'columns-three-middle'} only %}
+                {%  include "widgets/view_zone.twig" with { zone: zones[2], zoneClass: 'columns-three-right'} only %}
         {% elseif (data.columns == 4) %}
-                {%  include "view_zone.twig" with { zone: zones[0], zoneClass: 'columns-four-first' } only %}
-                {%  include "view_zone.twig" with { zone: zones[1], zoneClass: 'columns-four-second'} only %}
-                {%  include "view_zone.twig" with { zone: zones[2], zoneClass: 'columns-four-third' } only %}
-                {%  include "view_zone.twig" with { zone: zones[3], zoneClass: 'columns-four-fourth'} only %}
+                {%  include "widgets/view_zone.twig" with { zone: zones[0], zoneClass: 'columns-four-first' } only %}
+                {%  include "widgets/view_zone.twig" with { zone: zones[1], zoneClass: 'columns-four-second'} only %}
+                {%  include "widgets/view_zone.twig" with { zone: zones[2], zoneClass: 'columns-four-third' } only %}
+                {%  include "widgets/view_zone.twig" with { zone: zones[3], zoneClass: 'columns-four-fourth'} only %}
         {% endif %}
      {% endif %}
 {% endif %}

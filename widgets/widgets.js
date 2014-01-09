@@ -3,6 +3,7 @@
     BaseKit.Widget.Bloglistposts = null;
 
     BaseKit.Widget.BloglistpostsProperties = {
+        postDisplayType: 'summary'
     };
 
     BaseKit.Widget.BloglistpostsMethods = {
@@ -31,7 +32,8 @@
             $(el).data('bkob', new BaseKit.Widget.Bloglistposts(el, options));
         });
     };
-}());(function () {
+}());
+(function () {
     BaseKit.Widget.BlogpostProperties = {
         dateFormat: 'international'
     };

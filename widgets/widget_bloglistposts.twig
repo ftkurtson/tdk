@@ -1,10 +1,26 @@
 {% if plugins.blog.posts|length %}
+    {% if plugins.blog.displayBlogHomePageLink %}
+        <a class="back-blog-home" href="/{{ plugins.blog.directory }}">{{"shared_views.blog-list.home-link"|translate("See all recent posts")}}</a>
+    {% endif %}
+
     <ol class="blog-post-list">
         {% for post in plugins.blog.posts %}
+            {% set postPermalink = '/' ~ plugins.blog.directory ~ '/' ~ post.slug %}
             <li class="blog-post-item">
-                <a href="/{{ plugins.blog.directory }}/{{ post.slug }}">
+                <a href="{{ postPermalink }}">
                     <h2 class="blog-post-title">{{ post.title|raw }}</h2>
+                </a>
+                {% if data.postDisplayType == 'summary' %}
                     <p class="blog-post-summary">{{ post.summary }}</p>
+                    <a href="{{ postPermalink }}" class="blog-post-more-link">{{ 'widgets.blogpostlist.read_more'|translate('Read more') }}</a>
+                {% else %}
+                    <p class="blog-post-summary">{{ post.summary }}</p>
+                    <div class="blog-post-body">
+                        {{ post.content|raw }}
+                    </div>
+                {% endif %}
+                <a href="{{ postPermalink }}" class="blog-post-date">
+                    <time class="blog-post-published-date" pubdate>{{ post.publishedDate.date|formatBlogDate() }}</time>
                 </a>
             </li>
         {% endfor%}

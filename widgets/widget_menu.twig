@@ -1,4 +1,4 @@
-{% if plugins.menu and plugins.menu.items %}
+{% if plugins.menu and plugins.menu.items and plugins.menu.items|length > 0 %}
     {% for topSection in plugins.menu.items %}
         <!-- gets the first top level section -->
         <div class="main wrapper clearfix {% if loop.first %}selected{% endif %}" id="menu-section-{{topSection.ref}}">
