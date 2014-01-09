@@ -1,9 +1,16 @@
 {% if plugins.menu and plugins.menu.items and plugins.menu.items|length > 0 %}
+    {% set activeCount = 0 %}
     <ul class='menu-section-list'>
         {% for topSection in plugins.menu.items %}
-        <li><a href='#menu-section-{{topSection.ref}}'>{{ topSection.title }}</a></li>
+            {% if topSection.active == 1 %}
+                <li><a href='#menu-section-{{topSection.ref}}'>{{ topSection.title }}</a></li>
+                {% set activeCount = activeCount + 1 %}
+            {% endif %}
         {% endfor %}
     </ul>
+    {% if activeCount == 0 %}
+        <p>{{"shared_views.menu.no-active-sections"|translate("You have no active sections")}}</p>
+    {% endif %}
 {% else %}
     <p>{{"shared_views.menu.no-menu"|translate("You have no menu")}}</p>
 {% endif %}
