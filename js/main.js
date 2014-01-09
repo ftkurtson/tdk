@@ -302,7 +302,6 @@ $(function() {
                 // Render the compiled Twig template to HTML
                 try {
                     // add template type of the page data
-                    console.log(previouslyRequestedFile);
                     fileStringToProcess = (typeof previouslyRequestedFile === 'string' ? previouslyRequestedFile : file);
                     page.templateType = fileStringToProcess.replace('.twig','');
 
