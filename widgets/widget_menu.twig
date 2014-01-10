@@ -21,15 +21,21 @@
                 {% if topSection.items|length %}
                     <ol class="menu-items">
                         {% for item in topSection.items %}
-
                             {% if item.menuType == 'item' %}
+                                {% if loop.first == false and topSection.items[loop.index0 - 1 ].menuType == 'section' %}
+                    <ol class="menu-items">
+                                {% endif %}
                                 {% include "widgets/widget_menu_item.twig" with {'item': item} only %}
                             {% endif %}
 
                             {% if item.menuType == 'section' %}
+                                {% if loop.first == false and topSection.items[loop.index0 - 1 ].menuType == 'item' %}
+                    </ol>
+                                {% endif %}
+                    <ol class="menu-items">
                                 {% include "widgets/widget_menu_section.twig" with {'section': item} only %}
+                    </ol>
                             {% endif %}
-
                         {% endfor %}
                     </ol>
                 {% endif %}

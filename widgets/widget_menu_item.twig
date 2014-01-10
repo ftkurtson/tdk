@@ -7,17 +7,13 @@
        {% endif %}
 
         {% if item.prices|length %}
-            <ol class="menu-item-prices">
-                {% for price in item.prices %}
-                    <li class="menu-item-price">
-                        {% if price.name == '' %}
-                            <p class="standard-price">{{ price.price }}</p>
-                        {% else %}
-                            <p class="variant-price">{{ price.name }} {{ price.price }}</p>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ol>
+        <div class="menu-item-price">
+            {% if item.prices.name == 'Normal' %}
+                <p class="standard-price">{{ item.prices.price }}</p>
+            {% else %}
+                <p class="variant-price">{{ item.prices.name }} {{ item.prices.price }}</p>
+            {% endif %}
+        </div>
         {% endif %}
 
         {% if item.description is not null %}
