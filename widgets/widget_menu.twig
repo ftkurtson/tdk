@@ -32,7 +32,7 @@
                                 {% if loop.first == false and topSection.items[loop.index0 - 1 ].menuType == 'item' %}
                     </ol>
                                 {% endif %}
-                    <ol class="menu-items">
+                    <ol class="menu-subsection">
                                 {% include "widgets/widget_menu_section.twig" with {'section': item} only %}
                     </ol>
                             {% endif %}
