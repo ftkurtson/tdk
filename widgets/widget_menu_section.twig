@@ -1,26 +1,22 @@
-{% if section.active == 1 %}
-    <li class="menu-section{% if section.promoted %} menu-item-promoted{% endif %}">
-        <div class="menu-section-header">
-            <h2 class="menu-section-name">{{ section.title }}</h2>
-            {% if section.availability is not null %}
-                <p class="menu-sub-section-availability">{{ section.availability }}</p>
+{% if subsection.active == 1 %}
+    <li class="menu-subsection-wrapper{% if subsection.promoted %} menu-subsection-promoted{% endif %}">
+        <div class="menu-subsection-header">
+            <h2 class="menu-subsection-name">{{ subsection.title }}</h2>
+            {% if subsection.availability is not null %}
+                <p class="menu-subsection-availability">{{ subsection.availability }}</p>
             {% endif %}
-            {% if section.description is not null %}
-                <p class="menu-sub-section-description">{{ section.description }}</p>
+            {% if subsection.description is not null %}
+                <p class="menu-subsection-description">{{ subsection.description }}</p>
             {% endif %}
         </div>
 
-        {% if section.items|length %}
+        {% if subsection.items|length %}
             <ol class="menu-items">
-                {% for item in section.items %}
+                {% for item in subsection.items %}
                     {% if item.active == 1 %}
 
                         {% if item.menuType == 'item' %}
                             {% include "widgets/widget_menu_item.twig" with {'item': item} only %}
-                        {% endif %}
-
-                        {% if item.menuType == 'section' %}
-                            {% include "widgets/widget_menu_section.twig" with {'section': item} only %}
                         {% endif %}
                     {% endif %}
                 {% endfor %}

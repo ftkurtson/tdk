@@ -19,25 +19,31 @@
                 </div>
 
                 {% if topSection.items|length %}
-                    <ol class="menu-items">
-                        {% for item in topSection.items %}
-                            {% if item.menuType == 'item' %}
-                                {% if loop.first == false and topSection.items[loop.index0 - 1 ].menuType == 'section' %}
-                    <ol class="menu-items">
-                                {% endif %}
-                                {% include "widgets/widget_menu_item.twig" with {'item': item} only %}
-                            {% endif %}
+                
+                {% for item in topSection.items %}
+                    {% if item.menuType == 'section' %}
+                        {% if loop.first == false %}
+                        {# close the preview subsection as one ol should only have one li sub section #}
+                            </ol>
+                        {% endif %}
 
-                            {% if item.menuType == 'section' %}
-                                {% if loop.first == false and topSection.items[loop.index0 - 1 ].menuType == 'item' %}
-                    </ol>
-                                {% endif %}
-                    <ol class="menu-subsection">
-                                {% include "widgets/widget_menu_section.twig" with {'section': item} only %}
-                    </ol>
-                            {% endif %}
-                        {% endfor %}
-                    </ol>
+                        <ol class="menu-subsection">
+
+                        {% include "widgets/widget_menu_section.twig" with {'subsection': item} only %}
+                    {% else %}
+
+                        {% if loop.first == true %}
+                            <ol class="menu-items">
+                        {% elseif topSection.items[loop.index0 - 1 ].menuType != item.menuType %}
+                        {# close the preview ol if previous is not item #}
+                            </ol>
+                            <ol class="menu-items">
+                        {% endif %}
+                    
+                        {% include "widgets/widget_menu_item.twig" with {'item': item} only %}
+                    {% endif %}
+                {% endfor %}
+                </ol>
                 {% endif %}
 
                 <!-- the menu also has note property, now we use the section note but might need to be changed later -->
@@ -51,12 +57,12 @@
                             {% if key == 'vegetarian' %}
                                 <dl class="menu-dietary-key">
                                     <dt class="vegetarian-icon dietary-icon"></dt>
-                                    <dd>Suitable for vegetarians</dd>
+                                    <dd>{{"widgets.menu.suitable_for_veg"|translate("Suitable for vegetarians")}}</dd>
                                 </dl>
                             {% elseif key == 'glutenFree' %}
                                 <dl class="menu-dietary-key">
                                     <dt class="glutenFree-icon dietary-icon"></dt>
-                                    <dd>Gluten free</dd>
+                                    <dd>{{"widgets.menu.gluten_free"|translate("Gluten free")}}</dd>
                                 </dl>
                             {% endif %}
                         {% endfor %}
