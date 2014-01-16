@@ -52,30 +52,30 @@ var library = [
  * You should always extend the default properties (via the defaults argument).
  */
 var properties = {
-    feature: function(template, defaults) {
-        return $.extend(defaults, {
+    feature: function(templateName, templateValues) {
+        return $.extend({
             preset: "align-center",
-            bgImg: "templates/" + template + "/images/feature-bg.jpg",
+            bgImg: "templates/" + templateName + "/images/feature-bg.jpg",
             buttonText: "Sign Up",
             header: "My Website Header",
             strapline: "Here is the website strapline!"
-        });
+        }, templateValues);
     },
-    companyname: function(template, defaults) {
-        return $.extend(defaults, {
+    companyname: function(templateName, templateValues) {
+        return $.extend({
             url:"home"
-        });
+        }, templateValues);
     },
-    companyheader: function(template, defaults) {
-        return $.extend(defaults, {
+    companyheader: function(templateName, templateValues) {
+        return $.extend({
             preset: "default",
             showLogo: 1
-        });
+        }, templateValues);
     },
-    content: function(template, defaults) {
-        var properties = $.extend(defaults, {
+    content: function(templateName, templateValues) {
+        var properties = $.extend({
             lines: "all"
-        });
+        }, templateValues);
 
         if (typeof properties.content !== "string") {
             properties.content = library[Math.floor(Math.random() * library.length)];
@@ -83,20 +83,20 @@ var properties = {
 
         return properties;
     },
-    contactform: function(template, defaults) {
-        return $.extend(defaults, {
+    contactform: function(templateName, templateValues) {
+        return $.extend({
             preset: "todo",
             text: "Submit Form"
-        });
+        }, templateValues);
     },
-    map: function(template, defaults) {
-        return $.extend(defaults, {
+    map: function(templateName, templateValues) {
+        return $.extend({
             height: 300,
             markerPath: '/images/map-marker.png'
-        });
+        }, templateValues);
     },
-    twitter: function(template, defaults) {
-        return $.extend(defaults, {
+    twitter: function(templateName, templateValues) {
+        return $.extend({
             tweets: [
                 {
                     "text": "How To Get Big-Brand Search Visibility",
@@ -115,58 +115,58 @@ var properties = {
                     "imageUrl": "http://a0.twimg.com/profile_images/2388265742/8pkr9i1jj6x3wtu4h9j4_normal.jpeg"
                 }
             ]
-        });
+        }, templateValues);
     },
-    youtube: function(template, defaults) {
-        return $.extend(defaults, {
+    youtube: function(templateName, templateValues) {
+        return $.extend({
             videoId: "yfCdflc3x8U"
-        });
+        }, templateValues);
     },
-    button: function(template, defaults) {
-        return $.extend(defaults, {
+    button: function(templateName, templateValues) {
+        return $.extend({
             text: "Click Me"
-        });
+        }, templateValues);
     },
-    gallery: function(template, defaults) {
+    gallery: function(templateName, templateValues) {
         return $.extend({
             preset: "default",
             albumRef: 1
-        }, defaults);
+        }, templateValues);
     },
-    extendednavigation: function(template, defaults) {
-        return $.extend(defaults, {
+    extendednavigation: function(templateName, templateValues) {
+        return $.extend({
             align: "left"
-        });
+        }, templateValues);
     },
-    responsiveslideshow: function(template, defaults) {
-        return $.extend(defaults, {
+    responsiveslideshow: function(templateName, templateValues) {
+        return $.extend({
             preset: "default",
             albumRef: 0
-        });
+        }, templateValues);
     },
-    navigation: function(template, defaults) {
+    navigation: function(templateName, templateValues) {
         return $.extend({
             preset: "default",
             align: "left"
-        }, defaults);
+        }, templateValues);
     },
-    image: function(template, defaults) {
+    image: function(templateName, templateValues) {
         return $.extend({
             src: "http://placehold.it/250x250"
-        }, defaults);
+        }, templateValues);
     },
-    paypalbuynow: function(template, defaults) {
-        return $.extend(defaults, {
+    paypalbuynow: function(templateName, templateValues) {
+        return $.extend({
             paypalbuynow_businessemail: "test@test.com",
             paypalbuynow_currency: "GDP",
             paypalbuynow_text: "Buy Me Now"
-        });
+        }, templateValues);
     },
-    dropbox: function(template, defaults) {
-        return $.extend(defaults, {
+    dropbox: function(templateName, templateValues) {
+        return $.extend({
             showFileName: 1,
             fileName: "test.file"
-        });
+        }, templateValues);
     }
 };
 

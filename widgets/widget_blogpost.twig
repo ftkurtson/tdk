@@ -3,20 +3,19 @@
         {% set featureImg = plugins.assets.images[plugins.blog.posts[0].featureImageAssetRef] %}
         <img class="blog-post-feature-image" src="{{ featureImg.url }}" alt="">
     {% endif %}
-
+ 
     <h2 class='blog-post-title'>{{ plugins.blog.posts[0].title|raw }}</h2>
     <p class="blog-post-summary">{{ plugins.blog.posts[0].summary }}</p>
-
-    <div class="blog-post-content">
+ 
+    <section class="blog-post-content">
         {{ plugins.blog.posts[0].content|raw }}
-    </div>
-
-    <div class="blog-post-metadata">
-
+    </section>
+ 
+    <footer class="blog-post-metadata">
         {% if plugins.blog.posts[0].publishedDate %}
-            <time class="blog-post-publish-date" pubdate>{{ plugins.blog.posts[0].publishedDate.date|formatBlogDate(data.dateFormat) }}</time>
+            <time pubdate datetime="{{ plugins.blog.posts[0].publishedDate.date }}" class="blog-post-publish-date">{{ plugins.blog.posts[0].publishedDate.date|formatBlogDate(languageCode) }}</time>
         {% endif %}
-
+ 
         {% if plugins.blog.posts[0].category|length %}
             <div class="blog-post-category">
                 <p class="blog-post-category-label">{{"shared_views.blog.category"|translate("Category")}}</p>
@@ -25,7 +24,7 @@
                 </p>
             </div>
         {% endif %}
-
+ 
         {% if plugins.blog.posts[0].tags|length %}
             <div class="blog-post-tags">
                 <p class="blog-post-tags-label">{{"shared_views.blog.tags"|translate("Tags")}}</p>
@@ -41,8 +40,8 @@
                 </ol>
             </div>
         {% endif %}
-
-    </div>
+    </footer>
+    
 {% else %}
     <p>{{"shared_views.blog.no-post"|translate("You haven’t added any posts yet.")}}</p>
 {% endif %}

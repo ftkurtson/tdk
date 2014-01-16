@@ -1,37 +1,45 @@
 {% if plugins.blog.posts|length %}
+ 
     {% if plugins.blog.displayBlogHomePageLink %}
-        <a class="back-blog-home" href="/{{ plugins.blog.directory }}">{{"shared_views.blog-list.home-link"|translate("See all recent posts")}}</a>
+        <a class="blog-back-home" href="/{{ plugins.blog.directory }}">{{"shared_views.blog-list.home-link"|translate("See all recent posts")}}</a>
     {% endif %}
-
-    <ol class="blog-post-list">
+ 
+    <section class="blog-post-list">
         {% for post in plugins.blog.posts %}
             {% set postPermalink = '/' ~ plugins.blog.directory ~ '/' ~ post.slug %}
-            <li class="blog-post-item">
-                <a href="{{ postPermalink }}">
-                    <h2 class="blog-post-title">{{ post.title|raw }}</h2>
-                </a>
+            <article class="blog-post-item">
+ 
+                <h2 class="blog-post-title">
+                    <a href="{{ postPermalink }}">
+                        {{ post.title|raw }}
+                    </a>
+                </h2>
+ 
                 {% if data.postDisplayType == 'summary' %}
                     <p class="blog-post-summary">{{ post.summary }}</p>
                     <a href="{{ postPermalink }}" class="blog-post-more-link">{{ 'widgets.blogpostlist.read_more'|translate('Read more') }}</a>
                 {% else %}
                     <p class="blog-post-summary">{{ post.summary }}</p>
-                    <div class="blog-post-body">
+                    <section class="blog-post-body">
                         {{ post.content|raw }}
-                    </div>
+                    </section>
                 {% endif %}
+ 
                 <a href="{{ postPermalink }}" class="blog-post-date">
-                    <time class="blog-post-published-date" pubdate>{{ post.publishedDate.date|formatBlogDate() }}</time>
+                    <time pubdate datetime="{{ post.publishedDate.date }}" class="blog-post-published-date">{{ post.publishedDate.date|formatBlogDate(languageCode) }}</time>
                 </a>
-            </li>
+            </article>
         {% endfor%}
-    </ol>
+    </section>
+    
     {% if plugins.blog.currentPage > 1 and plugins.blog.currentPage <= plugins.blog.totalPages %}
-        <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage - 1) }}" class="paginate-newer blog-post-pagination-page">{{ "shared_views.blog-list.newer"|translate("Newer") }}</a>
+        <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage - 1) }}" class="blog-post-pagination-pagepaginate-newer">{{ "shared_views.blog-list.newer"|translate("Newer") }}</a>
     {% endif %}
-
+ 
     {% if plugins.blog.totalPages > 1 and plugins.blog.currentPage != plugins.blog.totalPages and plugins.blog.currentPage <= plugins.blog.totalPages %}
-        <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage + 1) }}" class="paginate-older blog-post-pagination-page">{{ "shared_views.blog-list.older"|translate("Older") }}</a>
+        <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage + 1) }}" class="blog-post-pagination-page paginate-older">{{ "shared_views.blog-list.older"|translate("Older") }}</a>
     {% endif %}
+    
 {% else %}
     <p>{{"shared_views.blog-list.no-content"|translate("There aren't any posts to display.")}}</p>
 {% endif %}

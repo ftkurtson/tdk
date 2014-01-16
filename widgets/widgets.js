@@ -638,7 +638,8 @@
             var that = this,
                 thisEl = $(this.el),
                 url = '/site/' + App.session.get('siteRef') + '/submit-form',
-                data = {};
+                data = {},
+                emailRegex = /[a-z0-9!#$%&'*+\/=?\^_`{|}~\-]+(?:\.[a-z0-9!#$%&'*+\/=?\^_`{|}~\-]+)*@(?:[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?/i;
 
             // override the submit event on the form
             thisEl.find('form').on('submit', function (e) {
@@ -653,53 +654,77 @@
                     'widgetId': thisEl.attr('id')
                 };
 
+                that.removeMessage();
+                that.showMessageBox();
+
+                if (!data.emailFrom.length) {
+                    that.showMessage(
+                        App.t('widgets.form.empty_email', 'Please enter an email address.'),
+                        'fail'
+                    );
+                    return;
+                }
+
+                if (!data.message.length) {
+                    that.showMessage(
+                        App.t('widgets.form.empty_message', 'Please enter a message.'),
+                        'fail'
+                    );
+                    return;
+                }
+
+                if (!emailRegex.test(data.emailFrom)) {
+                    that.showMessage(
+                        App.t('widgets.form.invalid_email', 'Please enter a valid email address.'),
+                        'fail'
+                    );
+                    return;
+                }
+
                 // submit the form using the api
                 $.ajax({
                     url: url,
                     type: "POST",
                     data: data,
-                    beforeSend: function () {
-                        that.showMessageBox();
-                    },
                     success: function () {
                         if (that.get('goalUrl')) {
                             //redirect the window location
                             window.location = that.get('goalUrl');
                         } else {
-                            that.showText(true);
+                            that.showMessage(
+                                App.t('widgets.form.success', 'Message sent successfully.'),
+                                'success'
+                            );
                             that.removeMessageBox();
                         }
                     },
                     error: function () {
-                        that.showText();
+                        that.showMessage(
+                            App.t('widgets.form.failed', 'Submit failed.'),
+                            'fail'
+                        );
                         that.removeMessageBox();
                     }
                 });
             });
         },
 
-        /**
-         * showText: shows the message text depends on the status
-         * @param <boolean>  isSuccess
-         */
-        showText: function (isSuccess) {
-            var message = null,
-                thisEl = $(this.el),
-                className = null;
+        showMessage: function (message, className) {
+            var thisEl = $(this.el);
+
+            if (!message) {
+                return;
+            }
 
             if (thisEl.find('.message-box').length > 0) {
                 thisEl.find('.message-box').remove();
             }
 
-            if (isSuccess) {
-                message = App.t('widgets.form.success', 'Message sent successfully.');
-                className = 'success';
-            } else {
-                message = App.t('widgets.form.failed', 'Submit failed.');
-                className = 'fail';
-            }
-
             thisEl.find('.overlay').addClass(className).append('<div class="message-box"><span class="message-text">' + message + '</span></div>');
+        },
+
+        removeMessage: function () {
+            $(this.el).find('.overlay .message-box').remove();
         },
 
         showMessageBox: function () {
@@ -721,7 +746,7 @@
                     thisEl.find('.email, .message').val('');
                     $(this).remove();
                 });
-            }, 3000);
+            }, 15000);
         }
     };
 
