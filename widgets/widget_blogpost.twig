@@ -1,6 +1,7 @@
 {% if plugins.blog.posts %}
     {% if plugins.blog.posts[0].featureImageAssetRef is not null %}
-        {% set featureImg = plugins.assets.images[plugins.blog.posts[0].featureImageAssetRef] %}
+        {% set assetRef = plugins.blog.posts[0].featureImageAssetRef|number_format %}
+        {% set featureImg = plugins.assets.images[assetRef] %}
         <img class="blog-post-feature-image" src="{{ featureImg.url }}" alt="">
     {% endif %}
  
@@ -13,12 +14,12 @@
  
     <footer class="blog-post-metadata">
         {% if plugins.blog.posts[0].publishedDate %}
-            <time pubdate datetime="{{ plugins.blog.posts[0].publishedDate.date }}" class="blog-post-publish-date">{{ plugins.blog.posts[0].publishedDate.date|formatBlogDate(languageCode) }}</time>
+            <time pubdate datetime="{{ plugins.blog.posts[0].publishedDate.date }}" class="blog-post-publish-date">{{ plugins.blog.posts[0].publishedDate.date }}</time>
         {% endif %}
  
         {% if plugins.blog.posts[0].category|length %}
             <div class="blog-post-category">
-                <p class="blog-post-category-label">{{"shared_views.blog.category"|translate("Category")}}</p>
+                <p class="blog-post-category-label">Category</p>
                 <p class="blog-post-category">
                     <a href="/{{ plugins.blog.directory }}/categories/{{ plugins.blog.posts[0].category|url_encode }}">{{ plugins.blog.posts[0].category }}</a>
                 </p>
@@ -27,14 +28,14 @@
  
         {% if plugins.blog.posts[0].tags|length %}
             <div class="blog-post-tags">
-                <p class="blog-post-tags-label">{{"shared_views.blog.tags"|translate("Tags")}}</p>
+                <p class="blog-post-tags-label">Tags</p>
                 <ol class="blog-post-tags-list">
                     {% set tags = plugins.blog.posts[0].tags %}
                     {% set count = 0 %}
                     {% for tag in tags %}
                         {% set count = count + 1 %}
                         <li class="blog-post-tag">
-                            <a href="/{{ plugins.blog.directory }}/tags/{{ tag|url_encode }}">{{ tag }}</a>
+                            <a href="/{{ plugins.blog.directory }}/tags/{{ tag }}">{{ tag }}</a>
                         </li>
                     {% endfor %}
                 </ol>
@@ -43,5 +44,5 @@
     </footer>
     
 {% else %}
-    <p>{{"shared_views.blog.no-post"|translate("You haven’t added any posts yet.")}}</p>
+    <p>You haven’t added any posts yet.</p>
 {% endif %}

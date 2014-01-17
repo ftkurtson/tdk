@@ -1,7 +1,7 @@
 {% if plugins.blog.posts|length %}
  
     {% if plugins.blog.displayBlogHomePageLink %}
-        <a class="blog-back-home" href="/{{ plugins.blog.directory }}">{{"shared_views.blog-list.home-link"|translate("See all recent posts")}}</a>
+        <a class="blog-back-home" href="/{{ plugins.blog.directory }}">See all recent posts</a>
     {% endif %}
  
     <section class="blog-post-list">
@@ -17,7 +17,7 @@
  
                 {% if data.postDisplayType == 'summary' %}
                     <p class="blog-post-summary">{{ post.summary }}</p>
-                    <a href="{{ postPermalink }}" class="blog-post-more-link">{{ 'widgets.blogpostlist.read_more'|translate('Read more') }}</a>
+                    <a href="{{ postPermalink }}" class="blog-post-more-link">Read more</a>
                 {% else %}
                     <p class="blog-post-summary">{{ post.summary }}</p>
                     <section class="blog-post-body">
@@ -26,20 +26,20 @@
                 {% endif %}
  
                 <a href="{{ postPermalink }}" class="blog-post-date">
-                    <time pubdate datetime="{{ post.publishedDate.date }}" class="blog-post-published-date">{{ post.publishedDate.date|formatBlogDate(languageCode) }}</time>
+                    <time pubdate datetime="{{ post.publishedDate.date }}" class="blog-post-published-date">{{ post.publishedDate.date }}</time>
                 </a>
             </article>
         {% endfor%}
     </section>
     
     {% if plugins.blog.currentPage > 1 and plugins.blog.currentPage <= plugins.blog.totalPages %}
-        <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage - 1) }}" class="blog-post-pagination-pagepaginate-newer">{{ "shared_views.blog-list.newer"|translate("Newer") }}</a>
+        <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage - 1) }}" class="blog-post-pagination-pagepaginate-newer">Newer</a>
     {% endif %}
  
     {% if plugins.blog.totalPages > 1 and plugins.blog.currentPage != plugins.blog.totalPages and plugins.blog.currentPage <= plugins.blog.totalPages %}
-        <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage + 1) }}" class="blog-post-pagination-page paginate-older">{{ "shared_views.blog-list.older"|translate("Older") }}</a>
+        <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage + 1) }}" class="blog-post-pagination-page paginate-older">Older</a>
     {% endif %}
     
 {% else %}
-    <p>{{"shared_views.blog-list.no-content"|translate("There aren't any posts to display.")}}</p>
+    <p>There aren't any posts to display.</p>
 {% endif %}

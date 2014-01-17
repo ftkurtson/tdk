@@ -167,6 +167,9 @@ var properties = {
             showFileName: 1,
             fileName: "test.file"
         }, templateValues);
+    },
+    blogpost: function(templateName, templateValues) {
+        return $.extend({}, templateValues);
     }
 };
 
@@ -213,7 +216,7 @@ var plugins = function(template) {
               {
                  "category": "cars",
                  "content": "<p>\r\n\t <strong>Cras dictum, urna ut luctus vulputate, massa nunc semper nisl, et tempor libero elit at massa.<\/strong> Cras ut hendrerit nunc. Etiam ut viverra lacus. Donec sagittis, nibh ut dapibus convallis, turpis leo scelerisque lectus, nec bibendum libero sem id urna. Phasellus cursus nec risus in gravida. Nullam tristique felis et neque ornare suscipit. Nulla congue auctor mauris sed consectetur. Nulla consectetur viverra tellus, aliquet pellentesque magna blandit ac. Ut feugiat, arcu ut tempus commodo, nisi tellus semper ante, in faucibus lacus nisl id elit. Pellentesque tristique nibh nec interdum pulvinar.\r\n<\/p>",
-                 "featureImageAssetRef": 1523,
+                 "featureImageAssetRef": "1",
                  "publishedDate": {
                     "date": "2014-01-14 15:54:47",
                     "timezone": "Europe/London",
@@ -231,7 +234,7 @@ var plugins = function(template) {
               {
                  "category": "cars",
                  "content": "<p>\r\n\t Nunc scelerisque, elit eu iaculis tincidunt, lectus nisl suscipit enim, eu fringilla augue justo ornare tortor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus mattis a leo quis sollicitudin. Vestibulum ornare turpis in elit tincidunt, ornare sollicitudin ligula laoreet. Sed eu nisi a lorem cursus venenatis a ac velit. Maecenas mollis neque sit amet tellus faucibus semper. Donec eu massa orci. Nunc gravida ante eu magna egestas blandit. Vivamus iaculis ac tellus vel rhoncus. Vestibulum non feugiat nibh. Phasellus eget metus ligula. In ut enim et tortor pharetra scelerisque. Morbi porta lacus tortor, ut pharetra orci laoreet in. Suspendisse laoreet id neque at tristique.\r\n<\/p>",
-                 "featureImageAssetRef": 1521,
+                 "featureImageAssetRef": 2,
                  "publishedDate": {
                     "date": "2014-01-14 15:54:25",
                     "timezone": "Europe/London",
@@ -250,7 +253,7 @@ var plugins = function(template) {
               {
                  "category": "cars",
                  "content": "<p>\r\n\t Vestibulum convallis sollicitudin odio, et suscipit nunc scelerisque id. Aenean imperdiet, tellus vel euismod adipiscing, libero ligula aliquam quam, nec adipiscing dolor nunc id lacus. Maecenas fringilla ultricies mauris nec convallis. Integer porttitor posuere quam a varius. Etiam aliquam eleifend orci. Proin ullamcorper vulputate eros, quis semper mi accumsan eu. Curabitur faucibus est mi, id dictum nisi tincidunt vitae. Vestibulum nisi dolor, condimentum non magna ut, tincidunt dignissim sapien. Vestibulum iaculis dui et pretium luctus. Pellentesque in tristique sapien, sit amet rutrum turpis. Proin nisi lacus, cursus sed tincidunt id, pulvinar eu lorem. Sed ut elementum magna. Aliquam erat volutpat.\r\n<\/p>",
-                 "featureImageAssetRef": 1520,
+                 "featureImageAssetRef": 3,
                  "publishedDate": {
                     "date": "2014-01-14 15:54:07",
                     "timezone": "Europe/London",
@@ -268,7 +271,7 @@ var plugins = function(template) {
               {
                  "category": "trucks",
                  "content": "<p>\r\n\t  Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean pretium in dui in consequat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In hac habitasse platea dictumst. Praesent ac interdum nisi, et tempus mauris. Maecenas quis dapibus massa. Aliquam id sapien facilisis, tincidunt turpis eu, gravida purus. Curabitur pretium nibh quam, quis adipiscing libero venenatis ac. Interdum et malesuada fames ac ante ipsum primis in faucibus. Maecenas sodales, nisi vel aliquam suscipit, eros tortor accumsan purus, id tincidunt risus nulla in nisi. Nunc lobortis id magna sit amet semper. Curabitur iaculis ultrices ligula eget vulputate.\r\n<\/p>\r\n<p>\r\n\t  Nunc scelerisque, elit eu iaculis tincidunt, lectus nisl suscipit enim, eu fringilla augue justo ornare tortor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus mattis a leo quis sollicitudin. Vestibulum ornare turpis in elit tincidunt, ornare sollicitudin ligula laoreet. Sed eu nisi a lorem cursus venenatis a ac velit. Maecenas mollis neque sit amet tellus faucibus semper. Donec eu massa orci. Nunc gravida ante eu magna egestas blandit. Vivamus iaculis ac tellus vel rhoncus. Vestibulum non feugiat nibh. Phasellus eget metus ligula. In ut enim et tortor pharetra scelerisque. Morbi porta lacus tortor, ut pharetra orci laoreet in. Suspendisse laoreet id neque at tristique.\r\n<\/p>",
-                 "featureImageAssetRef": 1519,
+                 "featureImageAssetRef": 4,
                  "publishedDate": {
                     "date": "2014-01-14 15:53:41",
                     "timezone": "Europe/London",
@@ -285,7 +288,7 @@ var plugins = function(template) {
               {
                  "category": null,
                  "content": "<p>\r\n\t Cconsectetur adipiscing elit. Nunc ut ligula iaculis, ornare nibh ut, tincidunt dui. Curabitur adipiscing lobortis hendrerit. Donec ut ipsum nec arcu posuere ultrices a quis nisi. Quisque a arcu leo. Quisque commodo, purus ut suscipit gravida, magna libero egestas sapien, ac sollicitudin libero mauris non ipsum. Morbi tristique dictum tellus non laoreet. Suspendisse condimentum lectus at metus euismod tempus.\r\n<\/p>",
-                 "featureImageAssetRef": 1516,
+                 "featureImageAssetRef": 5,
                  "publishedDate": {
                     "date": "2014-01-14 15:53:30",
                     "timezone": "Europe/London",
