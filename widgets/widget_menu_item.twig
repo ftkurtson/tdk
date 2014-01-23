@@ -2,8 +2,12 @@
     <div class="inner-item">
         <h3 class="menu-item-name">{{ item.title }}</h3>
 
-       {% if item.imageURL is not null %}
-        <img class="menu-item-image" alt="" src="{{ item.imageURL }}">
+       {% if item.assetRef is not null %}
+            {% set ref = item.assetRef %}
+            {% set featureImg = plugins.assets.images[ref] %}
+        <div class="menu-item-image-wrap" style="background:url('{{ featureImg.url }}')">
+            <img class="menu-item-image" alt="" src="{{ featureImg.url }}">
+        </div>
        {% endif %}
 
         {% if item.prices|length %}
@@ -32,6 +36,7 @@
                         <span class="{{ key }}-icon dietary-icon"></span>
                     {% endif %}
                 {% endfor %}
+                <span class="{{ item.spicy|replace(' ','-') }}-icon dietary-icon"></span>
             </div>
         {% endif %}
     </div><!--end inner-item-->
