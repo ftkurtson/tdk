@@ -1,8 +1,8 @@
 {% if plugins.menu and plugins.menu.items and plugins.menu.items|length > 0 %}
+    {% set activeCount = 0 %}
     {% for topSection in plugins.menu.items %}
-        {% set activeCount = 0 %}
         {% if topSection.active == 1 %}
-            <!-- gets the first top level section -->
+            <!-- gets the top level sections -->
             <div class="main wrapper clearfix {% if loop.first %}selected{% endif %}" id="menu-section-{{topSection.ref}}">
                 <div class="menu-header">
                     <div class="menu-name-background">
@@ -29,29 +29,61 @@
 
                         <ol class="menu-subsection">
 
-                        {% include "widgets/widget_menu_section.twig" with {'subsection': item} only %}
+                        {% include "widgets/widget_menu_section.twig" with {'subsection': item} %}
                     {% else %}
 
                         {% if loop.first == true %}
-                            <ol class="menu-items">
+
+                            {% set count = 0 %}
+                            {% set doLoop = true %}
+                            {% set numClass = 'odd' %}
+
+                            {% for item in topSection.items if doLoop %}
+                                {% if item.menuType != 'section' %}
+                                    {% set count = count + 1 %}
+                                {% elseif item.menuType == 'section' %}
+                                    {% set doLoop = false %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if count % 2 == 0 %}
+                                {% set numClass = 'even' %}
+                            {% endif %}
+
+                            <ol class="menu-items {{ numClass }} {{ count }}-columns">
                         {% elseif topSection.items[loop.index0 - 1 ].menuType != item.menuType %}
                         {# close the preview ol if previous is not item #}
                             </ol>
-                            <ol class="menu-items">
-                        {% endif %}
-                    
-                        {% include "widgets/widget_menu_item.twig" with {'item': item, 'plugins':plugins} only %}
+
+                            {% set count = 0 %}
+                            {% set doLoop = true %}
+                            {% set currentIndex = loop.index %}
+                            {% set numClass = 'odd' %}
+
+                            {% for item in topSection.items if doLoop %}
+                                {% if item.menuType != 'section' and loop.index - currentIndex >= 0 %}
+                                    {% set count = count + 1 %}
+                                {% elseif item.menuType == 'section' and loop.index - currentIndex >= 0 %}
+                                    {% set doLoop = false %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if count % 2 == 0 %}
+                                {% set numClass = 'even' %}
+                            {% endif %}
+                                <ol class="menu-items {{ numClass }} {{ count }}-columns">
+                            {% endif %}
+
+                        {% include "widgets/widget_menu_item.twig" with {'item': item, 'plugins': plugins} %}
                     {% endif %}
                 {% endfor %}
                 </ol>
                 {% endif %}
 
                 <!-- the menu also has note property, now we use the section note but might need to be changed later -->
+                {% if topSection.note is not null %}
                 <div class="menu-info">
-                    {% if topSection.note is not null %}
-                        <p class="menu-note">{{ topSection.note }}</p>
-                    {% endif %}
-
+                    <p class="menu-note">{{ topSection.note }}</p>
                     {% if topSection.dietaryInfoKeys|length %}
                         {% for key in topSection.dietaryInfoKeys %}
                             {% if key == 'vegetarian' %}
@@ -68,6 +100,7 @@
                         {% endfor %}
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
             {% set activeCount = activeCount + 1 %}
         {% endif %}

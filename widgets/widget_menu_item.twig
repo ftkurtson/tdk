@@ -5,7 +5,7 @@
        {% if item.assetRef is not null %}
             {% set ref = item.assetRef %}
             {% set featureImg = plugins.assets.images[ref] %}
-        <div class="menu-item-image-wrap" style="background:url('{{ featureImg.url }}')">
+        <div class="menu-item-image-wrap" style="background-image:url('{{ featureImg.url }}')">
             <img class="menu-item-image" alt="" src="{{ featureImg.url }}">
         </div>
        {% endif %}

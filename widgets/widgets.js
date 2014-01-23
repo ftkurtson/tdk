@@ -654,6 +654,10 @@
                     'widgetId': thisEl.attr('id')
                 };
 
+                if (thisEl.find('.overlay').length > 0) {
+                    thisEl.find('.overlay').removeClass('fail success');
+                }
+
                 that.removeMessage();
                 that.showMessageBox();
 
@@ -937,6 +941,40 @@
     $.fn.basekitWidgetDropbox = function (options) {
         this.each(function (index, el) {
             $(el).data('bkob', new BaseKit.Widget.Dropbox(el, options));
+        });
+    };
+}());
+(function () {
+
+    BaseKit.Widget.Ecomproductslist = null;
+
+    BaseKit.Widget.EcomproductslistProperties = {
+    };
+
+    BaseKit.Widget.EcomproductslistMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Ecomproductslist = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.EcomproductslistProperties,
+            methods: BaseKit.Widget.EcomproductslistMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetEcomproductslist = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Ecomproductslist(el, options));
         });
     };
 }());
@@ -1871,7 +1909,7 @@
         attachEvents: function () {
             var that = this,
                 thisEl = $(this.el),
-                anchorEl = thisEl.find('a'),
+                anchorEl = thisEl.find('.menu-section-list a'),
                 menuEl = $(document).find('.widget.menu');
 
             anchorEl.on('click.selectSection', function (e) {
@@ -2072,6 +2110,10 @@
                     'formTitle': that.get('formTitle'),
                     'widgetId': thisEl.attr('id')
                 };
+
+                if (thisEl.find('.overlay').length > 0) {
+                    thisEl.find('.overlay').removeClass('fail success');
+                }
 
                 // submit the form using the api
                 $.ajax({
@@ -3618,7 +3660,7 @@
                     'email':        thisEl.find("input[type='email']").val(),
                     'password':     thisEl.find("input[type='password']").val(),
                     'widgetId':     thisEl.attr('id'),
-                    'languageCode': 'en',
+                    'languageCode': App.session.get('languageCode'),
                     'auth_token':   null
                 };
                 thisEl.find("p.error").empty().hide();

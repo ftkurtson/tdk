@@ -11,12 +11,19 @@
         </div>
 
         {% if subsection.items|length %}
-            <ol class="menu-items">
+            {% set numClass = 'odd' %}
+            {% set count = subsection.items|length %}
+
+            {% if count % 2 == 0 %}
+                {% set numClass = 'even' %}
+            {% endif %}
+
+            <ol class="menu-items {{ numClass }} {{ count }}-columns">
                 {% for item in subsection.items %}
                     {% if item.active == 1 %}
 
                         {% if item.menuType == 'item' %}
-                            {% include "widgets/widget_menu_item.twig" with {'item': item} only %}
+                            {% include "widgets/widget_menu_item.twig" with {'item': item} %}
                         {% endif %}
                     {% endif %}
                 {% endfor %}
