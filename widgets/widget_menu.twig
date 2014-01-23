@@ -40,7 +40,7 @@
                             <ol class="menu-items">
                         {% endif %}
                     
-                        {% include "widgets/widget_menu_item.twig" with {'item': item} only %}
+                        {% include "widgets/widget_menu_item.twig" with {'item': item, 'plugins':plugins} only %}
                     {% endif %}
                 {% endfor %}
                 </ol>

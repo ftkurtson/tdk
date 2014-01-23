@@ -190,16 +190,16 @@ var plugins = function(template) {
                     url: "http://placehold.it/250x250"
                 },
                 2: {
-                    url: "http://placehold.it/250x250"
+                    url: "http://placehold.it/300x100"
                 },
                 3: {
                     url: "http://placehold.it/250x250"
                 },
                 4: {
-                    url: "http://placehold.it/250x250"
+                    url: "http://placehold.it/529x150"
                 },
                 5: {
-                    url: "http://placehold.it/250x250"
+                    url: "http://placehold.it/600x200"
                 },
                 6: {
                     url: "http://placehold.it/250x250"
@@ -341,7 +341,7 @@ var plugins = function(template) {
                      "ref":27,
                      "title":"Daily Oats Organic Rude Health Porridge",
                      "description":"This porridge will have you feeling rudely healthy all day. we top ours with honey, fresh strawberries & bananas",
-                     "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/b4601db1a9da86163ad7b91cd4815de8.jpg&w=260&h=200&q=90&a=crop",
+                     "assetRef": 1,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":1,
@@ -359,14 +359,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"4.15"
+                        "price":"$4.15"
                      }
                   },
                   {
                      "ref":28,
                      "title":"Veggie Brunch Plate",
                      "description":"Free range fried, poached or scrambled eggs, veggie sausages, Heinz baked beans, mushrooms & avocado with toasted artisan sourdough",
-                     "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/bb401118d8274d9557eec826e8955654.jpg&w=260&h=200&q=90&a=crop",
+                     "assetRef": 2,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":2,
@@ -384,14 +384,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"8.25"
+                        "price":"$8.25"
                      }
                   },
                   {
                      "ref":29,
                      "title":"Deluxe Toastie",
                      "description":"Artisan sourdough toast filled with crispy bacon, fried egg, melting cheddar, lettuce, tomato & mustard mayo",
-                     "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/d6ea55aa9728d27dd0a8abf13b3ed351.jpg&w=260&h=200&q=90&a=crop",
+                     "assetRef": 3,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":3,
@@ -409,14 +409,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"4.95"
+                        "price":"$4.95"
                      }
                   },
                   {
                      "ref":30,
                      "title":"Stacked Blueberry & Banana Pancakes",
                      "description":"With maple syrup. 50p from every Pancake Stack goes to Rays of Sunshine Children's Charity which grants wishes for seriously ill children across the UK",
-                     "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/6d3c07c9bdc1521091addc89550907c2.jpg&w=260&h=200&q=90&a=crop",
+                     "assetRef": 5,
                      "promoted":true,
                      "menuType":"item",
                      "displayOrder":4,
@@ -434,14 +434,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"6.95"
+                        "price":"$6.95"
                      }
                   },
                   {
                      "ref":31,
                      "title":"Daybreaker Omelette",
                      "description":"Egg white omelette served with cherry tomato & avocado salsa",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":5,
@@ -459,14 +459,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
                      "ref":32,
                      "title":"Huevos Rancheros Mexican Breakfast",
                      "description":"Vegetarian option with roasted mushrooms £7.95Free range fried or scrambled eggs, chorizo sausage, black beans, melting cheese, adobe sauce, avocado & tomato salsa on a warm soft corn tortilla",
-                     "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/57fb3a391b903d6af86eb4755a495f60.jpg&w=260&h=200&q=90&a=crop",
+                     "assetRef": 4,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":6,
@@ -484,14 +484,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"8.25"
+                        "price":"$8.25"
                      }
                   },
                   {
                      "ref":33,
                      "title":"Avocado, Hummus & Roasted Cherry Tomatoes",
                      "description":"On toasted artisan sourdough with basil oil",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":7,
@@ -509,14 +509,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
                      "ref":34,
                      "title":"“The Western” Omelette",
                      "description":"Three egg omelette with roasted vegetables & manchego, served with cherry tomato & avocado salsa",
-                     "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/3aeca6039a9d0d3a0fa65029525b9df2.jpg&w=260&h=200&q=90&a=crop",
+                     "assetRef": 6,
                      "promoted":true,
                      "menuType":"item",
                      "displayOrder":8,
@@ -534,14 +534,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
                      "ref":27,
                      "title":"Daily Oats Organic Rude Health Porridge",
                      "description":"This porridge will have you feeling rudely healthy all day. we top ours with honey, fresh strawberries & bananas",
-                     "imageURL":"http://giraffe.net/assets/global/php/image.php?src=/assets/giraffe/cms/images/menu/01ce34db7b9c0fc587026dc6496c2be7.jpg&w=260&h=200&q=90&a=crop",
+                     "assetRef": 3,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":1,
@@ -559,14 +559,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"4.15"
+                        "price":"$4.15"
                      }
                   },
                   {
                      "ref":28,
                      "title":"Veggie Brunch Plate",
                      "description":"Free range fried, poached or scrambled eggs, veggie sausages, Heinz baked beans, mushrooms & avocado with toasted artisan sourdough",
-                     "imageURL":null,
+                     "assetRef": 2,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":2,
@@ -584,14 +584,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"8.25"
+                        "price":"$8.25"
                      }
                   },
                   {
                      "ref":29,
                      "title":"Deluxe Toastie",
                      "description":"Artisan sourdough toast filled with crispy bacon, fried egg, melting cheddar, lettuce, tomato & mustard mayo",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":3,
@@ -609,14 +609,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"4.95"
+                        "price":"$4.95"
                      }
                   },
                   {
                      "ref":30,
                      "title":"Stacked Blueberry & Banana Pancakes",
                      "description":"With maple syrup. 50p from every Pancake Stack goes to Rays of Sunshine Children's Charity which grants wishes for seriously ill children across the UK",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":true,
                      "menuType":"item",
                      "displayOrder":4,
@@ -634,14 +634,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"6.95"
+                        "price":"$6.95"
                      }
                   },
                   {
                      "ref":31,
                      "title":"Daybreaker Omelette",
                      "description":"Egg white omelette served with cherry tomato & avocado salsa",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":5,
@@ -659,14 +659,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
                      "ref":32,
                      "title":"Huevos Rancheros Mexican Breakfast",
                      "description":"Vegetarian option with roasted mushrooms £7.95Free range fried or scrambled eggs, chorizo sausage, black beans, melting cheese, adobe sauce, avocado & tomato salsa on a warm soft corn tortilla",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":6,
@@ -684,14 +684,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"8.25"
+                        "price":"$8.25"
                      }
                   },
                   {
                      "ref":33,
                      "title":"Avocado, Hummus & Roasted Cherry Tomatoes",
                      "description":"On toasted artisan sourdough with basil oil",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":7,
@@ -709,14 +709,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
                      "ref":34,
                      "title":"“The Western” Omelette",
                      "description":"Three egg omelette with roasted vegetables & manchego, served with cherry tomato & avocado salsa",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":8,
@@ -734,7 +734,7 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
@@ -756,7 +756,7 @@ var plugins = function(template) {
                            "ref":35,
                            "title":"Ultimate Superfoods Rude Health Muesli",
                            "description":"Add natural yoghurt & fresh fruit £1.50Wheat free & totally organic blend of oats, apricots, barley & rye flakes, apple, sultanas, dates, golden linseed, seeds & raisins",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":1,
@@ -774,14 +774,14 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         },
                         {
                            "ref":36,
                            "title":"Granola Breakfast Sundae",
                            "description":"Granola, natural yoghurt, fresh fruit & honey",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":2,
@@ -799,14 +799,14 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         },
                         {
                            "ref":37,
                            "title":"Free Range Eggs on Toasted Focaccia",
                            "description":"Scrambled, fried or poached free range eggs with roasted cherry tomatoes",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":3,
@@ -824,7 +824,7 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         }
                      ]
@@ -848,7 +848,7 @@ var plugins = function(template) {
                            "ref":35,
                            "title":"Ultimate Superfoods Rude Health Muesli",
                            "description":"Add natural yoghurt & fresh fruit £1.50Wheat free & totally organic blend of oats, apricots, barley & rye flakes, apple, sultanas, dates, golden linseed, seeds & raisins",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":1,
@@ -866,14 +866,14 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         },
                         {
                            "ref":36,
                            "title":"Granola Breakfast Sundae",
                            "description":"Granola, natural yoghurt, fresh fruit & honey",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":2,
@@ -891,14 +891,14 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         },
                         {
                            "ref":37,
                            "title":"Free Range Eggs on Toasted Focaccia",
                            "description":"Scrambled, fried or poached free range eggs with roasted cherry tomatoes",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":3,
@@ -916,7 +916,7 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         }
                      ]
@@ -942,7 +942,7 @@ var plugins = function(template) {
                      "ref":27,
                      "title":"Daily Oats Organic Rude Health Porridge",
                      "description":"This porridge will have you feeling rudely healthy all day. we top ours with honey, fresh strawberries & bananas",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":1,
@@ -960,14 +960,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"4.15"
+                        "price":"$4.15"
                      }
                   },
                   {
                      "ref":28,
                      "title":"Veggie Brunch Plate",
                      "description":"Free range fried, poached or scrambled eggs, veggie sausages, Heinz baked beans, mushrooms & avocado with toasted artisan sourdough",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":2,
@@ -985,14 +985,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"8.25"
+                        "price":"$8.25"
                      }
                   },
                   {
                      "ref":29,
                      "title":"Deluxe Toastie",
                      "description":"Artisan sourdough toast filled with crispy bacon, fried egg, melting cheddar, lettuce, tomato & mustard mayo",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":3,
@@ -1010,14 +1010,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"4.95"
+                        "price":"$4.95"
                      }
                   },
                   {
                      "ref":30,
                      "title":"Stacked Blueberry & Banana Pancakes",
                      "description":"With maple syrup. 50p from every Pancake Stack goes to Rays of Sunshine Children's Charity which grants wishes for seriously ill children across the UK",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":true,
                      "menuType":"item",
                      "displayOrder":4,
@@ -1035,14 +1035,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"6.95"
+                        "price":"$6.95"
                      }
                   },
                   {
                      "ref":31,
                      "title":"Daybreaker Omelette",
                      "description":"Egg white omelette served with cherry tomato & avocado salsa",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":5,
@@ -1060,14 +1060,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
                      "ref":32,
                      "title":"Huevos Rancheros Mexican Breakfast",
                      "description":"Vegetarian option with roasted mushrooms £7.95Free range fried or scrambled eggs, chorizo sausage, black beans, melting cheese, adobe sauce, avocado & tomato salsa on a warm soft corn tortilla",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":6,
@@ -1085,14 +1085,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"8.25"
+                        "price":"$8.25"
                      }
                   },
                   {
                      "ref":33,
                      "title":"Avocado, Hummus & Roasted Cherry Tomatoes",
                      "description":"On toasted artisan sourdough with basil oil",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":7,
@@ -1110,14 +1110,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
                      "ref":34,
                      "title":"“The Western” Omelette",
                      "description":"Three egg omelette with roasted vegetables & manchego, served with cherry tomato & avocado salsa",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":8,
@@ -1135,14 +1135,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
                      "ref":27,
                      "title":"Daily Oats Organic Rude Health Porridge",
                      "description":"This porridge will have you feeling rudely healthy all day. we top ours with honey, fresh strawberries & bananas",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":1,
@@ -1160,14 +1160,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"4.15"
+                        "price":"$4.15"
                      }
                   },
                   {
                      "ref":28,
                      "title":"Veggie Brunch Plate",
                      "description":"Free range fried, poached or scrambled eggs, veggie sausages, Heinz baked beans, mushrooms & avocado with toasted artisan sourdough",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":2,
@@ -1185,14 +1185,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"8.25"
+                        "price":"$8.25"
                      }
                   },
                   {
                      "ref":29,
                      "title":"Deluxe Toastie",
                      "description":"Artisan sourdough toast filled with crispy bacon, fried egg, melting cheddar, lettuce, tomato & mustard mayo",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":3,
@@ -1210,14 +1210,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"4.95"
+                        "price":"$4.95"
                      }
                   },
                   {
                      "ref":30,
                      "title":"Stacked Blueberry & Banana Pancakes",
                      "description":"With maple syrup. 50p from every Pancake Stack goes to Rays of Sunshine Children's Charity which grants wishes for seriously ill children across the UK",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":true,
                      "menuType":"item",
                      "displayOrder":4,
@@ -1235,14 +1235,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"6.95"
+                        "price":"$6.95"
                      }
                   },
                   {
                      "ref":31,
                      "title":"Daybreaker Omelette",
                      "description":"Egg white omelette served with cherry tomato & avocado salsa",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":5,
@@ -1260,14 +1260,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
                      "ref":32,
                      "title":"Huevos Rancheros Mexican Breakfast",
                      "description":"Vegetarian option with roasted mushrooms £7.95Free range fried or scrambled eggs, chorizo sausage, black beans, melting cheese, adobe sauce, avocado & tomato salsa on a warm soft corn tortilla",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":6,
@@ -1285,14 +1285,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"8.25"
+                        "price":"$8.25"
                      }
                   },
                   {
                      "ref":33,
                      "title":"Avocado, Hummus & Roasted Cherry Tomatoes",
                      "description":"On toasted artisan sourdough with basil oil",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":7,
@@ -1310,14 +1310,14 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
                      "ref":34,
                      "title":"“The Western” Omelette",
                      "description":"Three egg omelette with roasted vegetables & manchego, served with cherry tomato & avocado salsa",
-                     "imageURL":null,
+                     "assetRef": null,
                      "promoted":false,
                      "menuType":"item",
                      "displayOrder":8,
@@ -1335,7 +1335,7 @@ var plugins = function(template) {
                      "spicy":"not spicy",
                      "prices":{
                         "name":"Normal",
-                        "price":"5.95"
+                        "price":"$5.95"
                      }
                   },
                   {
@@ -1357,7 +1357,7 @@ var plugins = function(template) {
                            "ref":35,
                            "title":"Ultimate Superfoods Rude Health Muesli",
                            "description":"Add natural yoghurt & fresh fruit £1.50Wheat free & totally organic blend of oats, apricots, barley & rye flakes, apple, sultanas, dates, golden linseed, seeds & raisins",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":1,
@@ -1375,14 +1375,14 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         },
                         {
                            "ref":36,
                            "title":"Granola Breakfast Sundae",
                            "description":"Granola, natural yoghurt, fresh fruit & honey",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":2,
@@ -1400,14 +1400,14 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         },
                         {
                            "ref":37,
                            "title":"Free Range Eggs on Toasted Focaccia",
                            "description":"Scrambled, fried or poached free range eggs with roasted cherry tomatoes",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":3,
@@ -1425,7 +1425,7 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         }
                      ]
@@ -1449,7 +1449,7 @@ var plugins = function(template) {
                            "ref":35,
                            "title":"Ultimate Superfoods Rude Health Muesli",
                            "description":"Add natural yoghurt & fresh fruit £1.50Wheat free & totally organic blend of oats, apricots, barley & rye flakes, apple, sultanas, dates, golden linseed, seeds & raisins",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":1,
@@ -1467,14 +1467,14 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         },
                         {
                            "ref":36,
                            "title":"Granola Breakfast Sundae",
                            "description":"Granola, natural yoghurt, fresh fruit & honey",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":2,
@@ -1492,14 +1492,14 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         },
                         {
                            "ref":37,
                            "title":"Free Range Eggs on Toasted Focaccia",
                            "description":"Scrambled, fried or poached free range eggs with roasted cherry tomatoes",
-                           "imageURL":null,
+                           "assetRef": null,
                            "promoted":false,
                            "menuType":"item",
                            "displayOrder":3,
@@ -1517,7 +1517,7 @@ var plugins = function(template) {
                            "spicy":"not spicy",
                            "prices":{
                               "name":"Normal",
-                              "price":"5"
+                              "price":"$5"
                            }
                         }
                      ]
