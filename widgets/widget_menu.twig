@@ -50,7 +50,7 @@
                                 {% set numClass = 'even' %}
                             {% endif %}
 
-                            <ol class="menu-items {{ numClass }} {{ count }}-columns">
+                            <ol class="menu-items {{ numClass }} bk{{ count }}-columns">
                         {% elseif topSection.items[loop.index0 - 1 ].menuType != item.menuType %}
                         {# close the preview ol if previous is not item #}
                             </ol>
@@ -71,7 +71,7 @@
                             {% if count % 2 == 0 %}
                                 {% set numClass = 'even' %}
                             {% endif %}
-                                <ol class="menu-items {{ numClass }} {{ count }}-columns">
+                                <ol class="menu-items {{ numClass }} bk{{ count }}-columns">
                             {% endif %}
 
                         {% include "widgets/widget_menu_item.twig" with {'item': item, 'plugins': plugins} %}
