@@ -1,8 +1,10 @@
 {% if plugins.blog.posts %}
-    {% if plugins.blog.posts[0].featureImageAssetRef is not null %}
-        {% set assetRef = plugins.blog.posts[0].featureImageAssetRef|number_format %}
+     {% if plugins.blog.posts[0].featureImageAssetRef is not null %}
+        {% set assetRef = plugins.blog.posts[0].featureImageAssetRef %}
         {% set featureImg = plugins.assets.images[assetRef] %}
-        <img class="blog-post-feature-image" src="{{ featureImg.url }}" alt="">
+        <div class="blog-post-feature-image-wrap" style="background-image:url('{{ featureImg.url }}')">
+            <img class="blog-post-feature-image" src="{{ featureImg.url }}" alt="">
+        </div>
     {% endif %}
  
     <h2 class='blog-post-title'>{{ plugins.blog.posts[0].title|raw }}</h2>
