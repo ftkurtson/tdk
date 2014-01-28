@@ -1,4 +1,4 @@
-<li class="menu-item{% if item.promoted %} menu-item-promoted{% endif %}">
+<li class="menu-item{% if item.highlight %} menu-item-promoted{% endif %}">
     <div class="inner-item">
         <h3 class="menu-item-name">{{ item.title }}</h3>
 
@@ -24,19 +24,20 @@
             <p class="menu-item-description">{{ item.description }}</p>
         {% endif %}
 
-        {% if item.nutritionalProperties|length %}
-            <h4 class="menu-item-nutritional-title">{{"widgets.menu.nutrition"|translate("Nutritional information")}}</h4>
-            <div class="menu-item-nutritional-prop"> {{ item.nutritionalProperties }} </div>
+        {% if item.foodNutrition|length %}
+            <h4 class="menu-item-nutritional-title">Nutritional information</h4>
+            <div class="menu-item-nutritional-prop"> {{ item.foodNutrition }} </div>
         {% endif %}
 
         {% if item.dietaryInfo|length %}
             <div class="menu-section-item-dietary-props">
                 {% for key, value in item.dietaryInfo %}
                     {% if value == 1 %}
-                        <span class="{{ key }}-icon dietary-icon"></span>
+                        {% set key = key|lower %}
+                        <span class="{{ key|replace({'food':''}) }}-icon dietary-icon"></span>
                     {% endif %}
                 {% endfor %}
-                <span class="{{ item.spicy|replace(' ','-') }}-icon dietary-icon"></span>
+                <span class="{{ item.foodSpicy|replace(' ','-') }}-icon dietary-icon"></span>
             </div>
         {% endif %}
     </div><!--end inner-item-->

@@ -1,5 +1,5 @@
 {% if subsection.active == 1 %}
-    <li class="menu-subsection-wrapper{% if subsection.promoted %} menu-subsection-promoted{% endif %}">
+    <li class="menu-subsection-wrapper{% if subsection.highlight %} menu-subsection-promoted{% endif %}">
         <div class="menu-subsection-header">
             <h2 class="menu-subsection-name">{{ subsection.title }}</h2>
             {% if subsection.availability is not null %}
