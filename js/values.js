@@ -7,7 +7,7 @@
 var profile = function(template) {
     return {
         business: "Smart Inc.",
-        header: "My Website Header",
+        headline: "My Website Header",
         strapline: "Here is the website strapline!",
         address1: "123 Example Street",
         address2: "Block Number One",
@@ -104,7 +104,7 @@ var properties = {
                     "source": "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
                     "fullName": "BaseKit.Com",
                     "screenName": "basekit",
-                    "imageUrl": "http://a0.twimg.com/profile_images/2388265742/8pkr9i1jj6x3wtu4h9j4_normal.jpeg"
+                    "imageUrl": "http://placehold.it/98x98"
                 },
                 {
                     "text": "Check out the 10 companies that control the internet ",
@@ -112,7 +112,7 @@ var properties = {
                     "source": "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
                     "fullName": "BaseKit.Com",
                     "screenName": "basekit",
-                    "imageUrl": "http://a0.twimg.com/profile_images/2388265742/8pkr9i1jj6x3wtu4h9j4_normal.jpeg"
+                    "imageUrl": "http://placehold.it/98x98"
                 }
             ]
         }, templateValues);
