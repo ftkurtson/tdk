@@ -16,17 +16,23 @@
                     <img class="blog-post-feature-image" src="{{ featureImg.url }}" alt="">
                 </div>
                 {% endif %}
- 
-                {% if data.postDisplayType == 'summary' %}
-                    <p class="blog-post-summary">{{ post.summary }}</p>
-                    <a href="{{ postPermalink }}" class="blog-post-more-link">Read more</a>
-                {% else %}
-                    <p class="blog-post-summary">{{ post.summary }}</p>
-                    <section class="blog-post-body">
-                        {{ post.content|raw }}
-                    </section>
+
+                <h2 class="blog-post-title">
+                    <a href="{{ postPermalink }}">
+                        {{ post.title|raw }}
+                    </a>
+                </h2>
+
+                {% if post.summary|length > 0 %}
+                    {% if data.postDisplayType == 'summary' %}
+                        <p class="blog-post-summary">{{ post.summary }}</p>
+                        <a href="{{ postPermalink }}" class="blog-post-more-link">Read more</a>
+                    {% else %}
+                        <section class="blog-post-body">
+                            {{ post.content|raw }}
+                        </section>
+                    {% endif %}
                 {% endif %}
- 
                 <a href="{{ postPermalink }}" class="blog-post-date">
                     <time pubdate datetime="{{ post.publishedDate.date }}" class="blog-post-published-date">{{ post.publishedDate.date }}</time>
                 </a>
