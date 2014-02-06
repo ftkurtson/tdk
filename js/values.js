@@ -141,7 +141,33 @@ var properties = {
     responsiveslideshow: function(templateName, templateValues) {
         return $.extend({
             preset: "default",
-            albumRef: 0
+            albumRef: 0,
+            images: [
+                {
+                    'imageHeight':'350',
+                    'imageWidth':'300',
+                    'url':'http://placehold.it/350x300',
+                    'title':'test title',
+                    'description': 'test desc'
+                },{
+                    'imageHeight':'350',
+                    'imageWidth':'300',
+                    'url':'http://placehold.it/350x300',
+                    'title':'test title',
+                    'description': 'test desc'
+                },{
+                    'imageHeight':'350',
+                    'imageWidth':'300',
+                    'url':'http://placehold.it/350x300',
+                    'title':'test title',
+                    'description': 'test desc'
+                },{
+                    'imageHeight':'350',
+                    'imageWidth':'300',
+                    'url':'http://placehold.it/350x300',
+                    'title':'test title',
+                    'description': 'test desc'
+                }]
         }, templateValues);
     },
     navigation: function(templateName, templateValues) {
