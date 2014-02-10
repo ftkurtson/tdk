@@ -61,6 +61,8 @@ $(function() {
                 html += renderWidget('gallery', 'maingallery1');
                 html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1');
                 html += renderWidget('signupform', 'mainsignupform1');
+                html += renderWidget('bloglistposts', 'bloglistposts1');
+                html += renderWidget('blogpost', 'blogpost1');
                 break;
         }
 

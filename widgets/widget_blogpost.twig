@@ -20,7 +20,7 @@
  
     <footer class="blog-post-metadata">
         {% if plugins.blog.posts[0].publishedDate %}
-            <time pubdate datetime="{{ plugins.blog.posts[0].publishedDate.date }}" class="blog-post-publish-date">{{ plugins.blog.posts[0].publishedDate.date|formatBlogDate(languageCode) }}</time>
+            <time pubdate datetime="{{ plugins.blog.posts[0].publishedDate.date }}" class="blog-post-publish-date">{{ plugins.blog.posts[0].publishedDate.date }}</time>
         {% endif %}
  
         {% if plugins.blog.posts[0].category|length %}
