@@ -1,0 +1,80 @@
+//==============
+// Featured Item
+//==============
+
+ .widget {
+	&.feature {
+		.feature-bgimg {
+			height: 500px;
+			@media @mobile {
+				height: 220px;
+			}
+			.content {
+				height: 500px;
+				@media @mobile {
+					height: 220px;
+				}
+				button {
+					margin: 1em 0;
+					padding: 8px 14px;
+					border: 0;
+					text-decoration: none;
+					&:hover {
+						cursor: pointer;
+					}
+					@media @mobile {
+						margin: 0;
+					}
+					&.btn {
+						/* ALIGNMENTS */
+						&.justifyleft {
+							text-align: left;
+						}
+						&.justifycenter {
+							text-align: center;
+						}
+						&.justifyright {
+							text-align: right;
+						}
+						&.justifyfull {
+							text-align: justify;
+						}
+						
+						/* FONT STYLES */
+						&.justifyitalic {
+							font-style: italic;
+						}
+						&.justifybold {
+							font-weight: bold;
+						}
+					}
+					span {
+						vertical-align: middle;
+					}
+					i {
+						margin-right: 5px;
+					}
+				}
+			}
+
+		}
+		&:align-left {
+			.content {
+				width: 100%;
+				text-align: left;
+			}
+		}
+		&:align-center {
+			.content {
+				width: 100%;
+				text-align: center;
+			}
+		}
+		&:align-right {
+			.content {
+				width: 100%;
+				text-align: right;
+			}
+		}
+	}
+}
