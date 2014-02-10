@@ -2,9 +2,9 @@
 {% if data.source == 'companyName' and (data.companyName|length > 0 or profile.business|length > 0) %}
 	<div class="profile-details">
 		{% if(data.companyName and data.companyName|length > 0) %}
-			<script type="IN/CompanyProfile" data-id="http://www.linkedin.com/company/{{ data.companyName|format_url }}" data-related="false" data-width="320" data-format="inline"></script>
+			<script type="IN/CompanyProfile" data-id="http://www.linkedin.com/company/{{ data.companyName|url_encode }}" data-related="false" data-width="320" data-format="inline"></script>
 		{% else %}
-			<script type="IN/CompanyProfile" data-id="http://www.linkedin.com/company/{{ profile.business|format_url }}" data-related="false" data-width="320" data-format="inline"></script>
+			<script type="IN/CompanyProfile" data-id="http://www.linkedin.com/company/{{ profile.business|url_encode }}" data-related="false" data-width="320" data-format="inline"></script>
 		{% endif%}
 	</div>
 {% elseif data.source == 'id' and data.linkedinID|length > 0 %}
@@ -12,6 +12,6 @@
 		<script type="IN/CompanyProfile" data-id="{{ data.linkedinID }}" data-related="false" data-width="320" data-format="inline"></script>
 	</div>
 {% else %}
-	<span class="no-profile">{{"widgets.linkedincompanyprofile.noprofile"|translate("No Linkedin business profile set")}}</span>
+	<span class="no-profile">No Linkedin business profile set</span>
 {% endif %}
 </div>

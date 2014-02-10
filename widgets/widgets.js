@@ -946,6 +946,40 @@
 }());
 (function () {
 
+    BaseKit.Widget.Ecomproduct = null;
+
+    BaseKit.Widget.EcomproductProperties = {
+    };
+
+    BaseKit.Widget.EcomproductMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Ecomproduct = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.EcomproductProperties,
+            methods: BaseKit.Widget.EcomproductMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetEcomproduct = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Ecomproduct(el, options));
+        });
+    };
+}());
+(function () {
+
     BaseKit.Widget.Ecomproductslist = null;
 
     BaseKit.Widget.EcomproductslistProperties = {
@@ -1917,6 +1951,8 @@
                     that.updateMenuSectionClass($(this).attr('href'));
                 }
             });
+
+            this.menuDropdownEvent();
         },
 
         updateMenuSectionClass: function (sectionId) {
@@ -1930,6 +1966,39 @@
             }
 
             menuEl.find(sectionId).addClass('selected');
+        },
+
+        menuDropdownEvent: function () {
+            var that = this,
+                thisEl = $(this.el),
+                pullEl = thisEl.find('.menu-pull'),
+                menuListEl = thisEl.find('.menu-section-list');
+
+            pullEl.off('click').on('click', function (e) {
+                e.preventDefault();
+                if (!$('body').hasClass('edit')) {
+                    if (menuListEl.is(':visible')) {
+                        menuListEl.hide();
+                    } else {
+                        menuListEl.show();
+                    }
+                }
+            });
+
+            this.menuToggle();
+
+            $(window).on('resize orientationchange', function () {
+                that.menuToggle();
+            });
+        },
+
+        menuToggle: function () {
+            var w = $(window).width(),
+                menuListEl = $(this.el).find('.menu-section-list');
+
+            if (w > 320 && menuListEl.is(':hidden')) {
+                menuListEl.removeAttr('style');
+            }
         }
     };
 
@@ -3759,7 +3828,7 @@
                         return;
                     }
                     $.each(properties.templates, function (template, value) {
-                        var args = ['widget.userregistration.error.' + template.toLowerCase(), value];
+                        var args = ['widgets.userregistration.error.' + template.toLowerCase(), value];
                         errors.push(App.t.apply(App, args));
                     });
                 });

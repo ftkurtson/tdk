@@ -38,8 +38,8 @@
                             {% set doLoop = true %}
                             {% set numClass = 'odd' %}
 
-                            {% for item in topSection.items if doLoop %}
-                                {% if item.menuType != 'section' %}
+                            {% for item in topSection.items %}
+                                {% if item.menuType != 'section' and doLoop == true %}
                                     {% set count = count + 1 %}
                                 {% elseif item.menuType == 'section' %}
                                     {% set doLoop = false %}
@@ -60,8 +60,8 @@
                             {% set currentIndex = loop.index %}
                             {% set numClass = 'odd' %}
 
-                            {% for item in topSection.items if doLoop %}
-                                {% if item.menuType != 'section' and loop.index - currentIndex >= 0 %}
+                            {% for item in topSection.items %}
+                                {% if item.menuType != 'section' and loop.index - currentIndex >= 0 and doLoop == true %}
                                     {% set count = count + 1 %}
                                 {% elseif item.menuType == 'section' and loop.index - currentIndex >= 0 %}
                                     {% set doLoop = false %}
@@ -89,12 +89,12 @@
                             {% if key == 'vegetarian' %}
                                 <dl class="menu-dietary-key">
                                     <dt class="vegetarian-icon dietary-icon"></dt>
-                                    <dd>{{"widgets.menu.suitable_for_veg"|translate("Suitable for vegetarians")}}</dd>
+                                    <dd>Suitable for vegetarians</dd>
                                 </dl>
                             {% elseif key == 'glutenFree' %}
                                 <dl class="menu-dietary-key">
                                     <dt class="glutenFree-icon dietary-icon"></dt>
-                                    <dd>{{"widgets.menu.gluten_free"|translate("Gluten free")}}</dd>
+                                    <dd>Gluten free</dd>
                                 </dl>
                             {% endif %}
                         {% endfor %}
@@ -106,8 +106,8 @@
         {% endif %}
     {% endfor %}
     {% if activeCount == 0 %}
-        <p>{{"shared_views.menu.no-active-sections"|translate("You have no active sections")}}</p>
+        <p>You have no active sections</p>
     {% endif %}
 {% else %}
-    <p>{{"shared_views.menu.no-menu"|translate("You have no menu")}}</p>
+    <p>You have no menu</p>
 {% endif %}

@@ -1,5 +1,6 @@
 {% if plugins.blog.posts %}
-     {% if plugins.blog.posts[0].featureImageAssetRef is not null %}
+<article class="blog-post-item{% if plugins.blog.posts[0].featureImageAssetRef is not null %} has-image{% endif %}">
+    {% if plugins.blog.posts[0].featureImageAssetRef is not null %}
         {% set assetRef = plugins.blog.posts[0].featureImageAssetRef %}
         {% set featureImg = plugins.assets.images[assetRef] %}
         <div class="blog-post-feature-image-wrap" style="background-image:url('{{ featureImg.url }}')">
@@ -8,7 +9,10 @@
     {% endif %}
  
     <h2 class='blog-post-title'>{{ plugins.blog.posts[0].title|raw }}</h2>
-    <p class="blog-post-summary">{{ plugins.blog.posts[0].summary }}</p>
+
+    {% if plugins.blog.posts[0].summary|length  %}
+        <p class="blog-post-summary">{{ plugins.blog.posts[0].summary }}</p>
+    {% endif %}
  
     <section class="blog-post-content">
         {{ plugins.blog.posts[0].content|raw }}
@@ -16,7 +20,7 @@
  
     <footer class="blog-post-metadata">
         {% if plugins.blog.posts[0].publishedDate %}
-            <time pubdate datetime="{{ plugins.blog.posts[0].publishedDate.date }}" class="blog-post-publish-date">{{ plugins.blog.posts[0].publishedDate.date }}</time>
+            <time pubdate datetime="{{ plugins.blog.posts[0].publishedDate.date }}" class="blog-post-publish-date">{{ plugins.blog.posts[0].publishedDate.date|formatBlogDate(languageCode) }}</time>
         {% endif %}
  
         {% if plugins.blog.posts[0].category|length %}
@@ -37,14 +41,14 @@
                     {% for tag in tags %}
                         {% set count = count + 1 %}
                         <li class="blog-post-tag">
-                            <a href="/{{ plugins.blog.directory }}/tags/{{ tag }}">{{ tag }}</a>
+                            <a href="/{{ plugins.blog.directory }}/tags/{{ tag|url_encode }}">{{ tag }}</a>
                         </li>
                     {% endfor %}
                 </ol>
             </div>
         {% endif %}
     </footer>
-    
+</article>
 {% else %}
     <p>You haven’t added any posts yet.</p>
 {% endif %}

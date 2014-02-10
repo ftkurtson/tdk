@@ -1,0 +1,19 @@
+{% if plugins.ecommerce.products|length %}
+    {% for product in plugins.ecommerce.products %}
+        <p>{{product.title}}</p>
+        <p>{{product.shortDescription}}</p>
+        {% if product.category is not null %}
+            <p>{{product.category.name}}</p>
+        {% endif %}
+        {% if product.assets is not null %}
+            {% for asset in product.assets %}
+                {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
+                    <input type="hidden" name="imageAssetRef" value="{{asset.assetRef}}">
+                    <img class="product-image" src="{{plugins.assets.images[asset.assetRef].url}}" alt>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor%}
+{% else %}
+    <p>There aren't any products to display.</p>
+{% endif %}
