@@ -6,7 +6,7 @@
  
     <section class="blog-post-list">
         {% for post in plugins.blog.posts %}
-            {% set postPermalink = '/' ~ plugins.blog.directory ~ '/' ~ post.slug|url_encode %}
+            {% set postPermalink = '/' ~ plugins.blog.directory ~ '/' ~ post.slug %}
             <article class="blog-post-item{% if post.featureImageAssetRef is not null %} has-image{% endif %}">
                 
                 {% if post.featureImageAssetRef is not null %}
@@ -34,7 +34,7 @@
                     {% endif %}
                 {% endif %}
                 <a href="{{ postPermalink }}" class="blog-post-date">
-                    <time pubdate datetime="{{ post.publishedDate.date }}" class="blog-post-published-date">{{ post.publishedDate.date|formatBlogDate(languageCode) }}</time>
+                    <time pubdate datetime="{{ post.publishedDate.date }}" class="blog-post-published-date">{{ post.publishedDate.date }}</time>
                 </a>
             </article>
         {% endfor%}
