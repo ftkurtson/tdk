@@ -63,6 +63,7 @@ $(function() {
                 html += renderWidget('signupform', 'mainsignupform1');
                 html += renderWidget('bloglistposts', 'bloglistposts1');
                 html += renderWidget('blogpost', 'blogpost1');
+                html += renderWidget('blogsearch', 'blogsearch1');
                 break;
         }
 
