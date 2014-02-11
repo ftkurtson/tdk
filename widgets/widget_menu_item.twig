@@ -49,7 +49,7 @@
                         </span>
                     {% endif %}
                 {% endfor %}
-                <span class="{{ item.foodSpicy|replace(' ','-') }}-icon dietary-icon">
+                <span class="{{ item.foodSpicy|replace({' ':'-'}) }}-icon dietary-icon">
                     {% if item.foodSpicy == 'spicy' %}
                         {{ "widgets.menu.dietaryicon_spicy"|translate('mild') }}
                     {% elseif item.foodSpicy == 'medium spicy' %}
