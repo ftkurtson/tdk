@@ -50,10 +50,9 @@
             }
         }
         .description {
-            padding: 6px 20px;
-                @media @mobile {
-                    display: none;
-                }
+            @media @mobile {
+                display: none;
+            }
         }
         .slideshow-widget {
             .btn-prev, .btn-next {
@@ -65,10 +64,12 @@
                 cursor: pointer;
             }
             .btn-prev {
+                z-index: 11;
                 left: 10px;
                 background: #ddd;
             }
             .btn-next {
+                z-index: 11;
                 right: 10px;
                 background: #ddd;
             }
