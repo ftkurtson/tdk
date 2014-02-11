@@ -34,10 +34,30 @@
                 {% for key, value in item.dietaryInfo %}
                     {% if value == 1 %}
                         {% set key = key|lower %}
-                        <span class="{{ key|replace({'food':''}) }}-icon dietary-icon"></span>
+                        <span class="{{ key|replace({'food':''}) }}-icon dietary-icon">
+                            {% if key == 'foodvegetarian' %}
+                                Vegetarian
+                            {% elseif key == 'foodvegan' %}
+                                Vegan
+                            {% elseif key == 'foodnutfree' %}
+                                Nutfree
+                            {% elseif key == 'foodglutenfree' %}
+                                Gluten Free
+                            {% elseif key == 'fooddairyfree' %}
+                                Dairy Free
+                            {% endif %}
+                        </span>
                     {% endif %}
                 {% endfor %}
-                <span class="{{ item.foodSpicy|replace(' ','-') }}-icon dietary-icon"></span>
+                <span class="{{ item.foodSpicy|replace(' ','-') }}-icon dietary-icon">
+                    {% if item.foodSpicy == 'spicy' %}
+                        {{ "widgets.menu.dietaryicon_spicy"|translate('mild') }}
+                    {% elseif item.foodSpicy == 'medium spicy' %}
+                        {{ "widgets.menu.dietaryicon_mediumspicy"|translate('medium') }}
+                    {% elseif item.foodSpicy == 'hot' %}
+                        {{ "widgets.menu.dietaryicon_hot"|translate('hot') }}
+                    {% endif %}
+                </span>
             </div>
         {% endif %}
     </div><!--end inner-item-->
