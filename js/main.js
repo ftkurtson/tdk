@@ -339,6 +339,7 @@ $(function() {
                         },
                         site: site,
                         page: page,
+                        pages: pages,
                         profile: profile(template),
                         plugins: plugins(template),
                         basekit: {
