@@ -61,9 +61,8 @@ $(function() {
                 html += renderWidget('profile', 'profile6', {'profileType':'business'});
                 html += renderWidget('profile', 'profile7', {'profileType':'copyright'});
                 html += renderWidget('profile', 'profile8', {'profileType':'twitter'});
-                html += renderWidget('profile', 'profile9', {'profileType':'map'});
-                html += renderWidget('profile', 'profile10', {'profileType':'form'});
-                html += renderWidget('profile', 'profile11', {'profileType':'socialicons'});
+                html += renderWidget('profile', 'profile9', {'profileType':'form'});
+                html += renderWidget('profile', 'profile10', {'profileType':'socialicons'});
                 html += renderWidget('image', 'mainimage1');
                 html += renderWidget('paypalbuynow', 'mainpaypalbuynow1');
                 html += renderWidget('tweet', 'maintweet1');
