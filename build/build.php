@@ -65,8 +65,6 @@ $rules = array(
     $basekitDir . '/assets/public/site/widgets/widgetcore.js' => $sdkDir . '/widgets/widgetcore.js',
     $basekitDir . '/assets/public/apps/js/framework/components/component/component.js' => $sdkDir . '/templates/common/component.js',
     $basekitDir . '/assets/public/apps/js/framework/basekit.js' => $sdkDir . '/templates/common/basekit.js',
-    $basekitDir . '/templates/common/responsive-columns.css' => $sdkDir . '/templates/common/responsive-columns.css',
-    $basekitDir . '/templates/common/template-common.css' => $sdkDir . '/templates/common/template-common.css',
     $basekitDir . '/assets/public/libs/google-fonts-latin.js' => $sdkDir . '/templates/common/google-fonts.js'
 );
 

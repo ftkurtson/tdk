@@ -59,7 +59,7 @@ $(function() {
                 html += renderWidget('dropbox', 'maindropbox1');
                 html += renderWidget('clicktocall', 'mainclicktocall1');
                 html += renderWidget('gallery', 'maingallery1');
-                html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1');
+                html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1', {'crop':1});
                 html += renderWidget('signupform', 'mainsignupform1');
                 html += renderWidget('bloglistposts', 'bloglistposts1');
                 html += renderWidget('blogpost', 'blogpost1');
