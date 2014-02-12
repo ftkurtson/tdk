@@ -213,7 +213,7 @@ var plugins = function(template) {
             },
             images: {
                 1: {
-                    url: "http://placehold.it/250x250"
+                    url: "http://placehold.it/2250x800"
                 },
                 2: {
                     url: "http://placehold.it/300x100"
