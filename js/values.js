@@ -30,20 +30,7 @@ var profile = function(template) {
  * This will only be used where there is no default content specified in a widget.
  * Template text widgets should always have a default value, so this content should only appear within the main zone.
  */
-var library = [
-    // Lorem Ipsum
-    "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>",
-    // Gansta Ipsum
-    "<p>Lorem ipsizzle dolizzle sit amizzle, daahng dawg we gonna chung elit. Da bomb boom shackalack fo shizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle volutpat, funky fresh quis, gravida vizzle, tellivizzle. Pellentesque shizznit fo. Shiz erizzle. Things izzle dolizzle dapibus boofron tempizzle tempor. Maurizzle pellentesque gangster et boom shackalack.</p>",
-    // Bacon Ipsum
-    "<p>Bacon ipsum dolor sit amet biltong pastrami tenderloin ball tip jowl andouille. Strip steak meatball ribeye shoulder turducken doner, swine shankle pastrami drumstick meatloaf pork. Meatball ham capicola, strip steak andouille shank chuck chicken turducken venison leberkas ball tip. Tri-tip t-bone ball tip salami. Frankfurter brisket corned beef, fatback.</p>",
-    // Dummy Terms & Conditions 
-    "<p>This product is meant for educational purposes only. Any resemblance to real persons, living or dead is purely coincidental. Void where prohibited. Some assembly required. List each check separately by bank number. Batteries not included. Contents may settle during shipment. Use only as directed. No other warranty expressed or implied.</p>",
-    // Cupcake Ipsum
-    "<p>Marshmallow candy canes chocolate fruitcake icing gummies jujubes gummies. Unerdwear.com croissant croissant cookie gingerbread sweet. Pudding cake muffin tart halvah ice cream danish. Candy canes chocolate cake chocolate jelly. Ice cream danish biscuit lemon drops. Donut chupa chups jelly-o sweet roll danish toffee unerdwear.com bear claw lollipop.</p>",
-    // Hipster Ipsum
-    "<p>Umami Brooklyn eu Pinterest swag, dolore pop-up messenger bag anim tattooed nihil mumblecore veniam. Exercitation minim laboris, Neutra Carles Schlitz skateboard delectus ut direct trade eu ennui biodiesel put a bird on it. Culpa tempor flannel typewriter. Tote bag farm-to-table skateboard kale chips velit, elit organic minim qui shabby chic viral nostrud forage selfies banh mi.</p>"
-];
+var library = ['<h1>Heading 1</h1><h2>Heading 2</h2><h3>Heading 3</h3><h4>Heading 4</h4><h5>Heading 5</h5><h6>Heading 6</h6><small>A small element</small><a href="#" title="A link">A link</a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <u>underline element</u> labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco <i>italicised element</i> laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in <a href="#" title="a link">a link</a> reprehenderit in voluptate velit esse cillum <strong>bold text</strong> dolore eu fugiat nulla pariatur. Excepteur <span>span element</span> sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><ul><li>An item</li><li>An item</li><li>An item</li><li>An item</li><li>An item</li></ul><ol><li>Item one</li><li>Item two</li><li>Item three</li><li>Item four</li><li>Item five</li></ol><strong>Bold text</strong><br /><i>Italicised element</i><br /><u>Underline element</u><blockquote>A simple blockquote</blockquote><pre>A line of code</pre><code>Another line of code</code><br /><span>Span element</span>'];
 
 /**
  * Widget Properties
