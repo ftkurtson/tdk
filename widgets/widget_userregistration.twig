@@ -1,14 +1,20 @@
 <form action="" method="post">
     <fieldset {% if data.align %}class="{{data.align}}"{% endif %}>
-        <label for="email">{{"widgets.userregistration.email"|translate("Email")}}:</label>
-        <input type="email" class="email" value="" maxlength="255" placeholder="{{"widgets.userregistration.emailholder"|translate("Your Email")}}">
+        <label for="email">Email:</label>
+        <input type="email" class="email" value="" maxlength="255" placeholder="Your Email">
         <p class="error email hidden"><!-- email errors --></p>
 
-        <label for="password">{{"widgets.userregistration.password"|translate("Password")}}:</label>
-        <input type="password" class="password" value="" maxlength="255" placeholder="{{"widgets.userregistration.passwordholder"|translate("Choose Password")}}">
+        <label for="password">Password:</label>
+        <input type="password" class="password" value="" maxlength="255" placeholder="Choose Password">
          <p class="error password hidden"><!-- password errors --></p>
 
         <button class="userregistrationbtn btnText {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %} {{data.textAlign}}" type="submit" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.text}}</button>
         <p class="error submission hidden"><!-- error message --></p>
     </fieldset>
 </form>
+
+<div class="overlay">
+    <div class="inner">
+        <div class="message"></div>
+    </div>
+</div>

@@ -39,9 +39,13 @@
             {% endif %}
 
             {% for key, image in images %}
-            
+
             {% if data.albumRef != 0 and data.albumRef is not null %}
                 {% set image = plugins.assets.images[image] %}
+            {% endif %}
+
+            {% if image.ref|length > 0 %}
+                {% set image = plugins.assets.images[image.ref] %}
             {% endif %}
 
             {% if image.imageWidth is not null and image.imageHeight is not null %}
@@ -56,10 +60,6 @@
                 {% if image.imageWidth < image.imageHeight %}
                     {% set aspectClass = 'portrait' %}
                 {% endif %}
-            {% endif %}
-            
-            {% if image.ref|length > 0 %}
-                {% set image = plugins.assets.images[image.ref] %}
             {% endif %}
 
             <li data-ref="{{key}}" class="slideshow-image-item{% if loop.index0 == 0 %} current{% endif %}">
@@ -93,7 +93,7 @@
     {% if showWidget == false %}
         <div class="slideshow-empty hidden">
            <p class="slideshow-empty-title">No Images</p>
-           <p class="slideshow-empty-message">In order to use the slideshow widget, you need to select an album. If you have no albums please upload images under the Images panel, or organize your images into albums by going to your Manage section.</p>
+           <p class="slideshow-empty-message">{{"widgets.slideshow.no_images_text"|translate("In order to use the slideshow widget, you need to select an album. If you have no albums please upload images under the Images panel, or organize your images into albums by going to your Manage section.")|raw}}</p>
         </div>
     {% endif %}
 </div>

@@ -1,39 +1,4 @@
 (function () {
-
-    BaseKit.Widget.Bloglistposts = null;
-
-    BaseKit.Widget.BloglistpostsProperties = {
-        postDisplayType: 'summary'
-    };
-
-    BaseKit.Widget.BloglistpostsMethods = {
-        construct: function (el, options) {
-            this.options = options;
-            this.load();
-        },
-
-        load: function () {
-            //do something if the widget needs to be loaded!
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Bloglistposts = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.BloglistpostsProperties,
-            methods: BaseKit.Widget.BloglistpostsMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetBloglistposts = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Bloglistposts(el, options));
-        });
-    };
-}());
-(function () {
     BaseKit.Widget.BlogpostProperties = {
         dateFormat: 'international'
     };
@@ -65,6 +30,41 @@
         });
     };
 }());(function () {
+
+    BaseKit.Widget.Blogpostlist = null;
+
+    BaseKit.Widget.BlogpostlistProperties = {
+        postDisplayType: 'summary'
+    };
+
+    BaseKit.Widget.BlogpostlistMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Blogpostlist = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.BlogpostlistProperties,
+            methods: BaseKit.Widget.BlogpostlistMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetBlogpostlist = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Blogpostlist(el, options));
+        });
+    };
+}());
+(function () {
     BaseKit.Widget.Blogsearch = {};
 
     BaseKit.Widget.BlogsearchProperties = {};
@@ -149,6 +149,12 @@
                 url = that.get('url');
                 target = that.get('target');
 
+                if (window.Server.page.facebookPublish && action === 'internal') {
+                    target = '_blank';
+                    console.log(window.Server.page.facebookPublish);
+                    url = window.Server.page.facebookPublish.urlPrefix + url;
+                }
+
                 // check if the buton has a button link
                 if (action !== 'none' && action !== null) {
                     //open in the same window
@@ -177,7 +183,8 @@
             $(el).data('bkob', new BaseKit.Widget.Button(el, options));
         });
     };
-}());(function () {
+}());
+(function () {
     BaseKit.Widget.BuynowProperties = {
         'showNames': 0
     };
@@ -946,6 +953,117 @@
 }());
 (function () {
 
+    BaseKit.Widget.Ecombasket = null;
+
+    BaseKit.Widget.EcombasketProperties = {
+    };
+
+    BaseKit.Widget.EcombasketMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            var cart = this.getCart();
+            this.updateBasket(this.getCartSize(cart), cart);
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
+            var that = this;
+            Globals.addHook('ecom.basket.changed', this, function () {
+                var cart = that.getCart();
+                that.updateBasket(that.getCartSize(cart), cart);
+            });
+
+            window.addEventListener('storage', function (e) {
+                var cart = that.getCart();
+                that.updateBasket(that.getCartSize(cart), cart);
+            }, false);
+        },
+
+        getCart: function () {
+            var cart = localStorage.getItem('cart');
+            if (cart) {
+                cart = JSON.parse(cart);
+                return cart;
+            }
+
+            return {};
+        },
+
+        getCartSize: function (cart) {
+            var size = 0,
+                key;
+
+            for (key in cart) {
+                if (cart.hasOwnProperty(key)) {
+                    size++;
+                }
+            }
+            return size;
+        },
+
+        updateBasket: function (size, cart) {
+            var product,
+                button,
+                that = this,
+                key,
+                onClick;
+            this.el.find('.basket-count').text(size);
+            this.el.find('ul').empty();
+
+            onClick = function (e) {
+                that.removeFromBasket(e.data.ref);
+            };
+
+            for (key in cart) {
+                button = $('<button>Remove</button>');
+                this.el.find('ul').append($('<li></li>').attr('data-ref', key).text(this.findProductByRef(key).title).append(button));
+                $(button).on('click', { ref: key }, onClick);
+            }
+        },
+
+        removeFromBasket: function (ref) {
+            this.el.find('li[data-ref=' + ref + ']').remove();
+            var cart = this.getCart();
+            delete cart[ref];
+            cart = JSON.stringify(cart);
+            localStorage.setItem('cart', cart);
+            Globals.notifyHooks('ecom.basket.changed', {});
+        },
+
+        findProductByRef: function (ref) {
+            var key,
+                product;
+            for (key in Server.plugins.ecommerce.products) {
+                product = Server.plugins.ecommerce.products[key];
+                if (product.ref == ref) {
+                    return product;
+                }
+            }
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Ecombasket = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.EcombasketProperties,
+            methods: BaseKit.Widget.EcombasketMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetEcombasket = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Ecombasket(el, options));
+        });
+    };
+}());
+(function () {
+
     BaseKit.Widget.Ecomproduct = null;
 
     BaseKit.Widget.EcomproductProperties = {
@@ -958,7 +1076,27 @@
         },
 
         load: function () {
-            //do something if the widget needs to be loaded!
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
+            var that = this;
+            $(this.el).find('button').on('click', function (e) {
+                that.addToBasket($(this).data('ref'));
+            });
+        },
+
+        addToBasket: function (productRef) {
+            var cart = localStorage.getItem('cart');
+            if (cart) {
+                cart = JSON.parse(cart);
+            } else {
+                cart = {};
+            }
+            cart[productRef] = 1;
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            Globals.notifyHooks('ecom.basket.changed', {});
         }
     };
 
@@ -992,7 +1130,27 @@
         },
 
         load: function () {
-            //do something if the widget needs to be loaded!
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
+            var that = this;
+            $(this.el).find('button').on('click', function (e) {
+                that.addToBasket($(this).data('ref'));
+            });
+        },
+
+        addToBasket: function (productRef) {
+            var cart = localStorage.getItem('cart');
+            if (cart) {
+                cart = JSON.parse(cart);
+            } else {
+                cart = {};
+            }
+            cart[productRef] = 1;
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            Globals.notifyHooks('ecom.basket.changed', {});
         }
     };
 
@@ -1692,7 +1850,7 @@
                 script = document.createElement("script");
                 script.type = "text/javascript";
                 script.id = "gmaps-widget-script";
-                script.src = "http://maps.google.com/maps/api/js?sensor=false&callback=mapReady&language=" + App.session.get('languageCode');
+                script.src = "https://maps.google.com/maps/api/js?sensor=false&callback=mapReady&language=" + App.session.get('languageCode');
 
                 // append to the body
                 document.body.appendChild(script);
@@ -3474,30 +3632,24 @@
          * @param <string> message the message to display in the overlay
          */
         showOverlay: function (message) {
-
             message = message || 'message';
-            var overlay = $('#page-overlay');
-            if (overlay.length === 0) {
-                overlay = '<div id="page-overlay" class="overlay"><div class="inner">' +
-                          '<div class="message">' + message + '</div></div></div>';
-                $('body').append(overlay).show();
-            } else {
-                overlay.find(".message").html(message);
-                overlay.show();
-            }
-            $(this.el).find("form button.userregistrationbtn").attr('disabled', true);
+
+            var thisEl = $(this.el),
+                overlayEl = thisEl.find('.overlay');
+
+            overlayEl.find(".message").html(message).end().show();
+            $(this.el).find("form button.userloginbtn").attr('disabled', true);
         },
 
         /**
          * hideOverlay: hides the overlay
          */
         hideOverlay: function () {
-            var overlay = $('#page-overlay');
-            if (overlay.length) {
-                overlay.find(".message").empty();
-                overlay.hide();
-            }
-            $(this.el).find("form button.userregistrationbtn").attr('disabled', false);
+            var thisEl = $(this.el),
+                overlayEl = thisEl.find('.overlay');
+
+            overlayEl.hide().find('.message').empty();
+            thisEl.find("form button.userloginbtn").attr('disabled', false);
         },
 
         /**
@@ -3513,6 +3665,7 @@
             thisEl.find('form').on('submit', function (e) {
                 e.preventDefault();
 
+                that.hideOverlay();
                 errors = [];
                 postData = {
                     'email':        thisEl.find("input[type='email']").val(),
@@ -3685,28 +3838,23 @@
         showOverlay: function (message) {
 
             message = message || 'message';
-            var overlay = $('#page-overlay');
-            if (overlay.length === 0) {
-                overlay = '<div id="page-overlay" class="overlay"><div class="inner">' +
-                          '<div class="message">' + message + '</div></div></div>';
-                $('body').append(overlay).show();
-            } else {
-                overlay.find(".message").html(message);
-                overlay.show();
-            }
-            $(this.el).find("form button.userregistrationbtn").attr('disabled', true);
+
+            var thisEl = $(this.el),
+                overlayEl = thisEl.find('.overlay');
+
+            overlayEl.find(".message").html(message).end().show();
+            thisEl.find("form button.userregistrationbtn").attr('disabled', true);
         },
 
         /**
          * hideOverlay: hides the overlay
          */
         hideOverlay: function () {
-            var overlay = $('#page-overlay');
-            if (overlay.length) {
-                overlay.find(".message").empty();
-                overlay.hide();
-            }
-            $(this.el).find("form button.userregistrationbtn").attr('disabled', false);
+            var thisEl = $(this.el),
+                overlayEl = thisEl.find('.overlay');
+
+            overlayEl.hide().find('.message').empty();
+            thisEl.find("form button.userregistrationbtn").attr('disabled', false);
         },
 
         /**
@@ -3722,6 +3870,7 @@
             thisEl.find('form').on('submit', function (e) {
                 e.preventDefault();
 
+                that.hideOverlay();
                 errors = [];
                 postData = {
                     'brandRef':     App.session.get('brandRef'),

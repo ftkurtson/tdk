@@ -3,7 +3,16 @@
         <p>{{product.title}}</p>
         <p>{{product.shortDescription}}</p>
         {% if product.category is not null %}
-            <p>{{product.category.name}}</p>
+            <p>
+                <a href="/store/categories/{{product.category.name}}" class="store-category-link">{{product.category.name}}</a>
+            </p>
+        {% endif %}
+        {% if product.tags is not null %}
+            {% for tag in product.tags %}
+                <p>
+                    <a href="/store/tags/{{tag}}" class="store-tag-link">{{tag}}</a>
+                </p>
+            {% endfor %}
         {% endif %}
         {% if product.assets is not null %}
             {% for asset in product.assets %}
@@ -13,6 +22,7 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
+        <button data-ref="{{ product.ref }}">Add to cart</button>
     {% endfor%}
 {% else %}
     <p>There aren't any products to display.</p>

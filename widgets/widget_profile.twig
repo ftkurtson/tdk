@@ -31,7 +31,7 @@
   {% endif %}
 
   {% if noAddress and noAddress1 and noAddress2 and noCountry and noPostalcode %}
-    <span>{{"widgets.profile.noaddress"|translate("No address")}}</span>
+    <span>No address</span>
   {% endif %}
 {% endif %}
 
@@ -41,7 +41,7 @@
   {% if (data.email != 'profile' and data.email|length > 0) or (profile.email|length > 0) %}
     <a href="mailto:{% if data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}}{% endif %}">{% if data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}}{% endif %}</a>
   {% else %}
-    <span>{{"widgets.profile.noemail"|translate("No email")}}</span>
+    <span>No email</span>
   {% endif %}
 </div>
 {% endif %}
@@ -51,7 +51,7 @@
   {% if (data.headline != 'profile' and data.headline|length > 0) or (profile.headline|length > 0) %}
     <span>{% if data.headline|length > 0 and data.headline != 'profile' %}{{ data.headline }}{% else %}{{profile.headline}} {% endif %}</span>
   {% else %}
-    <span>{{"widgets.profile.noheadline"|translate("No headline")}}</span>
+    <span>No headline</span>
   {% endif %}
 {% endif %}
 
@@ -60,7 +60,7 @@
   {% if (data.strapline != 'profile' and data.strapline|length > 0) or (profile.strapline|length > 0) %}
     <span>{% if data.strapline|length > 0 and data.strapline != 'profile' %}{{ data.strapline }}{% else %}{{profile.strapline}} {% endif %}</span>
   {% else %}
-    <span>{{"widgets.profile.nostrapline"|translate("No strapline")}}</span>
+    <span>No strapline</span>
   {% endif %}
 {% endif %}
 
@@ -69,7 +69,7 @@
   {% if (data.companydescription != 'profile' and data.companydescription|length > 0) or (profile.companydescription|length > 0) %}
     <span>{% if data.companydescription|length > 0 and data.companydescription != 'profile' %}{{ data.companydescription }}{% else %}{{profile.companydescription}} {% endif %}</span>
   {% else %}
-    <span>{{"widgets.profile.nocompanydescription"|translate("No company description")}}</span>
+    <span>No company description</span>
   {% endif %}
 {% endif %}
 
@@ -78,7 +78,7 @@
   {% if (data.phone != 'profile' and data.phone|length > 0) or (profile.phone|length > 0) %}
     <span>{% if data.phone|length > 0 and data.phone != 'profile' %}{{ data.phone }}{% else %}{{profile.phone}} {% endif %}</span>
   {% else %}
-    <span>{{"widgets.profile.nophone"|translate("No phone number")}}</span>
+    <span>No phone number</span>
   {% endif %}
 {% endif %}
 
@@ -87,7 +87,7 @@
   {% if (data.business != 'profile' and data.business|length > 0) or (profile.business|length > 0) %}
     <span>{% if data.business|length > 0 and data.business != 'profile' %}{{ data.business }}{% else %}{{profile.business}} {% endif %}</span>
   {% else %}
-    <span>{{"widgets.profile.nobusiness"|translate("No business")}}</span>
+    <span>No business</span>
   {% endif %}
 {% endif %}
 
@@ -96,7 +96,7 @@
   {% if (data.copyright != 'profile' and data.copyright|length > 0) or (profile.copyright|length > 0) %}
     <span>{% if data.copyright|length > 0 and data.copyright != 'profile' %}{{ data.copyright }}{% else %}{{profile.copyright}} {% endif %}</span>
   {% else %}
-    <span>{{"widgets.profile.nocopyright"|translate("No copyright")}}</span>
+    <span>No copyright</span>
   {% endif %}
 {% endif %}
 
@@ -119,13 +119,13 @@
       </a>
       <p> {{ tweet.text|raw }} </p>
       <time class="created_at" data-value="{{ tweet.createdAt }}"> {{ tweet.createdAt }} </time>
-      <span> {{"widgets.twitter.via"|translate("via")}} </span>
+      <span> via </span>
       <span> {{ tweet.source|raw }} </span>
     </div>
   </li>  
 </ul>
 {% else %}
-<p>{{"widgets.twitter.message"|translate("Retrieving tweets")}}.</p>
+<p>Retrieving tweets.</p>
 {% endif %}
 {% endif %}
 
@@ -140,10 +140,10 @@
 {% if data.profileType == 'form' %}
 <form action="" method="post">
   <fieldset>
-    <label for="email">{{"widgets.profile.formtitle"|translate("Your email")}}:</label>
-    <input type="email" class="email" placeholder="{{"widgets.profile.formholder"|translate("Type your email")}}">
+    <label for="email">Your email:</label>
+    <input type="email" class="email" placeholder="Type your email">
 
-    <button class="btn btnText {% if data.formItalic %}italic{% endif %} {% if data.formBold %}bold{% endif %} {{data.formAlign}}" type="submit" {% if data.formFontSize|length > 0 %}style="font-size: {{data.formFontSize}}px"{% endif %}>{% if data.formText %}{{data.formText}}{% else %}{{"widgets.profile.default_button_text"|translate("Send")}}{% endif %}</button>
+    <button class="btn btnText {% if data.formItalic %}italic{% endif %} {% if data.formBold %}bold{% endif %} {{data.formAlign}}" type="submit" {% if data.formFontSize|length > 0 %}style="font-size: {{data.formFontSize}}px"{% endif %}>{% if data.formText %}{{data.formText}}{% else %}Send{% endif %}</button>
   </fieldset>
 </form>
 {% endif %}
@@ -207,7 +207,7 @@
     {% endif %}
 
     {% if noLinkedIn and noTwitter and noFacebook and noRss and noGoogleplus and noYoutube %}  
-    <span>{{"widgets.socialicons.noicons"|translate("No social icons")}}</span>
+    <span>No social icons</span>
     {% endif %}
 
 </div>
@@ -215,5 +215,5 @@
 
 
 {% if data.profileType|length == 0 or (data.profileType != 'address' and data.profileType != 'email' and data.profileType != 'headline' and data.profileType != 'strapline' and data.profileType != 'companydescription' and data.profileType != 'phone' and data.profileType != 'business' and data.profileType != 'copyright' and data.profileType != 'twitter' and data.profileType != 'map' and data.profileType != 'form' and data.profileType != 'socialicons') %}
-<p> {{"widgets.profile.error"|translate("Sorry, something is wrong with this widget")}} </p>
+<p> Sorry, something is wrong with this widget </p>
 {% endif %}

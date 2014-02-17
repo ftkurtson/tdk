@@ -1,5 +1,33 @@
 <?php
 
+function AddWidgetPathToInclude($html) {
+    $html = preg_replace('/include\s"widget_/', 'include "widgets/widget_', $html);
+    return $html;
+}
+
+function RemoveTranslate($html) {
+    $html = preg_replace('/\{\{\"(.*?)"\|translate\(\"(.*?)"\)\}\}/', '$2', $html);
+    return $html;
+}
+
+function RemoveFormatBlogDate($html) {
+    $html = preg_replace('/\|formatBlogDate\((.*?)\)/', '', $html);
+    return $html;
+}
+
+function RemoveStripUrlScheme($html) {
+    $html = preg_replace('/strip\_url\_scheme\((.*?)\)/', '$1', $html);
+    return $html;
+}
+
+function ProcessHTML($html) {
+    $html = AddWidgetPathToInclude($html);
+    $html = RemoveTranslate($html);
+    $html = RemoveFormatBlogDate($html);
+    $html = RemoveStripUrlScheme($html);
+    return $html;
+}
+
 $basekitDir = '/Library/WebServer/Documents/v7';
 $sdkDir = '/Library/WebServer/Documents/emulator';
 
@@ -25,6 +53,10 @@ foreach (new DirectoryIterator($source) as $fileInfo) {
         }
 
         copy($from, $to);
+
+        $html = file_get_contents($to);
+        $html = ProcessHTML($html);
+        file_put_contents($to, $html);
     }
 }
 
