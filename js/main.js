@@ -319,6 +319,7 @@ $(function() {
                     // add template type of the page data
                     fileStringToProcess = (typeof previouslyRequestedFile === 'string' ? previouslyRequestedFile : file);
                     page.templateType = fileStringToProcess.replace('.twig','');
+                    page.backgroundClass = fileStringToProcess.replace('.twig','');
 
                     // if twig is null then requested file can't be found.
                     // fallback to default.twig

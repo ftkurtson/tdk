@@ -400,6 +400,64 @@ var plugins = function(template) {
                     "timezone_type":3,
                     "timezone":"Europe/London"
                  }
+              },
+              {
+                 "ref":38,
+                 "title":"Hand bag",
+                 "shortDescription":"Large hand bag for the beach",
+                 "longDescription":"You will see this bag and immediately fell in love, pistachio and purple - perfect!",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":6,
+                       "assetRef":6
+                    }
+                 ],
+                 "category":null,
+                 "tags":[
+                    "xkcd"
+                 ],
+                 "created":{
+                    "date":"2014-02-12 16:31:22",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-02-12 16:31:22",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
+              },
+              {
+                 "ref":38,
+                 "title":"Hand bag",
+                 "shortDescription":"Large hand bag for the beach",
+                 "longDescription":"You will see this bag and immediately fell in love, pistachio and purple - perfect!",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":6,
+                       "assetRef":6
+                    }
+                 ],
+                 "category":null,
+                 "tags":[
+                    "xkcd"
+                 ],
+                 "created":{
+                    "date":"2014-02-12 16:31:22",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-02-12 16:31:22",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
               }
            ]
         },

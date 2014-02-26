@@ -1,0 +1,30 @@
+//=============
+// Menu Styling
+//=============
+
+.widget {
+	&.ecomproductslist {
+		.ecom-productslist-product {
+			float: left;
+            position: relative;
+            width: 33.3%;
+            @media @mobile {
+                width: 100%;
+                padding-bottom: 100%;
+            }
+		}
+		.ecom-productslist-image-wrap {
+			height:250px;
+			background-position:center center;
+            background-repeat:no-repeat;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+           	-o-background-size: cover;
+            background-size: cover;
+            overflow: hidden;
+		}
+		.ecom-productslist-image {
+			display:none;
+		}
+	}
+}
