@@ -1,20 +1,33 @@
 {% if plugins.ecommerce.products[0] is defined %}
 {% set product = plugins.ecommerce.products[0] %}
-    <p>{{product.title}}</p>
-    <p>{{product.longDescription}}</p>
-    <p>{{product.sku}}</p>
+    <article class="ecom-p-product">
+        <p class="ecom-p-title">{{product.title}}</p>
+        <p class="ecom-p-long-description">{{product.longDescription}}</p>
+        <p class="ecom-p-sku">{{product.sku}}</p>
     {% if product.category is not null %}
-        <p>{{product.category.name}}</p>
+        <span class="ecom-p-category">
+            {{product.category.name}}
+        </span>
+    {% endif %}
+    {% if product.tags is not null %}
+        {% for tag in product.tags %}
+        <span class="ecom-p-tag">
+            <a href="/store/tags/{{tag}}" class="ecom-p-tag-link">{{tag}}</a>
+        </span>
+        {% endfor %}
     {% endif %}
     {% if product.assets is not null %}
         {% for asset in product.assets %}
             {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
-                <input type="hidden" name="imageAssetRef" value="{{asset.assetRef}}">
-                <img class="product-image" src="{{plugins.assets.images[asset.assetRef].url}}" alt>
+                {% set imageSrc = plugins.assets.images[asset.assetRef].url %}
+                <div class="ecom-p-image-wrap" style="background-image:url('{{ imageSrc }}')">
+                    <img class="ecom-p-image"  src="{{plugins.assets.images[asset.assetRef].url}}" alt>
+                </div>
             {% endif %}
         {% endfor %}
     {% endif %}
     <button data-ref="{{ product.ref }}">Add to cart</button>
+    </article>
 {% else %}
     <p>There aren't any products to display.</p>
 {% endif %}

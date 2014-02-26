@@ -200,24 +200,208 @@ var plugins = function(template) {
             },
             images: {
                 1: {
-                    url: "http://placehold.it/2250x800"
+                    url: "http://placehold.it/2250x800",
+                    fileType: "image"
                 },
                 2: {
-                    url: "http://placehold.it/300x100"
+                    url: "http://placehold.it/300x100",
+                    fileType: "image"
                 },
                 3: {
-                    url: "http://placehold.it/250x250"
+                    url: "http://placehold.it/250x250",
+                    fileType: "image"
                 },
                 4: {
-                    url: "http://placehold.it/529x150"
+                    url: "http://placehold.it/529x150",
+                    fileType: "image"
                 },
                 5: {
-                    url: "http://placehold.it/600x200"
+                    url: "http://placehold.it/600x200",
+                    fileType: "image"
                 },
                 6: {
-                    url: "http://placehold.it/250x250"
+                    url: "http://placehold.it/250x250",
+                    fileType: "image"
                 }
             }
+        },
+        ecommerce: {
+           "products":[
+              {
+                 "ref":27,
+                 "title":"Brown bag",
+                 "shortDescription":"bag 2",
+                 "longDescription":"the second bag",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":1,
+                       "assetRef":1
+                    }
+                 ],
+                 "category":null,
+                 "tags":[
+
+                 ],
+                 "created":{
+                    "date":"2014-02-07 16:51:03",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-02-07 16:51:03",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
+              },
+              {
+                 "ref":28,
+                 "title":"Dark brown bag",
+                 "shortDescription":"Darkest of brown bags",
+                 "longDescription":"Darkest of the brown bags. Lots of capacity.",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":2,
+                       "assetRef":2
+                    }
+                 ],
+                 "category":null,
+                 "tags":[
+
+                 ],
+                 "created":{
+                    "date":"2014-02-07 16:51:43",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-02-12 16:49:23",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
+              },
+              {
+                 "ref":30,
+                 "title":"Fly Cross-Body Bag",
+                 "shortDescription":"Ladies Cross-Body Bag",
+                 "longDescription":"Flap over cross over body bag, Detachable strap, Outer Material: Leather, Zip Closure, Magnetic flap, Inside flap zip fastening, 2 colourways ",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":3,
+                       "assetRef":3
+                    }
+                 ],
+                 "category":null,
+                 "tags":[
+
+                 ],
+                 "created":{
+                    "date":"2014-02-07 17:12:21",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-02-07 17:12:21",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
+              },
+              {
+                 "ref":26,
+                 "title":"Leather satchel",
+                 "shortDescription":"A bag. For those who like bags",
+                 "longDescription":"The baggiest bag ever.\r\n\r\n\r\n\r\n\r\nBag",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":4,
+                       "assetRef":4
+                    }
+                 ],
+                 "category":null,
+                 "tags":[
+
+                 ],
+                 "created":{
+                    "date":"2014-02-07 16:46:25",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-02-07 16:46:25",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
+              },
+              {
+                 "ref":29,
+                 "title":"Tripple clasp bag",
+                 "shortDescription":"Like leather belt clasp things? This is the bag for you!",
+                 "longDescription":"Polyester, Embroidered animal branding, Zip Closure, Tropical floral print, Zip to main compartment, End grab handles",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":5,
+                       "assetRef":5
+                    }
+                 ],
+                 "category":null,
+                 "tags":[
+
+                 ],
+                 "created":{
+                    "date":"2014-02-07 16:53:21",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-02-07 16:53:21",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
+              },
+              {
+                 "ref":38,
+                 "title":"Hand bag",
+                 "shortDescription":"Large hand bag for the beach",
+                 "longDescription":"You will see this bag and immediately fell in love, pistachio and purple - perfect!",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":6,
+                       "assetRef":6
+                    }
+                 ],
+                 "category":null,
+                 "tags":[
+                    "xkcd"
+                 ],
+                 "created":{
+                    "date":"2014-02-12 16:31:22",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-02-12 16:31:22",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
+              }
+           ]
         },
         blog: {
            "currentPage": 1,

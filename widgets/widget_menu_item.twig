@@ -10,7 +10,7 @@
         </div>
        {% endif %}
 
-        {% if item.prices|length %}
+        {% if item.prices|length > 0 %}
         <div class="menu-item-price">
             {% if item.prices.name == 'Normal' %}
                 <p class="standard-price">{{ item.prices.price }}</p>
@@ -20,16 +20,16 @@
         </div>
         {% endif %}
 
-        {% if item.description is not null %}
+        {% if item.description|length > 0 %}
             <p class="menu-item-description">{{ item.description }}</p>
         {% endif %}
 
-        {% if item.foodNutrition|length %}
+        {% if item.foodNutrition|length > 0 %}
             <h4 class="menu-item-nutritional-title">Nutritional information</h4>
             <div class="menu-item-nutritional-prop"> {{ item.foodNutrition }} </div>
         {% endif %}
 
-        {% if item.dietaryInfo|length %}
+        {% if item.dietaryInfo|length > 0 %}
             <div class="menu-section-item-dietary-props">
                 {% for key, value in item.dietaryInfo %}
                     {% if value == 1 %}

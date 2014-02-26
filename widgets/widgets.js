@@ -999,7 +999,7 @@
 
             for (key in cart) {
                 if (cart.hasOwnProperty(key)) {
-                    size++;
+                    size = size + 1;
                 }
             }
             return size;
@@ -1019,9 +1019,11 @@
             };
 
             for (key in cart) {
-                button = $('<button>Remove</button>');
-                this.el.find('ul').append($('<li></li>').attr('data-ref', key).text(this.findProductByRef(key).title).append(button));
-                $(button).on('click', { ref: key }, onClick);
+                if (cart.hasOwnProperty(key)) {
+                    button = $('<button>Remove</button>');
+                    this.el.find('ul').append($('<li></li>').attr('data-ref', key).text(this.findProductByRef(key).title).append(button));
+                    $(button).on('click', { ref: key }, onClick);
+                }
             }
         },
 
@@ -1038,9 +1040,12 @@
             var key,
                 product;
             for (key in Server.plugins.ecommerce.products) {
-                product = Server.plugins.ecommerce.products[key];
-                if (product.ref == ref) {
-                    return product;
+
+                if (Server.plugins.ecommerce.products.hasOwnProperty(key)) {
+                    product = Server.plugins.ecommerce.products[key];
+                    if (parseInt(product.ref, 10) === parseInt(ref, 10)) {
+                        return product;
+                    }
                 }
             }
         }

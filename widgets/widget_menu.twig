@@ -81,12 +81,12 @@
                 {% endif %}
 
                 <!-- the menu also has note property, now we use the section note but might need to be changed later -->
-                {% if topSection.note|length > 0 and topSection.dietaryInfoKeys|length > 0 %}
+                {% if topSection.note|length > 0 or topSection.dietaryInfoKeys|length > 0%}
                 <div class="menu-info">
                     {% if topSection.note|length > 0 %}
                     <p class="menu-note">{{ topSection.note }}</p>
                     {% endif %}
-                    {% if topSection.dietaryInfoKeys|length %}
+                    {% if topSection.dietaryInfoKeys|length > 0 %}
                         {% for key in topSection.dietaryInfoKeys %}
                             {% if key == 'vegetarian' %}
                                 <dl class="menu-dietary-key">
