@@ -1,18 +1,19 @@
 {% if plugins.ecommerce.products|length %}
+<section class="ecom-productslist-products">
     {% for product in plugins.ecommerce.products %}
-    <article class="ecom-pl-product">
-        <p class="ecom-pl-title">{{product.title}}</p>
-        <p class="ecom-pl-description">{{product.shortDescription}}</p>
+    <article class="ecom-productslist-product">
+        <h2 class="ecom-productslist-title">{{product.title}}</h2>
+        <p class="ecom-productslist-description">{{product.shortDescription}}</p>
         {% if product.category is not null %}
-            <div class="ecom-pl-category">
+            <div class="ecom-productslist-category">
                 <a href="/store/categories/{{product.category.name}}" class="store-category-link">{{product.category.name}}</a>
             </div>
         {% endif %}
         {% if product.tags is not null %}
             {% for tag in product.tags %}
-            <div class="ecom-pl-tags">
-                <span class="ecom-pl-tag">
-                    <a href="/store/tags/{{tag}}" class="ecom-pl-tag-link">{{tag}}</a>
+            <div class="ecom-productslist-tags">
+                <span class="ecom-productslist-tag">
+                    <a href="/store/tags/{{tag}}" class="ecom-productslist-tag-link">{{tag}}</a>
                 </span>
             </div>
             {% endfor %}
@@ -21,8 +22,8 @@
             {% for asset in product.assets %}
                 {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
                     {% set imageSrc = plugins.assets.images[asset.assetRef].url %}
-                    <div class="ecom-pl-image-wrap" style="background-image:url('{{ imageSrc }}')">
-                        <img class="ecom-pl-image" src="{{imageSrc}}">
+                    <div class="ecom-productslist-image-wrap" style="background-image:url('{{ imageSrc }}')">
+                        <img class="ecom-productslist-image" src="{{imageSrc}}">
                     </div>
                 {% endif %}
             {% endfor %}
