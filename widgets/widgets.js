@@ -1252,7 +1252,7 @@
             var that = this,
                 thisEl = $(this.el),
                 pullEl = thisEl.find('.pull'),
-                menuEl = thisEl.find('.extendednavigation ul');
+                menuEl = thisEl.find('.extendednavigation > ul');
 
             pullEl.off('click').on('click', function (e) {
                 e.preventDefault();

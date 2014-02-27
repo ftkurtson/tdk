@@ -132,8 +132,8 @@ var properties = {
             images: [
                 {
                     'imageHeight':'350',
-                    'imageWidth':'300',
-                    'url':'http://placehold.it/350x300',
+                    'imageWidth':'900',
+                    'url':'http://placehold.it/350x900',
                     'title':'test title',
                     'description': 'test desc'
                 },{
@@ -144,8 +144,8 @@ var properties = {
                     'description': 'test desc'
                 },{
                     'imageHeight':'350',
-                    'imageWidth':'300',
-                    'url':'http://placehold.it/350x300',
+                    'imageWidth':'500',
+                    'url':'http://placehold.it/350x500',
                     'title':'test title',
                     'description': 'test desc'
                 },{

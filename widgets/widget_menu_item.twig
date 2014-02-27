@@ -13,9 +13,9 @@
         {% if item.prices|length > 0 %}
         <div class="menu-item-price">
             {% if item.prices.name == 'Normal' %}
-                <p class="standard-price">{{ item.prices.price }}</p>
+                <p class="standard-price">{{ plugins.menu.currency.htmlCode|raw }}{{ item.prices.price }}</p>
             {% else %}
-                <p class="variant-price">{{ item.prices.name }} {{ item.prices.price }}</p>
+                <p class="variant-price">{{ item.prices.name }} {{ plugins.menu.currency.htmlCode|raw }}{{ item.prices.price }}</p>
             {% endif %}
         </div>
         {% endif %}

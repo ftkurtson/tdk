@@ -5,12 +5,27 @@
 .widget {
 	&.ecomproductslist {
 		.ecom-productslist-product {
-			float: left;
-            position: relative;
-            width: 33.3%;
+            display: inline-block;
+            *display: inline;
+            vertical-align: top;
+			width: 31.317641639709474%;
+            margin-left: 2.564102564102564%;
+            margin-bottom:15px;
+            padding:10px;
+            zoom: 1;
+            &:nth-child(3n+1) {
+            	margin-left:0;
+            }
+            @media @tablet {
+                width: 48%;
+                margin-left:2%;
+                &:nth-child(2n+1) {
+                    margin-left:0;
+                }
+            }
             @media @mobile {
                 width: 100%;
-                padding-bottom: 100%;
+                margin-left:0;
             }
 		}
 		.ecom-productslist-image-wrap {
