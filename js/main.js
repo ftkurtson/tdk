@@ -69,7 +69,8 @@ $(function() {
                 html += renderWidget('dropbox', 'maindropbox1');
                 html += renderWidget('clicktocall', 'mainclicktocall1');
                 html += renderWidget('gallery', 'maingallery1');
-                html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1', {'crop':1, 'showButtons':true, 'showBullets':true, 'allowPause':true});
+                html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1', {'crop':0, 'showButtons':true, 'showBullets':true, 'allowPause':true});
+                html += renderWidget('content', 'maincontent2');
                 html += renderWidget('signupform', 'mainsignupform1');
                 html += renderWidget('bloglistposts', 'bloglistposts1');
                 html += renderWidget('blogpost', 'blogpost1');
@@ -319,7 +320,7 @@ $(function() {
                     // add template type of the page data
                     fileStringToProcess = (typeof previouslyRequestedFile === 'string' ? previouslyRequestedFile : file);
                     page.templateType = fileStringToProcess.replace('.twig','');
-                    page.backgroundClass = fileStringToProcess.replace('.twig','');
+                    page.backgroundClass = '';
 
                     // if twig is null then requested file can't be found.
                     // fallback to default.twig
