@@ -1,6 +1,26 @@
 {% if plugins.ecommerce.products[0] is defined %}
 {% set product = plugins.ecommerce.products[0] %}
     <article class="ecom-product">
+        {% if product.assets is not null %}
+        <div class="ecom-product-images-container">
+            {% set imageSrcPreview = plugins.assets.images[product.assets|first.assetRef].url %}
+            <div class="ecom-product-preview-image-wrap" style="background-image:url('{{ imageSrcPreview }}')">
+                <img class="ecom-product-preview-image"  src="{{imageSrcPreview}}" alt>
+            </div>
+            {% if product.assets|length > 1 %}
+            <ul class="ecom-product-image-list">
+            {% for asset in product.assets %}
+                {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
+                    {% set imageSrc = plugins.assets.images[asset.assetRef].url %}
+                    <li class="ecom-product-image-wrap" style="background-image:url('{{ imageSrc }}')">
+                        <img class="ecom-product-image"  src="{{imageSrc}}" alt>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endif %}
         <h2 class="ecom-product-title">{{product.title}}</h2>
         <p class="ecom-product-long-description">{{product.longDescription}}</p>
         <p class="ecom-product-sku">{{product.sku}}</p>
@@ -14,16 +34,6 @@
         <span class="ecom-product-tag">
             <a href="/store/tags/{{tag}}" class="ecom-product-tag-link">{{tag}}</a>
         </span>
-        {% endfor %}
-    {% endif %}
-    {% if product.assets is not null %}
-        {% for asset in product.assets %}
-            {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
-                {% set imageSrc = plugins.assets.images[asset.assetRef].url %}
-                <div class="ecom-product-image-wrap" style="background-image:url('{{ imageSrc }}')">
-                    <img class="ecom-product-image"  src="{{plugins.assets.images[asset.assetRef].url}}" alt>
-                </div>
-            {% endif %}
         {% endfor %}
     {% endif %}
     <button class="btn" data-ref="{{ product.ref }}">Add to cart</button>
