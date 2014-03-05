@@ -3,11 +3,8 @@
  */
 var templates = [
     {
-        name: "Baseplate",
-        directory: "basekit-baseplate"
-    },
-    {
-        name: "Leaf Avenue",
-        directory: "leafavenue"
+        name: "velit",
+        directory: "velit"
     }
 ];
+	
