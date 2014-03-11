@@ -45,6 +45,7 @@ $(function() {
 
         switch (name) {
             case "main":
+                /*
                 html += renderWidget('content', 'maincontent1');
                 html += renderWidget('contactform', 'maincontactform1');
                 html += renderWidget('twitter', 'maintwitter1');
@@ -74,7 +75,7 @@ $(function() {
                 html += renderWidget('signupform', 'mainsignupform1');
                 html += renderWidget('bloglistposts', 'bloglistposts1');
                 html += renderWidget('blogpost', 'blogpost1');
-                html += renderWidget('blogsearch', 'blogsearch1');
+                html += renderWidget('blogsearch', 'blogsearch1');*/
                 html += renderWidget('menusections', 'menusections1');
                 html += renderWidget('menu', 'menu1');
                 break;
