@@ -230,20 +230,6 @@ $(function() {
 
             var error, varsLess = "";
 
-            // Check that the metadata.json file contains colour and font swatches
-
-            if (typeof data.colorSwatches === "undefined") {
-                error = "Template Metadata Error\nNo 'colorSwatches' provided";
-                alert(error);
-                throw error;
-            }
-
-            if (typeof data.fontSwatch === "undefined") {
-                error = "Template Metadata Error\nNo 'fontSwatch' provided";
-                alert(error);
-                throw error;
-            }
-
             // Add the templateCommon & templateLocal strings into the mix
             varsLess += '@templateCommon: "/templates/common";';
             varsLess += '@templateLocal: "/templates/' + template + '";';
@@ -252,40 +238,49 @@ $(function() {
 
             $("#colour-swatch").empty();
 
-            for (var name in data.colorSwatches) {
-                var colours = data.colorSwatches[name];
+            if (data.colorSwatches && data.colorSwatches.length > 0) {
+                for (var name in data.colorSwatches) {
+                    var colours = data.colorSwatches[name];
 
-                if (colourNumber == colourSwatchIndex) {
-                    var index = 0;
-                    for (var key in colours) {
-                        varsLess += "@color-swatch" + (index + 1) + ":" + colours[key] + ";\n";
-                        index++;
+                    if (colourNumber == colourSwatchIndex) {
+                        var index = 0;
+                        for (var key in colours) {
+                            varsLess += "@color-swatch" + (index + 1) + ":" + colours[key] + ";\n";
+                            index++;
+                        }
                     }
+
+                    $("#colour-swatch")
+                        .append($("<option></option>")
+                            .attr("value", colourNumber)
+                            .text(name)
+                        );
+
+                    colourNumber++;
                 }
 
-                $("#colour-swatch")
-                    .append($("<option></option>")
-                        .attr("value", colourNumber)
-                        .text(name)
-                    );
-
-                colourNumber++;
+                $("#colour-swatch").val(colourSwatchIndex);
+            } else {
+                varsLess += '@color-swatch1:#ffffff;@color-swatch2:#4a7491;@color-swatch3:#c26b57;@color-swatch4:#111111;@color-swatch5:#bcbcbc;@color-swatch6:#ffffff;@color-swatch7:#235071;'
             }
 
-            $("#colour-swatch").val(colourSwatchIndex);
 
-            for (var fontNumber = 1; fontNumber < 11; fontNumber++) {
-                if (typeof data.fontSwatch["font" + fontNumber] === "undefined") {
-                    error = "Template Metadata Error\nNo 'fontSwatch.font" + fontNumber + "' provided";
-                    alert(error);
-                    throw error;
+            if (data.fontSwatch && data.fontSwatch.length > 0) {
+                for (var fontNumber = 1; fontNumber < 11; fontNumber++) {
+                    if (typeof data.fontSwatch["font" + fontNumber] === "undefined") {
+                        error = "Template Metadata Error\nNo 'fontSwatch.font" + fontNumber + "' provided";
+                        alert(error);
+                        throw error;
+                    }
+
+                    var font = data.fontSwatch["font" + fontNumber];
+
+                    for (var attribute in font) {
+                        varsLess += "@font-swatch" + (fontNumber) + "-" + attribute + ":" + font[attribute] + ";\n";
+                    }
                 }
-
-                var font = data.fontSwatch["font" + fontNumber];
-
-                for (var attribute in font) {
-                    varsLess += "@font-swatch" + (fontNumber) + "-" + attribute + ":" + font[attribute] + ";\n";
-                }
+            } else {
+                varsLess += '@font-swatch1-font-family: "Helvetica, arial";@font-swatch1-font-size:36px;@font-swatch1-font-weight:inherit;@font-swatch1-line-height:36px;@font-swatch1-color:@color-swatch4;@font-swatch1-letter-spacing:inherit;@font-swatch2-font-family: "Helvetica, arial";@font-swatch2-font-size:24px;@font-swatch2-font-weight:inherit;@font-swatch2-line-height:inherit;@font-swatch2-color:@color-swatch4;@font-swatch2-letter-spacing:inherit;@font-swatch3-font-family:"Helvetica, arial";@font-swatch3-font-size:18px;@font-swatch3-font-weight:inherit;@font-swatch3-line-height:inherit;@font-swatch3-color:@color-swatch4;@font-swatch3-letter-spacing:inherit;@font-swatch4-font-family:Helvetica, arial;@font-swatch4-font-size:16px;@font-swatch4-font-weight:inherit;@font-swatch4-line-height:inherit;@font-swatch4-color:@color-swatch4;@font-swatch4-letter-spacing:inherit;@font-swatch5-font-family:"Helvetica, arial";@font-swatch5-font-size:14px;@font-swatch5-font-weight:inherit;@font-swatch5-line-height:28px;@font-swatch5-color:@color-swatch5;@font-swatch5-letter-spacing:inherit;@font-swatch6-font-family:"Helvetica, arial";@font-swatch6-font-size:15px;@font-swatch6-font-weight:inherit;@font-swatch6-line-height:inherit;@font-swatch6-letter-spacing:inherit;@font-swatch6-color:@color-swatch6;@font-swatch6-color-hover:@color-swatch2;@font-swatch6-background-color:@color-swatch2;@font-swatch6-background-color-hover:@color-swatch1;@font-swatch7-font-family:"Helvetica, arial";@font-swatch7-font-size:14px;@font-swatch7-font-weight:inherit;@font-swatch7-line-height:inherit;@font-swatch7-letter-spacing:inherit;@font-swatch7-color:@color-swatch1;@font-swatch7-background-color:@color-swatch3;@font-swatch7-background-color-hover:darken(@color-swatch3,20%);@font-swatch8-font-family:"Helvetica, arial";@font-swatch8-font-size:40px;@font-swatch8-font-weight:inherit;@font-swatch8-line-height:50px;@font-swatch8-letter-spacing:inherit;@font-swatch8-color:@color-swatch1;@font-swatch9-font-family:"Helvetica, arial";@font-swatch9-font-size:22px;@font-swatch9-font-weight:inherit;@font-swatch9-line-height:50px;@font-swatch9-letter-spacing:inherit;@font-swatch9-color:@color-swatch1;@font-swatch10-font-family:"Helvetica, arial";@font-swatch10-font-size:24px;@font-swatch10-font-weight:inherit;@font-swatch10-line-height:50px;@font-swatch10-letter-spacing:inherit;@font-swatch10-color:@color-swatch4;'
             }
 
             // Parse the LESS code for the selected template

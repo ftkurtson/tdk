@@ -52,9 +52,7 @@ function validateMetadata($templateDir, &$errors)
     $requiredMetaElements = array(
         'name',
         'screenshot',
-        'thumbnail',
-        'colorSwatches',
-        'fontSwatch',
+        'thumbnail'
     );
 
     $requiredMetaImages = array(
