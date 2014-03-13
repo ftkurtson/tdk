@@ -3,7 +3,7 @@
  */
 var templates = [
     {
-        name: "amet-bakery",
-        directory: "amet-bakery"
+        name: "jays",
+        directory: "jays"
     }
 ];
