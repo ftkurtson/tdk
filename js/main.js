@@ -237,8 +237,8 @@ $(function() {
             var colourNumber = 0;
 
             $("#colour-swatch").empty();
-
-            if (data.colorSwatches && data.colorSwatches.length > 0) {
+console.log(data.colorSwatches.length);
+            if (data.colorSwatches) {
                 for (var name in data.colorSwatches) {
                     var colours = data.colorSwatches[name];
 
@@ -265,7 +265,7 @@ $(function() {
             }
 
 
-            if (data.fontSwatch && data.fontSwatch.length > 0) {
+            if (data.fontSwatch) {
                 for (var fontNumber = 1; fontNumber < 11; fontNumber++) {
                     if (typeof data.fontSwatch["font" + fontNumber] === "undefined") {
                         error = "Template Metadata Error\nNo 'fontSwatch.font" + fontNumber + "' provided";

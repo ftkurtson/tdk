@@ -3,7 +3,6 @@
 WebFontConfig = {
     google: {
         families: [
-        /*
             'Droid+Sans:400,700:latin',
             'Arvo:400,700:latin',
             'Corben:400,700:latin',
@@ -34,7 +33,6 @@ WebFontConfig = {
             'PT+Sans:400,700:latin',
             'PT+Serif:400,700:latin',
             'PT+Mono::latin'
-        */
         ]
     }
 };
