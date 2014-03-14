@@ -2,7 +2,7 @@
 <section class="ecom-productslist-products">
     {% for product in plugins.ecommerce.products %}
     <article class="ecom-productslist-product">
-        <h2 class="ecom-productslist-title">{{product.title}}</h2>
+        <h2 class="ecom-productslist-title"><a href="/store/product/{{product.ref}}">{{product.title}}</a></h2>
         <p class="ecom-productslist-description">{{product.shortDescription}}</p>
         {% if product.category is not null %}
             <div class="ecom-productslist-category">

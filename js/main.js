@@ -45,14 +45,11 @@ $(function() {
 
         switch (name) {
             case "main":
-                /*
                 html += renderWidget('content', 'maincontent1');
                 html += renderWidget('contactform', 'maincontactform1');
                 html += renderWidget('twitter', 'maintwitter1');
                 html += renderWidget('line', 'mainline1');
-                */
                 html += renderWidget('button', 'mainbutton1');
-                /*
                 html += renderWidget('socialicons', 'mainsocialicons1');
                 html += renderWidget('youtube', 'mainyoutube1');
                 html += renderWidget('map', 'mainmap1');
@@ -74,13 +71,15 @@ $(function() {
                 html += renderWidget('gallery', 'maingallery1');
                 html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1', {'crop':1, 'showButtons':true, 'showBullets':true, 'allowPause':true});
                 html += renderWidget('content', 'maincontent2');
+                html += renderWidget('menusections', 'menusections1');
+                html += renderWidget('menu', 'menu1');
                 html += renderWidget('signupform', 'mainsignupform1');
                 html += renderWidget('bloglistposts', 'bloglistposts1');
                 html += renderWidget('blogpost', 'blogpost1');
                 html += renderWidget('blogsearch', 'blogsearch1');
                 html += renderWidget('menusections', 'menusections1');
                 html += renderWidget('menu', 'menu1');
-                */
+
                 break;
         }
 
@@ -240,7 +239,6 @@ $(function() {
             var colourNumber = 0;
 
             $("#colour-swatch").empty();
-console.log(data.colorSwatches.length);
             if (data.colorSwatches) {
                 for (var name in data.colorSwatches) {
                     var colours = data.colorSwatches[name];

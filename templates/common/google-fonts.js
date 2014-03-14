@@ -32,7 +32,13 @@ WebFontConfig = {
             'Ubuntu:300,400,700:latin',
             'PT+Sans:400,700:latin',
             'PT+Serif:400,700:latin',
-            'PT+Mono::latin'
+            'PT+Mono::latin',
+            'Quicksand:300,400,700:latin',
+            'Josefin+Sans:300,400,700:latin',
+            'Montserrat+Alternates:400,700:latin',
+            'Oleo+Script:400,700:latin',
+            'Cabin:300,400,700:latin',
+            'Squada+One:400:latin'
         ]
     }
 };

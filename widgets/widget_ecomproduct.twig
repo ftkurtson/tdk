@@ -7,7 +7,7 @@
             <div class="ecom-product-preview-image-wrap" style="background-image:url('{{ imageSrcPreview }}')">
                 <img class="ecom-product-preview-image"  src="{{imageSrcPreview}}" alt>
             </div>
-            {% if product.assets|length > 1 %}
+            {% if product.assets|length > 0 %}
             <ul class="ecom-product-image-list">
             {% for asset in product.assets %}
                 {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
@@ -23,10 +23,20 @@
         {% endif %}
         <h2 class="ecom-product-title">{{product.title}}</h2>
         <p class="ecom-product-long-description">{{product.longDescription}}</p>
+        {% for option in product.options %}
+            <select>
+                <option value>{{option.title}}</option>
+                <option disabled>----</option>
+                {% for value in option.values %}
+                    <option value="{{value.ref}}">{{value.title}}</option>
+                {% endfor %}
+            </select>
+        {% endfor %}
+
         <p class="ecom-product-sku">{{product.sku}}</p>
     {% if product.category is not null %}
         <span class="ecom-product-category">
-            {{product.category.name}}
+            <a href="/store/categories/{{product.category.name}}" class="store-category-link">{{product.category.name}}</a>
         </span>
     {% endif %}
     {% if product.tags is not null %}
