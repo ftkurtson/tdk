@@ -238,6 +238,12 @@ $(function() {
 
             // Add Twig Page Types
             if (data.pageTypes) {
+                $("#layout").empty();
+                $("#layout")
+                        .append($("<option></option>")
+                            .attr("value", 'default.twig')
+                            .text('Default')
+                        );
                 $.each(data.pageTypes, function (i, pageType) {
                     $("#layout")
                         .append($("<option></option>")

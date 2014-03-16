@@ -1,0 +1,44 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+<section>
+    {{widget('feature', 'featurehome', {"header": "", "strapline":"", "buttonText":"Nullam Posuer","defaultBgImg": asset('images/feature-bg.jpg'), 'positionTopPercentage': '0','showBtn': false})|raw}}
+</section>
+
+<header class="bk-header">
+    <div class="wrapper clearfix">
+        <div class="companyheader clearfix">
+            {{widget('logo', 'logo', {"defaultlogo": asset('images/logo.png')})|raw}}
+            {{widget('companyname', 'companyname', {"business": "profile"})|raw}}
+        </div>
+        {{widget('extendednavigation', 'navigationheader', {})|raw}}
+    </div>
+</header>
+
+<div class="main wrapper clearfix">
+    {{zone('main')|raw}}
+</div>
+
+<footer class="bk-footer">
+    <div class="wrapper clearfix">
+        <div class="responsivecolumns columns-two-25-75">
+            <div class="column columns-two-left">
+                {{widget('content', 'footercolumn1content1', {"content":"<h2>Lorem Ip Soda</h2>"})|raw}}
+
+                {{widget('profile', 'footercolumn1profileaddress', { 'profileType':'address', 'address':'profile'})|raw}}
+            </div>
+            <div class="column columns-two-right">
+
+                {{widget('content', 'footercolumn2content1', {"content":"<h2>Lorem Ip Soda</h2>"})|raw}}
+
+                {{widget('profile', 'footcolumn2profilecopyright', { 'profileType':'copyright', 'copyright':'profile'})|raw}}
+
+                {{widget('profile', 'footcolumn2profilesocialicons', { 'profileType':'socialicons', 'socialicons':'profile'})|raw}}
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}

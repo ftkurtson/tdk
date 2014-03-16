@@ -3,6 +3,10 @@
  */
 var templates = [
     {
+        name: "sycamore",
+        directory: "sycamore"
+    },
+    {
         name: "basekit-baseplate",
         directory: "basekit-baseplate"
     }

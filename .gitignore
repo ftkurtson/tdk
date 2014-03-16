@@ -2,10 +2,13 @@
 nbproject/private/
 nbproject/project.properties
 nbproject/project.xml
-js/templates.js
+!templates/
 templates/*
-# !templates/common/*
-# !templates/common/*/*
-# !templates/common/*/*/*
+!templates/common/
+!templates/common/*
+!templates/basekit-baseplate/
+!templates/basekit-baseplate/*
+!templates/sycamore/
+!templates/sycamore/*
 config/values.custom.js
 config/templates.custom.js
