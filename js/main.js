@@ -251,6 +251,7 @@ $(function() {
             var colourNumber = 0;
             $("#colour-swatch").empty();
             if (data.colorSwatches) {
+                $("#cswatch").show();
                 for (var name in data.colorSwatches) {
                     var colours = data.colorSwatches[name];
 
@@ -273,6 +274,7 @@ $(function() {
 
                 $("#colour-swatch").val(colourSwatchIndex);
             } else {
+                $("#cswatch").hide();
                 varsLess += '@color-swatch1:#ffffff;@color-swatch2:#4a7491;@color-swatch3:#c26b57;@color-swatch4:#111111;@color-swatch5:#bcbcbc;@color-swatch6:#ffffff;@color-swatch7:#235071;'
             }
 
