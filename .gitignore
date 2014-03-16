@@ -7,3 +7,5 @@ templates/*
 # !templates/common/*
 # !templates/common/*/*
 # !templates/common/*/*/*
+config/values.custom.js
+config/templates.custom.js

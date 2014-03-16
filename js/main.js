@@ -236,8 +236,19 @@ $(function() {
             varsLess += '@templateCommon: "/templates/common";';
             varsLess += '@templateLocal: "/templates/' + template + '";';
 
-            var colourNumber = 0;
+            // Add Twig Page Types
+            if (data.pageTypes) {
+                $.each(data.pageTypes, function (i, pageType) {
+                    $("#layout")
+                        .append($("<option></option>")
+                            .attr("value", pageType.toLowerCase()+ '.twig')
+                            .text(pageType)
+                        );
+                });
+            }
 
+            // Add color swatches 
+            var colourNumber = 0;
             $("#colour-swatch").empty();
             if (data.colorSwatches) {
                 for (var name in data.colorSwatches) {
@@ -410,7 +421,7 @@ $(function() {
             });
         }).fail(function (response) {
             console.log(response); 
-        });;
+        });
     }
 
     $("#render").click(renderTemplate);
