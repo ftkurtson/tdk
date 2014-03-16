@@ -3,7 +3,7 @@
  */
 var templates = [
     {
-        name: "winterwoods",
-        directory: "winterwoods"
+        name: "basekit-baseplate",
+        directory: "basekit-baseplate"
     }
 ];
