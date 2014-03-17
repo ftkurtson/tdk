@@ -3,11 +3,11 @@
  */
 var templates = [
     {
-        name: "sycamore",
+        name: "Sycamore",
         directory: "sycamore"
     },
     {
-        name: "basekit-baseplate",
+        name: "Basekit Baseplate",
         directory: "basekit-baseplate"
     }
 ];
