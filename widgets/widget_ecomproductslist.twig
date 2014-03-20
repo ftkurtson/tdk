@@ -2,22 +2,6 @@
 <section class="ecom-productslist-products">
     {% for product in plugins.ecommerce.products %}
     <article class="ecom-productslist-product">
-        <h2 class="ecom-productslist-title"><a href="/store/product/{{product.ref}}">{{product.title}}</a></h2>
-        <p class="ecom-productslist-description">{{product.shortDescription}}</p>
-        {% if product.category is not null %}
-            <div class="ecom-productslist-category">
-                <a href="/store/categories/{{product.category.name}}" class="store-category-link">{{product.category.name}}</a>
-            </div>
-        {% endif %}
-        {% if product.tags is not null %}
-            {% for tag in product.tags %}
-            <div class="ecom-productslist-tags">
-                <span class="ecom-productslist-tag">
-                    <a href="/store/tags/{{tag}}" class="ecom-productslist-tag-link">{{tag}}</a>
-                </span>
-            </div>
-            {% endfor %}
-        {% endif %}
         {% if product.assets is not null %}
             {% for asset in product.assets %}
                 {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
@@ -28,6 +12,7 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
+        <h2 class="ecom-productslist-title"><a href="/store/product/{{product.ref}}">{{product.title}}</a></h2>
         <button class="btn" data-ref="{{ product.ref }}">Add to cart</button>
     </article>
     {% endfor%}

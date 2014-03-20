@@ -22,7 +22,6 @@
         </div>
         {% endif %}
         <h2 class="ecom-product-title">{{product.title}}</h2>
-        <p class="ecom-product-long-description">{{product.longDescription}}</p>
         {% for option in product.options %}
             <select>
                 <option value>{{option.title}}</option>
@@ -47,6 +46,7 @@
         {% endfor %}
     {% endif %}
     <button class="btn" data-ref="{{ product.ref }}">Add to cart</button>
+    <p class="ecom-product-long-description">{{product.longDescription}}</p>
     </article>
 {% else %}
     <p>There aren't any products to display.</p>

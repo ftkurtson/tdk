@@ -27,7 +27,7 @@
                             </ol>
                         {% endif %}
 
-                        <ol class="menu-subsection">
+                        <ol class="menu-subsection" {% if item.active != 1 %}hidden{% endif %}>
 
                         {% include "widgets/widget_menu_section.twig" with {'subsection': item} %}
                     {% else %}
@@ -74,7 +74,9 @@
                                 <ol class="menu-items {{ numClass }} bk{{ count }}-columns">
                             {% endif %}
 
-                        {% include "widgets/widget_menu_item.twig" with {'item': item, 'plugins': plugins} %}
+                        {% if item.active == 1 %}
+                            {% include "widgets/widget_menu_item.twig" with {'item': item, 'plugins': plugins} %}
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 </ol>

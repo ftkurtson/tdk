@@ -1069,6 +1069,122 @@
 }());
 (function () {
 
+    BaseKit.Widget.Ecomcheckout = null;
+
+    BaseKit.Widget.EcomcheckoutProperties = {
+    };
+
+    BaseKit.Widget.EcomcheckoutMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            var cart = this.getCart();
+            this.updateItems(this.getCartSize(cart), cart);
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
+            var that = this;
+            Globals.addHook('ecom.basket.changed', this, function () {
+                var cart = that.getCart();
+                that.updateItems(that.getCartSize(cart), cart);
+            });
+
+            window.addEventListener('storage', function (e) {
+                var cart = that.getCart();
+                that.updateItems(that.getCartSize(cart), cart);
+            }, false);
+        },
+
+        getCart: function () {
+            var cart = localStorage.getItem('cart');
+            if (cart) {
+                cart = JSON.parse(cart);
+                return cart;
+            }
+
+            return {};
+        },
+
+        getCartSize: function (cart) {
+            var size = 0,
+                key;
+
+            for (key in cart) {
+                if (cart.hasOwnProperty(key)) {
+                    size = size + 1;
+                }
+            }
+            return size;
+        },
+
+        updateItems: function (size, cart) {
+            var product,
+                button,
+                that = this,
+                key,
+                onClick;
+            this.el.find('.item-count').text(size);
+            this.el.find('.js-checkout-items').empty();
+
+            onClick = function (e) {
+                that.removeFromBasket(e.data.ref);
+            };
+
+            for (key in cart) {
+                if (cart.hasOwnProperty(key)) {
+                    button = $('<button>Remove</button>');
+                    this.el.find('ul').append($('<li></li>').attr('data-ref', key).text(this.findProductByRef(key).title).append(button));
+                    $(button).on('click', { ref: key }, onClick);
+                }
+            }
+        },
+
+        removeFromBasket: function (ref) {
+            this.el.find('li[data-ref=' + ref + ']').remove();
+            var cart = this.getCart();
+            delete cart[ref];
+            cart = JSON.stringify(cart);
+            localStorage.setItem('cart', cart);
+            Globals.notifyHooks('ecom.basket.changed', {});
+        },
+
+        findProductByRef: function (ref) {
+            var key,
+                product;
+            for (key in Server.plugins.ecommerce.products) {
+
+                if (Server.plugins.ecommerce.products.hasOwnProperty(key)) {
+                    product = Server.plugins.ecommerce.products[key];
+                    if (parseInt(product.ref, 10) === parseInt(ref, 10)) {
+                        return product;
+                    }
+                }
+            }
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Ecomcheckout = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.EcomcheckoutProperties,
+            methods: BaseKit.Widget.EcomcheckoutMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetEcomcheckout = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Ecomcheckout(el, options));
+        });
+    };
+}());
+(function () {
+
     BaseKit.Widget.Ecomproduct = null;
 
     BaseKit.Widget.EcomproductProperties = {
@@ -3451,6 +3567,192 @@
         });
     };
 }());(function () {
+
+    BaseKit.Widget.Stripe = null;
+
+    BaseKit.Widget.StripeProperties = {
+        storeRef: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.store.ref : null,
+        chargeUrl: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.store.chargeUrl : null
+    };
+
+    BaseKit.Widget.StripeMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+
+        load: function () {
+            var cart = this.getCart(),
+                cartSize = this.getCartSize(cart);
+
+            this.inCheckout = false;
+
+            this.attachEvents();
+            this.setupStripe();
+            this.renderForm(cartSize, cart);
+        },
+
+        setupStripe: function () {
+            var that = this,
+                stripeHandler = null;
+
+            stripeHandler = StripeCheckout.configure({
+                key: Server.plugins.ecommerce.store.stripePublishableKey,
+                token: function (token, args) {
+                    var form = that.el.find('.js-charge-stripe'),
+                        params = $.extend({}, token, args);
+
+                    $.each(params.card, function (key, value) {
+                        form.append('<input type="hidden" name="card[' + key + ']" value="' + value + '">');
+                    });
+
+                    $.each(params, function (key, value) {
+                        if (key === 'card') {
+                            return;
+                        }
+
+                        form.append('<input type="hidden" name="' + key + '" value="' + value + '">');
+                    });
+
+                    localStorage.removeItem('cart');
+
+                    form.submit();
+                },
+                opened: function () {
+                    that.inCheckout = true;
+                },
+                closed: function () {
+                    that.inCheckout = false;
+                    that.el.find('.js-checkout-stripe').attr('disabled', false).removeClass('loading');
+                }
+            });
+
+            this.el.find('.js-checkout-stripe').on('click', function () {
+                var currency = that.getStoreCurrency(),
+                    cart = that.getCart(),
+                    cartSize = that.getCartSize(cart),
+                    cartTotal = that.getCartTotal(cart);
+
+                $(this).attr('disabled', true).addClass('loading');
+
+                stripeHandler.open({
+                    name: Profile.profile.business || null,
+                    description: App.t('widget.ecomcheckout.stripe_description', '%1 items', cartSize),
+                    image: Profile.profile.logo || null,
+                    amount: cartTotal,
+                    currency: currency.alphaCode,
+                    panelLabel: App.t('widget.ecomcheckout.stripe_pay', 'Pay {{amount}}')
+                });
+            });
+        },
+
+        attachEvents: function () {
+            var that = this;
+
+            Globals.addHook('ecom.basket.changed', this, function () {
+                var cart = that.getCart();
+                that.renderForm(that.getCartSize(cart), cart);
+            });
+
+            window.addEventListener('storage', function (e) {
+                var cart = that.getCart();
+                that.renderForm(that.getCartSize(cart), cart);
+            }, false);
+        },
+
+        renderForm: function (cartSize, cart) {
+            var form = this.el.find('.js-charge-stripe');
+
+            if (this.inCheckout === true) {
+                return;
+            }
+
+            this.el.find('.js-checkout-stripe').attr('disabled', (cartSize > 0) ? false : true);
+
+            form.find('input[name^="items"]').remove();
+
+            $.each(cart, function (item) {
+                form.append('<input type="hidden" name="items[]" value="' + item + '">');
+            });
+        },
+
+        getCart: function () {
+            var cart = localStorage.getItem('cart');
+            if (cart) {
+                cart = JSON.parse(cart);
+                return cart;
+            }
+
+            return {};
+        },
+
+        getCartSize: function (cart) {
+            var size = 0,
+                key;
+
+            for (key in cart) {
+                if (cart.hasOwnProperty(key)) {
+                    size = size + 1;
+                }
+            }
+            return size;
+        },
+
+        getCartTotal: function (cart) {
+            var that = this,
+                total = null,
+                products = [],
+                product = null,
+                key;
+
+            products = _.map(cart, function (quantity, ref) {
+                product = that.findProductByRef(ref);
+                return parseFloat(product.variations[0].price) * quantity;
+            });
+
+            total = _.reduce(products, function (total, price) {
+                return total + price;
+            });
+
+            return total * 100;
+        },
+
+        getStoreCurrency: function () {
+            return Server.plugins.ecommerce.store.currency;
+        },
+
+        findProductByRef: function (ref) {
+            var key,
+                product;
+            for (key in Server.plugins.ecommerce.products) {
+
+                if (Server.plugins.ecommerce.products.hasOwnProperty(key)) {
+                    product = Server.plugins.ecommerce.products[key];
+                    if (parseInt(product.ref, 10) === parseInt(ref, 10)) {
+                        return product;
+                    }
+                }
+            }
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Stripe = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.StripeProperties,
+            methods: BaseKit.Widget.StripeMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    $.fn.basekitWidgetStripe = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Stripe(el, options));
+        });
+    };
+}());
+(function () {
     BaseKit.Widget.Tweet = null;
 
     BaseKit.Widget.TweetProperties = {
