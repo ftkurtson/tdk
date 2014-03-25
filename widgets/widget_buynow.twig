@@ -1,3 +1,7 @@
+{% set freePackage = false %}
+{% if data.packageData and data.packageData.price == '0.00' %}
+    {% set freePackage = true %}
+{% endif %}
 <form class="widget-buynow-container">
     <ul class="widget-buynow-container-list">
         <li>
@@ -29,51 +33,61 @@
             </div>
         </li>
 
+        {% if freePackage == false %}
         <li>
-        {% if data.paymentMethods and data.paymentMethods|length > 0 %}
-            <span class="widget-buynow-title">Methods of payment</span>
-            <ul class="widget-buynow-paymentMethods">
+    
+            {% if data.paymentMethods and data.paymentMethods|length > 0 %}
+                <span class="widget-buynow-title">Methods of payment</span>
+                <ul class="widget-buynow-paymentMethods">
 
-            {% for ref, name in data.paymentMethods %}
-                <li class="payment-method">
-                    <label title="{{ name }}" name="paymentMethods">{{ name }}
-                        <input type="radio" class="{{ name }}" name="paymentMethods" value="{{ ref }}" title="{{ name }}" {% if loop.first %}checked{% endif %}>
-                    </label>
-                </li>
-            {% endfor %}
-
-            </ul>
-        {% else %}
-            {% set noPaymentMethods = true %}
-            <span>No payment methods found.</span>
-        {% endif %}
-        </li>
-
-        <li>
-            <span class="widget-buynow-title">You are about to purchase:</span>
-            {% if data.packageData and data.packageData|length > 0 %}
-                <div class='widget-buynow-package'>
-                    <span class="widget-buynow-package-name" data-ref="{{ data.packageData.ref }}">{{ data.packageData.name }}</span>
-                    <span class="widget-buynow-package-price" data-annually="" data-monthly="">{{ data.packageData.price }}</span>
-                </div>
-
-                <ul>
-                    <li class="pay-period">
-                        <label title="Pay: Annually" name="paymentPeriod">Pay: Annually
-                            <input type="radio" class="payment-period-annually" name="paymentPeriod" value="12" checked="checked" title="Pay: Annually">
+                {% for ref, name in data.paymentMethods %}
+                    <li class="payment-method">
+                        <label title="{{ name }}" name="paymentMethods">{{ name }}
+                            <input type="radio" class="{{ name }}" name="paymentMethods" value="{{ ref }}" title="{{ name }}" {% if loop.first %}checked{% endif %}>
                         </label>
                     </li>
-                    <li class="">
-                        <label title="Pay: Monthly" name="paymentPeriod">Pay: Monthly
-                            <input type="radio" class="payment-period-monthly" name="paymentPeriod" value="1" title="Pay: Monthly">
-                        </label>
-                    </li>
+                {% endfor %}
+
                 </ul>
             {% else %}
-                {% set noPackageInfo = true %}
-                <span>No package information found.</span>
+                {% set noPaymentMethods = true %}
+                <span>No payment methods found.</span>
             {% endif %}
-        </li>
+            </li>
+
+            <li>
+                {% if data.packageData and data.packageData|length > 0 %}
+                    {% if freePackage == true %}
+                        <span class="widget-buynow-title">You are about to register:</span>
+                        <div class='widget-buynow-package'>
+                            <span class="widget-buynow-package-name" data-ref="{{ data.packageData.ref }}">{{ data.packageData.name }}</span>
+                        </div>
+                    {% else %}
+                        <span class="widget-buynow-title">You are about to purchase:</span>
+                        <div class='widget-buynow-package'>
+                            <span class="widget-buynow-package-name" data-ref="{{ data.packageData.ref }}">{{ data.packageData.name }}</span>
+                            <span class="widget-buynow-package-price" data-annually="" data-monthly="">{{ data.packageData.formattedPrice }}</span>
+                        </div>
+
+                        <ul>
+                            <li class="pay-period">
+                                <label title="Pay: Annually" name="paymentPeriod">Pay: Annually
+                                    <input type="radio" class="payment-period-annually" name="paymentPeriod" value="12" checked="checked" title="Pay: Annually">
+                                </label>
+                            </li>
+                            <li class="">
+                                <label title="Pay: Monthly" name="paymentPeriod">Pay: Monthly
+                                    <input type="radio" class="payment-period-monthly" name="paymentPeriod" value="1" title="Pay: Monthly">
+                                </label>
+                            </li>
+                        </ul>
+                    {% endif %}
+                {% else %}
+                    {% set noPackageInfo = true %}
+                    <span>No package information found.</span>
+                {% endif %}
+            </li>
+        {% endif %}
     </ul>
 
     <div>
@@ -81,6 +95,9 @@
             <input type="checkbox" class="widget-buynow-newsletter" name="newsletter" title=newsletter>
         </label>
     </div>
-
-    <button class="widget-buynow-make-payment" title="{{'widgets.buynow.submit'|translate('Make a payment using your selected package options')}}" type="submit" {% if noPaymentMethods or noPackageInfo %} disabled {% endif %}>Buy now</button>
+    {% if freePackage == false %}
+        <button class="widget-buynow-make-payment" title="{{'widgets.buynow.submit'|translate('Make a payment using your selected package options')}}" type="submit" {% if noPaymentMethods or noPackageInfo %} disabled {% endif %}>Buy now</button>
+    {% else %}
+        <button class="widget-buynow-make-payment" title="{{'widgets.buynow.free.submit'|translate('Register')}}" type="submit">Register</button>
+    {% endif %}
 </form>

@@ -1,5 +1,8 @@
-$(function() {
+var Server = {
+    "plugins": plugins
+};
 
+$(function() {
     Twig.extend(function(Twig) {
         Twig.exports.extendTag({
             type: "extends",

@@ -183,6 +183,9 @@ var properties = {
     },
     blogpost: function(templateName, templateValues) {
         return $.extend({}, templateValues);
+    },
+    ecombasket: function(templateName, templateValues) {
+        return $.extend({}, templateValues);
     }
 };
 
@@ -224,242 +227,6 @@ var plugins = function(template) {
                     fileType: "image"
                 }
             }
-        },
-        ecommerce: {
-           "products":[
-              {
-                 "ref":27,
-                 "title":"Brown bag",
-                 "shortDescription":"bag 2",
-                 "longDescription":"the second bag",
-                 "visibility":0,
-                 "availability":1,
-                 "sku":null,
-                 "assets":[
-                    {
-                       "ref":1,
-                       "assetRef":1
-                    }
-                 ],
-                 "category":null,
-                 "tags":[
-
-                 ],
-                 "created":{
-                    "date":"2014-02-07 16:51:03",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 },
-                 "updated":{
-                    "date":"2014-02-07 16:51:03",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 }
-              },
-              {
-                 "ref":28,
-                 "title":"Dark brown bag",
-                 "shortDescription":"Darkest of brown bags",
-                 "longDescription":"Darkest of the brown bags. Lots of capacity.",
-                 "visibility":0,
-                 "availability":1,
-                 "sku":null,
-                 "assets":[
-                    {
-                       "ref":2,
-                       "assetRef":2
-                    }
-                 ],
-                 "category":null,
-                 "tags":[
-
-                 ],
-                 "created":{
-                    "date":"2014-02-07 16:51:43",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 },
-                 "updated":{
-                    "date":"2014-02-12 16:49:23",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 }
-              },
-              {
-                 "ref":30,
-                 "title":"Fly Cross-Body Bag",
-                 "shortDescription":"Ladies Cross-Body Bag",
-                 "longDescription":"Flap over cross over body bag, Detachable strap, Outer Material: Leather, Zip Closure, Magnetic flap, Inside flap zip fastening, 2 colourways ",
-                 "visibility":0,
-                 "availability":1,
-                 "sku":null,
-                 "assets":[
-                    {
-                       "ref":3,
-                       "assetRef":3
-                    }
-                 ],
-                 "category":null,
-                 "tags":[
-
-                 ],
-                 "created":{
-                    "date":"2014-02-07 17:12:21",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 },
-                 "updated":{
-                    "date":"2014-02-07 17:12:21",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 }
-              },
-              {
-                 "ref":26,
-                 "title":"Leather satchel",
-                 "shortDescription":"A bag. For those who like bags",
-                 "longDescription":"The baggiest bag ever.\r\n\r\n\r\n\r\n\r\nBag",
-                 "visibility":0,
-                 "availability":1,
-                 "sku":null,
-                 "assets":[
-                    {
-                       "ref":4,
-                       "assetRef":4
-                    }
-                 ],
-                 "category":null,
-                 "tags":[
-
-                 ],
-                 "created":{
-                    "date":"2014-02-07 16:46:25",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 },
-                 "updated":{
-                    "date":"2014-02-07 16:46:25",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 }
-              },
-              {
-                 "ref":29,
-                 "title":"Tripple clasp bag",
-                 "shortDescription":"Like leather belt clasp things? This is the bag for you!",
-                 "longDescription":"Polyester, Embroidered animal branding, Zip Closure, Tropical floral print, Zip to main compartment, End grab handles",
-                 "visibility":0,
-                 "availability":1,
-                 "sku":null,
-                 "assets":[
-                    {
-                       "ref":5,
-                       "assetRef":5
-                    }
-                 ],
-                 "category":null,
-                 "tags":[
-
-                 ],
-                 "created":{
-                    "date":"2014-02-07 16:53:21",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 },
-                 "updated":{
-                    "date":"2014-02-07 16:53:21",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 }
-              },
-              {
-                 "ref":38,
-                 "title":"Hand bag",
-                 "shortDescription":"Large hand bag for the beach",
-                 "longDescription":"You will see this bag and immediately fell in love, pistachio and purple - perfect!",
-                 "visibility":0,
-                 "availability":1,
-                 "sku":null,
-                 "assets":[
-                    {
-                       "ref":6,
-                       "assetRef":6
-                    }
-                 ],
-                 "category":null,
-                 "tags":[
-                    "xkcd"
-                 ],
-                 "created":{
-                    "date":"2014-02-12 16:31:22",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 },
-                 "updated":{
-                    "date":"2014-02-12 16:31:22",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 }
-              },
-              {
-                 "ref":38,
-                 "title":"Hand bag",
-                 "shortDescription":"Large hand bag for the beach",
-                 "longDescription":"You will see this bag and immediately fell in love, pistachio and purple - perfect!",
-                 "visibility":0,
-                 "availability":1,
-                 "sku":null,
-                 "assets":[
-                    {
-                       "ref":6,
-                       "assetRef":6
-                    }
-                 ],
-                 "category":null,
-                 "tags":[
-                    "xkcd"
-                 ],
-                 "created":{
-                    "date":"2014-02-12 16:31:22",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 },
-                 "updated":{
-                    "date":"2014-02-12 16:31:22",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 }
-              },
-              {
-                 "ref":38,
-                 "title":"Hand bag",
-                 "shortDescription":"Large hand bag for the beach",
-                 "longDescription":"You will see this bag and immediately fell in love, pistachio and purple - perfect!",
-                 "visibility":0,
-                 "availability":1,
-                 "sku":null,
-                 "assets":[
-                    {
-                       "ref":6,
-                       "assetRef":6
-                    }
-                 ],
-                 "category":null,
-                 "tags":[
-                    "xkcd"
-                 ],
-                 "created":{
-                    "date":"2014-02-12 16:31:22",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 },
-                 "updated":{
-                    "date":"2014-02-12 16:31:22",
-                    "timezone_type":3,
-                    "timezone":"Europe/London"
-                 }
-              }
-           ]
         },
         blog: {
            "currentPage": 1,
@@ -565,18 +332,18 @@ var plugins = function(template) {
            "totalPages": 2
         },
         menu: {
-         "ref":4,
-         "title":"Menu",
-         "description":"My menu",
-         "availability":null,
-         "note":null,
-         "category":null,
-         "active":null,
-         "slug":null,
-         "created":"2014-01-06 14:33:27",
-         "updated":"2014-01-06 14:33:27",
-         "items":[
-            {
+            "ref":4,
+            "title":"Menu",
+            "description":"My menu",
+            "availability":null,
+            "note":null,
+            "category":null,
+            "active":null,
+            "slug":null,
+            "created":"2014-01-06 14:33:27",
+            "updated":"2014-01-06 14:33:27",
+            "items":
+            [{
                "ref":373,
                "parentRef":null,
                "title":"Breakfast",
@@ -591,8 +358,8 @@ var plugins = function(template) {
                "created":"2014-01-08 12:46:44",
                "updated":"2014-01-09 12:02:47",
                "note": "here is the note part",
-               "items":[
-                  {
+               "items":
+               [{
                      "ref":27,
                      "title":"Daily Oats Organic Rude Health Porridge",
                      "description":"This porridge will have you feeling rudely healthy all day. we top ours with honey, fresh strawberries & bananas",
@@ -616,8 +383,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$4.15"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":28,
                      "title":"Veggie Brunch Plate",
                      "description":"Free range fried, poached or scrambled eggs, veggie sausages, Heinz baked beans, mushrooms & avocado with toasted artisan sourdough",
@@ -666,8 +433,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$4.95"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":30,
                      "title":"Stacked Blueberry & Banana Pancakes",
                      "description":"With maple syrup. 50p from every Pancake Stack goes to Rays of Sunshine Children's Charity which grants wishes for seriously ill children across the UK",
@@ -691,8 +458,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$6.95"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":31,
                      "title":"Daybreaker Omelette",
                      "description":"Egg white omelette served with cherry tomato & avocado salsa",
@@ -716,8 +483,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$5.95"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":32,
                      "title":"Huevos Rancheros Mexican Breakfast",
                      "description":"Vegetarian option with roasted mushrooms £7.95Free range fried or scrambled eggs, chorizo sausage, black beans, melting cheese, adobe sauce, avocado & tomato salsa on a warm soft corn tortilla",
@@ -741,8 +508,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$8.25"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":33,
                      "title":"Avocado, Hummus & Roasted Cherry Tomatoes",
                      "description":"On toasted artisan sourdough with basil oil",
@@ -766,8 +533,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$5.95"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":34,
                      "title":"“The Western” Omelette",
                      "description":"Three egg omelette with roasted vegetables & manchego, served with cherry tomato & avocado salsa",
@@ -791,8 +558,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$5.95"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":27,
                      "title":"Daily Oats Organic Rude Health Porridge",
                      "description":"This porridge will have you feeling rudely healthy all day. we top ours with honey, fresh strawberries & bananas",
@@ -816,8 +583,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$4.15"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":28,
                      "title":"Veggie Brunch Plate",
                      "description":"Free range fried, poached or scrambled eggs, veggie sausages, Heinz baked beans, mushrooms & avocado with toasted artisan sourdough",
@@ -841,8 +608,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$8.25"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":29,
                      "title":"Deluxe Toastie",
                      "description":"Artisan sourdough toast filled with crispy bacon, fried egg, melting cheddar, lettuce, tomato & mustard mayo",
@@ -866,8 +633,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$4.95"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":30,
                      "title":"Stacked Blueberry & Banana Pancakes",
                      "description":"With maple syrup. 50p from every Pancake Stack goes to Rays of Sunshine Children's Charity which grants wishes for seriously ill children across the UK",
@@ -891,8 +658,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$6.95"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":31,
                      "title":"Daybreaker Omelette",
                      "description":"Egg white omelette served with cherry tomato & avocado salsa",
@@ -916,8 +683,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$5.95"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":32,
                      "title":"Huevos Rancheros Mexican Breakfast",
                      "description":"Vegetarian option with roasted mushrooms £7.95Free range fried or scrambled eggs, chorizo sausage, black beans, melting cheese, adobe sauce, avocado & tomato salsa on a warm soft corn tortilla",
@@ -941,8 +708,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$8.25"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":33,
                      "title":"Avocado, Hummus & Roasted Cherry Tomatoes",
                      "description":"On toasted artisan sourdough with basil oil",
@@ -966,8 +733,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$5.95"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":34,
                      "title":"“The Western” Omelette",
                      "description":"Three egg omelette with roasted vegetables & manchego, served with cherry tomato & avocado salsa",
@@ -991,8 +758,8 @@ var plugins = function(template) {
                         "name":"Normal",
                         "price":"$5.95"
                      }
-                  },
-                  {
+                },
+                {
                      "ref":376,
                      "parentRef":373,
                      "title":"£5 GOOD MORNING BREKKIE",
@@ -1083,8 +850,8 @@ var plugins = function(template) {
                            }
                         }
                      ]
-                  },
-                  {
+                },
+                {
                      "ref":377,
                      "parentRef":373,
                      "title":"£5 GOOD MORNING BREKKIE",
@@ -1175,8 +942,7 @@ var plugins = function(template) {
                            }
                         }
                      ]
-                  }
-               ]
+                }]
             },
             {
                "ref":374,
@@ -1778,9 +1544,400 @@ var plugins = function(template) {
                      ]
                   }
                ]
-            }
-         ]
-      }
+            }]
+        },
+        "ecommerce": {
+            "store":{
+                "ref":18,
+                "currency":{
+                    "ref":3,
+                    "name":"Pound Sterling",
+                    "alphaCode":"GBP",
+                    "htmlCode":"&#163;"
+                },
+                "stripePublishableKey":null,
+                "chargeUrl":"http://localhost"
+            },
+            "products":[
+            {
+                "ref":1,
+                "title":"Aliquam Handbag",
+                "shortDescription":null,
+                "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+                "visibility":0,
+                "availability":1,
+                "sku":null,
+                "assets":[
+                {
+                   "ref":15,
+                   "assetRef":1
+                }],
+                "category":{
+                    "ref":10,
+                    "name":"Handheld"
+                },
+                 "tags":[
+
+                 ],
+                 "options":[
+
+                 ],
+                 "created":{
+                    "date":"2014-03-20 09:29:34",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-03-20 09:32:02",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
+            },
+            {
+                 "ref":2,
+                 "title":"Commodo Handbag",
+                 "shortDescription":null,
+                 "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":21,
+                       "assetRef":2
+                    }
+                 ],
+                 "category":{
+                    "ref":10,
+                    "name":"Handheld"
+                 },
+                 "tags":[
+                    "blue",
+                    "brown",
+                    "pink",
+                    "turquoise"
+                 ],
+                 "options":[
+                    {
+                       "ref":21,
+                       "title":"Colour",
+                       "values":[
+                          {
+                             "ref":66,
+                             "title":"pink"
+                          },
+                          {
+                             "ref":67,
+                             "title":"blue"
+                          },
+                          {
+                             "ref":68,
+                             "title":"turquoise"
+                          },
+                          {
+                             "ref":69,
+                             "title":"brown"
+                          }
+                       ]
+                    }
+                 ],
+                 "created":{
+                    "date":"2014-03-20 09:41:35",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-03-20 09:41:35",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "variations":[
+                    {
+                       "ref":68,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "stock":3,
+                       "values":[
+                          {
+                             "ref":92,
+                             "optionTitle":"Colour",
+                             "valueTitle":"blue"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":69,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "stock":8,
+                       "values":[
+                          {
+                             "ref":93,
+                             "optionTitle":"Colour",
+                             "valueTitle":"turquoise"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":70,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "stock":9,
+                       "values":[
+                          {
+                             "ref":94,
+                             "optionTitle":"Colour",
+                             "valueTitle":"pink"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":71,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"30.00",
+                       "stock":7,
+                       "values":[
+                          {
+                             "ref":95,
+                             "optionTitle":"Colour",
+                             "valueTitle":"brown"
+                          }
+                       ]
+                    }
+                 ]
+            },
+            {
+                 "ref":3,
+                 "title":"Conubia Nostra Handbag",
+                 "shortDescription":null,
+                 "longDescription":"Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut a ligula non tortor pretium laoreet at vel mi. ",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":22,
+                       "assetRef":3
+                    }
+                 ],
+                 "category":{
+                    "ref":11,
+                    "name":"Weekend Bag"
+                 },
+                 "tags":[
+                    "red"
+                 ],
+                 "options":[
+                    {
+                       "ref":22,
+                       "title":"Size",
+                       "values":[
+                          {
+                             "ref":70,
+                             "title":"small"
+                          },
+                          {
+                             "ref":71,
+                             "title":"large"
+                          }
+                       ]
+                    }
+                 ],
+                 "created":{
+                    "date":"2014-03-20 09:46:03",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-03-20 09:46:03",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "variations":[
+                    {
+                       "ref":72,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"42.00",
+                       "stock":4,
+                       "values":[
+                          {
+                             "ref":96,
+                             "optionTitle":"Size",
+                             "valueTitle":"small"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":73,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"58.00",
+                       "stock":15,
+                       "values":[
+                          {
+                             "ref":97,
+                             "optionTitle":"Size",
+                             "valueTitle":"large"
+                          }
+                       ]
+                    }
+                 ]
+            },
+            {
+                 "ref":4,
+                 "title":"Magnis Handbag",
+                 "shortDescription":null,
+                 "longDescription":"Cum sociis natoque penatibus et magnis dis parturient montes.",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":20,
+                       "assetRef":4
+                    }
+                 ],
+                 "category":{
+                    "ref":10,
+                    "name":"Handheld"
+                 },
+                 "tags":[
+                    "leather",
+                    "brown"
+                 ],
+                 "options":[
+
+                 ],
+                 "created":{
+                    "date":"2014-03-20 09:38:16",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-03-20 09:38:16",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
+            },
+            {
+                 "ref":5,
+                 "title":"Montes Handheld Bag",
+                 "shortDescription":null,
+                 "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes.",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":19,
+                       "assetRef":5
+                    }
+                 ],
+                 "category":{
+                    "ref":10,
+                    "name":"Handheld"
+                 },
+                 "tags":[
+                    "brown"
+                 ],
+                 "options":[
+
+                 ],
+                 "created":{
+                    "date":"2014-03-20 09:36:42",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-03-20 09:36:42",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 }
+            },
+            {
+                "ref":6,
+                "title":"Tristique Handbag",
+                "shortDescription":null,
+                "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique.",
+                "visibility":0,
+                "availability":1,
+                "sku":null,
+                "assets":[
+                    {
+                       "ref":23,
+                       "assetRef":6
+                    }
+                ],
+                "category":{
+                    "ref":12,
+                    "name":"Tote Bag"
+                },
+                "tags":[
+
+                ],
+                "options":[
+                    {
+                       "ref":20,
+                       "title":"Colour",
+                       "values":[
+                          {
+                             "ref":64,
+                             "title":"red"
+                          },
+                          {
+                             "ref":65,
+                             "title":"brown"
+                          }
+                       ]
+                    }
+                ],
+                "created":{
+                    "date":"2014-03-20 09:34:38",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                },
+                "updated":{
+                    "date":"2014-03-20 09:46:41",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                },
+                "variations":[
+                    {
+                       "ref":66,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"67.00",
+                       "stock":3,
+                       "values":[
+                          {
+                             "ref":90,
+                             "optionTitle":"Colour",
+                             "valueTitle":"brown"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":67,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"67.00",
+                       "stock":1,
+                       "values":[
+                          {
+                             "ref":91,
+                             "optionTitle":"Colour",
+                             "valueTitle":"red"
+                          }
+                       ]
+                    }
+                ]
+            }]
+        }
     }
 };
 

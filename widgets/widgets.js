@@ -283,7 +283,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: 'site/api/user-registration',
+                        url: '/site/api/user-registration',
                         data: submitData,
                         async: false,
                         beforeSend: function () {
@@ -309,7 +309,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: 'site/api/auth-token',
+                    url: '/site/api/auth-token',
                     success: onSuccess
                 });
             });
@@ -331,7 +331,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'site/api/brand-payment-methods',
+                url: '/site/api/brand-payment-methods',
                 data: {
                     brandRef: this.get('brandRef')
                 },
@@ -341,7 +341,6 @@
                     that.showMessageBox();
                 }
             }).done(function (response) {
-
                 // HC: sets to temporary properties as we don't want to save them
                 that.set('paymentMethods', response.paymentMethods, true);
                 that.rerender();
@@ -417,7 +416,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'site/api/get-package',
+                url: '/site/api/get-package',
                 data: data,
                 async: false,
                 beforeSend: function () {
@@ -436,7 +435,8 @@
 
                     if (response.prices && response.prices.length > 0) {
                         $.each(response.prices, function (index, value) {
-                            packageData.price = this.formattedPrice;
+                            packageData.price = this.price;
+                            packageData.formattedPrice = this.formattedPrice;
                         });
                     }
                 }
@@ -1008,9 +1008,14 @@
         updateBasket: function (size, cart) {
             var product,
                 button,
+                imageHTML,
+                imageEl,
                 that = this,
                 key,
-                onClick;
+                onClick,
+                assetUrl,
+                basketTotal = 0;
+
             this.el.find('.basket-count').text(size);
             this.el.find('ul').empty();
 
@@ -1020,11 +1025,53 @@
 
             for (key in cart) {
                 if (cart.hasOwnProperty(key)) {
+                    imageHTML = '';
+                    if (assetUrl = this.findAssetURL(cart[key])) {
+                        imageHTML = '<img src=\'' + assetUrl + '\'></img>';
+                    }
+                    basketTotal = this.addToBasketTotal(basketTotal, cart[key]);
+
                     button = $('<button>Remove</button>');
-                    this.el.find('ul').append($('<li></li>').attr('data-ref', key).text(this.findProductByRef(key).title).append(button));
+                    imageEl = $(imageHTML);
+                    this.el.find('ul').append($('<li></li>').attr('data-ref', key).text(this.findProductByRef(key).title).append(imageEl).append(button));
                     $(button).on('click', { ref: key }, onClick);
                 }
             }
+
+            this.el.find('.basket-total').text(Server.plugins.ecommerce.store.currency.alphaCode + ' ' + basketTotal);
+        },
+
+        addToBasketTotal: function (total, productRef) {
+            var price = 0;
+            total = parseInt(total, 10);
+
+            if (Server.plugins.ecommerce.products.hasOwnProperty(productRef)) {
+                product = Server.plugins.ecommerce.products[productRef];
+                
+                // Need to get variation price in here when it's ready - for the time being just add 1
+                price = total + 1;
+            }
+            return price;
+        },
+
+        findAssetURL: function (productRef) {
+            var asset,
+                assetRef = null,
+                product;
+  
+            if (Server.plugins.ecommerce.products.hasOwnProperty(productRef)) {
+                product = Server.plugins.ecommerce.products[productRef];
+                if (product.assets.hasOwnProperty(0)) {
+                    assetRef = product.assets[0].assetRef;
+                }
+            }
+
+            if (Server.plugins.assets.images.hasOwnProperty(assetRef)) {
+                asset = Server.plugins.assets.images[assetRef];
+                return asset.url;
+            }
+
+            return;
         },
 
         removeFromBasket: function (ref) {
@@ -1185,6 +1232,32 @@
 }());
 (function () {
 
+    BaseKit.Widget.Ecomconfirmation = null;
+
+    BaseKit.Widget.EcomconfirmationProperties = {
+    };
+
+    BaseKit.Widget.EcomconfirmationMethods = {
+        construct: function (el, options) {
+            this.options = options;
+        }
+    };
+
+    BaseKit.Widget.Ecomconfirmation = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.EcomconfirmationProperties,
+            methods: BaseKit.Widget.EcomconfirmationMethods
+        });
+    };
+
+    $.fn.basekitWidgetEcomconfirmation = function (options) {
+        this.each(function (index, el) {
+            $(el).data('bkob', new BaseKit.Widget.Ecomconfirmation(el, options));
+        });
+    };
+}());
+(function () {
+
     BaseKit.Widget.Ecomproduct = null;
 
     BaseKit.Widget.EcomproductProperties = {
@@ -1214,7 +1287,7 @@
             } else {
                 cart = {};
             }
-            cart[productRef] = 1;
+            cart[productRef] = productRef;
             localStorage.setItem('cart', JSON.stringify(cart));
 
             Globals.notifyHooks('ecom.basket.changed', {});

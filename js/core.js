@@ -38,3 +38,7 @@ var Profile = {
 };
 
 var Server = {};
+
+var Globals = {
+    addHook: function (){}
+}
