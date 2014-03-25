@@ -1008,14 +1008,9 @@
         updateBasket: function (size, cart) {
             var product,
                 button,
-                imageHTML,
-                imageEl,
                 that = this,
                 key,
-                onClick,
-                assetUrl,
-                basketTotal = 0;
-
+                onClick;
             this.el.find('.basket-count').text(size);
             this.el.find('ul').empty();
 
@@ -1025,53 +1020,11 @@
 
             for (key in cart) {
                 if (cart.hasOwnProperty(key)) {
-                    imageHTML = '';
-                    if (assetUrl = this.findAssetURL(cart[key])) {
-                        imageHTML = '<img src=\'' + assetUrl + '\'></img>';
-                    }
-                    basketTotal = this.addToBasketTotal(basketTotal, cart[key]);
-
                     button = $('<button>Remove</button>');
-                    imageEl = $(imageHTML);
-                    this.el.find('ul').append($('<li></li>').attr('data-ref', key).text(this.findProductByRef(key).title).append(imageEl).append(button));
+                    this.el.find('ul').append($('<li></li>').attr('data-ref', key).text(this.findProductByRef(key).title).append(button));
                     $(button).on('click', { ref: key }, onClick);
                 }
             }
-
-            this.el.find('.basket-total').text(Server.plugins.ecommerce.store.currency.alphaCode + ' ' + basketTotal);
-        },
-
-        addToBasketTotal: function (total, productRef) {
-            var price = 0;
-            total = parseInt(total, 10);
-
-            if (Server.plugins.ecommerce.products.hasOwnProperty(productRef)) {
-                product = Server.plugins.ecommerce.products[productRef];
-                
-                // Need to get variation price in here when it's ready - for the time being just add 1
-                price = total + 1;
-            }
-            return price;
-        },
-
-        findAssetURL: function (productRef) {
-            var asset,
-                assetRef = null,
-                product;
-  
-            if (Server.plugins.ecommerce.products.hasOwnProperty(productRef)) {
-                product = Server.plugins.ecommerce.products[productRef];
-                if (product.assets.hasOwnProperty(0)) {
-                    assetRef = product.assets[0].assetRef;
-                }
-            }
-
-            if (Server.plugins.assets.images.hasOwnProperty(assetRef)) {
-                asset = Server.plugins.assets.images[assetRef];
-                return asset.url;
-            }
-
-            return;
         },
 
         removeFromBasket: function (ref) {
@@ -1287,7 +1240,7 @@
             } else {
                 cart = {};
             }
-            cart[productRef] = productRef;
+            cart[productRef] = 1;
             localStorage.setItem('cart', JSON.stringify(cart));
 
             Globals.notifyHooks('ecom.basket.changed', {});
