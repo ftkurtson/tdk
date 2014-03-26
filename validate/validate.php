@@ -51,12 +51,10 @@ function validateMetadata($templateDir, &$errors)
 {
     $requiredMetaElements = array(
         'name',
-        'screenshot',
         'thumbnail'
     );
 
     $requiredMetaImages = array(
-        'screenshot',
         'thumbnail',
     );
 

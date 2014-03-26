@@ -251,6 +251,8 @@ $(function() {
                         );
                 });
             } else {
+                $("#layout").empty();
+                
 	            $("#layout")
                 .append($("<option></option>")
                     .attr("value", 'default.twig')

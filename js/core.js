@@ -40,5 +40,6 @@ var Profile = {
 var Server = {};
 
 var Globals = {
-    addHook: function (){}
+    addHook: function (){},
+    notifyHooks: function (){}
 }
