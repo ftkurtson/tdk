@@ -1006,6 +1006,7 @@
         },
 
         updateBasket: function (size, cart) {
+            return;
             var product,
                 button,
                 imageHTML,
@@ -1173,6 +1174,7 @@
         },
 
         updateItems: function (size, cart) {
+            return;
             var product,
                 button,
                 that = this,

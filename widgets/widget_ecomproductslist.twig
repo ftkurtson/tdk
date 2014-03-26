@@ -1,21 +1,38 @@
-{% if plugins.ecommerce.products|length %}
 <section class="ecom-productslist-products">
-    {% for product in plugins.ecommerce.products %}
     <article class="ecom-productslist-product">
-        {% if product.assets is not null %}
-            {% for asset in product.assets %}
-                {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
-                    {% set imageSrc = plugins.assets.images[asset.assetRef].url %}
-                    <div class="ecom-productslist-image-wrap" style="background-image:url('{{ imageSrc }}')">
-                        <img class="ecom-productslist-image" src="{{imageSrc}}">
-                    </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-        <h2 class="ecom-productslist-title"><a href="/store/product/{{product.ref}}">{{product.title}}</a></h2>
-        <button class="btn" data-ref="{{ product.ref }}">Add to cart</button>
+        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/2250x800')">
+            <img class="ecom-productslist-image" src="http://placehold.it/2250x800">
+        </div>
+        <h2 class="ecom-productslist-title"><a href="/store/product/1">Aliquam Handbag</a></h2>
     </article>
-    {% endfor%}
-{% else %}
-    <p>There aren't any products to display.</p>
-{% endif %}
+    <article class="ecom-productslist-product">
+        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/300x100')">
+            <img class="ecom-productslist-image" src="http://placehold.it/300x100">
+        </div>
+        <h2 class="ecom-productslist-title"><a href="/store/product/2">Commodo Handbag</a></h2>
+    </article>
+    <article class="ecom-productslist-product">
+        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/250x250')">
+            <img class="ecom-productslist-image" src="http://placehold.it/250x250">
+        </div>
+        <h2 class="ecom-productslist-title"><a href="/store/product/3">Conubia Nostra Handbag</a></h2>
+    </article>
+    <article class="ecom-productslist-product">
+        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/529x150')">
+            <img class="ecom-productslist-image" src="http://placehold.it/529x150">
+        </div>
+        <h2 class="ecom-productslist-title"><a href="/store/product/4">Magnis Handbag</a></h2>
+    </article>
+    <article class="ecom-productslist-product">
+        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/600x200')">
+            <img class="ecom-productslist-image" src="http://placehold.it/600x200">
+        </div>
+        <h2 class="ecom-productslist-title"><a href="/store/product/5">Montes Handheld Bag</a></h2>
+    </article>
+    <article class="ecom-productslist-product">
+        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/250x250')">
+            <img class="ecom-productslist-image" src="http://placehold.it/250x250">
+        </div>
+        <h2 class="ecom-productslist-title"><a href="/store/product/6">Tristique Handbag</a></h2>
+    </article>
+</section>

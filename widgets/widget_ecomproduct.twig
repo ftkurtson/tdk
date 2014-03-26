@@ -1,53 +1,37 @@
-{% if plugins.ecommerce.products[0] is defined %}
-{% set product = plugins.ecommerce.products[0] %}
-    <article class="ecom-product">
-        {% if product.assets is not null %}
-        <div class="ecom-product-images-container">
-            {% set imageSrcPreview = plugins.assets.images[product.assets|first.assetRef].url %}
-            <div class="ecom-product-preview-image-wrap" style="background-image:url('{{ imageSrcPreview }}')">
-                <img class="ecom-product-preview-image"  src="{{imageSrcPreview}}" alt>
-            </div>
-            {% if product.assets|length > 0 %}
-            <ul class="ecom-product-image-list">
-            {% for asset in product.assets %}
-                {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
-                    {% set imageSrc = plugins.assets.images[asset.assetRef].url %}
-                    <li class="ecom-product-image-wrap" style="background-image:url('{{ imageSrc }}')">
-                        <img class="ecom-product-image"  src="{{imageSrc}}" alt>
-                    </li>
-                {% endif %}
-            {% endfor %}
-            </ul>
-            {% endif %}
+<article class="ecom-product">
+    <div class="ecom-product-images-container">
+        <div class="ecom-product-preview-image-wrap" style="background-image:url('http://placehold.it/960x150')">
+            <img class="ecom-product-preview-image" src="http://placehold.it/960x150" alt="">
         </div>
-        {% endif %}
-        <h2 class="ecom-product-title">{{product.title}}</h2>
-        {% for option in product.options %}
-            <select>
-                <option value>{{option.title}}</option>
-                <option disabled>----</option>
-                {% for value in option.values %}
-                    <option value="{{value.ref}}">{{value.title}}</option>
-                {% endfor %}
-            </select>
-        {% endfor %}
-
-        <p class="ecom-product-sku">{{product.sku}}</p>
-    {% if product.category is not null %}
-        <span class="ecom-product-category">
-            <a href="/store/categories/{{product.category.name}}" class="store-category-link">{{product.category.name}}</a>
-        </span>
-    {% endif %}
-    {% if product.tags is not null %}
-        {% for tag in product.tags %}
-        <span class="ecom-product-tag">
-            <a href="/store/tags/{{tag}}" class="ecom-product-tag-link">{{tag}}</a>
-        </span>
-        {% endfor %}
-    {% endif %}
-    <button class="btn" data-ref="{{ product.ref }}">Add to cart</button>
-    <p class="ecom-product-long-description">{{product.longDescription}}</p>
-    </article>
-{% else %}
-    <p>There aren't any products to display.</p>
-{% endif %}
+        <ul class="ecom-product-image-list">
+            <li class="ecom-product-image-wrap" style="background-image:url('http://placehold.it/960x150')">
+                <img class="ecom-product-image"  src="http://placehold.it/960x150">
+            </li>
+            <li class="ecom-product-image-wrap" style="background-image:url('http://placehold.it/150x500')">
+                <img class="ecom-product-image"  src="http://placehold.it/150x500">
+            </li>
+            <li class="ecom-product-image-wrap" style="background-image:url('http://placehold.it/64x64')">
+                <img class="ecom-product-image"  src="http://placehold.it/64x64">
+            </li>
+        </ul>
+    </div>
+    <h2 class="ecom-product-title">Type your product title</h2>
+    <span>size</span>
+    <select data-option-name="size">
+        <option value="">Select</option>
+            <option value="1">large</option>
+            <option value="2">small</option>
+            <option value="3" selected="">medium</option>
+    </select>
+    
+    <p>Price: 1.00</p>
+    <p class="ecom-product-sku"></p>
+    <span class="ecom-product-category">
+        <a href="/store/categories/tvs" class="store-category-link">tvs</a>
+    </span>
+    <span class="ecom-product-tag">
+        <a href="/store/tags/telly" class="ecom-product-tag-link">telly</a>
+    </span>
+    <button class="btn" data-ref="1">Add to cart</button>
+    <p class="ecom-product-long-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gravida a orci sit amet lacinia. Cras consequat consectetur est, id imperdiet quam luctus vel. In commodo, quam tempus consequat scelerisque, eros nunc venenatis turpis, id facilisis nulla libero ut quam. Integer molestie ante nec sollicitudin vulputate. Pellentesque eu risus velit. Sed gravida neque mi, vel feugiat enim porttitor a. Pellentesque sollicitudin vel augue accumsan fringilla. Nam sit amet velit sit amet dolor volutpat pretium. In elementum purus elementum, dictum augue at, bibendum turpis. Quisque pulvinar metus ac lacinia pulvinar. Proin dapibus convallis risus eget egestas. Integer est magna, sodales ut auctor in, tristique vel eros. Donec vel tortor tempor, lobortis justo in, sagittis leo.</p>
+</article>
