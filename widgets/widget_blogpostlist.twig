@@ -45,9 +45,10 @@
         <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage - 1) }}" class="blog-post-pagination-pagepaginate-newer">{{ "shared_views.blog-list.newer"|translate("Newer") }}</a>
     {% endif %}
 
-    {% if plugins.blog.totalPages > 1 and plugins.blog.currentPage != plugins.blog.totalPages and plugins.blog.currentPage <= plugins.blog.totalPages %}
+    {% if (plugins.blog.totalPages > 1 and plugins.blog.currentPage != plugins.blog.totalPages and plugins.blog.currentPage <= plugins.blog.totalPages) or (page.immutable == 0) %}
         <a href="{{ plugins.blog.pathFormat ~ (plugins.blog.currentPage + 1) }}" class="blog-post-pagination-page paginate-older">{{ "shared_views.blog-list.older"|translate("Older") }}</a>
     {% endif %}
+
     </footer>
 
 {% else %}

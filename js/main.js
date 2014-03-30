@@ -48,7 +48,8 @@ $(function() {
 
         switch (name) {
             case "main":
-                html += renderWidget('content', 'maincontent1');
+                html += renderWidget('ecomproduct', 'mainecomproduct');
+                /*
                 html += renderWidget('contactform', 'maincontactform1');
                 html += renderWidget('twitter', 'maintwitter1');
                 html += renderWidget('line', 'mainline1');
@@ -82,6 +83,7 @@ $(function() {
                 html += renderWidget('blogsearch', 'blogsearch1');
                 html += renderWidget('menusections', 'menusections1');
                 html += renderWidget('menu', 'menu1');
+                */
 
                 break;
         }
