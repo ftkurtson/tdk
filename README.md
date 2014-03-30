@@ -7,6 +7,11 @@ The build file included can be used to pull in all the required files from the m
 
 For more on template creation, please refer to the template development kit [documentation](http://developers.basekit.com).
 
+###Updates 2014-03-30
+Build for version 7.22
+ - Added LESS validation for validator. Find those LESS bugs easily!
+ - Added basekit-bootstrap version 2.1
+
 ###Updates 2014-03-16
 Build for version 7.20
 - Pulls page types from the template
