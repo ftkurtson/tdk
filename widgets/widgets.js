@@ -965,7 +965,9 @@
         },
 
         load: function () {
-            this.updateBasket();
+            if (Server.plugins.ecommerce) {
+                this.updateBasket();
+            }
         },
 
         attachEvents: function () {
@@ -1034,10 +1036,10 @@
                     return parseInt(variation.ref, 10) === parseInt(ref, 10);
                 });
 
-                if (result.length === 1) {
+                if (typeof result === 'object' && result.length === 1) {
                     variation = result[0];
 
-                    if(product.assets.length) {
+                    if(typeof product === 'object' && typeof product.assets === 'object' && product.assets.length > 0) {
                         variation.assetUrl = Server.plugins.assets.images[product.assets[0].assetRef].url;
                     }
                 }

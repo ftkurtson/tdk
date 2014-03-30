@@ -6,9 +6,9 @@
             {% for asset in product.assets %}
                 {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
                     {% set imageSrc = plugins.assets.images[asset.assetRef].url %}
-                    <div class="ecom-productslist-image-wrap" style="background-image:url('{{ imageSrc }}')">
+                    <a class="ecom-productslist-image-wrap" style="background-image:url('{{ imageSrc }}')" href="/store/product/{{product.ref}}" title="{{product.title}}">
                         <img class="ecom-productslist-image" src="{{imageSrc}}">
-                    </div>
+                    </a>
                 {% endif %}
             {% endfor %}
         {% endif %}
