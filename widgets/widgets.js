@@ -965,140 +965,85 @@
         },
 
         load: function () {
-            var cart = this.getCart();
-            this.updateBasket(this.getCartSize(cart), cart);
-            this.attachEvents();
+            this.updateBasket();
         },
 
         attachEvents: function () {
             var that = this;
             Globals.addHook('ecom.basket.changed', this, function () {
-                var cart = that.getCart();
-                that.updateBasket(that.getCartSize(cart), cart);
+                that.updateBasket();
             });
 
-            window.addEventListener('storage', function (e) {
-                var cart = that.getCart();
-                that.updateBasket(that.getCartSize(cart), cart);
-            }, false);
+            $(this.el).find('.js-remove').on('click', function (e) {
+                that.removeItem($(this).parent().data('ref'));
+                that.updateBasket();
+            });
         },
 
         getCart: function () {
-            var cart = localStorage.getItem('cart');
-            if (cart) {
-                cart = JSON.parse(cart);
-                return cart;
-            }
-
-            return {};
+            return JSON.parse(localStorage.getItem('cart')) || {};
         },
 
-        getCartSize: function (cart) {
-            var size = 0,
-                key;
-
-            for (key in cart) {
-                if (cart.hasOwnProperty(key)) {
-                    size = size + 1;
-                }
-            }
-            return size;
-        },
-
-        updateBasket: function (size, cart) {
-            var product,
-                button,
-                imageHTML,
-                imageEl,
-                titleText,
-                that = this,
-                key,
-                onClick,
-                assetUrl,
+        updateBasket: function () {
+            var that = this,
+                cart = this.getCart(),
+                quantity = 0,
+                items = [],
                 basketTotal = 0;
 
-            this.el.find('.basket-count').text(size);
-            this.el.find('ul').empty();
+            $.each(cart, function (ref, key) {
+                var variation = that.findVariationByRef(ref);
 
-            onClick = function (e) {
-                that.removeFromBasket(e.data.ref);
-            };
+                if (variation !== null) {
+                    basketTotal = parseFloat(basketTotal) + parseFloat(variation.price) * parseInt(cart[ref], 10);
+                    items.push({
+                        ref: parseInt(ref, 10),
+                        title: variation.title,
+                        quantity: cart[ref],
+                        assetUrl: variation.assetUrl
+                    });
 
-            for (key in cart) {
-                if (cart.hasOwnProperty(key)) {
-                    imageHTML = '';
-                    assetUrl = this.findAssetURL(cart[key]);
-                    if (assetUrl) {
-                        imageHTML = '<div class="ecombasekit-item-image" style="background-image:url(\'' + assetUrl + '\');"><img src=\'' + assetUrl + '\'></img></div>';
-                    }
-                    basketTotal = this.addToBasketTotal(basketTotal, cart[key]);
-
-                    button = $('<button>Remove</button>');
-                    imageEl = $(imageHTML);
-                    titleText = $('<span></span>').text(this.findProductByRef(key).title);
-                    this.el.find('ul').append($('<li></li>').attr('data-ref', key).append(imageEl).append(titleText).append(button));
-                    $(button).on('click', { ref: key }, onClick);
+                    quantity = quantity + 1;
                 }
-            }
+            });
 
-            this.el.find('.basket-total').text(Server.plugins.ecommerce.store.currency.alphaCode + ' ' + basketTotal);
+            items['total'] = Server.plugins.ecommerce.store.currency.alphaCode + ' ' + basketTotal;
+            items['quantity'] = quantity;
+            this.set('items', items, true);
+            this.rerender();
         },
 
-        addToBasketTotal: function (total, productRef) {
-            var price = 0,
-                product = null;
-            total = parseInt(total, 10);
-
-            if (Server.plugins.ecommerce.products.hasOwnProperty(productRef)) {
-                product = Server.plugins.ecommerce.products[productRef];
-                
-                // Need to get variation price in here when it's ready - for the time being just add 1
-                price = total + 1;
-            }
-            return price;
-        },
-
-        findAssetURL: function (productRef) {
-            var asset,
-                assetRef = null,
-                product;
-  
-            if (Server.plugins.ecommerce.products.hasOwnProperty(productRef)) {
-                product = Server.plugins.ecommerce.products[productRef];
-                if (product.assets.hasOwnProperty(0)) {
-                    assetRef = product.assets[0].assetRef;
-                }
-            }
-
-            if (Server.plugins.assets.images.hasOwnProperty(assetRef)) {
-                asset = Server.plugins.assets.images[assetRef];
-                return asset.url;
-            }
-
-            return;
-        },
-
-        removeFromBasket: function (ref) {
-            this.el.find('li[data-ref=' + ref + ']').remove();
+        removeItem: function (ref) {
             var cart = this.getCart();
-            delete cart[ref];
-            cart = JSON.stringify(cart);
-            localStorage.setItem('cart', cart);
-            Globals.notifyHooks('ecom.basket.changed', {});
+
+            if (cart[ref] === 1) {
+                delete cart[ref];
+            } else {
+                cart[ref] = cart[ref] - 1;
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
         },
 
-        findProductByRef: function (ref) {
-            var key,
-                product;
-            for (key in Server.plugins.ecommerce.products) {
+        findVariationByRef: function (ref) {
+            var variation = null,
+                products = Server.plugins.ecommerce.products;
 
-                if (Server.plugins.ecommerce.products.hasOwnProperty(key)) {
-                    product = Server.plugins.ecommerce.products[key];
-                    if (parseInt(product.ref, 10) === parseInt(ref, 10)) {
-                        return product;
+            $.each(products, function (key, product) {
+                var result = $.grep(product.variations, function (variation) {
+                    return parseInt(variation.ref, 10) === parseInt(ref, 10);
+                });
+
+                if (result.length === 1) {
+                    variation = result[0];
+
+                    if(product.assets.length) {
+                        variation.assetUrl = Server.plugins.assets.images[product.assets[0].assetRef].url;
                     }
                 }
-            }
+            });
+
+            return variation || null;
         }
     };
 
@@ -1123,6 +1068,8 @@
     BaseKit.Widget.Ecomcheckout = null;
 
     BaseKit.Widget.EcomcheckoutProperties = {
+        'countries' : Server.plugins.ecommerce ? Server.plugins.ecommerce.countries : null,
+        'shippings' : Server.plugins.ecommerce ? Server.plugins.ecommerce.shippings : null
     };
 
     BaseKit.Widget.EcomcheckoutMethods = {
@@ -1132,141 +1079,149 @@
         },
 
         load: function () {
-            var cart = this.getCart();
-            this.updateItems(this.getCartSize(cart), cart);
-            this.attachEvents();
+            this.updateCheckout();
         },
 
         attachEvents: function () {
             var that = this;
             Globals.addHook('ecom.basket.changed', this, function () {
-                var cart = that.getCart();
-                that.updateItems(that.getCartSize(cart), cart);
+                that.updateCheckout();
             });
 
-            window.addEventListener('storage', function (e) {
-                var cart = that.getCart();
-                that.updateItems(that.getCartSize(cart), cart);
-            }, false);
+            $(this.el).find('.js-add').on('click', function (e) {
+                that.addItem($(this).data('ref'));
+                that.updateCheckout();
+            });
+
+            $(this.el).find('.js-remove').on('click', function (e) {
+                that.removeItem($(this).data('ref'));
+                that.updateCheckout();
+            });
+
+            this.countrySelectEvent();
+            this.shippingSelectEvent();
         },
 
         getCart: function () {
-            var cart = localStorage.getItem('cart');
-            if (cart) {
-                cart = JSON.parse(cart);
-                return cart;
-            }
-
-            return {};
+            return JSON.parse(localStorage.getItem('cart')) || {};
         },
 
-        getCartSize: function (cart) {
-            var size = 0,
-                key;
+        updateCheckout: function () {
+            var that = this,
+                cart = this.getCart(),
+                total = 0,
+                items = [];
 
-            for (key in cart) {
-                if (cart.hasOwnProperty(key)) {
-                    size = size + 1;
+            $.each(cart, function (ref, key) {
+                var variation = that.findVariationByRef(ref);
+
+                if (variation !== null) {
+                    total = total + parseFloat(variation.price) * parseInt(cart[ref], 10);
+
+                    items.push({
+                        ref: ref,
+                        title: variation.title,
+                        assetUrl: variation.assetUrl,
+                        quantity: parseInt(cart[ref], 10),
+                        pricePU: parseFloat(variation.price),
+                        price: parseFloat(variation.price) * parseInt(cart[ref], 10)
+                    });
                 }
-            }
-            return size;
+            });
+
+            items['totalPrice'] = total;
+            this.set('items', items, true);
+            this.set('totalPrice', total, true);
+            this.rerender();
         },
 
-        updateItems: function (size, cart) {
-            var product,
-                button,
-                that = this,
-                key,
-                imageHTML,
-                imageEl,
-                titleText,
-                basketTotal = 0,
-                assetUrl,
-                onClick;
-
-            this.el.find('.item-count').text(size);
-            this.el.find('.js-checkout-items').empty();
-
-            onClick = function (e) {
-                that.removeFromBasket(e.data.ref);
-            };
-
-            for (key in cart) {
-                if (cart.hasOwnProperty(key)) {
-                    imageHTML = '';
-                    assetUrl = this.findAssetURL(cart[key]);
-                    if (assetUrl) {
-                        imageHTML = '<div class="ecombasekit-item-image" style="background-image:url(\'' + assetUrl + '\');"><img src=\'' + assetUrl + '\'></img></div>';
-                    }
-                    basketTotal = this.addToBasketTotal(basketTotal, cart[key]);
-
-                    button = $('<button>Remove</button>');
-                    imageEl = $(imageHTML);
-                    titleText = $('<span></span>').text(this.findProductByRef(key).title);
-                    this.el.find('ul').append($('<li></li>').attr('data-ref', key).append(imageEl).append(titleText).append(button));
-                    $(button).on('click', { ref: key }, onClick);
-                }
-            }
-
-            this.el.find('.checkout-total').text(Server.plugins.ecommerce.store.currency.alphaCode + ' ' + basketTotal);
-        },
-
-        addToBasketTotal: function (total, productRef) {
-            var price = 0,
-                product = null;
-            total = parseInt(total, 10);
-
-            if (Server.plugins.ecommerce.products.hasOwnProperty(productRef)) {
-                product = Server.plugins.ecommerce.products[productRef];
-                
-                // Need to get variation price in here when it's ready - for the time being just add 1
-                price = total + 1;
-            }
-
-            return price;
-        },
-
-        findAssetURL: function (productRef) {
-            var asset,
-                assetRef = null,
-                product;
-  
-            if (Server.plugins.ecommerce.products.hasOwnProperty(productRef)) {
-                product = Server.plugins.ecommerce.products[productRef];
-                if (product.assets.hasOwnProperty(0)) {
-                    assetRef = product.assets[0].assetRef;
-                }
-            }
-
-            if (Server.plugins.assets.images.hasOwnProperty(assetRef)) {
-                asset = Server.plugins.assets.images[assetRef];
-                return asset.url;
-            }
-
-            return;
-        },
-
-        removeFromBasket: function (ref) {
-            this.el.find('li[data-ref=' + ref + ']').remove();
+        removeItem: function (ref) {
             var cart = this.getCart();
-            delete cart[ref];
-            cart = JSON.stringify(cart);
-            localStorage.setItem('cart', cart);
-            Globals.notifyHooks('ecom.basket.changed', {});
+
+            if (cart[ref] === 1) {
+                delete cart[ref];
+            } else {
+                cart[ref] = cart[ref] - 1;
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
         },
 
-        findProductByRef: function (ref) {
-            var key,
-                product;
-            for (key in Server.plugins.ecommerce.products) {
+        addItem: function (ref) {
+            var cart = this.getCart();
 
-                if (Server.plugins.ecommerce.products.hasOwnProperty(key)) {
-                    product = Server.plugins.ecommerce.products[key];
-                    if (parseInt(product.ref, 10) === parseInt(ref, 10)) {
-                        return product;
+            cart[ref] = cart[ref] + 1;
+            localStorage.setItem('cart', JSON.stringify(cart));
+        },
+
+        findVariationByRef: function (ref) {
+            var variation = null,
+                products = Server.plugins.ecommerce.products;
+
+            $.each(products, function (key, product) {
+                var result = $.grep(product.variations, function (variation) {
+                    return parseInt(variation.ref, 10) === parseInt(ref, 10);
+                });
+
+                if (result.length === 1) {
+                    variation = result[0];
+
+                    if(product.assets.length) {
+                        variation.assetUrl = Server.plugins.assets.images[product.assets[0].assetRef].url;
                     }
+                    return;
                 }
+            });
+
+            return variation || null;
+        },
+
+        countrySelectEvent: function () {
+            var that = this,
+                thisEl = $(this.el),
+                countryRef = null;
+
+            thisEl.find('#country').on('change', function () {
+                countryRef = thisEl.find('#country').val();
+                that.updatePrice();
+                that.set('countryRef', countryRef, true);
+                that.rerender();
+            });
+        },
+
+        shippingSelectEvent: function () {
+            var that = this,
+                thisEl = $(this.el),
+                shippingRef = null;
+
+            thisEl.find('#shipping').on('change', function () {
+                shippingRef = thisEl.find('#shipping').val();
+                that.set('shippingRef', shippingRef, true);
+                that.updatePrice(shippingRef);
+            });
+        },
+
+        updatePrice: function (shippingRef) {
+            var selectedShipping = null,
+                result = [],
+                totalPrice = this.get('items').totalPrice;
+
+            if (shippingRef) {
+                result = $.grep(Server.plugins.ecommerce.shippings, function (shipping) {
+                    return parseInt(shipping.ref, 10) === parseInt(shippingRef, 10);
+                });
             }
+
+            if (result.length === 1) {
+                selectedShipping = result[0];
+                this.set('shippingPrice', selectedShipping.cost, true);
+                totalPrice = parseInt(totalPrice, 10) + parseInt(selectedShipping.cost, 10);
+            } else {
+                this.set('shippingPrice', 0, true);
+            }
+
+            this.set('totalPrice', totalPrice, true);
+            this.rerender();
         }
     };
 
@@ -1317,6 +1272,9 @@
     BaseKit.Widget.Ecomproduct = null;
 
     BaseKit.Widget.EcomproductProperties = {
+        price: 0,
+        product: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.products[0] : [],
+        disableButton: 1
     };
 
     BaseKit.Widget.EcomproductMethods = {
@@ -1326,24 +1284,211 @@
         },
 
         load: function () {
-            this.attachEvents();
+            this.set('options', this.getOptions(), true);
+            this.setProductAssets();
+
+            $.each(this.get('options'), function (index, option) {
+                if (index > 0) {
+                    option.disabled = 1;
+                }
+            })
+
+            this.rerender();
         },
 
         attachEvents: function () {
             var that = this;
+
+            $(this.el).find('select').on('change', function (e) {
+                that.updateOptions($(this).data('option-name'), $(this).val());
+            });
+
             $(this.el).find('button').on('click', function (e) {
                 that.addToBasket($(this).data('ref'));
             });
         },
 
-        addToBasket: function (productRef) {
-            var cart = localStorage.getItem('cart');
-            if (cart) {
-                cart = JSON.parse(cart);
-            } else {
-                cart = {};
+        setProductAssets: function () {
+            if (Server.plugins.ecommerce.products.length === 1) {
+                $.each(this.get('product').assets, function (index, asset) {
+                    if (Server.plugins.assets.images[asset.assetRef].fileType === 'image') {
+                        asset.imageSrc = Server.plugins.assets.images[asset.assetRef].url;
+                    }
+                });
             }
-            cart[productRef] = productRef;
+        },
+
+        getOptions: function () {
+            if (Server.plugins.ecommerce.products.length === 1) {
+                return this.get('product').options;
+            }
+
+            return [];
+        },
+
+        getMapValueToVariation: function () {
+            if (Server.plugins.ecommerce.products.length === 1) {
+                return this.get('product').mapValueToVariation;
+            }
+
+            return [];
+        },
+
+        updateOptions: function (optionName, valueRef) {
+            var that = this,
+                mapValueToVariation = this.getMapValueToVariation(),
+                variationRefs = null,
+                resetOptions = false,
+                from = 0,
+                found = false,
+                variation = null;
+
+            $.each(this.get('options'), function (index, option) {
+                //Every select box after we found the last changed are reset
+                //for calculating the possibilities in findVariationList()
+                if (found) {
+                    option.valueRef = null;
+                }
+
+                if (option.title === optionName) {
+                    from = index;
+                    option.valueRef = parseInt(valueRef, 10);
+                    found = true;
+                }
+            });
+
+            variationRefs = this.findVariationList() || [];
+
+            $.each(this.get('options'), function (index, option) {
+                //First option is never disabled then
+                //calculate possiblities for the next select
+                //Until previous select hasn't been choosen values stay disabled.
+                if (index === 0) {
+                    option.disabled = 0;
+                } else if (index === from + 1) {
+                    option.disabled = 0;
+
+                    $.each(option.values, function (index, value) {
+                        var possibleList = mapValueToVariation[value.ref] || [];
+                        value.disabled = 1;
+
+                        //If the next options' values intersect with the previous values' variations
+                        //then make them selectable
+                        if (that._intersection(possibleList, variationRefs).length) {
+                            value.disabled = 0;
+                            option.disabled = 0;
+                        }
+                    });
+                } else if (index > from + 1) {
+                    option.disabled = 1;
+                }
+            });
+
+            variation = this.getUniqueVariation();
+
+            if (variation !== null && this.isAllOptionsSelected()) {
+                this.set('variationRef', variation.ref, true);
+                this.set('price', variation.price, true);
+                this.set('disableButton', 0, true);
+            } else {
+                this.set('disableButton', 1, true);
+                this.set('price', 0.00, true);
+            }
+
+            this.rerender();
+        },
+
+        getUniqueVariation: function () {
+            var that = this,
+                variationRefs = [];
+
+            variationRefs = this.findVariationList();
+
+            if (variationRefs !== undefined) {
+                if (variationRefs.length === 1) {
+                    return this.findVariationByRef(variationRefs[0]);
+                } else if (variationRefs.length > 1) {
+                    this.set('notAvailable', 0, true);
+                }
+            } else {
+                this.set('notAvailable', 1, true);
+                this.set('price', 0.00, true);
+            }
+
+            return null;
+        },
+
+        isAllOptionsSelected: function () {
+            var options = $.grep(this.get('options'), function (option) {
+                return option.valueRef;
+            });
+
+            return options.length === this.get('options').length;
+        },
+
+        findVariationList: function () {
+            var that = this,
+                result = [],
+                mapValueToVariation = this.getMapValueToVariation(),
+                options = $.grep(this.get('options'), function (option) {
+                    return option.valueRef;
+                });
+
+            //Find unique variation by intersecting all possible values found by options selected
+            $.each(options, function (index, option) {
+                var list = mapValueToVariation[option.valueRef] || [];
+
+                if (that._intersection(list, result).length === 0) {
+                    result = mapValueToVariation[option.valueRef];
+                } else {
+                    result = that._intersection(list, result);
+                }
+            });
+
+            return result;
+        },
+
+        findVariationByRef: function (ref) {
+            var variations = Server.plugins.ecommerce.products[0].variations,
+                result = [];
+
+            result = $.grep(variations, function (variation) {
+                return parseInt(variation.ref, 10) === parseInt(ref, 10);
+            });
+
+            if (result.length === 1) {
+                return result[0];
+            }
+
+            return null;
+        },
+
+        _intersection: function (array1, array2) {
+            var result = [],
+                i = 0;
+
+            for (i = 0; i < array1.length; i = i + 1) {
+                if (array2.indexOf(array1[i]) !== -1) {
+                    result.push(array1[i]);
+                }
+            }
+
+            return result;
+        },
+
+        getCart: function () {
+            return JSON.parse(localStorage.getItem('cart')) || {};
+        },
+
+        addToBasket: function (variationRef) {
+            var cart = this.getCart();
+
+            if (cart[variationRef] !== undefined) {
+                cart[variationRef] = cart[variationRef] + 1;
+            } else {
+                cart[variationRef] = 1;
+            }
+
             localStorage.setItem('cart', JSON.stringify(cart));
 
             Globals.notifyHooks('ecom.basket.changed', {});
@@ -1384,23 +1529,6 @@
         },
 
         attachEvents: function () {
-            var that = this;
-            $(this.el).find('button').on('click', function (e) {
-                that.addToBasket($(this).data('ref'));
-            });
-        },
-
-        addToBasket: function (productRef) {
-            var cart = localStorage.getItem('cart');
-            if (cart) {
-                cart = JSON.parse(cart);
-            } else {
-                cart = {};
-            }
-            cart[productRef] = 1;
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            Globals.notifyHooks('ecom.basket.changed', {});
         }
     };
 
@@ -3700,6 +3828,7 @@
     BaseKit.Widget.Stripe = null;
 
     BaseKit.Widget.StripeProperties = {
+        products: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.products : [],
         storeRef: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.store.ref : null,
         chargeUrl: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.store.chargeUrl : null
     };
@@ -3806,13 +3935,7 @@
         },
 
         getCart: function () {
-            var cart = localStorage.getItem('cart');
-            if (cart) {
-                cart = JSON.parse(cart);
-                return cart;
-            }
-
-            return {};
+            return JSON.parse(localStorage.getItem('cart')) || {};
         },
 
         getCartSize: function (cart) {
@@ -3829,18 +3952,18 @@
 
         getCartTotal: function (cart) {
             var that = this,
-                total = null,
-                products = [],
+                total = 0,
+                prices = [],
                 product = null,
                 key;
 
-            products = _.map(cart, function (quantity, ref) {
-                product = that.findProductByRef(ref);
-                return parseFloat(product.variations[0].price) * quantity;
+            prices = $.map(cart, function (quantity, ref) {
+                var variation = that.findVariationByRef(ref);
+                return parseFloat(variation.price) * quantity;
             });
 
-            total = _.reduce(products, function (total, price) {
-                return total + price;
+            $.each(prices, function (index, price) {
+                total = total + price;
             });
 
             return total * 100;
@@ -3850,18 +3973,20 @@
             return Server.plugins.ecommerce.store.currency;
         },
 
-        findProductByRef: function (ref) {
-            var key,
-                product;
-            for (key in Server.plugins.ecommerce.products) {
+        findVariationByRef: function (ref) {
+            var variation = null;
 
-                if (Server.plugins.ecommerce.products.hasOwnProperty(key)) {
-                    product = Server.plugins.ecommerce.products[key];
-                    if (parseInt(product.ref, 10) === parseInt(ref, 10)) {
-                        return product;
-                    }
+            $.each(this.get('products'), function (key, product) {
+                var result = $.grep(product.variations, function (variation) {
+                    return parseInt(variation.ref, 10) === parseInt(ref, 10);
+                });
+
+                if (result.length === 1) {
+                    variation = result[0];
                 }
-            }
+            });
+
+            return variation || null;
         }
     };
 
