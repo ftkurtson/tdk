@@ -1,4 +1,5 @@
 <?php
+require "../lib/lessphp/lessc.inc.php";
 
 $errors = array();
 
@@ -14,6 +15,7 @@ if ($templateName) {
         validateRequiredFiles($dir, $errors);
         validateMetadata($templateDir, $errors);
         validateTwigFiles($templateDir, $dir, $errors);
+        validateLESS($templateDir, $errors);
         
     } else {
         $errors[] = sprintf("The directory '%s' does not exist", $templateDir);
@@ -196,5 +198,196 @@ function validateTwigFiles($templateDir, $dir, &$errors)
 
     if (!$bodyScriptExists) {
         $errors[] = "There are no body scripts included in any of the twig files";
+    }
+}
+
+function recruseImports($lessc, $templateDir, $fileLocation) {
+     
+    $str = file_get_contents($fileLocation);
+    
+    // Check LESS at this point
+    $lessc->compile($str);
+    
+    $pattern = "/@import\W+?[\"\'](.*?)[\"\']\;/i";
+    preg_match_all($pattern, $str, $matches);
+    if(count($matches[0]) > 0) {
+        for ($i = 0; $i < count($matches[0]); $i++) {
+            
+            $swapOutString = $matches[0][$i];
+            $result = preg_replace($pattern, '$1', $swapOutString);
+            $result = str_replace('@{templateCommon}', '../templates/common', $result);
+            $result = str_replace('@{templateLocal}', $templateDir, $result);
+            
+            recruseImports($lessc, $templateDir, $result);
+        }
+    }
+}
+
+function validateLESS($templateDir, &$errors)
+{
+    $input =  array (
+    'type' => 'css',
+    'params' => 
+    array (
+        '@font-swatch1-font-family' => '"Futura", "Helvetica", sans-serif',
+        '@font-swatch1-font-size' => '24px',
+        '@font-swatch1-font-weight' => '400',
+        '@font-swatch1-line-height' => '34px',
+        '@font-swatch1-color' => '@color-swatch6',
+        '@font-swatch2-font-family' => '"Futura", "Helvetica", sans-serif',
+        '@font-swatch2-font-size' => '24px',
+        '@font-swatch2-font-weight' => '400',
+        '@font-swatch2-line-height' => '34px',
+        '@font-swatch2-color' => '@color-swatch3',
+        '@font-swatch3-font-family' => '"Futura", "Helvetica", sans-serif',
+        '@font-swatch3-font-size' => '18px',
+        '@font-swatch3-font-weight' => '400',
+        '@font-swatch3-line-height' => '28px',
+        '@font-swatch3-color' => '@color-swatch3',
+        '@font-swatch4-font-family' => '"Futura", "Helvetica", sans-serif',
+        '@font-swatch4-font-size' => '14px',
+        '@font-swatch4-font-weight' => '400',
+        '@font-swatch4-line-height' => '24px',
+        '@font-swatch4-color' => '@color-swatch3',
+        '@font-swatch5-font-family' => '"Futura", "Helvetica", sans-serif',
+        '@font-swatch5-font-size' => '14px',
+        '@font-swatch5-font-weight' => '400',
+        '@font-swatch5-line-height' => '24px',
+        '@font-swatch5-color' => '@color-swatch5',
+        '@color-swatch1' => '#4a979d',
+        '@color-swatch2' => '#eafffc',
+        '@color-swatch3' => '#3e3e3e',
+        '@color-swatch4' => '#6a6a6a',
+        '@color-swatch5' => '#bdbdbd',
+        '@siteBackgroundColor' => 'transparent',
+        '@siteBackgroundGradientType' => 'vertical',
+        '@siteBackgroundGradientFrom' => 'transparent',
+        '@siteBackgroundGradientTo' => 'transparent',
+        '@siteBackgroundImageScale' => 'original',
+        '@siteBackgroundImage' => 'none',
+        '@siteBackgroundPositionX' => 'center',
+        '@siteBackgroundPositionY' => 'top',
+        '@siteBackgroundRepeat' => 'no-repeat',
+        '@font-swatch1-letter-spacing' => 'inherit',
+        '@font-swatch2-letter-spacing' => 'inherit',
+        '@font-swatch3-letter-spacing' => 'inherit',
+        '@font-swatch4-letter-spacing' => 'inherit',
+        '@font-swatch5-letter-spacing' => 'inherit',
+        '@font-swatch6-font-family' => '"Futura", "Helvetica", sans-serif',
+        '@font-swatch6-font-size' => '16px',
+        '@font-swatch6-font-weight' => '400',
+        '@font-swatch6-line-height' => '26px',
+        '@font-swatch6-letter-spacing' => 'inherit',
+        '@font-swatch6-color' => '@color-swatch5',
+        '@font-swatch6-color-hover' => '@color-swatch5',
+        '@font-swatch6-background-color' => 'transparent',
+        '@font-swatch6-background-color-hover' => 'transparent',
+        '@font-swatch7-font-family' => '"Futura", "Helvetica", sans-serif',
+        '@font-swatch7-font-size' => '18px',
+        '@font-swatch7-font-weight' => '400',
+        '@font-swatch7-line-height' => '28px',
+        '@font-swatch7-letter-spacing' => 'inherit',
+        '@font-swatch7-color' => '@color-swatch5',
+        '@font-swatch7-background-color' => 'transparent',
+        '@font-swatch7-background-color-hover' => 'darken(@color-swatch1,5%)',
+        '@color-swatch6' => '#ffffff',
+        '@color-swatch7' => '#f4f4f4',
+        '@font-swatch8-font-family' => '"Futura", "Helvetica", sans-serif',
+        '@font-swatch8-font-size' => '18px',
+        '@font-swatch8-font-weight' => '400',
+        '@font-swatch8-line-height' => '28px',
+        '@font-swatch8-letter-spacing' => 'inherit',
+        '@font-swatch8-color' => '@color-swatch5',
+        '@font-swatch9-font-family' => '"Futura", "Helvetica", sans-serif',
+        '@font-swatch9-font-size' => '18px',
+        '@font-swatch9-font-weight' => '400',
+        '@font-swatch9-line-height' => '28px',
+        '@font-swatch9-letter-spacing' => 'inherit',
+        '@font-swatch9-color' => '@color-swatch5',
+        '@font-swatch10-font-family' => '"Futura", "Helvetica", sans-serif',
+        '@font-swatch10-font-size' => '24px',
+        '@font-swatch10-font-weight' => '400',
+        '@font-swatch10-line-height' => '34px',
+        '@font-swatch10-letter-spacing' => 'inherit',
+        '@font-swatch10-color' => '@color-swatch5',
+    ),
+    'options' => 
+        array (
+            'compress' => 1,
+        )
+    );
+
+    $lessc = new lessc();
+    $lessc->setImportDir(array($templateDir, __DIR__ . '../templates'));
+    
+    // convert any relative image URL's to use the FQDN
+    $assetDomain = null;
+    $assetVersion = null;
+    $templateDirectory = $templateDir;
+    $templateHash = null;
+    $lessc->registerFunction(
+        'image',
+        function ($arg) use ($assetDomain, $templateDirectory, $templateHash, $assetVersion) {
+            list($type, $delim, $path) = $arg;
+            $url = sprintf(
+                '//%s/%s/templates',
+                $assetDomain,
+                $templateHash ? $templateHash : $assetVersion
+            );
+            if ($templateDirectory) {
+                $url .= "/$templateDirectory";
+            }
+            $url .= $path[0];
+            return array($type, '', array(" url($url)"));
+        }
+    );
+
+    $lessc->registerFunction(
+        'bkscale',
+        function ($arg) {
+            list($type, $delim, $args) = $arg;
+
+            $value = isset($args[0]) && isset($args[0][1]) ? $args[0][1] : '';
+            $unit = isset($args[0]) && isset($args[0][2]) ? $args[0][2] : '';
+            $scale = isset($args[1]) && isset($args[1][1]) ? $args[1][1] : '';
+            $intValue = intval($value);
+            $floatScale = floatval($scale);
+            $returnValue = array();
+
+            if ($intValue > 0 && $floatScale > 0) {
+                $newScale = ($intValue * $floatScale);
+                $returnValue = array('string', '', array($newScale . $unit));
+            } else {
+                // return back the original value
+                $returnValue = array('string', '', array($value));
+            }
+
+            return $returnValue;
+        }
+    );
+
+    if (null !== $templateDirectory) {
+        $input['params']['@templateLocal'] = '"' . $templateDirectory . '"';
+    } else {
+        $input['params']['@templateLocal'] = '""';
+    }
+
+    $input['params']['@templateCommon'] = '"../templates/common"';
+
+    //  Any passed in variables used to populate the parsed CSS
+    if (isset($input['params']) && is_array($input['params']) && count($input['params']) > 0) {
+        $lessc->setVariables($input['params']);
+    }
+
+    if (isset($input['options']) &&
+        isset($input['options']['compress']) &&
+        $input['options']['compress'] == true) {
+        $lessc->setFormatter("compressed");
+    }
+
+    try {
+        recruseImports($lessc, $templateDir,  $templateDir .'/stylesheet.less');
+    } catch (\Exception $e) {
+        $errors[] = "LESS Error: ". $e->getMessage();
     }
 }
