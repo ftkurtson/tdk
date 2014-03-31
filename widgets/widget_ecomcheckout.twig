@@ -1,39 +1,40 @@
 <h2 class="checkout-title">Checkout</h2>
 <table>
-    <tbody><tr><th></th>
-    <th>Description</th>
-    <th>Price per unit</th>
-    <th>Quantity</th>
-    <th>Amount</th>
-                </tr><tr>
+    <tbody>
+        <tr>
+            <th></th>
+            <th>Items</th>
+            <th>Amount</th>
+        </tr>
+        <tr class="checkout-items">
             <td>
                 <div class="image-wrap" style="background-repeat: no-repeat;background-image:url('http://placehold.it/250x250')">
                     <img class="image" style="max-width: 150px" src="http://placehold.it/250x250">
                 </div>
             </td>
-            <td>productVariation</td>
-            <td>1</td>
             <td>
+                <p class="checkout-productname">Product Name</p>
+                <p class="checkout-quantity">1</p>
                 <button class="js-remove" data-ref="1">-</button>
-                3
+                1
                 <button class="js-add" data-ref="1">+</button>
             </td>
-            <td>3</td>
+            <td class="checkout-amount">3</td>
         </tr>
-        <tr>
+        <tr class="checkout-items">
             <td>
                 <div class="image-wrap" style="background-repeat: no-repeat;background-image:url('http://placehold.it/250x250')">
                     <img class="image" style="max-width: 150px" src="http://placehold.it/250x250">
                 </div>
             </td>
-            <td>productVariation</td>
-            <td>2</td>
             <td>
-                <button class="js-remove" data-ref="2">-</button>
+                <p class="checkout-productname">Another Product Name</p>
+                <p class="checkout-quantity">1</p>
+                <button class="js-remove" data-ref="1">-</button>
                 1
-                <button class="js-add" data-ref="2">+</button>
+                <button class="js-add" data-ref="1">+</button>
             </td>
-            <td>2</td>
+            <td class="checkout-amount">3</td>
         </tr>
         <tr>
 	        <td></td>
@@ -46,9 +47,9 @@
 </table>
 
 <div class="delivery">
+    <span class="delivery-title">Delivery details</span>
     <label for="firstname">First name:</label>
     <input type="text" id="firstname" placeholder="First name">
-
     <label for="lastname">Last name:</label>
     <input type="text" id="lastname" placeholder="Last name">
 
@@ -325,6 +326,8 @@
 
     <label for="email">Email:</label>
     <input type="email" id="email" placeholder="Email">
+
+
 
     <label for="shipping">Select your shipping method:</label>
     <select id="shipping" name="shipping">
