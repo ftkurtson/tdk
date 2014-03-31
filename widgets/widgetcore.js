@@ -82,7 +82,25 @@
                 },
 
                 rerender: function () {
-                    var properties = this.getProperties('current');
+                    var properties = this.getProperties('current'),
+                        pluginName = null;
+
+                    // HC: store the plugin data
+                    properties.plugins = {};
+
+                    if (typeof Server !== 'undefined' && Server.hasOwnProperty('plugins')) {
+                        // HC: get the plugin data from the server
+                        for (pluginName in Server.plugins) {
+                            if (Server.plugins.hasOwnProperty(pluginName)) {
+                                if (properties.plugins.hasOwnProperty(pluginName)) {
+                                    throw new Error('Plugin name conflicts');
+                                } else {
+                                    properties.plugins[pluginName] = $.extend(true, {}, Server.plugins[pluginName]);
+                                }
+                            }
+                        }
+                    }
+
                     this.el.html('');
                     this.renderTemplate(properties.type, properties, true);
                 },
