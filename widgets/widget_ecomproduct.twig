@@ -38,7 +38,17 @@
             </select>
         </div>
        
-        <button class="btn" data-ref="1">Add to cart</button>
+                <div class="ecom-product-add-to-cart-btn-wrapper">
+                <button class="btn ecom-product-add-to-cart-btn" data-ref="{{ data.variationRef }}" {% if data.disableButton %} disabled {% endif %}>
+                    <span class="text">Add to cart</span>
+                </button>
+            </div>
+
+            <div class="ecom-product-go-to-checkout-btn-wrapper">
+                <button class="btn ecom-product-go-to-checkout-btn" hidden>
+                    <span class="text">Checkout</span>
+                </button>
+            </div>
 
         <div class="ecom-product-cattag">
             <span class="ecom-product-category">
