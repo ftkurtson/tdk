@@ -373,11 +373,15 @@
     <div class="checkout-total-amount">Total amount: £45.97</div>
 
     <div class="checkout-payment-method">
-        <label for="paywithstripe">Pay with card</label>
-        <input id="paywithstripe" type="radio" name="paymentMethod" value="stripe" checked>
+        <div class="checkout-payment-card">
+            <input id="paywithstripe" type="radio" name="paymentMethod" value="stripe" checked>
+            <label for="paywithstripe">Pay with card</label>
+        </div>
 
-        <label for="paywithpaypal">Pay with Paypal</label>
-        <input id="paywithpaypal" type="radio" name="paymentMethod" value="paypal">
+        <div class="checkout-payment-paypal">
+            <input id="paywithpaypal" type="radio" name="paymentMethod" value="paypal">
+            <label for="paywithpaypal">Pay with Paypal</label>
+        </div>
     </div>
 
     <button class="checkout-order-button btn js-create-order" type="submit" disabled="">Continue to payment</button>
