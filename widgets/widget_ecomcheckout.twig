@@ -372,7 +372,13 @@
     <div class="checkout-total-tax">Total tax: £0.90</div>
     <div class="checkout-total-amount">Total amount: £45.97</div>
 
-    <input type="hidden" name="paymentMethod" value="stripe">
+    <div class="checkout-payment-method">
+        <label for="paywithstripe">Pay with card</label>
+        <input id="paywithstripe" type="radio" name="paymentMethod" value="stripe" checked>
+
+        <label for="paywithpaypal">Pay with Paypal</label>
+        <input id="paywithpaypal" type="radio" name="paymentMethod" value="paypal">
+    </div>
 
     <button class="checkout-order-button btn js-create-order" type="submit" disabled="">Continue to payment</button>
 </form>
