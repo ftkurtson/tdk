@@ -3233,7 +3233,7 @@ footer {
         }
     }
 
-    &:hover .ecombasket-list-container {
+    &.show-content .ecombasket-list-container {
         display: block;
     }
     .ecombasket-list-container {
@@ -3419,6 +3419,12 @@ footer {
         select {
             margin-bottom: 1.5em;
             -webkit-appearance: menulist;
+        }
+    }
+    .checkout-payment-method {
+        input {
+            -webkit-appearance: radio;
+            width: auto;
         }
     }
     .checkout-order-button {
