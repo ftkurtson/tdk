@@ -3303,7 +3303,6 @@ footer {
 /* ===============================
   ECOM - CHECKOUT
    =============================== */
-
 .widget.ecomcheckout {
     table {
         border-spacing: 0;
@@ -3341,23 +3340,23 @@ footer {
                     margin: 10px 0 0;
                     button {
                         font-family: @font-swatch7-font-family;
-				        color: @font-swatch7-color;
-				        font-size: @font-swatch7-font-size;
-				        font-weight: @font-swatch7-font-weight;
-				        line-height: @font-swatch7-line-height;
-				        background-color: @font-swatch7-background-color;
-				        border: none;
-				        margin: 0;
-				        width: 2em;
-				        height: 2em;
+                        color: @font-swatch7-color;
+                        font-size: @font-swatch7-font-size;
+                        font-weight: @font-swatch7-font-weight;
+                        line-height: @font-swatch7-line-height;
+                        background-color: @font-swatch7-background-color;
+                        border: none;
+                        margin: 0;
+                        width: 2em;
+                        height: 2em;
+                        cursor: pointer;
                         @media @tablet {
                             width: 56px;
                             height: 44px;
                         }
                         &:hover {
-			           		background-color: @font-swatch7-background-color-hover;
-			           		cursor: pointer;
-			           	}
+                            background-color: @font-swatch7-background-color-hover;
+                        }
                     }
                     span {
                         width: 56px;
@@ -3440,12 +3439,10 @@ footer {
             cursor: pointer;
         }
         &:disabled {
-            display: none;
+            background-color: fade(@color-swatch3,50%);
         }
     }
-}
-
-
+}/* end .widget.ecomcheckout */
 
 // Print styling
 /* ==========================================================================
