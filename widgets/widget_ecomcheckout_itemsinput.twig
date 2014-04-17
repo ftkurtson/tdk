@@ -1,0 +1,3 @@
+{% for item in items %}
+    <input type="hidden" name="variations[{{ item.ref }}]" class="js-checkout-items-input" value="{{ item.quantity }}">
+{% endfor %}

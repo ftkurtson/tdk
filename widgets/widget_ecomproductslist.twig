@@ -1,56 +1,37 @@
+{% if plugins.ecommerce.products|length or plugins.ecommerce.filteredProducts|length %}
 <section class="ecom-productslist-products">
+    {% if plugins.ecommerce.filteredProducts|length %}
+        {% set products = plugins.ecommerce.filteredProducts %}
+    {% else %}
+        {% set products = plugins.ecommerce.products %}
+    {% endif %}
+
+    {% for product in products %}
     <article class="ecom-productslist-product">
-        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/2250x800')">
-            <img class="ecom-productslist-image" src="http://placehold.it/2250x800">
-        </div>
+        {% if product.assets is not null %}
+            {% for asset in product.assets %}
+                {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
+                    {% set imageSrc = plugins.assets.images[asset.assetRef].url %}
+                    <a class="ecom-productslist-image-wrap" style="background-image:url('{{ imageSrc }}')" href="{{ requestBase }}/store/product/{{product.ref}}" title="{{product.title}}">
+                        <img class="ecom-productslist-image" src="{{imageSrc}}">
+                    </a>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
         <div class="ecom-productlist-info">
-            <h2 class="ecom-productslist-title"><a href="/store/product/1">Aliquam Handbag</a></h2>
-            <span class="ecom-productlist-price">From £320,00</span>
+            <h2 class="ecom-productslist-title"><a href="{{ requestBase }}/store/product/{{product.ref}}">{{product.title}}</a></h2>
+            <span class="ecom-productlist-price">
+                {% if product.multiplePrices %}
+                    {{ "shared_views.ecom-products-list.minimum_price" | translate("From %1", product.formattedPrice) }}
+                {% else %}
+                    {{ product.formattedPrice }}
+                {% endif %}
+            </span>
         </div>
+
     </article>
-    <article class="ecom-productslist-product">
-        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/300x100')">
-            <img class="ecom-productslist-image" src="http://placehold.it/300x100">
-        </div>
-        <div class="ecom-productlist-info">
-            <h2 class="ecom-productslist-title"><a href="/store/product/2">Commodo Handbag Lorem Ipsum Dolor Sit Amet Very Long Name</a></h2>
-        <span class="ecom-productlist-price">From £45,00</span>
-        </div>
-    </article>
-    <article class="ecom-productslist-product">
-        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/250x250')">
-            <img class="ecom-productslist-image" src="http://placehold.it/250x250">
-        </div>
-        <div class="ecom-productlist-info">
-        <h2 class="ecom-productslist-title"><a href="/store/product/3">Conubia Nostra Handbag</a></h2>
-        <span class="ecom-productlist-price">£45,00</span>
-        </div>
-    </article>
-    <article class="ecom-productslist-product">
-        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/529x150')">
-            <img class="ecom-productslist-image" src="http://placehold.it/529x150">
-        </div>
-        <div class="ecom-productlist-info">
-        <h2 class="ecom-productslist-title"><a href="/store/product/4">Magnis Handbag</a></h2>
-        <span class="ecom-productlist-price">£45,00</span>
-        </div>
-    </article>
-    <article class="ecom-productslist-product">
-        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/600x200')">
-            <img class="ecom-productslist-image" src="http://placehold.it/600x200">
-        </div>
-        <div class="ecom-productlist-info">
-        <h2 class="ecom-productslist-title"><a href="/store/product/5">Montes Handheld Bag</a></h2>
-        <span class="ecom-productlist-price">£45,00</span>
-        </div>
-    </article>
-    <article class="ecom-productslist-product">
-        <div class="ecom-productslist-image-wrap" style="background-image:url('http://placehold.it/250x250')">
-            <img class="ecom-productslist-image" src="http://placehold.it/250x250">
-        </div>
-        <div class="ecom-productlist-info">
-        <h2 class="ecom-productslist-title"><a href="/store/product/6">Tristique Handbag</a></h2>
-        <span class="ecom-productlist-price">£45,00</span>
-        </div>
-    </article>
-</section>
+    {% endfor%}
+{% else %}
+    <p>There aren't any products to display.</p>
+{% endif %}

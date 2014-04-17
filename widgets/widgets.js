@@ -24,9 +24,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetBlogpost = function (options) {
+    bk$.fn.basekitWidgetBlogpost = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Blogpost(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Blogpost(el, options));
         });
     };
 }());(function () {
@@ -58,9 +58,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetBlogpostlist = function (options) {
+    bk$.fn.basekitWidgetBlogpostlist = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Blogpostlist(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Blogpostlist(el, options));
         });
     };
 }());
@@ -82,13 +82,13 @@
         attachEvents: function () {
             var that = this;
 
-            $(this.el).find('.blog-search-form').on('submit', function (evt) {
+            bk$(this.el).find('.blog-search-form').on('submit', function (evt) {
                 that.submitSearch(evt);
             });
         },
 
         submitSearch: function (evt) {
-            var value = $(this.el).find('.blog-search-input').val();
+            var value = bk$(this.el).find('.blog-search-input').val();
 
             evt.preventDefault();
 
@@ -107,9 +107,9 @@
         });
     };
 
-    $.fn.basekitWidgetBlogsearch = function (options) {
+    bk$.fn.basekitWidgetBlogsearch = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Blogsearch(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Blogsearch(el, options));
         });
     };
 }());
@@ -143,7 +143,7 @@
                 action = null,
                 target = null;
 
-            $(this.el).find('button').on('click', function (e) {
+            bk$(this.el).find('button').on('click', function (e) {
                 //get the button date
                 action = that.get('action');
                 url = that.get('url');
@@ -178,9 +178,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetButton = function (options) {
+    bk$.fn.basekitWidgetButton = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Button(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Button(el, options));
         });
     };
 }());
@@ -238,7 +238,7 @@
 
             // HC: disable the submit buttom if any of the fields is empty
             thisEl.find('input').each(function () {
-                if ($(this).val().length === 0) {
+                if (bk$(this).val().length === 0) {
                     empty = true;
                 }
             });
@@ -252,13 +252,13 @@
 
         clearErrorMessages: function () {
             this.el.find('.errors').each(function () {
-                $(this).empty();
+                bk$(this).empty();
             });
         },
 
         buttonClickEvent: function () {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 submitData = {};
 
             thisEl.find('form').on('submit', function (e) {
@@ -281,7 +281,7 @@
                         'languageCode':          App.session.get('languageCode')
                     };
 
-                    $.ajax({
+                    bk$.ajax({
                         type: 'POST',
                         url: '/site/api/user-registration',
                         data: submitData,
@@ -307,7 +307,7 @@
                     });
                 };
 
-                $.ajax({
+                bk$.ajax({
                     type: 'POST',
                     url: '/site/api/auth-token',
                     success: onSuccess
@@ -316,7 +316,7 @@
         },
 
         selectPaymentPeriodEvent: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 price = null,
                 that = this;
 
@@ -329,7 +329,7 @@
         loadBrandPaymentMethods: function () {
             var that = this;
 
-            $.ajax({
+            bk$.ajax({
                 type: 'POST',
                 url: '/site/api/brand-payment-methods',
                 data: {
@@ -337,7 +337,7 @@
                 },
                 async: false,
                 beforeSend: function () {
-                    $(that.el).find('.widget-buynow-paymentMethods').html('<span>' + App.t('widgets.buynow.retrieving_paymentmethods', 'Waiting for the paymentmethods') + '</span>');
+                    bk$(that.el).find('.widget-buynow-paymentMethods').html('<span>' + App.t('widgets.buynow.retrieving_paymentmethods', 'Waiting for the paymentmethods') + '</span>');
                     that.showMessageBox();
                 }
             }).done(function (response) {
@@ -357,7 +357,7 @@
          * @param <boolean>  isSuccess
          */
         showText: function (isSuccess, message) {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 className = null;
 
             if (thisEl.find('.message-box').length > 0) {
@@ -374,8 +374,8 @@
         },
 
         showMessageBox: function () {
-            var thisEl = $(this.el),
-                overlay = $('<div class="overlay"></div>');
+            var thisEl = bk$(this.el),
+                overlay = bk$('<div class="overlay"></div>');
 
             if (thisEl.find('.overlay').length === 0) {
                 thisEl.append(overlay);
@@ -383,21 +383,21 @@
         },
 
         removeMessageBox: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 t = null;
 
             t = setTimeout(function () {
                 clearTimeout(t);
                 thisEl.find('.overlay').fadeOut(function () {
                     thisEl.find('.email, .message').val('');
-                    $(this).remove();
+                    bk$(this).remove();
                 });
             }, 3000);
         },
 
         loadPackageInfo: function (doRerender) {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 packageData = {},
                 data = {
                     brandRef: this.get('brandRef'),
@@ -414,27 +414,27 @@
                 data.currencyRef = App.getParam('currencyRef');
             }
 
-            $.ajax({
+            bk$.ajax({
                 type: 'POST',
                 url: '/site/api/get-package',
                 data: data,
                 async: false,
                 beforeSend: function () {
                     if (doRerender !== false) {
-                        $(that.el).find('.widget-buynow-package').html('<span>' + App.t('widgets.buynow.retrieving_package', 'Waiting for the package inforamtion') + '</span>');
+                        bk$(that.el).find('.widget-buynow-package').html('<span>' + App.t('widgets.buynow.retrieving_package', 'Waiting for the package inforamtion') + '</span>');
                         that.showMessageBox();
                     }
                 }
             }).done(function (response) {
 
-                if (!jQuery.isEmptyObject(response)) {
+                if (!bk$.isEmptyObject(response)) {
                     packageData = {
                         'name' : response.name,
                         'ref' : response.ref
                     };
 
                     if (response.prices && response.prices.length > 0) {
-                        $.each(response.prices, function (index, value) {
+                        bk$.each(response.prices, function (index, value) {
                             packageData.price = this.price;
                             packageData.formattedPrice = this.formattedPrice;
                         });
@@ -458,18 +458,18 @@
         },
 
         toggleShowHidePassword: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 passwordInputEl = thisEl.find('.password');
 
             thisEl.find('.password-mask-toggle').on('click', function () {
                 if (passwordInputEl[0].type === 'password') {
                     passwordInputEl[0].type = 'text';
                     passwordInputEl.attr('autocapitalize', 'off').attr('autocorrect', 'off').attr('spellcheck', 'false');
-                    $(this).text(App.t('widgets.buynow.hide', 'Hide'));
+                    bk$(this).text(App.t('widgets.buynow.hide', 'Hide'));
                 } else {
                     passwordInputEl[0].type = 'password';
                     passwordInputEl.removeAttr('autocapitalize').removeAttr('autocorrect').removeAttr('spellcheck');
-                    $(this).text(App.t('widgets.buynow.show', 'Show'));
+                    bk$(this).text(App.t('widgets.buynow.show', 'Show'));
                 }
             });
         }
@@ -485,9 +485,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetBuynow = function (options) {
+    bk$.fn.basekitWidgetBuynow = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Buynow(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Buynow(el, options));
         });
     };
 }());
@@ -521,9 +521,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetClicktocall = function (options) {
+    bk$.fn.basekitWidgetClicktocall = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Clicktocall(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Clicktocall(el, options));
         });
     };
 }());(function () {
@@ -550,9 +550,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetCompanyaddress = function (options) {
+    bk$.fn.basekitWidgetCompanyaddress = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Companyaddress(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Companyaddress(el, options));
         });
     };
 }());(function () {
@@ -582,11 +582,11 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetCompanyheader = function (options) {
+    bk$.fn.basekitWidgetCompanyheader = function (options) {
         this.each(function (index, el) {
             var obj = null;
             obj = new BaseKit.Widget.Companyheader(el, options);
-            $(el).data('bkob', obj);
+            bk$(el).data('bkob', obj);
         });
     };
 }());(function () {
@@ -612,11 +612,11 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetCompanyname = function (options) {
+    bk$.fn.basekitWidgetCompanyname = function (options) {
         this.each(function (index, el) {
             var obj = null;
             obj = new BaseKit.Widget.Companyname(el, options);
-            $(el).data('bkob', obj);
+            bk$(el).data('bkob', obj);
         });
     };
 }());(function () {
@@ -643,7 +643,7 @@
          */
         attachEvents: function () {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 url = '/site/' + App.session.get('siteRef') + '/submit-form',
                 data = {},
                 emailRegex = /[a-z0-9!#$%&'*+\/=?\^_`{|}~\-]+(?:\.[a-z0-9!#$%&'*+\/=?\^_`{|}~\-]+)*@(?:[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9\-]*[a-z0-9])?/i;
@@ -693,7 +693,7 @@
                 }
 
                 // submit the form using the api
-                $.ajax({
+                bk$.ajax({
                     url: url,
                     type: "POST",
                     data: data,
@@ -721,7 +721,7 @@
         },
 
         showMessage: function (message, className) {
-            var thisEl = $(this.el);
+            var thisEl = bk$(this.el);
 
             if (!message) {
                 return;
@@ -735,12 +735,12 @@
         },
 
         removeMessage: function () {
-            $(this.el).find('.overlay .message-box').remove();
+            bk$(this.el).find('.overlay .message-box').remove();
         },
 
         showMessageBox: function () {
-            var thisEl = $(this.el),
-                overlay = $('<div class="overlay"></div>');
+            var thisEl = bk$(this.el),
+                overlay = bk$('<div class="overlay"></div>');
 
             if (thisEl.find('.overlay').length === 0) {
                 thisEl.append(overlay);
@@ -748,14 +748,14 @@
         },
 
         removeMessageBox: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 t = null;
 
             t = setTimeout(function () {
                 clearTimeout(t);
                 thisEl.find('.overlay').fadeOut(function () {
                     thisEl.find('.email, .message').val('');
-                    $(this).remove();
+                    bk$(this).remove();
                 });
             }, 15000);
         }
@@ -771,9 +771,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetContactform = function (options) {
+    bk$.fn.basekitWidgetContactform = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Contactform(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Contactform(el, options));
         });
     };
 }());
@@ -797,13 +797,17 @@
             }
         },
 
+        renderFinish: function () {
+            this.showLines(this.get('lines'));
+        },
+
         /**
          *showLines: show content according to the lines set and attach expand event
          *@param <string> lines - this is a content widget property, determining how many lines to show
          */
         showLines: function (lines) {
             if (typeof lines !== "undefined") {
-                var contentEl = $(this.el).find('.bk-content-text'),
+                var contentEl = bk$(this.el).find('.bk-content-text'),
                     contentElHeight = null,
                     newheight = null;
 
@@ -820,7 +824,7 @@
                     this.expandText(newheight, contentElHeight);
                     break;
                 case 'all':
-                    newheight = 'atuo';
+                    newheight = 'auto';
                     break;
                 }
 
@@ -836,7 +840,7 @@
          */
         expandText: function (newheight, fullheight) {
             if (typeof newheight !== "undefined" && typeof fullheight !== "undefined") {
-                var thisEl = $(this.el),
+                var thisEl = bk$(this.el),
                     expandSpan = thisEl.find('span.expand'),
                     contentTextEl = thisEl.find('div.bk-content-text'),
                     h = null;
@@ -872,9 +876,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetContent = function (options) {
+    bk$.fn.basekitWidgetContent = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Content(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Content(el, options));
         });
     };
 }());(function () {
@@ -897,9 +901,9 @@
         });
     };
 
-    $.fn.basekitWidgetDisqus = function (options) {
+    bk$.fn.basekitWidgetDisqus = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Disqus(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Disqus(el, options));
         });
     };
 }());
@@ -926,8 +930,8 @@
         attachEvents: function () {
             var that = this;
 
-            $(this.el).find('button').on('click', function (e) {
-                var link = $(this).data('link');
+            bk$(this.el).find('button').on('click', function (e) {
+                var link = bk$(this).data('link');
 
                 if (link === undefined || link.length === 0) {
                     alert(App.t('widgets.dropbox.no_file_added', 'No file added'));
@@ -945,9 +949,9 @@
         });
     };
 
-    $.fn.basekitWidgetDropbox = function (options) {
+    bk$.fn.basekitWidgetDropbox = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Dropbox(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Dropbox(el, options));
         });
     };
 }());
@@ -961,24 +965,37 @@
     BaseKit.Widget.EcombasketMethods = {
         construct: function (el, options) {
             this.options = options;
+
+            if (!Server.plugins.ecommerce) {
+                return;
+            }
+
+            this.storeRef = Server.plugins.ecommerce ? Server.plugins.ecommerce.store.ref : null;
+
             this.load();
         },
 
         load: function () {
-            if (Server.plugins.ecommerce) {
-                this.updateBasket();
-            }
-        },
-
-        attachEvents: function () {
             var that = this;
+
+            // HC: just want to add hook once
             Globals.addHook('ecom.basket.changed', this, function () {
                 that.updateBasket();
             });
 
-            $(this.el).find('.js-remove').on('click', function (e) {
-                that.removeItem($(this).parent().data('ref'));
-                that.updateBasket();
+            this.updateBasket();
+        },
+
+        attachEvents: function () {
+            var that = this,
+                thisEl = bk$(this.el);
+
+            thisEl.find('.js-pull').on('click', function () {
+                thisEl.toggleClass('show-content');
+            });
+
+            thisEl.find('.js-remove').on('click', function (e) {
+                that.removeItem(bk$(e.target).attr('data-ref'));
             });
         },
 
@@ -991,28 +1008,59 @@
                 cart = this.getCart(),
                 quantity = 0,
                 items = [],
-                basketTotal = 0;
+                variations = {};
 
-            $.each(cart, function (ref, key) {
+            bk$.each(cart, function (ref, key) {
                 var variation = that.findVariationByRef(ref);
 
                 if (variation !== null) {
-                    basketTotal = parseFloat(basketTotal) + parseFloat(variation.price) * parseInt(cart[ref], 10);
                     items.push({
+                        productRef: variation.productRef,
                         ref: parseInt(ref, 10),
                         title: variation.title,
                         quantity: cart[ref],
                         assetUrl: variation.assetUrl
                     });
 
+                    variations[ref] = parseInt(cart[ref], 10);
+
                     quantity = quantity + 1;
                 }
             });
 
-            items['total'] = Server.plugins.ecommerce.store.currency.alphaCode + ' ' + basketTotal;
-            items['quantity'] = quantity;
+            items.quantity = quantity;
             this.set('items', items, true);
-            this.rerender();
+            this.getBasketTotal(variations);
+        },
+
+        getBasketTotal: function (variations) {
+            var that = this,
+                sendingData = {
+                    storeRef: this.storeRef,
+                    productVariationRefs: variations
+                };
+
+            bk$.ajax({
+                url: Server.plugins.ecommerce.store.calculateUrl,
+                method: 'POST',
+                data: sendingData,
+                dataType: 'json'
+            }).done(function (response) {
+                that.setBasketData(response);
+                that.rerender();
+            }));
+        },
+
+        setBasketData: function (response) {
+            var itemRef = null,
+                currentItems = this.get('items'); // store the reference
+
+            bk$.each(currentItems, function (index, product) {
+                itemRef = product.ref;
+                product.price = response.productVariationSubTotals[itemRef];
+            });
+
+            this.set('subTotalPrice', response.productVariationsTotal, true);
         },
 
         removeItem: function (ref) {
@@ -1025,21 +1073,25 @@
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
+
+            // HC: this will update both basket and checkout widgets
+            Globals.notifyHooks('ecom.basket.changed', {});
         },
 
         findVariationByRef: function (ref) {
             var variation = null,
                 products = Server.plugins.ecommerce.products;
 
-            $.each(products, function (key, product) {
-                var result = $.grep(product.variations, function (variation) {
+            bk$.each(products, function (key, product) {
+                var result = bk$.grep(product.variations, function (variation) {
                     return parseInt(variation.ref, 10) === parseInt(ref, 10);
                 });
 
                 if (typeof result === 'object' && result.length === 1) {
                     variation = result[0];
+                    variation.productRef = product.ref;
 
-                    if(typeof product === 'object' && typeof product.assets === 'object' && product.assets.length > 0) {
+                    if (typeof product === 'object' && typeof product.assets === 'object' && product.assets.length > 0) {
                         variation.assetUrl = Server.plugins.assets.images[product.assets[0].assetRef].url;
                     }
                 }
@@ -1059,9 +1111,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetEcombasket = function (options) {
+    bk$.fn.basekitWidgetEcombasket = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Ecombasket(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Ecombasket(el, options));
         });
     };
 }());
@@ -1070,38 +1122,75 @@
     BaseKit.Widget.Ecomcheckout = null;
 
     BaseKit.Widget.EcomcheckoutProperties = {
-        'countries' : Server.plugins.ecommerce ? Server.plugins.ecommerce.countries : null,
-        'shippings' : Server.plugins.ecommerce ? Server.plugins.ecommerce.shippings : null
     };
 
     BaseKit.Widget.EcomcheckoutMethods = {
         construct: function (el, options) {
             this.options = options;
+
+            if (!Server.plugins.ecommerce) {
+                return;
+            }
+
             this.load();
         },
 
         load: function () {
-            this.updateCheckout();
-        },
-
-        attachEvents: function () {
             var that = this;
+
+            // HC: just want to add hook once
             Globals.addHook('ecom.basket.changed', this, function () {
                 that.updateCheckout();
             });
 
-            $(this.el).find('.js-add').on('click', function (e) {
-                that.addItem($(this).data('ref'));
-                that.updateCheckout();
+            this.updateCheckout();
+            this.handleCountryAutoFill();
+        },
+
+        attachEvents: function () {
+            var that = this;
+
+            bk$(this.el).find('.js-add').off('click').on('click', function (e) {
+                that.addItem(bk$(this).data('ref'));
             });
 
-            $(this.el).find('.js-remove').on('click', function (e) {
-                that.removeItem($(this).data('ref'));
-                that.updateCheckout();
+            bk$(this.el).find('.js-remove').off('click').on('click', function (e) {
+                that.removeItem(bk$(this).data('ref'));
             });
 
             this.countrySelectEvent();
             this.shippingSelectEvent();
+            this.formEvents();
+        },
+
+        handleCountryAutoFill: function () {
+            var that = this,
+                refreshTime = 1000;
+
+            // clean the interval
+            if (this.refreshInterval !== '') {
+                window.clearInterval(this.refreshInterval);
+                this.refreshInterval = '';
+            }
+
+            this.refreshInterval = window.setInterval(function () {
+                try {
+
+                    // HC: autofill does not fire change on country select so manually check it's value
+                    if (that.el.find('[name="delivery[countryCode]"]').val() !== that.countryCode) {
+
+                        // HC: resets the delivery ref value
+                        that.el.find('[name="deliveryRef"]').val("");
+                        that.updateCheckoutTotal();
+                    }
+                    
+                } catch (err) {
+                    clearInterval(that.refreshInterval);
+
+                    //throw error
+                    console.log(err);
+                }
+            }, refreshTime);
         },
 
         getCart: function () {
@@ -1111,30 +1200,57 @@
         updateCheckout: function () {
             var that = this,
                 cart = this.getCart(),
-                total = 0,
-                items = [];
+                variations = {},
+                store = Server.plugins.ecommerce.store;
 
-            $.each(cart, function (ref, key) {
+            this.items = [];
+
+            bk$.each(cart, function (ref, key) {
                 var variation = that.findVariationByRef(ref);
 
                 if (variation !== null) {
-                    total = total + parseFloat(variation.price) * parseInt(cart[ref], 10);
-
-                    items.push({
+                    that.items.push({
                         ref: ref,
                         title: variation.title,
+                        productRef: variation.productRef,
                         assetUrl: variation.assetUrl,
                         quantity: parseInt(cart[ref], 10),
-                        pricePU: parseFloat(variation.price),
-                        price: parseFloat(variation.price) * parseInt(cart[ref], 10)
+                        pricePU: variation.formattedPrice
                     });
+
+                    variations[ref] = parseInt(cart[ref], 10);
                 }
             });
 
-            items['totalPrice'] = total;
-            this.set('items', items, true);
-            this.set('totalPrice', total, true);
-            this.rerender();
+            this.variations = variations;
+
+            if (store.stripePublishableKey === null && !store.paypal) {
+                return;
+            }
+
+            if (this.items.length === 0) {
+                this.updateEmptyUI();
+            } else {
+                this.updateCheckoutTotal();
+            }
+        },
+
+        getCountryCode: function () {
+            var countryCode = this.el.find('[name="delivery[countryCode]"]').val();
+            this.countryCode = countryCode;
+            return countryCode;
+        },
+
+        getCountry: function () {
+            return this.el.find('[name="delivery[countryCode]"] option:selected').text();
+        },
+
+        getDeliveryRef: function () {
+            var deliveryRef = parseInt(this.el.find('[name="deliveryRef"]').val(), 10);
+
+            if (!isNaN(deliveryRef)) {
+                return deliveryRef;
+            }
         },
 
         removeItem: function (ref) {
@@ -1147,6 +1263,9 @@
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
+
+            // HC: this will update both basket and checkout widgets
+            Globals.notifyHooks('ecom.basket.changed', {});
         },
 
         addItem: function (ref) {
@@ -1154,21 +1273,167 @@
 
             cart[ref] = cart[ref] + 1;
             localStorage.setItem('cart', JSON.stringify(cart));
+
+            // HC: this will update both basket and checkout widgets
+            Globals.notifyHooks('ecom.basket.changed', {});
+        },
+
+        updateCheckoutTotal: function () {
+            var that = this,
+                sendingData = {
+                    storeRef: Server.plugins.ecommerce.store.ref,
+                    productVariationRefs: this.variations,
+                    countryCode: this.getCountryCode(),
+                    deliveryRef: this.getDeliveryRef()
+                };
+
+            bk$.ajax({
+                url: Server.plugins.ecommerce.store.calculateUrl,
+                method: 'POST',
+                data: sendingData
+            }).done(function (response) {
+                that.setCheckoutTotal(response);
+                // that.rerender();
+                that.updateCheckoutUI();
+            });
+        },
+
+        setCheckoutTotal: function (response) {
+            var itemRef = null,
+                currentItems = this.get('items'); // store the reference
+
+            bk$.each(currentItems, function (index, product) {
+                itemRef = product.ref;
+                product.price = response.productVariationSubTotals[itemRef];
+            });
+
+            // HC: partial tpl data
+            this.noShippingsReason = response.emptyShippingOptionsReason;
+            this.subTotalPrice     = response.productVariationsTotal;
+            this.shippingOpts      = response.shippingOptions;
+            this.totalPrice        = response.total;
+            this.shippingCost      = response.shippingCost;
+            this.totalTax          = response.totalTax;
+        },
+
+        updateCheckoutUI: function () {
+            this.updateItemsTableUI();
+            this.updateItemsInputUI();
+            this.updateShippingOptsUI();
+            this.updateTaxAndTotalValues();
+            this.updateSubmitBtnUI();
+            this.attachEvents();
+        },
+
+        updateEmptyUI: function () {
+            var thisEl = bk$(this.el),
+                emptyHtml = this.rerenderPartial('widget_ecomcheckout_empty'),
+                removedEl = thisEl.find(':not(.js-checkout-title)');
+
+            if (bk$('body').hasClass('edit')) {
+
+                // HC: in editor mode, thisEl will have an overlay which should not be removed
+                removedEl = thisEl.find(':not(.js-checkout-title, .bk-overlay, .bk-overlay-bg, .bk-icons-bar, .bk-icons-bar span)');
+            }
+
+            if (removedEl.length > 0 && emptyHtml.length > 0) {
+                removedEl.remove().end().append(emptyHtml);
+            }
+        },
+
+        updateItemsTableUI: function () {
+            var thisEl = bk$(this.el),
+                itemsData = {
+                    items: this.items,
+                    subTotalPrice: this.subTotalPrice
+                },
+                itemsHtml = this.rerenderPartial('widget_ecomcheckout_items', itemsData);
+
+            if (thisEl.find('.js-checkout-itemstable').length > 0 && itemsHtml.length > 0) {
+                thisEl.find('.js-checkout-itemstable').empty().append(itemsHtml);
+            } else {
+                throw new Error('unable to find .js-checkout-itemstable element');
+            }
+        },
+
+        updateItemsInputUI: function () {
+            var thisEl = bk$(this.el),
+                itemsInputData = {
+                    items: this.items,
+                    subTotalPrice: this.subTotalPrice
+                },
+                itemsInputHtml = this.rerenderPartial('widget_ecomcheckout_itemsinput', itemsInputData);
+
+            if (thisEl.find('.js-checkout-form').length > 0 && itemsInputHtml.length > 0) {
+
+                if (bk$('.js-checkout-items-input').length > 0) {
+                    bk$('.js-checkout-items-input').remove();
+                }
+
+                bk$('.js-checkout-form').append(itemsInputHtml);
+            } else {
+                throw new Error('unable to find .js-checkout-form element');
+            }
+        },
+
+        updateShippingOptsUI: function () {
+            var thisEl = bk$(this.el),
+                shippingData = {
+                    email:             Server.plugins.ecommerce.store.email,
+                    country:           this.getCountry(),
+                    business:          Profile.get('business'),
+                    shippings:         Server.plugins.ecommerce.shippings,
+                    countryCode:       this.getCountryCode(),
+                    deliveryRef:       this.getDeliveryRef(),
+                    shippingOpts:      this.shippingOpts,
+                    noShippingsReason: this.noShippingsReason
+                },
+                shippingHtml = this.rerenderPartial('widget_ecomcheckout_shippingopts', shippingData);
+
+            if (thisEl.find('.js-shipping-opts').length > 0 && shippingHtml.length > 0) {
+                thisEl.find('.js-shipping-opts').empty().append(shippingHtml);
+            } else {
+                throw new Error('unable to find .js-shipping-opts element');
+            }
+        },
+
+        updateTaxAndTotalValues: function () {
+            var thisEl = bk$(this.el),
+                shippingTaxText = App.t('widgets.ecomcheckout.delivery_amount_tax', 'Delivery price tax:') + ' ' + this.shippingTax,
+                shippingCostText = App.t('widgets.ecomcheckout.delivery_amount', 'Delivery price:') + ' ' + this.shippingCost,
+                totalTaxText = App.t('widgets.ecomcheckout.total_tax', 'Total tax:') + ' ' + this.totalTax,
+                totalPriceText = App.t('widgets.ecomcheckout.total_amount', 'Total amount:') + ' ' + this.totalPrice;
+
+            thisEl.find('.delivery-price-tax').text(shippingTaxText);
+            thisEl.find('.delivery-price').text(shippingCostText);
+            thisEl.find('.checkout-total-tax').text(totalTaxText);
+            thisEl.find('.checkout-total-amount').text(totalPriceText);
+        },
+
+        updateSubmitBtnUI: function () {
+            var btnEl = bk$(this.el).find('.js-create-order');
+
+            if (bk$.isEmptyObject(this.shippingOpts)) {
+                btnEl.prop('disabled', true);
+            } else {
+                btnEl.prop('disabled', false);
+            }
         },
 
         findVariationByRef: function (ref) {
             var variation = null,
                 products = Server.plugins.ecommerce.products;
 
-            $.each(products, function (key, product) {
-                var result = $.grep(product.variations, function (variation) {
+            bk$.each(products, function (key, product) {
+                var result = bk$.grep(product.variations, function (variation) {
                     return parseInt(variation.ref, 10) === parseInt(ref, 10);
                 });
 
                 if (result.length === 1) {
                     variation = result[0];
+                    variation.productRef = product.ref;
 
-                    if(product.assets.length) {
+                    if (product.assets.length) {
                         variation.assetUrl = Server.plugins.assets.images[product.assets[0].assetRef].url;
                     }
                     return;
@@ -1180,50 +1445,48 @@
 
         countrySelectEvent: function () {
             var that = this,
-                thisEl = $(this.el),
-                countryRef = null;
+                thisEl = bk$(this.el);
 
-            thisEl.find('#country').on('change', function () {
-                countryRef = thisEl.find('#country').val();
-                that.updatePrice();
-                that.set('countryRef', countryRef, true);
-                that.rerender();
+            thisEl.find('[name="delivery[countryCode]"]').off('change').on('change', function () {
+
+                // HC: resets the delivery ref value
+                thisEl.find('[name="deliveryRef"]').val("");
+                that.updateCheckoutTotal();
             });
         },
 
         shippingSelectEvent: function () {
-            var that = this,
-                thisEl = $(this.el),
-                shippingRef = null;
+            var that = this;
 
-            thisEl.find('#shipping').on('change', function () {
-                shippingRef = thisEl.find('#shipping').val();
-                that.set('shippingRef', shippingRef, true);
-                that.updatePrice(shippingRef);
+            bk$(this.el).find('[name="deliveryRef"]').off('change').on('change', function () {
+                that.updateCheckoutTotal();
             });
         },
 
-        updatePrice: function (shippingRef) {
-            var selectedShipping = null,
-                result = [],
-                totalPrice = this.get('items').totalPrice;
+        formEvents: function () {
+            var that = this;
 
-            if (shippingRef) {
-                result = $.grep(Server.plugins.ecommerce.shippings, function (shipping) {
-                    return parseInt(shipping.ref, 10) === parseInt(shippingRef, 10);
-                });
-            }
+            bk$(this.el).find('.checkout-form').off('submit').on('submit', function (e) {
+                if (!that.validateFields()) {
+                    e.preventDefault();
+                }
+            });
+        },
 
-            if (result.length === 1) {
-                selectedShipping = result[0];
-                this.set('shippingPrice', selectedShipping.cost, true);
-                totalPrice = parseInt(totalPrice, 10) + parseInt(selectedShipping.cost, 10);
-            } else {
-                this.set('shippingPrice', 0, true);
-            }
+        validateFields: function () {
+            var thisEl = bk$(this.el),
+                fieldEls = thisEl.find('[name][required]'),
+                isValid = true;
 
-            this.set('totalPrice', totalPrice, true);
-            this.rerender();
+            thisEl.find('.form-group').removeClass('invalid');
+
+            bk$.each(fieldEls, function () {
+                if (bk$(this).val().length === 0) {
+                    bk$(this).parents('.form-group').addClass('invalid');
+                    isValid = false;
+                }
+            });
+            return isValid;
         }
     };
 
@@ -1237,9 +1500,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetEcomcheckout = function (options) {
+    bk$.fn.basekitWidgetEcomcheckout = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Ecomcheckout(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Ecomcheckout(el, options));
         });
     };
 }());
@@ -1253,6 +1516,16 @@
     BaseKit.Widget.EcomconfirmationMethods = {
         construct: function (el, options) {
             this.options = options;
+
+            this.load();
+        },
+
+        load: function () {
+            this.clearCart();
+        },
+
+        clearCart: function () {
+            window.localStorage.removeItem('cart');
         }
     };
 
@@ -1263,9 +1536,38 @@
         });
     };
 
-    $.fn.basekitWidgetEcomconfirmation = function (options) {
+    bk$.fn.basekitWidgetEcomconfirmation = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Ecomconfirmation(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Ecomconfirmation(el, options));
+        });
+    };
+}());
+(function () {
+
+    BaseKit.Widget.Ecomlegal = null;
+
+    BaseKit.Widget.EcomlegalProperties = {
+    };
+
+    BaseKit.Widget.EcomlegalMethods = {
+        construct: function (el, options) {
+            this.options = options;
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Ecomlegal = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.EcomlegalProperties,
+            methods: BaseKit.Widget.EcomlegalMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    bk$.fn.basekitWidgetEcomlegal = function (options) {
+        this.each(function (index, el) {
+            bk$(el).data('bkob', new BaseKit.Widget.Ecomlegal(el, options));
         });
     };
 }());
@@ -1275,7 +1577,7 @@
 
     BaseKit.Widget.EcomproductProperties = {
         price: 0,
-        product: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.products[0] : [],
+        product: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.product : [],
         disableButton: 1
     };
 
@@ -1286,33 +1588,62 @@
         },
 
         load: function () {
+            var variation = null;
+
             this.set('options', this.getOptions(), true);
             this.setProductAssets();
 
-            $.each(this.get('options'), function (index, option) {
+            bk$.each(this.get('options'), function (index, option) {
                 if (index > 0) {
                     option.disabled = 1;
                 }
-            })
+            });
+
+            // Product with no variation
+            if (Server.plugins.ecommerce && Server.plugins.ecommerce.product !== null
+                && Server.plugins.ecommerce.product.variations.length === 1) {
+                variation = Server.plugins.ecommerce.product.variations[0];
+
+                if (variation.stock > 0 || (variation.stock <= 0 && this.get('product').stockUnlimited)) {
+                    this.set('variationRef', variation.ref, true);
+                    this.set('price', variation.formattedPrice, true);
+                    this.set('disableButton', 0, true);
+                } else {
+                    this.set('notAvailable', 1, true);
+                }
+            }
 
             this.rerender();
         },
 
         attachEvents: function () {
-            var that = this;
+            var that = this,
+                thiseEl = bk$(this.el),
+                previewWrapper = thiseEl.find('.ecom-product-preview-image-wrap'),
+                previewImg = thiseEl.find('.ecom-product-preview-image');
 
-            $(this.el).find('select').on('change', function (e) {
-                that.updateOptions($(this).data('option-name'), $(this).val());
+            thiseEl.find('select').on('change', function (e) {
+                that.updateOptions(bk$(this).data('option-name'), bk$(this).val());
             });
 
-            $(this.el).find('button').on('click', function (e) {
-                that.addToBasket($(this).data('ref'));
+            thiseEl.find('.ecom-product-add-to-cart-btn').on('click', function (e) {
+                that.addToBasket(bk$(this).data('ref'));
+            });
+
+            thiseEl.find('.ecom-product-go-to-checkout-btn').on('click', function () {
+                window.location.href = window.location.origin + '/store/checkout';
+            });
+
+            thiseEl.find('.ecom-product-image-wrap').on('mousedown', function () {
+                var src = bk$(this).find('img').attr('src');
+                previewImg.attr('src', src);
+                previewWrapper.css('background-image', 'url(' + src + ')');
             });
         },
 
         setProductAssets: function () {
-            if (Server.plugins.ecommerce.products.length === 1) {
-                $.each(this.get('product').assets, function (index, asset) {
+            if (Server.plugins.ecommerce && Server.plugins.ecommerce.product !== null) {
+                bk$.each(this.get('product').assets, function (index, asset) {
                     if (Server.plugins.assets.images[asset.assetRef].fileType === 'image') {
                         asset.imageSrc = Server.plugins.assets.images[asset.assetRef].url;
                     }
@@ -1321,7 +1652,7 @@
         },
 
         getOptions: function () {
-            if (Server.plugins.ecommerce.products.length === 1) {
+            if (Server.plugins.ecommerce && Server.plugins.ecommerce.product !== null) {
                 return this.get('product').options;
             }
 
@@ -1329,7 +1660,7 @@
         },
 
         getMapValueToVariation: function () {
-            if (Server.plugins.ecommerce.products.length === 1) {
+            if (Server.plugins.ecommerce && Server.plugins.ecommerce.product !== null) {
                 return this.get('product').mapValueToVariation;
             }
 
@@ -1340,12 +1671,11 @@
             var that = this,
                 mapValueToVariation = this.getMapValueToVariation(),
                 variationRefs = null,
-                resetOptions = false,
                 from = 0,
                 found = false,
                 variation = null;
 
-            $.each(this.get('options'), function (index, option) {
+            bk$.each(this.get('options'), function (index, option) {
                 //Every select box after we found the last changed are reset
                 //for calculating the possibilities in findVariationList()
                 if (found) {
@@ -1361,7 +1691,7 @@
 
             variationRefs = this.findVariationList() || [];
 
-            $.each(this.get('options'), function (index, option) {
+            bk$.each(this.get('options'), function (index, option) {
                 //First option is never disabled then
                 //calculate possiblities for the next select
                 //Until previous select hasn't been choosen values stay disabled.
@@ -1370,7 +1700,7 @@
                 } else if (index === from + 1) {
                     option.disabled = 0;
 
-                    $.each(option.values, function (index, value) {
+                    bk$.each(option.values, function (index, value) {
                         var possibleList = mapValueToVariation[value.ref] || [];
                         value.disabled = 1;
 
@@ -1387,10 +1717,9 @@
             });
 
             variation = this.getUniqueVariation();
-
             if (variation !== null && this.isAllOptionsSelected()) {
                 this.set('variationRef', variation.ref, true);
-                this.set('price', variation.price, true);
+                this.set('price', variation.formattedPrice, true);
                 this.set('disableButton', 0, true);
             } else {
                 this.set('disableButton', 1, true);
@@ -1401,8 +1730,7 @@
         },
 
         getUniqueVariation: function () {
-            var that = this,
-                variationRefs = [];
+            var variationRefs = [];
 
             variationRefs = this.findVariationList();
 
@@ -1421,7 +1749,7 @@
         },
 
         isAllOptionsSelected: function () {
-            var options = $.grep(this.get('options'), function (option) {
+            var options = bk$.grep(this.get('options'), function (option) {
                 return option.valueRef;
             });
 
@@ -1432,12 +1760,12 @@
             var that = this,
                 result = [],
                 mapValueToVariation = this.getMapValueToVariation(),
-                options = $.grep(this.get('options'), function (option) {
+                options = bk$.grep(this.get('options'), function (option) {
                     return option.valueRef;
                 });
 
             //Find unique variation by intersecting all possible values found by options selected
-            $.each(options, function (index, option) {
+            bk$.each(options, function (index, option) {
                 var list = mapValueToVariation[option.valueRef] || [];
 
                 if (that._intersection(list, result).length === 0) {
@@ -1451,10 +1779,10 @@
         },
 
         findVariationByRef: function (ref) {
-            var variations = Server.plugins.ecommerce.products[0].variations,
+            var variations = Server.plugins.ecommerce.product.variations,
                 result = [];
 
-            result = $.grep(variations, function (variation) {
+            result = bk$.grep(variations, function (variation) {
                 return parseInt(variation.ref, 10) === parseInt(ref, 10);
             });
 
@@ -1483,7 +1811,17 @@
         },
 
         addToBasket: function (variationRef) {
-            var cart = this.getCart();
+            var cart = this.getCart(),
+                addButtonText = App.t('shared_views.ecom-product.add-to-cart', 'Add to cart'),
+                addedButtonText = App.t('shared_views.ecom-product.added', 'Added'),
+                thisEl = bk$(this.el),
+                addBtnEl = thisEl.find('.ecom-product-add-to-cart-btn'),
+                checkoutBtnEl = thisEl.find('.ecom-product-go-to-checkout-btn'),
+                t = null;
+
+            addBtnEl.attr('disabled', 'disabled').addClass('added')
+                .find('.text').text(addedButtonText);
+            checkoutBtnEl.attr('hidden', true);
 
             if (cart[variationRef] !== undefined) {
                 cart[variationRef] = cart[variationRef] + 1;
@@ -1494,6 +1832,13 @@
             localStorage.setItem('cart', JSON.stringify(cart));
 
             Globals.notifyHooks('ecom.basket.changed', {});
+
+            t = setTimeout(function () {
+                clearTimeout(t);
+                addBtnEl.removeAttr('disabled').removeClass('added')
+                    .find('.text').text(addButtonText);
+                checkoutBtnEl.removeAttr('hidden');
+            }, 2000);
         }
     };
 
@@ -1507,9 +1852,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetEcomproduct = function (options) {
+    bk$.fn.basekitWidgetEcomproduct = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Ecomproduct(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Ecomproduct(el, options));
         });
     };
 }());
@@ -1544,9 +1889,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetEcomproductslist = function (options) {
+    bk$.fn.basekitWidgetEcomproductslist = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Ecomproductslist(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Ecomproductslist(el, options));
         });
     };
 }());
@@ -1564,7 +1909,7 @@
 
 		load: function ()
 		{
-			var thisEl = $(this.el),
+			var thisEl = bk$(this.el),
 				code = this.get('code');
 				
 			if (typeof(code) !== 'undefined' && code !== null &&  code.length > 0)
@@ -1598,11 +1943,11 @@
 	};
 
 	// JQuery plugin so that a widget can be attached to an element
-	$.fn.basekitWidgetEmbed = function (options)
+	bk$.fn.basekitWidgetEmbed = function (options)
 	{
 		this.each(function (index, el)
 		{
-			$(el).data('bkob', new BaseKit.Widget.Embed(el, options));
+			bk$(el).data('bkob', new BaseKit.Widget.Embed(el, options));
 		});
 	};
 }());
@@ -1620,18 +1965,22 @@
         },
 
         load: function () {
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
             this.menuDropdownEvent();
         },
 
         menuDropdownEvent: function () {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 pullEl = thisEl.find('.pull'),
                 menuEl = thisEl.find('.extendednavigation > ul');
 
             pullEl.off('click').on('click', function (e) {
                 e.preventDefault();
-                if (!$('body').hasClass('edit')) {
+                if (!bk$('body').hasClass('edit')) {
                     if (menuEl.is(':visible')) {
                         menuEl.hide();
                     } else {
@@ -1642,14 +1991,14 @@
 
             this.menuToggle();
 
-            $(window).on('resize orientationchange', function () {
+            bk$(window).on('resize orientationchange', function () {
                 that.menuToggle();
             });
         },
 
         menuToggle: function () {
-            var w = $(window).width(),
-                menuEl = $(this.el).find('.extendednavigation ul');
+            var w = bk$(window).width(),
+                menuEl = bk$(this.el).find('.extendednavigation ul');
 
             if (w > 320 && menuEl.is(':hidden')) {
                 menuEl.removeAttr('style');
@@ -1667,9 +2016,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetExtendednavigation = function (options) {
+    bk$.fn.basekitWidgetExtendednavigation = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Extendednavigation(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Extendednavigation(el, options));
         });
     };
 }());(function () {
@@ -1714,9 +2063,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetFacebooklike = function (options) {
+    bk$.fn.basekitWidgetFacebooklike = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Facebooklike(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Facebooklike(el, options));
         });
     };
 }());(function () {
@@ -1753,7 +2102,7 @@
                 action = null,
                 target = null;
 
-            $(this.el).find('button').on('click', function (e) {
+            bk$(this.el).find('button').on('click', function (e) {
                 //get the button date
                 action = that.get('action');
                 url = that.get('url');
@@ -1782,9 +2131,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetFeature = function (options) {
+    bk$.fn.basekitWidgetFeature = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Feature(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Feature(el, options));
         });
     };
 }());(function () {
@@ -1805,7 +2154,7 @@
 
         attachEvents: function () {
             var that = this,
-                thisEl = $(this.el);
+                thisEl = bk$(this.el);
 
             thisEl.find('form').on('submit', function (e) {
                 e.preventDefault();
@@ -1815,7 +2164,7 @@
                     return;
                 }
 
-                $.ajax({
+                bk$.ajax({
                     type: 'POST',
                     url: 'site/api/auth-token',
                     async: false
@@ -1826,7 +2175,7 @@
                         passwordResetPage : that.get('passwordResetPage')
                     };
 
-                    $.ajax({
+                    bk$.ajax({
                         url: 'site/api/forgotten-password',
                         type: 'POST',
                         data: data,
@@ -1842,7 +2191,7 @@
                         var errors = App.getErrorsFromResponse(response),
                             message = null;
 
-                        $.each(errors, function (i, value) {
+                        bk$.each(errors, function (i, value) {
                             if (value.field === 'email') {
                                 message = value.message;
                                 return;
@@ -1867,7 +2216,7 @@
          * @param <boolean>  isSuccess
          */
         showText: function (isSuccess, message) {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 className = null;
 
             if (thisEl.find('.message-box').length > 0) {
@@ -1884,8 +2233,8 @@
         },
 
         showMessageBox: function () {
-            var thisEl = $(this.el),
-                overlay = $('<div class="overlay"></div>');
+            var thisEl = bk$(this.el),
+                overlay = bk$('<div class="overlay"></div>');
 
             if (thisEl.find('.overlay').length === 0) {
                 thisEl.append(overlay);
@@ -1893,14 +2242,14 @@
         },
 
         removeMessageBox: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 t = null;
 
             t = setTimeout(function () {
                 clearTimeout(t);
                 thisEl.find('.overlay').fadeOut(function () {
                     thisEl.find('.email, .message').val('');
-                    $(this).remove();
+                    bk$(this).remove();
                 });
             }, 3000);
         }
@@ -1913,9 +2262,9 @@
         });
     };
 
-    $.fn.basekitWidgetForgottenpassword = function (options) {
+    bk$.fn.basekitWidgetForgottenpassword = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Forgottenpassword(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Forgottenpassword(el, options));
         });
     };
 }());
@@ -1951,9 +2300,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetGallery = function (options) {
+    bk$.fn.basekitWidgetGallery = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Gallery(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Gallery(el, options));
         });
     };
 }());(function () {
@@ -1992,9 +2341,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetImage = function (options) {
+    bk$.fn.basekitWidgetImage = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Image(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Image(el, options));
         });
     };
 }());(function () {
@@ -2028,9 +2377,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetLine = function (options) {
+    bk$.fn.basekitWidgetLine = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Line(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Line(el, options));
         });
     };
 }());(function () {
@@ -2057,16 +2406,27 @@
             var that = this;
 
             // This dynamically injects the linkedin script into the body
-            if (Site.Page.Globals.linkinInAPILoaded === false && $('#linkedin-script').length === 0) {
-                $.getScript("//platform.linkedin.com/in.js", function () {
-                    $(this).attr('id', 'linkedin-script');
+            if (Site.Page.Globals.linkinInAPILoaded === false && bk$('#linkedin-script').length === 0) {
+                bk$.getScript("//platform.linkedin.com/in.js", function () {
+                    bk$(this).attr('id', 'linkedin-script');
                     Site.Page.Globals.linkinInAPILoaded = true;
                 });
             } else {
-                // this is needed to force the LinkedIn code to reparse any new widgets
-                if (IN && typeof IN.parse === 'function') {
-                    IN.parse();
-                }
+                this.rebuild();
+            }
+        },
+
+        attachEvents: function () {
+            this.rebuild();
+        },
+
+        /**
+         * tells the linked IN object to reparse itself, thus rendereding the iframe inside
+         */
+        rebuild: function () {
+            // this is needed to force the LinkedIn code to reparse any new profile url's
+            if (IN && typeof IN.parse === 'function') {
+                IN.parse();
             }
         }
     };
@@ -2081,9 +2441,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetLinkedincompanyprofile = function (options) {
+    bk$.fn.basekitWidgetLinkedincompanyprofile = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Linkedincompanyprofile(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Linkedincompanyprofile(el, options));
         });
     };
 }());
@@ -2108,16 +2468,27 @@
             var that = this;
 
             // This dynamically injects the linkedin script into the body
-            if (Site.Page.Globals.linkinInAPILoaded === false && $('#linkinedin-widget-script').length === 0) {
-                $.getScript("//platform.linkedin.com/in.js?suppressWarnings=true", function () {
-                    $(this).attr('id', 'linkinedin-widget-script');
+            if (Site.Page.Globals.linkinInAPILoaded === false && bk$('#linkinedin-widget-script').length === 0) {
+                bk$.getScript("//platform.linkedin.com/in.js?suppressWarnings=true", function () {
+                    bk$(this).attr('id', 'linkinedin-widget-script');
                     Site.Page.Globals.linkinInAPILoaded = true;
                 });
             } else {
-                // this is needed to force the LinkedIn code to reparse any new profile url's
-                if (IN && typeof IN.parse === 'function') {
-                    IN.parse();
-                }
+                this.rebuild();
+            }
+        },
+
+        attachEvents: function () {
+            this.rebuild();
+        },
+
+        /**
+         * tells the linked IN object to reparse itself, thus rendereding the iframe inside
+         */
+        rebuild: function () {
+            // this is needed to force the LinkedIn code to reparse any new profile url's
+            if (IN && typeof IN.parse === 'function') {
+                IN.parse();
             }
         }
     };
@@ -2132,9 +2503,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetLinkedinprofile = function (options) {
+    bk$.fn.basekitWidgetLinkedinprofile = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Linkedinprofile(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Linkedinprofile(el, options));
         });
     };
 }());
@@ -2165,11 +2536,11 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetLogo = function (options) {
+    bk$.fn.basekitWidgetLogo = function (options) {
         this.each(function (index, el) {
             var obj = null;
             obj = new BaseKit.Widget.Logo(el, options);
-            $(el).data('bkob', obj);
+            bk$(el).data('bkob', obj);
         });
     };
 }());(function () {
@@ -2222,10 +2593,10 @@
                     that.resetMap();
                 }, 300);
             }
-            $(window).on('resize', this.onResize);
+            bk$(window).on('resize', this.onResize);
 
             // if no maps have yet been loaded, then try to load one
-            if (Site.Page.Globals.mapsAPILoaded === false && $('#gmaps-widget-script').length === 0) {
+            if (Site.Page.Globals.mapsAPILoaded === false && bk$('#gmaps-widget-script').length === 0) {
                 // This dynamically injects the googlemaps into the body
                 script = document.createElement("script");
                 script.type = "text/javascript";
@@ -2282,10 +2653,10 @@
 
             // MB: set the height
             // HC: we need to set the height before rendering the map to make sure the map is in the center
-            $(this.el).find('.map').height(this.get('height'));
+            bk$(this.el).find('.map').height(this.get('height'));
 
             // set the map
-            this.gmap = new google.maps.Map($(this.el).find('.map').get(0), mapOptions);
+            this.gmap = new google.maps.Map(bk$(this.el).find('.map').get(0), mapOptions);
             this.resetMap();
         },
 
@@ -2297,7 +2668,7 @@
 
             // make sure the maps has been loaded
             if (this.gmap !== null && Site.Page.Globals.mapsAPILoaded === true) {
-                $(this.el).find('.map').height(this.get('height'));
+                bk$(this.el).find('.map').height(this.get('height'));
 
                 // NOTE: Google Maps is fussy - needs parseFloat calls!
                 newCenter = new google.maps.LatLng(parseFloat(this.get('latitude'), 10),
@@ -2427,9 +2798,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetMap = function (options) {
+    bk$.fn.basekitWidgetMap = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Map(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Map(el, options));
         });
     };
 }());
@@ -2458,9 +2829,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetMenu = function (options) {
+    bk$.fn.basekitWidgetMenu = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Menu(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Menu(el, options));
         });
     };
 }());(function () {
@@ -2480,13 +2851,13 @@
 
         attachEvents: function () {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 anchorEl = thisEl.find('.menu-section-list a'),
-                menuEl = $(document).find('.widget.menu');
+                menuEl = bk$(document).find('.widget.menu');
 
             anchorEl.on('click.selectSection', function (e) {
                 if (menuEl.length > 0) {
-                    that.updateMenuSectionClass($(this).attr('href'));
+                    that.updateMenuSectionClass(bk$(this).attr('href'));
                 }
             });
 
@@ -2494,12 +2865,12 @@
         },
 
         updateMenuSectionClass: function (sectionId) {
-            var menuEl = $(document).find('.widget.menu'),
+            var menuEl = bk$(document).find('.widget.menu'),
                 sectionEls = menuEl.find('.main');
 
             if (sectionEls.length > 0) {
-                $.each(sectionEls, function (index, item) {
-                    $(item).removeClass('selected');
+                bk$.each(sectionEls, function (index, item) {
+                    bk$(item).removeClass('selected');
                 });
             }
 
@@ -2508,13 +2879,13 @@
 
         menuDropdownEvent: function () {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 pullEl = thisEl.find('.menu-pull'),
                 menuListEl = thisEl.find('.menu-section-list');
 
             pullEl.off('click').on('click', function (e) {
                 e.preventDefault();
-                if (!$('body').hasClass('edit')) {
+                if (!bk$('body').hasClass('edit')) {
                     if (menuListEl.is(':visible')) {
                         menuListEl.hide();
                     } else {
@@ -2525,14 +2896,14 @@
 
             this.menuToggle();
 
-            $(window).on('resize orientationchange', function () {
+            bk$(window).on('resize orientationchange', function () {
                 that.menuToggle();
             });
         },
 
         menuToggle: function () {
-            var w = $(window).width(),
-                menuListEl = $(this.el).find('.menu-section-list');
+            var w = bk$(window).width(),
+                menuListEl = bk$(this.el).find('.menu-section-list');
 
             if (w > 320 && menuListEl.is(':hidden')) {
                 menuListEl.removeAttr('style');
@@ -2550,9 +2921,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetMenusections = function (options) {
+    bk$.fn.basekitWidgetMenusections = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Menusections(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Menusections(el, options));
         });
     };
 }());(function () {
@@ -2583,9 +2954,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetNavigation = function (options) {
+    bk$.fn.basekitWidgetNavigation = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Navigation(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Navigation(el, options));
         });
     };
 }());(function () {
@@ -2623,9 +2994,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetPaypalbuynow = function (options) {
+    bk$.fn.basekitWidgetPaypalbuynow = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Paypalbuynow(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Paypalbuynow(el, options));
         });
     };
 }());
@@ -2683,6 +3054,10 @@
             this.attachProfileEvents();
         },
 
+        renderFinish: function () {
+            this.attachProfileEvents();
+        },
+
         attachProfileEvents: function () {
             switch (this.get('profileType')) {
             case 'twitter':
@@ -2701,7 +3076,7 @@
 
         initialForm: function () {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 url = '/site/' + App.session.get('siteRef') + '/submit-form',
                 data = {};
 
@@ -2723,7 +3098,7 @@
                 }
 
                 // submit the form using the api
-                $.ajax({
+                bk$.ajax({
                     url: url,
                     type: "POST",
                     data: data,
@@ -2753,7 +3128,7 @@
          */
         showText: function (isSuccess) {
             var message = null,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 className = null;
 
             if (thisEl.find('.message-box').length > 0) {
@@ -2772,8 +3147,8 @@
         },
 
         showMessageBox: function () {
-            var thisEl = $(this.el),
-                overlay = $('<div class="overlay"></div>');
+            var thisEl = bk$(this.el),
+                overlay = bk$('<div class="overlay"></div>');
 
             if (thisEl.find('.overlay').length === 0) {
                 thisEl.append(overlay);
@@ -2781,14 +3156,14 @@
         },
 
         removeMessageBox: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 t = null;
 
             t = setTimeout(function () {
                 clearTimeout(t);
                 thisEl.find('.overlay').fadeOut(function () {
                     thisEl.find('.email').val('');
-                    $(this).remove();
+                    bk$(this).remove();
                 });
             }, 3000);
         },
@@ -2818,7 +3193,7 @@
 
         loadMap: function () {
             // if no maps have yet been loaded, then try to load one
-            if (Site.Page.Globals.mapsAPILoaded === false && $('#gmaps-widget-script').length === 0) {
+            if (Site.Page.Globals.mapsAPILoaded === false && bk$('#gmaps-widget-script').length === 0) {
                 // This dynamically injects the googlemaps into the body
                 var script = document.createElement("script");
                 script.type = "text/javascript";
@@ -2874,10 +3249,10 @@
 
             // MB: set the map Height
             // HC: we need to set the height before rendering the map to make sure the map is in the center
-            $(this.el).find('.map').height(this.get('mapHeight'));
+            bk$(this.el).find('.map').height(this.get('mapHeight'));
 
             // set the map
-            this.gmap = new google.maps.Map($(this.el).find('.map').get(0), mapOptions);
+            this.gmap = new google.maps.Map(bk$(this.el).find('.map').get(0), mapOptions);
 
             // refresh the map
             this.resetMap();
@@ -2891,7 +3266,7 @@
 
             // make sure the maps has been loaded
             if (this.gmap !== null && Site.Page.Globals.mapsAPILoaded === true) {
-                $(this.el).find('.map').height(this.get('mapHeight'));
+                bk$(this.el).find('.map').height(this.get('mapHeight'));
 
                 // NOTE: Google Maps is fussy - needs parseFloat calls!
                 newCenter = new google.maps.LatLng(parseFloat(this.get('latitude'), 10),
@@ -3065,14 +3440,14 @@
             }
 
             // get twitter feed
-            $.ajax({
+            bk$.ajax({
                 url: url,
                 type: "POST",
                 data: data
             }).done(function (response, status) {
                 if (status === 'success') {
                     // format data
-                    $.each(response, function () {
+                    bk$.each(response, function () {
 
                         // format created data
                         createdDate = this.created_at;
@@ -3111,9 +3486,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetProfile = function (options) {
+    bk$.fn.basekitWidgetProfile = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Profile(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Profile(el, options));
         });
     };
 }());
@@ -3146,9 +3521,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetRedirecttodesktop = function (options) {
+    bk$.fn.basekitWidgetRedirecttodesktop = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Redirecttodesktop(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Redirecttodesktop(el, options));
         });
     };
 }());(function () {
@@ -3170,7 +3545,7 @@
 
         attachEvents: function () {
             var that = this,
-                thisEl = $(this.el);
+                thisEl = bk$(this.el);
 
             this.toggleShowHidePassword();
 
@@ -3182,7 +3557,7 @@
                     return;
                 }
 
-                $.ajax({
+                bk$.ajax({
                     type: 'POST',
                     url: 'site/api/auth-token',
                     async: false
@@ -3193,7 +3568,7 @@
                         token: response.token
                     };
 
-                    $.ajax({
+                    bk$.ajax({
                         url: '/site/api/reset-password',
                         type: 'POST',
                         data: data,
@@ -3216,7 +3591,7 @@
                         var errors = App.getErrorsFromResponse(response),
                             message = null;
 
-                        $.each(errors, function (i, value) {
+                        bk$.each(errors, function (i, value) {
                             if (value.field === 'hash') {
                                 message = value.message;
                                 return;
@@ -3237,18 +3612,18 @@
         },
 
         toggleShowHidePassword: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 passwordInputEl = thisEl.find('.password');
 
             thisEl.find('.password-mask-toggle').on('click', function () {
                 if (passwordInputEl[0].type === 'password') {
                     passwordInputEl[0].type = 'text';
                     passwordInputEl.attr('autocapitalize', 'off').attr('autocorrect', 'off').attr('spellcheck', 'false');
-                    $(this).text(App.t('widgets.resetpassword.hide', 'Hide'));
+                    bk$(this).text(App.t('widgets.resetpassword.hide', 'Hide'));
                 } else {
                     passwordInputEl[0].type = 'password';
                     passwordInputEl.removeAttr('autocapitalize').removeAttr('autocorrect').removeAttr('spellcheck');
-                    $(this).text(App.t('widgets.resetpassword.show', 'Show'));
+                    bk$(this).text(App.t('widgets.resetpassword.show', 'Show'));
                 }
             });
         },
@@ -3258,7 +3633,7 @@
          * @param <boolean>  isSuccess
          */
         showText: function (isSuccess, message) {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 className = null;
 
             if (thisEl.find('.message-box').length > 0) {
@@ -3275,8 +3650,8 @@
         },
 
         showMessageBox: function () {
-            var thisEl = $(this.el),
-                overlay = $('<div class="overlay"></div>');
+            var thisEl = bk$(this.el),
+                overlay = bk$('<div class="overlay"></div>');
 
             if (thisEl.find('.overlay').length === 0) {
                 thisEl.append(overlay);
@@ -3284,14 +3659,14 @@
         },
 
         removeMessageBox: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 t = null;
 
             t = setTimeout(function () {
                 clearTimeout(t);
                 thisEl.find('.overlay').fadeOut(function () {
                     thisEl.find('.email, .message').val('');
-                    $(this).remove();
+                    bk$(this).remove();
                 });
             }, 3000);
         }
@@ -3304,9 +3679,9 @@
         });
     };
 
-    $.fn.basekitWidgetResetpassword = function (options) {
+    bk$.fn.basekitWidgetResetpassword = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Resetpassword(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Resetpassword(el, options));
         });
     };
 }());
@@ -3329,8 +3704,8 @@
         },
 
         hideEmptyColumns: function () {
-            if (!$('body').hasClass('edit') && this.get('isEmpty') && this.get('isEmpty') === '1') {
-                $(this.el).find('.tip-message, #select-columns-num').hide();
+            if (!bk$('body').hasClass('edit') && this.get('isEmpty') && this.get('isEmpty') === '1') {
+                bk$(this.el).find('.tip-message, #select-columns-num').hide();
             }
         }
     };
@@ -3345,9 +3720,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetResponsivecolumns = function (options) {
+    bk$.fn.basekitWidgetResponsivecolumns = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Responsivecolumns(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Responsivecolumns(el, options));
         });
     };
 }());(function () {
@@ -3378,7 +3753,7 @@
         },
 
         load: function () {
-            var editor = $('body').hasClass('edit'),
+            var editor = bk$('body').hasClass('edit'),
                 albumArray = this.get('albumRef') > 0 ? Server.plugins.assets.albums[this.get('albumRef')] : this.get('images');
 
             if ((albumArray && (albumArray.length > 0)) || this.properties.changed.album) {
@@ -3393,8 +3768,8 @@
         attachEvents: function () {
 
             var that = this,
-                ref = $(this).data('ref'),
-                thisEl = $(this.el),
+                ref = bk$(this).data('ref'),
+                thisEl = bk$(this.el),
                 imageArray = this.get('albumRef') > 0 ? Server.plugins.assets.albums[this.get('albumRef')] : this.get('images');
 
             if (imageArray && imageArray.length === 1) {
@@ -3405,14 +3780,14 @@
             }
 
             thisEl.find('.btn-play').on('click', function () {
-                ref = $(this).data('ref');
+                ref = bk$(this).data('ref');
 
-                if ($(this).hasClass('pause')) {
+                if (bk$(this).hasClass('pause')) {
                     that.pauseSlideShow();
                     return;
                 }
 
-                if ($(this).attr('disabled') === 'disabled') {
+                if (bk$(this).attr('disabled') === 'disabled') {
                     return;
                 }
 
@@ -3420,7 +3795,7 @@
             });
 
             thisEl.find('.slide-ctrl').on('click', function () {
-                ref = $(this).data('ref');
+                ref = bk$(this).data('ref');
 
                 that.handleSlideNavigation(ref);
             });
@@ -3438,13 +3813,13 @@
                 that.startSlideShow(ref);
             }, duration);
 
-            $('.slide-ctrl').on('click', function () {
+            bk$('.slide-ctrl').on('click', function () {
                 clearTimeout(timer);
             });
         },
 
         startSlideShow: function (ref) {
-            if ($('body').hasClass('edit')) {
+            if (bk$('body').hasClass('edit')) {
                 return;
             }
 
@@ -3453,14 +3828,14 @@
         },
 
         stopSlideShow: function () {
-            var elAll = $(this.el).find('.slideshow-image-item');
+            var elAll = bk$(this.el).find('.slideshow-image-item');
 
             elAll.stop(true, true);
             this.stopSlide = true;
         },
 
         setSlide: function (ref) {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 currentSlide = thisEl.find('.slideshow-image-item.current'),
                 newSlide = thisEl.find('.slideshow-image-item[data-ref="' + ref + '"]'),
                 newImage = newSlide.find('.slideshow-image');
@@ -3472,7 +3847,7 @@
         },
 
         setSlideInfo: function (ref) {
-            var el = $(this.el),
+            var el = bk$(this.el),
                 imageArray = this.get('albumRef') > 0 ? Server.plugins.assets.albums[this.get('albumRef')] : this.get('images'),
                 lastImg = imageArray.length - 1,
                 next = ref + 1,
@@ -3506,7 +3881,7 @@
         },
 
         playSlideShow: function (ref) {
-            $(this.el).find('.btn-play').addClass('pause');
+            bk$(this.el).find('.btn-play').addClass('pause');
             this.stopSlide = false;
             this.paused = false;
 
@@ -3514,7 +3889,7 @@
         },
 
         pauseSlideShow: function () {
-            $(this.el).find('.btn-play').removeClass('pause');
+            bk$(this.el).find('.btn-play').removeClass('pause');
             this.stopSlide = true;
             this.paused = true;
         },
@@ -3538,7 +3913,7 @@
 
         animate: function (slideFromRef, slideToRef) {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 timing = parseInt(this.get('transSpeed'), 10),
                 elEffect = this.get('transType'),
                 elOut,
@@ -3561,7 +3936,7 @@
 
             elOut   = thisEl.find('.slideshow-image-item[data-ref=' + slideFromRef + ']');
             elIn    = thisEl.find('.slideshow-image-item[data-ref=' + slideToRef + ']');
-            elInImg = $(elIn).find('.slideshow-image');
+            elInImg = bk$(elIn).find('.slideshow-image');
 
             function callbackOut() {
                 that.setSlideInfo(slideToRef);
@@ -3620,9 +3995,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetResponsiveslideshow = function (options) {
+    bk$.fn.basekitWidgetResponsiveslideshow = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Responsiveslideshow(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Responsiveslideshow(el, options));
         });
     };
 }());
@@ -3651,7 +4026,7 @@
          */
         attachEvents: function () {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 url = '/site/' + App.session.get('siteRef') + '/submit-form',
                 data = {};
 
@@ -3668,7 +4043,7 @@
                 };
 
                 // submit the form using the api
-                $.ajax({
+                bk$.ajax({
                     url: url,
                     type: "POST",
                     data: data,
@@ -3698,7 +4073,7 @@
          */
         showText: function (isSuccess) {
             var message = null,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 className = null;
 
             if (thisEl.find('.message-box').length > 0) {
@@ -3717,8 +4092,8 @@
         },
 
         showMessageBox: function () {
-            var thisEl = $(this.el),
-                overlay = $('<div class="overlay"></div>');
+            var thisEl = bk$(this.el),
+                overlay = bk$('<div class="overlay"></div>');
 
             if (thisEl.find('.overlay').length === 0) {
                 thisEl.append(overlay);
@@ -3726,14 +4101,14 @@
         },
 
         removeMessageBox: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 t = null;
 
             t = setTimeout(function () {
                 clearTimeout(t);
                 thisEl.find('.overlay').fadeOut(function () {
                     thisEl.find('.email').val('');
-                    $(this).remove();
+                    bk$(this).remove();
                 });
             }, 3000);
         }
@@ -3749,9 +4124,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetSignupform = function (options) {
+    bk$.fn.basekitWidgetSignupform = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Signupform(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Signupform(el, options));
         });
     };
 }());
@@ -3788,9 +4163,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetSocialicons = function (options) {
+    bk$.fn.basekitWidgetSocialicons = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Socialicons(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Socialicons(el, options));
         });
     };
 }());(function () {
@@ -3820,195 +4195,12 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetSpace = function (options) {
+    bk$.fn.basekitWidgetSpace = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Space(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Space(el, options));
         });
     };
 }());(function () {
-
-    BaseKit.Widget.Stripe = null;
-
-    BaseKit.Widget.StripeProperties = {
-        products: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.products : [],
-        storeRef: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.store.ref : null,
-        chargeUrl: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.store.chargeUrl : null
-    };
-
-    BaseKit.Widget.StripeMethods = {
-        construct: function (el, options) {
-            this.options = options;
-            this.load();
-        },
-
-        load: function () {
-            var cart = this.getCart(),
-                cartSize = this.getCartSize(cart);
-
-            this.inCheckout = false;
-
-            this.attachEvents();
-            this.setupStripe();
-            this.renderForm(cartSize, cart);
-        },
-
-        setupStripe: function () {
-            var that = this,
-                stripeHandler = null;
-
-            stripeHandler = StripeCheckout.configure({
-                key: Server.plugins.ecommerce.store.stripePublishableKey,
-                token: function (token, args) {
-                    var form = that.el.find('.js-charge-stripe'),
-                        params = $.extend({}, token, args);
-
-                    $.each(params.card, function (key, value) {
-                        form.append('<input type="hidden" name="card[' + key + ']" value="' + value + '">');
-                    });
-
-                    $.each(params, function (key, value) {
-                        if (key === 'card') {
-                            return;
-                        }
-
-                        form.append('<input type="hidden" name="' + key + '" value="' + value + '">');
-                    });
-
-                    localStorage.removeItem('cart');
-
-                    form.submit();
-                },
-                opened: function () {
-                    that.inCheckout = true;
-                },
-                closed: function () {
-                    that.inCheckout = false;
-                    that.el.find('.js-checkout-stripe').attr('disabled', false).removeClass('loading');
-                }
-            });
-
-            this.el.find('.js-checkout-stripe').on('click', function () {
-                var currency = that.getStoreCurrency(),
-                    cart = that.getCart(),
-                    cartSize = that.getCartSize(cart),
-                    cartTotal = that.getCartTotal(cart);
-
-                $(this).attr('disabled', true).addClass('loading');
-
-                stripeHandler.open({
-                    name: Profile.profile.business || null,
-                    description: App.t('widget.ecomcheckout.stripe_description', '%1 items', cartSize),
-                    image: Profile.profile.logo || null,
-                    amount: cartTotal,
-                    currency: currency.alphaCode,
-                    panelLabel: App.t('widget.ecomcheckout.stripe_pay', 'Pay {{amount}}')
-                });
-            });
-        },
-
-        attachEvents: function () {
-            var that = this;
-
-            Globals.addHook('ecom.basket.changed', this, function () {
-                var cart = that.getCart();
-                that.renderForm(that.getCartSize(cart), cart);
-            });
-
-            window.addEventListener('storage', function (e) {
-                var cart = that.getCart();
-                that.renderForm(that.getCartSize(cart), cart);
-            }, false);
-        },
-
-        renderForm: function (cartSize, cart) {
-            var form = this.el.find('.js-charge-stripe');
-
-            if (this.inCheckout === true) {
-                return;
-            }
-
-            this.el.find('.js-checkout-stripe').attr('disabled', (cartSize > 0) ? false : true);
-
-            form.find('input[name^="items"]').remove();
-
-            $.each(cart, function (item) {
-                form.append('<input type="hidden" name="items[]" value="' + item + '">');
-            });
-        },
-
-        getCart: function () {
-            return JSON.parse(localStorage.getItem('cart')) || {};
-        },
-
-        getCartSize: function (cart) {
-            var size = 0,
-                key;
-
-            for (key in cart) {
-                if (cart.hasOwnProperty(key)) {
-                    size = size + 1;
-                }
-            }
-            return size;
-        },
-
-        getCartTotal: function (cart) {
-            var that = this,
-                total = 0,
-                prices = [],
-                product = null,
-                key;
-
-            prices = $.map(cart, function (quantity, ref) {
-                var variation = that.findVariationByRef(ref);
-                return parseFloat(variation.price) * quantity;
-            });
-
-            $.each(prices, function (index, price) {
-                total = total + price;
-            });
-
-            return total * 100;
-        },
-
-        getStoreCurrency: function () {
-            return Server.plugins.ecommerce.store.currency;
-        },
-
-        findVariationByRef: function (ref) {
-            var variation = null;
-
-            $.each(this.get('products'), function (key, product) {
-                var result = $.grep(product.variations, function (variation) {
-                    return parseInt(variation.ref, 10) === parseInt(ref, 10);
-                });
-
-                if (result.length === 1) {
-                    variation = result[0];
-                }
-            });
-
-            return variation || null;
-        }
-    };
-
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
-    BaseKit.Widget.Stripe = function () {
-        var o = new BaseKit.WidgetCore(this, arguments, {
-            properties: BaseKit.Widget.StripeProperties,
-            methods: BaseKit.Widget.StripeMethods
-        });
-    };
-
-    // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetStripe = function (options) {
-        this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Stripe(el, options));
-        });
-    };
-}());
-(function () {
     BaseKit.Widget.Tweet = null;
 
     BaseKit.Widget.TweetProperties = {
@@ -4044,9 +4236,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetTweet = function (options) {
+    bk$.fn.basekitWidgetTweet = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Tweet(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Tweet(el, options));
         });
     };
 }());(function () {
@@ -4121,7 +4313,7 @@
             }
 
             // get twitter feed
-            $.ajax({
+            bk$.ajax({
                 url: url,
                 type: "POST",
                 data: data,
@@ -4130,7 +4322,7 @@
                 }
             }).done(function (response, status) {
 
-                $.each(response, function () {
+                bk$.each(response, function () {
                     // format created date
                     createdDate = this.created_at;
                     createdDate = createdDate.split(' ');
@@ -4166,9 +4358,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetTwitter = function (options) {
+    bk$.fn.basekitWidgetTwitter = function (options) {
         this.each(function () {
-            $(this).data('bkob', new BaseKit.Widget.Twitter(this, options));
+            bk$(this).data('bkob', new BaseKit.Widget.Twitter(this, options));
         });
     };
 }());
@@ -4197,18 +4389,18 @@
         showOverlay: function (message) {
             message = message || 'message';
 
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 overlayEl = thisEl.find('.overlay');
 
             overlayEl.find(".message").html(message).end().show();
-            $(this.el).find("form button.userloginbtn").attr('disabled', true);
+            bk$(this.el).find("form button.userloginbtn").attr('disabled', true);
         },
 
         /**
          * hideOverlay: hides the overlay
          */
         hideOverlay: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 overlayEl = thisEl.find('.overlay');
 
             overlayEl.hide().find('.message').empty();
@@ -4220,7 +4412,7 @@
          */
         attachEvents: function () {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 errors = [],
                 postData = {};
 
@@ -4261,7 +4453,7 @@
                     }
                 }
 
-                $.each(errors, function () {
+                bk$.each(errors, function () {
                     var element = thisEl.find("p.error." + this.element);
                     if (element.length) {
                         element.html(this.error).show();
@@ -4270,7 +4462,7 @@
 
                 // only submit if we have no errors
                 if (!errors.length) {
-                    $.ajax({
+                    bk$.ajax({
                         url: '/site/api/auth-token',
                         type: "POST",
                         processData: false
@@ -4290,9 +4482,9 @@
          */
         login: function (postData) {
             var that = this,
-                thisEl = $(this.el);
+                thisEl = bk$(this.el);
 
-            $.ajax({
+            bk$.ajax({
                 url: '/site/api/user-login',
                 type: "POST",
                 data: postData,
@@ -4343,10 +4535,10 @@
             }
 
             response = (typeof response.responseJSON === 'object') ? response.responseJSON
-                                                                   : jQuery.parseJSON(response.responseJSON);
+                                                                   : bk$.parseJSON(response.responseJSON);
             if (response.messageTemplates) {
-                $.each(response.messageTemplates, function (type, properties) {
-                    $.each(properties.templates, function (template, value) {
+                bk$.each(response.messageTemplates, function (type, properties) {
+                    bk$.each(properties.templates, function (template, value) {
                         var args = ['widget.userregistration.error.' + template.toLowerCase(), value];
                         errors.push(App.t.apply(App, args));
                     });
@@ -4370,9 +4562,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetUserlogin = function (options) {
+    bk$.fn.basekitWidgetUserlogin = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Userlogin(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Userlogin(el, options));
         });
     };
 }());
@@ -4402,7 +4594,7 @@
 
             message = message || 'message';
 
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 overlayEl = thisEl.find('.overlay');
 
             overlayEl.find(".message").html(message).end().show();
@@ -4413,7 +4605,7 @@
          * hideOverlay: hides the overlay
          */
         hideOverlay: function () {
-            var thisEl = $(this.el),
+            var thisEl = bk$(this.el),
                 overlayEl = thisEl.find('.overlay');
 
             overlayEl.hide().find('.message').empty();
@@ -4425,7 +4617,7 @@
          */
         attachEvents: function () {
             var that = this,
-                thisEl = $(this.el),
+                thisEl = bk$(this.el),
                 errors = [],
                 postData = {};
 
@@ -4461,7 +4653,7 @@
                     });
                 }
 
-                $.each(errors, function () {
+                bk$.each(errors, function () {
                     var element = thisEl.find("p.error." + this.element);
                     if (element.length) {
                         element.html(this.error).show();
@@ -4470,7 +4662,7 @@
 
                 // only submit if we have no errors
                 if (!errors.length) {
-                    $.ajax({
+                    bk$.ajax({
                         url: '/site/api/auth-token',
                         type: "POST",
                         processData: false
@@ -4490,9 +4682,9 @@
          */
         createAccount: function (postData) {
             var that = this,
-                thisEl = $(this.el);
+                thisEl = bk$(this.el);
 
-            $.ajax({
+            bk$.ajax({
                 url: '/site/api/user-registration',
                 type: "POST",
                 data: postData,
@@ -4533,13 +4725,13 @@
             }
 
             response = (typeof response.responseJSON === 'object') ? response.responseJSON
-                                                                   : jQuery.parseJSON(response.responseJSON);
+                                                                   : bk$.parseJSON(response.responseJSON);
             if (response.messageTemplates) {
-                $.each(response.messageTemplates, function (type, properties) {
+                bk$.each(response.messageTemplates, function (type, properties) {
                     if (type === 'username') {
                         return;
                     }
-                    $.each(properties.templates, function (template, value) {
+                    bk$.each(properties.templates, function (template, value) {
                         var args = ['widgets.userregistration.error.' + template.toLowerCase(), value];
                         errors.push(App.t.apply(App, args));
                     });
@@ -4563,9 +4755,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetUserregistration = function (options) {
+    bk$.fn.basekitWidgetUserregistration = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Userregistration(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Userregistration(el, options));
         });
     };
 }());
@@ -4597,9 +4789,9 @@
     };
 
     // JQuery plugin so that a widget can be attached to an element
-    $.fn.basekitWidgetYoutube = function (options) {
+    bk$.fn.basekitWidgetYoutube = function (options) {
         this.each(function (index, el) {
-            $(el).data('bkob', new BaseKit.Widget.Youtube(el, options));
+            bk$(el).data('bkob', new BaseKit.Widget.Youtube(el, options));
         });
     };
 }());

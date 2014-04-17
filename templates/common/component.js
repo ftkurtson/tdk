@@ -3,16 +3,19 @@
     // Base Widget Functionality - What ever is required
     // to get the widget working in normal mode goes in here.
     BaseKit.Component = function (scope, args, options) {
+
+        $lib = (typeof bk$ === 'function') ? bk$ : $;
+
         // A component needs options
         if (options === null) {
             return scope;
         }
 
         // set the components element and scope
-        scope.self = scope.el = $(args[0]);
+        scope.self = scope.el = $lib(args[0]);
         scope.scope = scope;
 
-        $.extend(true, scope, {
+        $lib.extend(true, scope, {
             /**
              * This tries to get the twig template, and once it has it it calls postRender unless explicitly asked not too, if you pass a boolean through as the 'values' parameter then this will be used to determine if we need to call postRender
              *
@@ -63,7 +66,7 @@
 
                             // render the contents into the DOM
                             if (doRender === true) {
-                                $(scope.el).html(content);
+                                $lib(scope.el).html(content);
                             }
 
                             // see if they are using the callback method to be the postRender
@@ -87,15 +90,15 @@
             }
         });
 
-        $.extend(true, scope, {
+        $lib.extend(true, scope, {
             postRender: function (content) {
                 if (typeof this.renderFinish === 'function') {
                     var that = this,
                         lastLength = 0,
                         strikes = 0;
                     BaseKit.Util.waitsFor(function () {
-                        var loadingHTML = $(scope.el).html(),
-                            expectedHTML = typeof content === 'object' ? $(content).html().toString() : content,
+                        var loadingHTML = $lib(scope.el).html(),
+                            expectedHTML = typeof content === 'object' ? $lib(content).html().toString() : content,
                             loadingLength = 0,
                             expectedLength = 0;
 
@@ -155,7 +158,7 @@
 
         // extend methods that are coming through
         if (options.methods !== null) {
-            $.extend(true, scope, options.methods);
+            $lib.extend(true, scope, options.methods);
         }
 
         // run the constructor with any passed arguments for the component

@@ -63,7 +63,8 @@
             {% endif %}
 
             <li data-ref="{{key}}" class="slideshow-image-item{% if loop.index0 == 0 %} current{% endif %}">
-            <span class="inner {{ aspectClass }}"{% if data.crop == 1 %} style="background-image:url('{{ image.url }}');"{% endif %}>
+            {% if image is not null %}
+                <span class="inner {{ aspectClass }}"{% if data.crop == 1 %} style="background-image:url('{{ image.url }}');"{% endif %}>
                 <div class="image-wrapper">
                     <img class="slideshow-image" src="{{ image.url }}"{% if image.title != ''%} alt="{{ image.title }}"{% endif %}>
                 </div>
@@ -75,7 +76,8 @@
                     <span class="description">{{image.description}}</span>
                     {% endif %}
                 </div>
-            </span>
+                </span>
+            {% endif %}
             </li>
 
             {% endfor %}

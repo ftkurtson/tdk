@@ -1,0 +1,12 @@
+{% if plugins.ecommerce.store.legal.pageUrl == 'tos' %}
+    {% set title = 'widgets.ecomlegal.tos_title'|translate('Terms of service') %}
+{% elseif plugins.ecommerce.store.legal.pageUrl == 'refund' %}
+    {% set title = 'widgets.ecomlegal.refund_title'|translate('Refund policy') %}
+{% elseif plugins.ecommerce.store.legal.pageUrl == 'privacy' %}
+    {% set title = 'widgets.ecomlegal.privacy_title'|translate('Privacy policy') %}
+{% else %}
+    {% set title = 'widgets.ecomlegal.title'|translate('Legal') %}
+{% endif %}
+
+<h1>{{ title }}</h1>
+{{ plugins.ecommerce.store.legal.content }}

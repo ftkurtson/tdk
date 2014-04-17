@@ -1,0 +1,33 @@
+<tbody>
+    <tr>
+        <th>{{ 'widgets.ecomcheckout.item_items'|translate('Items') }} </th>
+        <th></th>
+        <th>{{ 'widgets.ecomcheckout.item_description'|translate('Amount') }}</th>
+    </tr>
+    {% for item in items %}
+        <tr class="checkout-items">
+            <td>
+                <div class="image-wrap" style="background-repeat: no-repeat;background-image:url('{{ item.assetUrl }}')">
+                    <img class="image" style="max-width: 150px" src="{{ item.assetUrl }}">
+                </div>
+            </td>
+
+            <td>
+                <a class="checkout-productname" href="{{ requestBase }}/store/product/{{ item.productRef }}">{{ item.title }}</a>
+                <span class="checkout-pricepu">{{ item.pricePU }}</span>
+                <span class="checkout-quantity">{{'widgets.ecomcheckout.quantity'|translate('Quantity:')}}</span>
+                <div class="checkout-quantitybtn">
+                    <button class="js-remove" data-ref="{{ item.ref }}">-</button>
+                    <span>{{ item.quantity }}</span>
+                    <button class="js-add" data-ref="{{ item.ref }}">+</button>
+                </div>
+            </td>
+            <td class="checkout-amount">{{ item.price }}</td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td></td>
+        <td></td>
+        <td class="checkout-subtotal">{{ 'widgets.ecomcheckout.subtotal'|translate('Subtotal:') }} {{ subTotalPrice }}</td>
+    </tr>
+</tbody>

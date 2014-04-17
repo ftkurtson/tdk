@@ -4,7 +4,11 @@ BaseKit = {
 };
 
 BaseKit.Util.extend = function (plugin, methods) {
-    $.extend(true, plugin.prototype, methods);
+    if (typeof bk$ === 'object') {
+        bk$.extend(true, plugin.prototype, methods);
+    } else {
+        $.extend(true, plugin.prototype, methods);
+    }
 };
 
 BaseKit.Util.expandException = function (exception) {

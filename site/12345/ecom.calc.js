@@ -1,0 +1,1 @@
+{"productVariationsTotal":"\u20ac0.00","productVariationTaxTotal":"\u20ac0.00","productVariationSubTotals":[],"shippingCost":"\u20ac0.00","totalTax":"\u20ac0.00","total":"\u20ac0.00","shippingOptions":{"18":"\u20ac12.00","20":"\u20ac15.00"},"emptyShippingOptionsReason":""}
