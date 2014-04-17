@@ -1048,7 +1048,7 @@
             }).done(function (response) {
                 that.setBasketData(response);
                 that.rerender();
-            }));
+            });
         },
 
         setBasketData: function (response) {

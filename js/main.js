@@ -184,7 +184,8 @@ bk$(function() {
         // Clear widgets
         widgets = [];
 
-        var template = bk$("#template").val() || "none", file = (typeof useFile === 'string' ? useFile : bk$("#layout").val()) || "default.twig";
+        var template = bk$("#template").val() || "none",
+            file = (typeof useFile === 'string' ? useFile : bk$("#layout").val()) || "default.twig";
         var colourSwatchIndex = bk$("#colour-swatch").val() || 0;
 
         if (currentTemplate != template) {
@@ -419,5 +420,6 @@ bk$(function() {
 
     bk$(document).ready(function () {
         renderTemplate();
+        window.renderWidget = renderWidget;
     });
 });
