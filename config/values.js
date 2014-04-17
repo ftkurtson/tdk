@@ -1548,16 +1548,18 @@ var plugins = function(template) {
         },
         "ecommerce": {
             "store":{
-                "ref":18,
+                "ref":"18",
                 "currency":{
-                    "ref":3,
+                    "ref":"3",
                     "name":"Pound Sterling",
                     "alphaCode":"GBP",
                     "htmlCode":"&#163;"
                 },
                 "stripePublishableKey":null,
                 "chargeUrl":"/",
-                "calculateUrl":"/site/12345/ecom.calc.js"
+                "paymentCompletionUrl": "/",
+                "calculateUrl":"/site/12345/ecom.calc.js",
+                "sitePrimaryDomain": '/' // it should be sitePrimaryDomain
             },
             "products":[
             {

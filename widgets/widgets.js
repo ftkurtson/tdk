@@ -1290,10 +1290,10 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                data: sendingData
+                data: sendingData,
+                dataType: 'json'
             }).done(function (response) {
                 that.setCheckoutTotal(response);
-                // that.rerender();
                 that.updateCheckoutUI();
             });
         },

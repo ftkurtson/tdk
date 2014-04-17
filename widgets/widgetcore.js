@@ -111,7 +111,7 @@
                     this.el.html('');
 
                     // for tdk
-                    var html = window.parent.renderWidget(properties.type, this.el.attr('id'), properties.temporary),
+                    var html = window.parent.renderWidget(properties.type, this.el.attr('id'), properties.temporary, true),
                         that = this,
                         t = null;
                     this.el.html(bk$(html).unwrap());
@@ -205,10 +205,11 @@
                 },
 
                 rerenderPartial: function (tplName, tplData) {
-                    console.log(tplName);
-                    // var html = window.parent.renderWidget(tplName, this.el.attr('id'), tplData);
-                    // return $(html).unwrap();
+                    // for tdk
+                    var html = window.parent.renderWidget(tplName, this.el.attr('id') + tplName.replace('widget_', ''), tplData, true);
+                    return bk$(html);
 
+                    // for editor
                 /*  if (typeof window[tplName] === 'function') {
                         return Twig.render(window[tplName], tplData);
                     } else {

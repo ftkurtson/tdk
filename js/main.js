@@ -48,7 +48,8 @@ bk$(function() {
 
         switch (name) {
             case "main":
-                html += renderWidget('twitter', 'maintwitter1');
+                // html += renderWidget('twitter', 'maintwitter1');
+                html += renderWidget('ecomcheckout', 'ecomcheckout1');
                 
                 break;
         }
@@ -127,7 +128,7 @@ bk$(function() {
         return defaults;
     }
 
-    function renderWidget(type, id, args) {
+    function renderWidget(type, id, args, renderPartial) {
         var template = bk$("#template").val() || "none";
 
         // Capitalize the type to get its initial properties
@@ -159,7 +160,12 @@ bk$(function() {
             plugins: plugins(template)
         };
 
-        var widget = loadTemplate(id, "widgets/widget_" + type + ".twig");
+        if (renderPartial === true) {
+            var widget = loadTemplate(id, "widgets/" + type + ".twig");
+        } else {
+            var widget = loadTemplate(id, "widgets/widget_" + type + ".twig");
+        }
+
         var html = widget.render(data);
 
         widgets.push({
@@ -169,7 +175,11 @@ bk$(function() {
             params: params
         });
 
-        return '<div id="' + id + '" class="widget ' + type + '">' + html + '</div>';
+        if (renderPartial === true) {
+            return html ;
+        } else {
+            return '<div id="' + id + '" class="widget ' + type + '">' + html + '</div>';
+        }
     }
 
     function renderTemplate(useFile, previouslyRequestedFile) {
