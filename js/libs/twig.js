@@ -1961,14 +1961,14 @@ var Twig = (function (Twig) {
                         }
                     };
 
-                if (result instanceof Array) {
+                if (Twig.lib.is('Array', result)) {
                     len = result.length;
                     Twig.forEach(result, function (value) {
                         var key = index;
 
                         loop(key, value);
                     });
-                } else if (result instanceof Object) {
+                } else if (Twig.lib.is('Object', result)) {
                     if (result._keys !== undefined) {
                         keyset = result._keys;
                     } else {
@@ -3793,9 +3793,9 @@ var Twig = (function (Twig) {
             });
         },
         length: function(value) {
-            if (value instanceof Array || typeof value === "string") {
+            if (is("Array", value) || is("String", value)) {
                 return value.length;
-            } else if (value instanceof Object) {
+            } else if (is("Object", value)) {
                 if (value._keys === undefined) {
                     return Object.keys(value).length;
                 } else {
@@ -3909,21 +3909,21 @@ var Twig = (function (Twig) {
                 keyset = [];
 
             // Check to see if all the objects being merged are arrays
-            if (!(value instanceof Array)) {
+            if (!Twig.lib.is("Array", value)) {
                 // Create obj as an Object
                 obj = { };
             } else {
                 Twig.forEach(params, function(param) {
-                    if (!(param instanceof Array)) {
+                    if (!Twig.lib.is("Array", param)) {
                         obj = { };
                     }
                 });
             }
-            if (!(obj instanceof Array)) {
+            if (!Twig.lib.is("Array", obj)) {
                 obj._keys = [];
             }
 
-            if (value instanceof Array) {
+            if (Twig.lib.is("Array", obj)) {
                 Twig.forEach(value, function(val) {
                     if (obj._keys) obj._keys.push(arr_index);
                     obj[arr_index] = val;
@@ -3951,7 +3951,7 @@ var Twig = (function (Twig) {
 
             // mixin the merge arrays
             Twig.forEach(params, function(param) {
-                if (param instanceof Array) {
+                if (Twig.lib.is("Array", param)) {
                     Twig.forEach(param, function(val) {
                         if (obj._keys) obj._keys.push(arr_index);
                         obj[arr_index] = val;
