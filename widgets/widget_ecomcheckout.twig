@@ -367,13 +367,16 @@
             <span>Please select a shipping method</span>
         </div>
 
-        <div class="delivery-price-tax">Delivery price tax: £0.14</div>
         <div class="delivery-price">Delivery price: £6.99</div>
     </div>
 
+    {# the element might be not existing if not charge tax #}
     <div class="checkout-total-tax">Total tax: £0.90</div>
+    {# end #}
+
     <div class="checkout-total-amount">Total amount: £45.97</div>
 
+    {# the element might be not existing if not charge tax #}
     <div class="checkout-payment-method">
         <h3 class="checkout-payment-title">Select a payment method</h3>
         <div class="checkout-payment-card">
@@ -385,7 +388,8 @@
             <input id="paywithpaypal" type="radio" name="paymentMethod" value="paypal">
             <label for="paywithpaypal">Pay with Paypal</label>
         </div>
-    </div>                       
+    </div>
+    {# end #}
 
     <button class="checkout-order-button btn js-create-order" type="submit" disabled="">Continue to payment</button>
 </form>
