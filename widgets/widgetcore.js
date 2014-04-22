@@ -82,6 +82,7 @@
                 },
 
                 rerender: function () {
+                    console.log('321');
                     var properties = this.getProperties('current'),
                         pluginName = null;
 
@@ -109,19 +110,7 @@
                     }
 
                     this.el.html('');
-
-                    // for tdk
-                    var html = window.parent.renderWidget(properties.type, this.el.attr('id'), properties.temporary, true),
-                        that = this,
-                        t = null;
-                    this.el.html(bk$(html).unwrap());
-
-                    t = setTimeout (function () {
-                        that.attachEvents();
-                    }, 1000);
-
-                    // for editor
-                    // this.renderTemplate(properties.type, properties, true);
+                    this.renderTemplate(properties.type, properties, true);
                 },
 
                 /**
@@ -205,16 +194,11 @@
                 },
 
                 rerenderPartial: function (tplName, tplData) {
-                    // for tdk
-                    var html = window.parent.renderWidget(tplName, this.el.attr('id') + tplName.replace('widget_', ''), tplData, true);
-                    return bk$(html);
-
-                    // for editor
-                /*  if (typeof window[tplName] === 'function') {
+                    if (typeof window[tplName] === 'function') {
                         return Twig.render(window[tplName], tplData);
                     } else {
                         throw new Error('No such template:' + tplName);
-                    }*/
+                    }
                 }
             }
         });

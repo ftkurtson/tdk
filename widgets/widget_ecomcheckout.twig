@@ -3,12 +3,12 @@
     <h2 class="checkout-title js-checkout-title">{{ 'widgets.ecomcheckout.checkout_title'|translate('Checkout') }}</h2>
     <table class='js-checkout-itemstable'>{# widget_checkout_items #}</table>
 
-    {% if plugins.ecommerce.store.chargeUrl|length > 0 and plugins.ecommerce.store.ref|length > 0 and plugins.ecommerce.store.paymentCompletionUrl|length > 0 and plugins.ecommerce.store.sitePrimaryDomain|length > 0 %}
+    {% if plugins.ecommerce.store.chargeUrl|length > 0 and plugins.ecommerce.store.ref|length > 0 and plugins.ecommerce.store.paymentCompletionUrl|length > 0 and sitePrimaryDomain|length > 0 %}
 
     <form class="checkout-form js-checkout-form" action="{{ plugins.ecommerce.store.chargeUrl }}" method="POST" novalidate>
         <input type="hidden" name="storeRef" value="{{ plugins.ecommerce.store.ref }}">
-        <input type="hidden" name="storeUrl" value="http://{{ plugins.ecommerce.store.sitePrimaryDomain }}/store">
-        <input type="hidden" name="orderConfirmationUrl" value="http://{{ plugins.ecommerce.store.sitePrimaryDomain }}/store/order-confirmation">
+        <input type="hidden" name="storeUrl" value="http://{{ sitePrimaryDomain }}/store">
+        <input type="hidden" name="orderConfirmationUrl" value="http://{{ sitePrimaryDomain }}/store/order-confirmation">
         <input type="hidden" name="paymentCompletionUrl" value="{{ plugins.ecommerce.store.paymentCompletionUrl }}">
 
         <div class="delivery">
@@ -60,7 +60,7 @@
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" name="email" id="email" required autocomplete="email">
+                <input type="email" name="customerEmail" id="email" required autocomplete="email">
                 <span>Please provide an email address</span>
             </div>
 
@@ -71,29 +71,31 @@
             <div class="delivery-price"></div>
         </div>
 
-        <div class="checkout-total-tax"></div>
+        {% if plugins.ecommerce.store.taxProducts == true %}
+            <div class="checkout-total-tax"></div>
+        {% endif %}
+
         <div class="checkout-total-amount"></div>
 
-        <div class="checkout-payment-method">
+        {% if plugins.ecommerce.store.stripePublishableKey != null and plugins.ecommerce.store.paypal != false %}
+            <div class="checkout-payment-method">
+                <h3 class="checkout-payment-title">{{ "widgets.ecomcheckout.payments"|translate("Select a payment method") }}</h3>
 
-            {% if plugins.ecommerce.store.stripePublishableKey != null and plugins.ecommerce.store.paypal != false %}
-            <h3 class="checkout-payment-title">{{ "widgets.ecomcheckout.payments"|translate("Select a payment method") }}</h3>
+                <div class="checkout-payment-card">
+                    <input id="paywithstripe" type="radio" name="paymentMethod" value="stripe" checked>
+                    <label for="paywithstripe">{{ "widgets.ecomcheckout.paywithstripe"|translate("Pay with card") }}</label>
+                </div>
 
-            <div class="checkout-payment-card">
-                <input id="paywithstripe" type="radio" name="paymentMethod" value="stripe" checked>
-                <label for="paywithstripe">{{ "widgets.ecomcheckout.paywithstripe"|translate("Pay with card") }}</label>
+                <div class="checkout-payment-paypal">
+                    <input id="paywithpaypal" type="radio" name="paymentMethod" value="paypal">
+                    <label for="paywithpaypal">{{ "widgets.ecomcheckout.paywithpaypal"|translate("Pay with Paypal") }}</label>
+                </div>
             </div>
-
-            <div class="checkout-payment-paypal">
-                <input id="paywithpaypal" type="radio" name="paymentMethod" value="paypal">
-                <label for="paywithpaypal">{{ "widgets.ecomcheckout.paywithpaypal"|translate("Pay with Paypal") }}</label>
-            </div>
-            {% elseif plugins.ecommerce.store.stripePublishableKey != null %}
-                <input id="paywithstripe" type="hidden" name="paymentMethod" value="stripe">
-            {% elseif plugins.ecommerce.store.paypal != false %}
-                <input id="paywithpaypal" type="hidden" name="paymentMethod" value="paypal">
-            {% endif %}
-        </div>
+        {% elseif plugins.ecommerce.store.stripePublishableKey != null %}
+            <input id="paywithstripe" type="hidden" name="paymentMethod" value="stripe">
+        {% elseif plugins.ecommerce.store.paypal != false %}
+            <input id="paywithpaypal" type="hidden" name="paymentMethod" value="paypal">
+        {% endif %}
 
         <button class="checkout-order-button btn js-create-order" type="submit">{{ 'widgets.ecomcheckout.proceed_payment'|translate('Continue to payment') }}</button>
 

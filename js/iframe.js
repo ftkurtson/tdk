@@ -8,8 +8,17 @@ bk$(function() {
         }
 
         var el = bk$("#" + widget.id);
+
         el["basekitWidget" + widget.name](widget.params);
         var object = el.data("bkob");
+
         object.scope.properties.data = widget.params;
+
+        // Let the widget overrides kick in
+        object.scope.rerender = BaseKit.WidgetCoreOverride.rerender;
+        object.scope.rerenderPartial = BaseKit.WidgetCoreOverride.rerenderPartial;
+
+        object.scope.rerender();
+
     });
 });

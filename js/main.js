@@ -48,7 +48,7 @@ bk$(function() {
 
         switch (name) {
             case "main":
-                // html += renderWidget('twitter', 'maintwitter1');
+                //html += renderWidget('twitter', 'maintwitter1');
                 html += renderWidget('ecomcheckout', 'ecomcheckout1');
                 
                 break;

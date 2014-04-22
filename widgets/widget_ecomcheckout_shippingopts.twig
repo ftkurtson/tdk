@@ -1,25 +1,23 @@
 <label for="shipping">{{ 'widgets.ecomcheckout.select_shipping'|translate('Select your shipping method') }}:</label>
 
-{% if data.shippingOpts|length == 0 and data.countryCode|length > 0 %}
-    {% if data.noShippingsReason == 'weight' and data.email|length > 0 %}
-        <span class='no-shipping'>{{ 'widgets.ecomcheckout.noshipping_weight'|translate("There currently aren't any shipping options available for your order. Contact the store owner for assistance at %1.", data.email) }}</span>
-    {% elseif data.noShippingsReason == 'weight' and data.email|length == 0 %}
+{% if shippingOpts|length == 0 and countryCode|length > 0 %}
+    {% if noShippingsReason == 'weight' and email|length > 0 %}
+        <span class='no-shipping'>{{ 'widgets.ecomcheckout.noshipping_weight'|translate("There currently aren't any shipping options available for your order. Contact the store owner for assistance at %1.", email) }}</span>
+    {% elseif noShippingsReason == 'weight' and email|length == 0 %}
         <span class='no-shipping'>{{ 'widgets.ecomcheckout.noshipping_weight_general'|translate("There currently aren't any shipping options available for your order.") }}</span>
-    {% elseif data.noShippingsReason == 'country' and data.business|length > 0 and data.email|length > 0 %}
-        <span class='no-shipping'>{{ 'widgets.ecomcheckout.noshipping'|translate('%1 does not currently support shipping to %2. To make an enquiry, please contact the store owner at %3.', data.business, data.country, data.email) }}</span>
+    {% elseif noShippingsReason == 'country' and business|length > 0 and email|length > 0 %}
+        <span class='no-shipping'>{{ 'widgets.ecomcheckout.noshipping'|translate('%1 does not currently support shipping to %2. To make an enquiry, please contact the store owner at %3.', business, country, email) }}</span>
     {% else %}
-        <span class='no-shipping'>{{ 'widgets.ecomcheckout.noshipping_general'|translate("There currently aren't any shipping options available to %1", data.country) }}</span>
+        <span class='no-shipping'>{{ 'widgets.ecomcheckout.noshipping_general'|translate("There currently aren't any shipping options available to %1", country) }}</span>
     {% endif %}
 {% else %}
     <select id="shipping" name="deliveryRef" required {% if shippingOpts|length == 0 %}disabled{% endif %}>
         <option value="">{{ 'widgets.ecomcheckout.choose_shipping'|translate('Choose your shipping method') }}</option>
-        {% for shippingRef, shippingPrice in data.shippingOpts %}
-        <option {% if data.deliveryRef == shippingRef %} selected{% endif %} value="{{ shippingRef }}">
+        {% for shippingRef, shippingPrice in shippingOpts %}
+        <option {% if deliveryRef == shippingRef %} selected{% endif %} value="{{ shippingRef }}">
             {# use the refs in shipping options to get the shipping name from plugin shipping data #}
-            {% for shipping in data.shippings %}
-                {% if shipping.ref == shippingRef %}
-                        {{ shipping.name }}
-                {% endif %}
+            {% for shipping in shippings %}
+                {% if shipping.ref == shippingRef %}{{ shipping.name }} {{ shippingPrice }}{% endif %}
             {% endfor %}
         </option>
         {% endfor %}

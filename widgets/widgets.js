@@ -1043,8 +1043,7 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                data: sendingData,
-                dataType: 'json'
+                data: sendingData
             }).done(function (response) {
                 that.setBasketData(response);
                 that.rerender();
@@ -1183,7 +1182,7 @@
                         that.el.find('[name="deliveryRef"]').val("");
                         that.updateCheckoutTotal();
                     }
-                    
+
                 } catch (err) {
                     clearInterval(that.refreshInterval);
 
@@ -1290,10 +1289,10 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                data: sendingData,
-                dataType: 'json'
+                data: sendingData
             }).done(function (response) {
                 that.setCheckoutTotal(response);
+                // that.rerender();
                 that.updateCheckoutUI();
             });
         },
@@ -1399,15 +1398,24 @@
 
         updateTaxAndTotalValues: function () {
             var thisEl = bk$(this.el),
-                shippingTaxText = App.t('widgets.ecomcheckout.delivery_amount_tax', 'Delivery price tax:') + ' ' + this.shippingTax,
                 shippingCostText = App.t('widgets.ecomcheckout.delivery_amount', 'Delivery price:') + ' ' + this.shippingCost,
                 totalTaxText = App.t('widgets.ecomcheckout.total_tax', 'Total tax:') + ' ' + this.totalTax,
-                totalPriceText = App.t('widgets.ecomcheckout.total_amount', 'Total amount:') + ' ' + this.totalPrice;
+                totalPriceText = App.t('widgets.ecomcheckout.total_amount', 'Total amount:') + ' ' + this.totalPrice,
+                deliveryPriceEl = thisEl.find('.delivery-price'),
+                taxEl = thisEl.find('.checkout-total-tax'),
+                totalAmountEl = thisEl.find('.checkout-total-amount');
 
-            thisEl.find('.delivery-price-tax').text(shippingTaxText);
-            thisEl.find('.delivery-price').text(shippingCostText);
-            thisEl.find('.checkout-total-tax').text(totalTaxText);
-            thisEl.find('.checkout-total-amount').text(totalPriceText);
+            if (deliveryPriceEl.length > 0) {
+                deliveryPriceEl.text(shippingCostText);
+            }
+
+            if (taxEl.length > 0) {
+                taxEl.text(totalTaxText);
+            }
+
+            if (totalAmountEl.length > 0) {
+                totalAmountEl.text(totalPriceText);
+            }
         },
 
         updateSubmitBtnUI: function () {
