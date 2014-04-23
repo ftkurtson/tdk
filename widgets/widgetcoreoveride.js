@@ -43,8 +43,6 @@
         },
 
         rerenderPartial: function (tplName, tplData) {
-            console.log('partial!');
-            // for tdk
             var html = window.parent.renderWidget(tplName, this.el.attr('id') + tplName.replace('widget_', ''), tplData, true);
             return bk$(html);
         }

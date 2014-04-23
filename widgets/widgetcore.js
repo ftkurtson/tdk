@@ -194,6 +194,7 @@
                 },
 
                 rerenderPartial: function (tplName, tplData) {
+                    console.log('partial nah!');
                     if (typeof window[tplName] === 'function') {
                         return Twig.render(window[tplName], tplData);
                     } else {

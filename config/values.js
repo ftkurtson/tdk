@@ -1555,7 +1555,8 @@ var plugins = function(template) {
                     "alphaCode":"GBP",
                     "htmlCode":"&#163;"
                 },
-                "stripePublishableKey":null,
+                "stripePublishableKey":'',
+                "paypal":'',
                 "chargeUrl":"/",
                 "paymentCompletionUrl": "/",
                 "calculateUrl":"/site/12345/ecom.calc.js",
@@ -1622,6 +1623,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
+                       "formattedPrice":"£32.00",
                        "stock":3,
                        "values":[
                           {
@@ -1636,6 +1638,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
+                       "formattedPrice":"£32.00",
                        "stock":8,
                        "values":[
                           {
@@ -1650,6 +1653,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
+                       "formattedPrice":"£32.00",
                        "stock":9,
                        "values":[
                           {
@@ -1664,6 +1668,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"30.00",
+                       "formattedPrice":"£32.00",
                        "stock":7,
                        "values":[
                           {
@@ -1739,6 +1744,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
+                       "formattedPrice":"£32.00",
                        "stock":3,
                        "values":[
                           {
@@ -1753,6 +1759,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
+                       "formattedPrice":"£32.00",
                        "stock":8,
                        "values":[
                           {
@@ -1767,6 +1774,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
+                       "formattedPrice":"£32.00",
                        "stock":9,
                        "values":[
                           {
@@ -1781,6 +1789,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"30.00",
+                       "formattedPrice":"£32.00",
                        "stock":7,
                        "values":[
                           {
@@ -1845,6 +1854,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"42.00",
+                       "formattedPrice":"£42.00",
                        "stock":4,
                        "values":[
                           {
@@ -1859,6 +1869,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"58.00",
+                       "formattedPrice":"£58.00",
                        "stock":15,
                        "values":[
                           {
@@ -1924,6 +1935,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"42.00",
+                       "formattedPrice":"£42.00",
                        "stock":4,
                        "values":[
                           {
@@ -1938,6 +1950,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"58.00",
+                       "formattedPrice":"£58.00",
                        "stock":15,
                        "values":[
                           {
@@ -2002,6 +2015,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"42.00",
+                       "formattedPrice":"£42.00",
                        "stock":4,
                        "values":[
                           {
@@ -2080,6 +2094,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"67.00",
+                       "formattedPrice":"£67.00",
                        "stock":3,
                        "values":[
                           {
@@ -2094,6 +2109,7 @@ var plugins = function(template) {
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"67.00",
+                       "formattedPrice":"£67.00",
                        "stock":1,
                        "values":[
                           {

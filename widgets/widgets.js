@@ -1289,6 +1289,7 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
+                dataType:'json',
                 data: sendingData
             }).done(function (response) {
                 that.setCheckoutTotal(response);
@@ -1362,7 +1363,6 @@
                     subTotalPrice: this.subTotalPrice
                 },
                 itemsInputHtml = this.rerenderPartial('widget_ecomcheckout_itemsinput', itemsInputData);
-
             if (thisEl.find('.js-checkout-form').length > 0 && itemsInputHtml.length > 0) {
 
                 if (bk$('.js-checkout-items-input').length > 0) {
@@ -1612,16 +1612,30 @@
                 && Server.plugins.ecommerce.product.variations.length === 1) {
                 variation = Server.plugins.ecommerce.product.variations[0];
 
+                this.set('variationRef', variation.ref, true);
+                this.set('price', variation.formattedPrice, true);
+
                 if (variation.stock > 0 || (variation.stock <= 0 && this.get('product').stockUnlimited)) {
-                    this.set('variationRef', variation.ref, true);
-                    this.set('price', variation.formattedPrice, true);
                     this.set('disableButton', 0, true);
                 } else {
-                    this.set('notAvailable', 1, true);
+                    this.set('notAvailable', this.get('product').stockTrack, true);
                 }
             }
 
+            if (Server.plugins.ecommerce.product.variations.length > 1) {
+                this.selectVariation(Server.plugins.ecommerce.product.variations[0]);
+            }
+
             this.rerender();
+        },
+
+        selectVariation: function(variation) {
+            var i = 0,
+                value = null;
+            for (i = 0; i < variation.values.length; i = i + 1) {
+                value = variation.values[i];
+                this.updateOptions(value.optionTitle, value.valueRef);
+            }
         },
 
         attachEvents: function () {
@@ -1632,6 +1646,7 @@
 
             thiseEl.find('select').on('change', function (e) {
                 that.updateOptions(bk$(this).data('option-name'), bk$(this).val());
+                that.rerender();
             });
 
             thiseEl.find('.ecom-product-add-to-cart-btn').on('click', function (e) {
@@ -1733,8 +1748,6 @@
                 this.set('disableButton', 1, true);
                 this.set('price', 0.00, true);
             }
-
-            this.rerender();
         },
 
         getUniqueVariation: function () {
@@ -2644,7 +2657,6 @@
         setupMap: function () {
             // map options
             var mapOptions = {
-                draggable: false,
                 zoom: parseInt(this.get('zoom'), 10),
                 center: new google.maps.LatLng(parseFloat(this.get('latitude'), 10),
                     parseFloat(this.get('longitude'), 10)),
@@ -2671,7 +2683,7 @@
         /**
          * Centres the map on the new coordinates
          */
-        resetMap: function () {
+        resetMap: function (markerDraggable) {
             var newCenter = null;
 
             // make sure the maps has been loaded
@@ -2679,16 +2691,21 @@
                 bk$(this.el).find('.map').height(this.get('height'));
 
                 // NOTE: Google Maps is fussy - needs parseFloat calls!
-                newCenter = new google.maps.LatLng(parseFloat(this.get('latitude'), 10),
-                    parseFloat(this.get('longitude'), 10));
+                newCenter = new google.maps.LatLng(
+                    parseFloat(this.get('latitude'), 10),
+                    parseFloat(this.get('longitude'), 10)
+                );
 
                 // reset the map
                 this.gmap.setZoom(parseInt(this.get('zoom'), 10));
                 this.gmap.setCenter(newCenter);
 
                 // create  an new map marker at this point
-                this.createMapMarker(parseFloat(this.get('latitude'), 10),
-                    parseFloat(this.get('longitude'), 10));
+                this.createMapMarker(
+                    parseFloat(this.get('latitude'), 10),
+                    parseFloat(this.get('longitude'), 10),
+                    markerDraggable || false
+                );
             }
         },
 
@@ -2696,8 +2713,9 @@
          * createMapMarker: creates a marker on the map at the passed co-ordinates
          * @param <integer> latitude - the latitude to position the marker
          * @param <integer> longitude - the longitude to position the marker
+         * @param <boolean> draggable - can the marker be dragged
          */
-        createMapMarker: function (latitude, longitude) {
+        createMapMarker: function (latitude, longitude, draggable) {
             var icon = new google.maps.MarkerImage(App.session.get('assetBaseUrl') + this.get('markerPath'),
                     new google.maps.Size(32, 32), null,
                     new google.maps.Point(16, 32),
@@ -2709,7 +2727,7 @@
                 this.marker = new google.maps.Marker({
                     icon: icon,
                     bouncy: true,
-                    draggable: true,
+                    draggable: false,
                     autoPan: true,
                     position: new google.maps.LatLng(latitude, longitude)
                 });
@@ -2719,6 +2737,7 @@
             } else {
                 // remove it from the current map and update the pos
                 this.marker.setMap(null);
+                this.marker.draggable = draggable || false;
                 this.marker.setPosition(new google.maps.LatLng(latitude, longitude));
 
                 // assign it to the current map
