@@ -48,7 +48,41 @@ bk$(function() {
 
         switch (name) {
             case "main":
-                //html += renderWidget('twitter', 'maintwitter1');
+                html += renderWidget('content', 'maincontent1');
+                html += renderWidget('contactform', 'maincontactform1');
+                html += renderWidget('twitter', 'maintwitter1');
+                html += renderWidget('line', 'mainline1');
+                html += renderWidget('button', 'mainbutton1');
+                html += renderWidget('socialicons', 'mainsocialicons1');
+                html += renderWidget('youtube', 'mainyoutube1');
+                html += renderWidget('map', 'mainmap1');
+                html += renderWidget('profile', 'profile1', {'profileType':'strapline'});
+                html += renderWidget('profile', 'profile2', {'profileType':'companydescription'});
+                html += renderWidget('profile', 'profile3', {'profileType':'address'});
+                html += renderWidget('profile', 'profile4', {'profileType':'email'});
+                html += renderWidget('profile', 'profile5', {'profileType':'phone'});
+                html += renderWidget('profile', 'profile6', {'profileType':'business'});
+                html += renderWidget('profile', 'profile7', {'profileType':'copyright'});
+                html += renderWidget('profile', 'profile8', {'profileType':'twitter'});
+                html += renderWidget('profile', 'profile9', {'profileType':'form'});
+                html += renderWidget('profile', 'profile10', {'profileType':'socialicons'});
+                html += renderWidget('image', 'mainimage1');
+                html += renderWidget('paypalbuynow', 'mainpaypalbuynow1');
+                html += renderWidget('tweet', 'maintweet1');
+                html += renderWidget('dropbox', 'maindropbox1');
+                html += renderWidget('clicktocall', 'mainclicktocall1');
+                html += renderWidget('gallery', 'maingallery1');
+                html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1', {'crop':1, 'showButtons':true, 'showBullets':true, 'allowPause':true});
+                html += renderWidget('content', 'maincontent2');
+                html += renderWidget('menusections', 'menusections1');
+                html += renderWidget('menu', 'menu1');
+                html += renderWidget('signupform', 'mainsignupform1');
+                html += renderWidget('bloglistposts', 'bloglistposts1');
+                html += renderWidget('blogpost', 'blogpost1');
+                html += renderWidget('blogsearch', 'blogsearch1');
+                html += renderWidget('menusections', 'menusections1');
+                html += renderWidget('menu', 'menu1');
+                html += renderWidget('ecombasket', 'ecombasket1');
                 html += renderWidget('ecomcheckout', 'ecomcheckout1');
                 
                 break;
