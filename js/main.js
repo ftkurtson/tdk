@@ -159,7 +159,7 @@ bk$(function() {
             pages: pages,
             plugins: plugins(template)
         };
-
+console.log(data);
         if (renderPartial === true) {
             var widget = loadTemplate(id, "widgets/" + type + ".twig");
         } else {

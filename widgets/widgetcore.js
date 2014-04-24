@@ -82,7 +82,6 @@
                 },
 
                 rerender: function () {
-                    console.log('321');
                     var properties = this.getProperties('current'),
                         pluginName = null;
 
@@ -194,9 +193,8 @@
                 },
 
                 rerenderPartial: function (tplName, tplData) {
-                    console.log('partial nah!');
                     if (typeof window[tplName] === 'function') {
-                        return Twig.render(window[tplName], tplData);
+                        return Twig.render(window[tplName], {'data':tplData});
                     } else {
                         throw new Error('No such template:' + tplName);
                     }

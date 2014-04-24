@@ -1289,8 +1289,8 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                dataType:'json',
-                data: sendingData
+                data: sendingData,
+                dataType: 'json'
             }).done(function (response) {
                 that.setCheckoutTotal(response);
                 // that.rerender();
@@ -1363,6 +1363,7 @@
                     subTotalPrice: this.subTotalPrice
                 },
                 itemsInputHtml = this.rerenderPartial('widget_ecomcheckout_itemsinput', itemsInputData);
+
             if (thisEl.find('.js-checkout-form').length > 0 && itemsInputHtml.length > 0) {
 
                 if (bk$('.js-checkout-items-input').length > 0) {
