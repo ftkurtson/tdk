@@ -1,35 +1,30 @@
-<div class="ecombasket-pull js-pull"><p>Basket: <span class="basket-count">2</span></p></div>
+<div class="ecombasket-pull js-pull">
+    <p>{{ 'widgets.ecombasket.basket'|translate('Basket') }}:
+        <span class="basket-count">{{data.items.quantity}}</span>
+    </p>
+</div>
+
 <div class="ecombasket-list-container">
-	<ul>
-		<li data-ref="1">
-			<div class="ecombasket-item-image" style="background-image:url('http://placehold.it/250x250');">
-				<img src="http://placehold.it/250x250">
-			</div>
-			<div class="ecombasket-item-info">
-				<span class='ecombasket-item-title'>Aliquam Handbag</span>
-				<div class="ecombasket-item-count-wrapper">
-					<span class='ecombasket-item-count-label'>Quantity:</span>
-					<span class='ecombasket-item-count'>1</span>
-				</div>
-				<span class="ecombasket-item-price">£19.95</span>
-				<span class='ecombasket-remove-button js-remove'>Remove</span>
-			</div>
-		</li>
-		<li data-ref="2">
-			<div class="ecombasket-item-image" style="background-image:url('http://placehold.it/300x100');">
-				<img src="http://placehold.it/300x100">
-			</div>
-			<div class="ecombasket-item-info">
-				<span class='ecombasket-item-title'>Commodo Handbag</span>
-				<div class="ecombasket-item-count-wrapper">
-					<span class='ecombasket-item-count-label'>Quantity:</span>
-					<span class='ecombasket-item-count'>1</span>
-				</div>
-				<span class="ecombasket-item-price">£19.95</span>
-				<span class='ecombasket-remove-button js-remove'>Remove</span>
-			</div>
-		</li>
-	</ul>
-	<div class="ecombasket-total-wrap"><p>Total: <span class="ecombasket-total">£2</span></p></div>
-	<div class="ecombasket-checkout-wrap"><a class="ecombasket-checkout-link" href="/store/checkout">Checkout</a></div>
+    <ul>
+        {% for item in data.items %}
+            <li data-ref="{{item.ref}}">
+                <div class="ecombasket-item-image" style="background-image:url({{item.assetUrl}});">
+                    <img src="{{item.assetUrl}}">
+                </div>
+
+                <div class="ecombasket-item-info">
+                    <a class="ecombasket-item-title" href="{{ requestBase }}/store/product/{{ item.productRef }}">{{item.title}}</a>
+                    <div class="ecombasket-item-count-wrapper">
+                        <span class="ecombasket-item-count-label">{{'widgets.ecombasket.quantity'|translate('Quantity:')}}</span>
+                        <span class="ecombasket-item-count">{{item.quantity}}</span>
+                    </div>
+                    <span class="ecombasket-item-price">{{item.price}}</span>
+                    <span class="ecombasket-remove-button js-remove" data-ref="{{item.ref}}">{{ 'widgets.ecombasket.remove'|translate('Remove') }}</span>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="ecombasket-total-wrap"><p>{{ 'widgets.ecombasket.total'|translate('Total') }}: <span class="ecombasket-total">{{ data.subTotalPrice }}</span></p></div>
+    <div class="ecombasket-checkout-wrap"><a class="ecombasket-checkout-link" href="{{ requestBase }}/store/checkout">{{ 'widget.ecombasket.checkout_link'|translate('Checkout') }}</a></div>
 </div>

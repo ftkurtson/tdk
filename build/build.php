@@ -62,7 +62,7 @@ foreach (new DirectoryIterator($source) as $fileInfo) {
 
 // Build widget JS into a single file
 
-$source = $basekitDir . '/assets/public/site/widgets';
+$source = $basekitDir . '/assets/public/responsive/site/widgets';
 $destination = $sdkDir . '/widgets';
 
 $widgetsJs = '';
@@ -94,7 +94,7 @@ file_put_contents($to, $widgetsJs);
 // Copy other individual files
 
 $rules = array(
-    $basekitDir . '/assets/public/site/widgets/widgetcore.js' => $sdkDir . '/widgets/widgetcore.js',
+    $basekitDir . '/assets/public/responsive/site/widgets/widgetcore.js' => $sdkDir . '/widgets/widgetcore.js',
     $basekitDir . '/assets/public/apps/js/framework/components/component/component.js' => $sdkDir . '/templates/common/component.js',
     $basekitDir . '/assets/public/apps/js/framework/basekit.js' => $sdkDir . '/templates/common/basekit.js'//,
     //$basekitDir . '/assets/public/libs/google-fonts-.js' => $sdkDir . '/templates/common/google-fonts.js'

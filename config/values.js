@@ -40,7 +40,7 @@ var library = ['<h1>Heading 1</h1><h2>Heading 2</h2><h3>Heading 3</h3><h4>Headin
  */
 var properties = {
     feature: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             preset: "align-center",
             bgImg: "templates/" + templateName + "/images/feature-bg.jpg",
             buttonText: "Sign Up",
@@ -49,18 +49,18 @@ var properties = {
         }, templateValues);
     },
     companyname: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             url:"home"
         }, templateValues);
     },
     companyheader: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             preset: "default",
             showLogo: 1
         }, templateValues);
     },
     content: function(templateName, templateValues) {
-        var properties = $.extend({
+        var properties = bk$.extend({
             lines: "all"
         }, templateValues);
 
@@ -71,19 +71,19 @@ var properties = {
         return properties;
     },
     contactform: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             preset: "todo",
             text: "Submit Form"
         }, templateValues);
     },
     map: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             height: 300,
             markerPath: '/images/map-marker.png'
         }, templateValues);
     },
     twitter: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             tweets: [
                 {
                     "text": "How To Get Big-Brand Search Visibility",
@@ -105,28 +105,28 @@ var properties = {
         }, templateValues);
     },
     youtube: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             videoId: "yfCdflc3x8U"
         }, templateValues);
     },
     button: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             text: "Click Me"
         }, templateValues);
     },
     gallery: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             preset: "default",
             albumRef: 1
         }, templateValues);
     },
     extendednavigation: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             align: "left"
         }, templateValues);
     },
     responsiveslideshow: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             preset: "default",
             albumRef: 0,
             images: [
@@ -158,34 +158,34 @@ var properties = {
         }, templateValues);
     },
     navigation: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             preset: "default",
             align: "left"
         }, templateValues);
     },
     image: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             src: "http://placehold.it/250x250"
         }, templateValues);
     },
     paypalbuynow: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             paypalbuynow_businessemail: "test@test.com",
             paypalbuynow_currency: "GDP",
             paypalbuynow_text: "Buy Me Now"
         }, templateValues);
     },
     dropbox: function(templateName, templateValues) {
-        return $.extend({
+        return bk$.extend({
             showFileName: 1,
             fileName: "test.file"
         }, templateValues);
     },
     blogpost: function(templateName, templateValues) {
-        return $.extend({}, templateValues);
+        return bk$.extend({}, templateValues);
     },
     ecombasket: function(templateName, templateValues) {
-        return $.extend({}, templateValues);
+        return bk$.extend({}, templateValues);
     }
 };
 
@@ -1548,15 +1548,19 @@ var plugins = function(template) {
         },
         "ecommerce": {
             "store":{
-                "ref":18,
+                "ref":"18",
                 "currency":{
-                    "ref":3,
+                    "ref":"3",
                     "name":"Pound Sterling",
                     "alphaCode":"GBP",
                     "htmlCode":"&#163;"
                 },
-                "stripePublishableKey":null,
-                "chargeUrl":"http://localhost"
+                "stripePublishableKey":'',
+                "paypal":'',
+                "chargeUrl":"/",
+                "paymentCompletionUrl": "/",
+                "calculateUrl":"/site/12345/ecom.calc.js",
+                "sitePrimaryDomain": '/' // it should be sitePrimaryDomain
             },
             "products":[
             {
@@ -1580,7 +1584,28 @@ var plugins = function(template) {
 
                  ],
                  "options":[
-
+                    {
+                       "ref":21,
+                       "title":"Colour",
+                       "values":[
+                          {
+                             "ref":66,
+                             "title":"pink"
+                          },
+                          {
+                             "ref":67,
+                             "title":"blue"
+                          },
+                          {
+                             "ref":68,
+                             "title":"turquoise"
+                          },
+                          {
+                             "ref":69,
+                             "title":"brown"
+                          }
+                       ]
+                    }
                  ],
                  "created":{
                     "date":"2014-03-20 09:29:34",
@@ -1591,7 +1616,69 @@ var plugins = function(template) {
                     "date":"2014-03-20 09:32:02",
                     "timezone_type":3,
                     "timezone":"Europe/London"
-                 }
+                 },
+                 "variations":[
+                    {
+                       "ref":1,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "formattedPrice":"£32.00",
+                       "stock":3,
+                       "values":[
+                          {
+                             "ref":92,
+                             "optionTitle":"Colour",
+                             "valueTitle":"blue"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":3,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "formattedPrice":"£32.00",
+                       "stock":8,
+                       "values":[
+                          {
+                             "ref":93,
+                             "optionTitle":"Colour",
+                             "valueTitle":"turquoise"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":5,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "formattedPrice":"£32.00",
+                       "stock":9,
+                       "values":[
+                          {
+                             "ref":94,
+                             "optionTitle":"Colour",
+                             "valueTitle":"pink"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":7,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"30.00",
+                       "formattedPrice":"£32.00",
+                       "stock":7,
+                       "values":[
+                          {
+                             "ref":95,
+                             "optionTitle":"Colour",
+                             "valueTitle":"brown"
+                          }
+                       ]
+                    }
+                ]
             },
             {
                  "ref":2,
@@ -1653,10 +1740,11 @@ var plugins = function(template) {
                  },
                  "variations":[
                     {
-                       "ref":68,
+                       "ref":2,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
+                       "formattedPrice":"£32.00",
                        "stock":3,
                        "values":[
                           {
@@ -1667,10 +1755,11 @@ var plugins = function(template) {
                        ]
                     },
                     {
-                       "ref":69,
+                       "ref":4,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
+                       "formattedPrice":"£32.00",
                        "stock":8,
                        "values":[
                           {
@@ -1681,10 +1770,11 @@ var plugins = function(template) {
                        ]
                     },
                     {
-                       "ref":70,
+                       "ref":6,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
+                       "formattedPrice":"£32.00",
                        "stock":9,
                        "values":[
                           {
@@ -1695,10 +1785,11 @@ var plugins = function(template) {
                        ]
                     },
                     {
-                       "ref":71,
+                       "ref":8,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"30.00",
+                       "formattedPrice":"£32.00",
                        "stock":7,
                        "values":[
                           {
@@ -1708,7 +1799,7 @@ var plugins = function(template) {
                           }
                        ]
                     }
-                 ]
+                ]
             },
             {
                  "ref":3,
@@ -1759,10 +1850,11 @@ var plugins = function(template) {
                  },
                  "variations":[
                     {
-                       "ref":72,
+                       "ref":11,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"42.00",
+                       "formattedPrice":"£42.00",
                        "stock":4,
                        "values":[
                           {
@@ -1773,10 +1865,11 @@ var plugins = function(template) {
                        ]
                     },
                     {
-                       "ref":73,
+                       "ref":13,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"58.00",
+                       "formattedPrice":"£58.00",
                        "stock":15,
                        "values":[
                           {
@@ -1786,7 +1879,7 @@ var plugins = function(template) {
                           }
                        ]
                     }
-                 ]
+                ]
             },
             {
                  "ref":4,
@@ -1811,7 +1904,20 @@ var plugins = function(template) {
                     "brown"
                  ],
                  "options":[
-
+                    {
+                       "ref":22,
+                       "title":"Size",
+                       "values":[
+                          {
+                             "ref":70,
+                             "title":"small"
+                          },
+                          {
+                             "ref":71,
+                             "title":"large"
+                          }
+                       ]
+                    }
                  ],
                  "created":{
                     "date":"2014-03-20 09:38:16",
@@ -1822,7 +1928,39 @@ var plugins = function(template) {
                     "date":"2014-03-20 09:38:16",
                     "timezone_type":3,
                     "timezone":"Europe/London"
-                 }
+                },
+                "variations":[
+                    {
+                       "ref":10,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"42.00",
+                       "formattedPrice":"£42.00",
+                       "stock":4,
+                       "values":[
+                          {
+                             "ref":96,
+                             "optionTitle":"Size",
+                             "valueTitle":"small"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":12,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"58.00",
+                       "formattedPrice":"£58.00",
+                       "stock":15,
+                       "values":[
+                          {
+                             "ref":97,
+                             "optionTitle":"Size",
+                             "valueTitle":"large"
+                          }
+                       ]
+                    }
+                ]
             },
             {
                  "ref":5,
@@ -1846,7 +1984,20 @@ var plugins = function(template) {
                     "brown"
                  ],
                  "options":[
-
+                    {
+                       "ref":22,
+                       "title":"Size",
+                       "values":[
+                          {
+                             "ref":70,
+                             "title":"small"
+                          },
+                          {
+                             "ref":71,
+                             "title":"large"
+                          }
+                       ]
+                    }
                  ],
                  "created":{
                     "date":"2014-03-20 09:36:42",
@@ -1857,7 +2008,38 @@ var plugins = function(template) {
                     "date":"2014-03-20 09:36:42",
                     "timezone_type":3,
                     "timezone":"Europe/London"
-                 }
+                 },
+                "variations":[
+                    {
+                       "ref":22,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"42.00",
+                       "formattedPrice":"£42.00",
+                       "stock":4,
+                       "values":[
+                          {
+                             "ref":96,
+                             "optionTitle":"Size",
+                             "valueTitle":"small"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":24,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"58.00",
+                       "stock":15,
+                       "values":[
+                          {
+                             "ref":97,
+                             "optionTitle":"Size",
+                             "valueTitle":"large"
+                          }
+                       ]
+                    }
+                ]
             },
             {
                 "ref":6,
@@ -1908,10 +2090,11 @@ var plugins = function(template) {
                 },
                 "variations":[
                     {
-                       "ref":66,
+                       "ref":21,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"67.00",
+                       "formattedPrice":"£67.00",
                        "stock":3,
                        "values":[
                           {
@@ -1922,10 +2105,11 @@ var plugins = function(template) {
                        ]
                     },
                     {
-                       "ref":67,
+                       "ref":23,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"67.00",
+                       "formattedPrice":"£67.00",
                        "stock":1,
                        "values":[
                           {

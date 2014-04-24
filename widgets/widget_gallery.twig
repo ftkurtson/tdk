@@ -33,6 +33,7 @@
         {% endif %}
 
         <li class="{{aspectClass}}">
+        {% if image is not null %}
             <span class="inner" style="background-image:url('{% if image.url|length > 0 %}{{image.url}}{% else %}{{ resizerUrl }}/{{image.path}}?w=960{% endif %}');">
                 <a class="" href="#" image-href="{% if image.url|length > 0 %}{{image.url}}{% else %}{{ resizerUrl }}/{{image.path}}?w=960{% endif %}" data-lightbox="set-{{ref}}" title="{{image.title}}">
                     <img src="{% if image.url|length > 0 %}{{image.url}}{% else %}{{ resizerUrl }}/{{image.path}}?w=960{% endif %}"/>
@@ -44,6 +45,7 @@
                     {% endif %}
                 </a>
             </span>
+        {% endif %}
         </li>
     {% endfor %}
 </ul>    

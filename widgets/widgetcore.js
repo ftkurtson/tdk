@@ -17,16 +17,16 @@
 
                     // RH: extend methods that are coming through
                     if (options.methods !== null) {
-                        $.extend(true, scope, options.methods);
+                        bk$.extend(true, scope, options.methods);
                     }
 
                     if (typeof options.properties === 'object') {
-                        $.extend(true, scope.properties.data, options.properties);
+                        bk$.extend(true, scope.properties.data, options.properties);
                     }
 
                     // extend the basic properties
                     if (args[1] && typeof args[1] === 'object') {
-                        $.extend(true, scope.properties, args[1]);
+                        bk$.extend(true, scope.properties, args[1]);
                     }
 
                     if (typeof scope.construct === 'function') {
@@ -95,10 +95,17 @@
                                 if (properties.plugins.hasOwnProperty(pluginName)) {
                                     throw new Error('Plugin name conflicts');
                                 } else {
-                                    properties.plugins[pluginName] = $.extend(true, {}, Server.plugins[pluginName]);
+                                    properties.plugins[pluginName] = bk$.extend(true, {}, Server.plugins[pluginName]);
                                 }
                             }
                         }
+                    }
+
+                    // HC: make profile available for the published site widgets
+                    if (properties.profile !== undefined) {
+                        bk$.extend(true, properties.profile, Profile.profile);
+                    } else {
+                        properties.profile = Profile.profile;
                     }
 
                     this.el.html('');
@@ -114,13 +121,13 @@
                     var properties = scope.properties;
                     if (type && type === 'current') {
 
-                        properties = $.extend(true, {}, scope.properties);
+                        properties = bk$.extend(true, {}, scope.properties);
 
                         // replace the previous with the current saved properties
-                        properties.data = $.extend(true, properties.data, properties.changed);
+                        properties.data = bk$.extend(true, properties.data, properties.changed);
 
                         // replace the previous with any temporary properties
-                        properties.data = $.extend(true, properties.data, properties.temporary);
+                        properties.data = bk$.extend(true, properties.data, properties.temporary);
                     }
                     return properties;
                 },
@@ -130,11 +137,11 @@
                         responseObj;
 
                     if (response.responseText) {
-                        responseObj = jQuery.parseJSON(response.responseText);
+                        responseObj = bk$.parseJSON(response.responseText);
 
                         if (responseObj.messageTemplates) {
-                            $.each(responseObj.messageTemplates, function (field, errorTemplates) {
-                                $.each(errorTemplates.templates, function (type, template) {
+                            bk$.each(responseObj.messageTemplates, function (field, errorTemplates) {
+                                bk$.each(errorTemplates.templates, function (type, template) {
                                     errors.push({
                                         field: field,
                                         type: type
@@ -151,7 +158,7 @@
                     var message = null,
                         field = null;
 
-                    $.each(errors, function (i, value) {
+                    bk$.each(errors, function (i, value) {
                         if (value.field === 'email' && value.type === 'duplicateEmail') {
                             field = 'email';
                             message = App.t('global_v7.error_registration.duplicate_email', 'It looks like that email is already in use. Are you sure you don’t already have an account?');
@@ -183,6 +190,14 @@
                         message: message,
                         field: field
                     };
+                },
+
+                rerenderPartial: function (tplName, tplData) {
+                    if (typeof window[tplName] === 'function') {
+                        return Twig.render(window[tplName], {'data':tplData});
+                    } else {
+                        throw new Error('No such template:' + tplName);
+                    }
                 }
             }
         });

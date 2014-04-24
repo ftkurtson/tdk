@@ -2,11 +2,11 @@ var Server = {
     "plugins": plugins
 };
 
-$(function() {
+bk$(function() {
     Twig.extend(function(Twig) {
         Twig.exports.extendTag({
             type: "extends",
-            regex: /^extends\s+(.+)$/,
+            regex: /^extends\s+(.+)bk$/,
             next: [ ],
             open: true,
             compile: function(token) {
@@ -35,7 +35,7 @@ $(function() {
     });
 
     Twig.extendFunction("asset", function(url) {
-        var template = $("#template").val() || "none";
+        var template = bk$("#template").val() || "none";
         return "templates/" + template + "/" + url;
     });
 
@@ -48,40 +48,9 @@ $(function() {
 
         switch (name) {
             case "main":
-                html += renderWidget('ecomproduct', 'mainecomproduct');
-                html += renderWidget('contactform', 'maincontactform1');
-                html += renderWidget('twitter', 'maintwitter1');
-                html += renderWidget('line', 'mainline1');
-                html += renderWidget('button', 'mainbutton1');
-                html += renderWidget('socialicons', 'mainsocialicons1');
-                html += renderWidget('youtube', 'mainyoutube1');
-                html += renderWidget('map', 'mainmap1');
-                html += renderWidget('profile', 'profile1', {'profileType':'strapline'});
-                html += renderWidget('profile', 'profile2', {'profileType':'companydescription'});
-                html += renderWidget('profile', 'profile3', {'profileType':'address'});
-                html += renderWidget('profile', 'profile4', {'profileType':'email'});
-                html += renderWidget('profile', 'profile5', {'profileType':'phone'});
-                html += renderWidget('profile', 'profile6', {'profileType':'business'});
-                html += renderWidget('profile', 'profile7', {'profileType':'copyright'});
-                html += renderWidget('profile', 'profile8', {'profileType':'twitter'});
-                html += renderWidget('profile', 'profile9', {'profileType':'form'});
-                html += renderWidget('profile', 'profile10', {'profileType':'socialicons'});
-                html += renderWidget('image', 'mainimage1');
-                html += renderWidget('paypalbuynow', 'mainpaypalbuynow1');
-                html += renderWidget('tweet', 'maintweet1');
-                html += renderWidget('dropbox', 'maindropbox1');
-                html += renderWidget('clicktocall', 'mainclicktocall1');
-                html += renderWidget('gallery', 'maingallery1');
-                html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1', {'crop':1, 'showButtons':true, 'showBullets':true, 'allowPause':true});
-                html += renderWidget('content', 'maincontent2');
-                html += renderWidget('menusections', 'menusections1');
-                html += renderWidget('menu', 'menu1');
-                html += renderWidget('signupform', 'mainsignupform1');
-                html += renderWidget('bloglistposts', 'bloglistposts1');
-                html += renderWidget('blogpost', 'blogpost1');
-                html += renderWidget('blogsearch', 'blogsearch1');
-                html += renderWidget('menusections', 'menusections1');
-                html += renderWidget('menu', 'menu1');
+                //html += renderWidget('twitter', 'maintwitter1');
+                html += renderWidget('ecomcheckout', 'ecomcheckout1');
+                
                 break;
         }
 
@@ -93,12 +62,12 @@ $(function() {
     });
 
     Twig.extendFilter("expandAssetUrl", function(url) {
-        var template = $("#template").val() || "none";
+        var template = bk$("#template").val() || "none";
         return "templates/" + template + "/" + url;
     });
 
     Twig.extendFilter("translate", function(key, values) {
-        return $.isArray(values) ? values[0] : values;
+        return bk$.isArray(values) ? values[0] : values;
     });
 
     var unique = 0,
@@ -159,8 +128,8 @@ $(function() {
         return defaults;
     }
 
-    function renderWidget(type, id, args) {
-        var template = $("#template").val() || "none";
+    function renderWidget(type, id, args, renderPartial) {
+        var template = bk$("#template").val() || "none";
 
         // Capitalize the type to get its initial properties
         var name = type.charAt(0).toUpperCase() + type.slice(1);
@@ -182,7 +151,7 @@ $(function() {
         }
 
         initial.type = type;
-        var params = $.extend({}, initial, input);
+        var params = bk$.extend({}, initial, input);
 
         var data = {
             profile: profile(template),
@@ -190,8 +159,13 @@ $(function() {
             pages: pages,
             plugins: plugins(template)
         };
+console.log(data);
+        if (renderPartial === true) {
+            var widget = loadTemplate(id, "widgets/" + type + ".twig");
+        } else {
+            var widget = loadTemplate(id, "widgets/widget_" + type + ".twig");
+        }
 
-        var widget = loadTemplate(id, "widgets/widget_" + type + ".twig");
         var html = widget.render(data);
 
         widgets.push({
@@ -201,7 +175,11 @@ $(function() {
             params: params
         });
 
-        return '<div id="' + id + '" class="widget ' + type + '">' + html + '</div>';
+        if (renderPartial === true) {
+            return html ;
+        } else {
+            return '<div id="' + id + '" class="widget ' + type + '">' + html + '</div>';
+        }
     }
 
     function renderTemplate(useFile, previouslyRequestedFile) {
@@ -216,8 +194,9 @@ $(function() {
         // Clear widgets
         widgets = [];
 
-        var template = $("#template").val() || "none", file = (typeof useFile === 'string' ? useFile : $("#layout").val()) || "default.twig";
-        var colourSwatchIndex = $("#colour-swatch").val() || 0;
+        var template = bk$("#template").val() || "none",
+            file = (typeof useFile === 'string' ? useFile : bk$("#layout").val()) || "default.twig";
+        var colourSwatchIndex = bk$("#colour-swatch").val() || 0;
 
         if (currentTemplate != template) {
             currentTemplate = template;
@@ -229,7 +208,7 @@ $(function() {
         site.colorSwatch = 'swatch-' + (parseInt(colourSwatchIndex, 10) + 1);
 
         // Grab the metadata.json file
-        $.getJSON("templates/" + template + "/metadata.json").done(function(data) {
+        bk$.getJSON("templates/" + template + "/metadata.json").done(function(data) {
             // Build the LESS variables for this template
 
             var error, varsLess = "";
@@ -240,20 +219,20 @@ $(function() {
 
             // Add Twig Page Types
             if (data.pageTypes) {
-                $("#layout").empty();
+                bk$("#layout").empty();
 
-                $.each(data.pageTypes, function (i, pageType) {
-                    $("#layout")
-                        .append($("<option></option>")
+                bk$.each(data.pageTypes, function (i, pageType) {
+                    bk$("#layout")
+                        .append(bk$("<option></option>")
                             .attr("value", pageType.toLowerCase()+ '.twig')
                             .text(pageType)
                         );
                 });
             } else {
-                $("#layout").empty();
+                bk$("#layout").empty();
                 
-	            $("#layout")
-                .append($("<option></option>")
+	            bk$("#layout")
+                .append(bk$("<option></option>")
                     .attr("value", 'default.twig')
                     .text('Default')
                 );
@@ -261,9 +240,9 @@ $(function() {
 
             // Add color swatches 
             var colourNumber = 0;
-            $("#colour-swatch").empty();
+            bk$("#colour-swatch").empty();
             if (data.colorSwatches) {
-                $("#cswatch").show();
+                bk$("#cswatch").show();
                 for (var name in data.colorSwatches) {
                     var colours = data.colorSwatches[name];
 
@@ -275,8 +254,8 @@ $(function() {
                         }
                     }
 
-                    $("#colour-swatch")
-                        .append($("<option></option>")
+                    bk$("#colour-swatch")
+                        .append(bk$("<option></option>")
                             .attr("value", colourNumber)
                             .text(name)
                         );
@@ -284,9 +263,9 @@ $(function() {
                     colourNumber++;
                 }
 
-                $("#colour-swatch").val(colourSwatchIndex);
+                bk$("#colour-swatch").val(colourSwatchIndex);
             } else {
-                $("#cswatch").hide();
+                bk$("#cswatch").hide();
                 varsLess += '@color-swatch1:#ffffff;@color-swatch2:#4a7491;@color-swatch3:#c26b57;@color-swatch4:#111111;@color-swatch5:#bcbcbc;@color-swatch6:#ffffff;@color-swatch7:#235071;'
             }
 
@@ -318,7 +297,7 @@ $(function() {
                     throw e;
                 }
 
-                var iframe = $("iframe");
+                var iframe = bk$("iframe");
 
                 try {
                     // Always make the id unique so we re-compile and render the template every time
@@ -392,10 +371,10 @@ $(function() {
                 js += 'var sdkPlugins = ' + JSON.stringify(plugins(template)) + ';';
 
                 // Submit the form to the iframe
-                $("#html").val(B64.encode(html));
-                $("#css").val(B64.encode(css));
-                $("#js").val(B64.encode(js));
-                $("#post").submit();
+                bk$("#html").val(B64.encode(html));
+                bk$("#css").val(B64.encode(css));
+                bk$("#js").val(B64.encode(js));
+                bk$("#post").submit();
             });
         }).fail(function() {
             var error = "Template Metadata Error\nJSON syntax error";
@@ -405,8 +384,8 @@ $(function() {
     }
 
     function validateTemplate() {
-        var template = $("#template").val(),
-            iFrame = $("#iframe"),
+        var template = bk$("#template").val(),
+            iFrame = bk$("#iframe"),
             overlay = '',
             message = '',
             errors = '',
@@ -414,7 +393,7 @@ $(function() {
 
         iFrame.find('.overlay').remove();
 
-        $.ajax({
+        bk$.ajax({
             url: "validate/validate.php?templateName=" + template
         }).done(function (response) {
             status = response.success;
@@ -423,33 +402,34 @@ $(function() {
             } else {
                 message = "<div class='validation-failure-header'>Validation failed! The following errors occurred:<br /><br /></div>";
                 errors = "<div class='validation-failure-body'>";
-                $.each(response.errors, function (index, value) {
+                bk$.each(response.errors, function (index, value) {
                     errors += value + '<br />';
                 });
                 errors += '</div>'
             }
-            overlay = $('<div class="overlay"><div class="message-box"><span class="overlay-close">x</span><span class="message-text">' + message + errors + '</span></div></div>');
+            overlay = bk$('<div class="overlay"><div class="message-box"><span class="overlay-close">x</span><span class="message-text">' + message + errors + '</span></div></div>');
             iFrame.append(overlay);
             iFrame.find('.overlay-close').off('.click').on('click', function() {
-                $("#iframe").find('.overlay').remove();
+                bk$("#iframe").find('.overlay').remove();
             });
         }).fail(function (response) {
             console.log(response); 
         });
     }
 
-    $("#render").click(renderTemplate);
-    $("#validate").click(validateTemplate);
+    bk$("#render").click(renderTemplate);
+    bk$("#validate").click(validateTemplate);
 
     templates.forEach(function(template) {
-        $("#template")
-            .append($("<option></option>")
+        bk$("#template")
+            .append(bk$("<option></option>")
                 .attr("value", template.directory)
                 .text(template.name)
             );
     });
 
-    $(document).ready(function () {
+    bk$(document).ready(function () {
         renderTemplate();
+        window.renderWidget = renderWidget;
     });
 });

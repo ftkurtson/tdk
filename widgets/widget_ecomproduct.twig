@@ -1,44 +1,47 @@
-<article class="ecom-product">
-    <div class="ecom-product-images-container">
-        <div class="ecom-product-preview-image-wrap" style="background-image:url('http://placehold.it/960x150')">
-            <img class="ecom-product-preview-image" src="http://placehold.it/960x150" alt="">
+{% if plugins.product is not null %}
+    {% set product = plugins.product %}
+    <article class="ecom-product">
+        {% if product.assets is not null %}
+        <div class="ecom-product-images-container">
+            {% set imageSrcPreview = plugins.assets.images[product.assets|first.assetRef].url %}
+            <div class="ecom-product-preview-image-wrap" style="background-image:url('{{ imageSrcPreview }}')">
+                <img class="ecom-product-preview-image" src="{{imageSrcPreview}}" alt>
+            </div>
+            {% if product.assets|length > 1 %}
+            <ul class="ecom-product-image-list">
+            {% for asset in product.assets %}
+                <li class="ecom-product-image-wrap" style="background-image:url('{{ asset.imageSrc }}')">
+                    <img class="ecom-product-image" src="{{asset.imageSrc}}" alt>
+                </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
         </div>
-        <ul class="ecom-product-image-list">
-            <li class="ecom-product-image-wrap" style="background-image:url('http://placehold.it/960x150')">
-                <img class="ecom-product-image"  src="http://placehold.it/960x150">
-            </li>
-            <li class="ecom-product-image-wrap" style="background-image:url('http://placehold.it/150x500')">
-                <img class="ecom-product-image"  src="http://placehold.it/150x500">
-            </li>
-            <li class="ecom-product-image-wrap" style="background-image:url('http://placehold.it/64x64')">
-                <img class="ecom-product-image"  src="http://placehold.it/64x64">
-            </li>
-        </ul>
-    </div>
+        {% endif %}
 
-    <div class="ecom-product-info">
-        <h2 class="ecom-product-title">Type your product title</h2>
+        <div class="ecom-product-info">
+            <h2 class="ecom-product-title">{{product.title}}</h2>
+            <p class="ecom-product-price">{{data.price}}</p>
 
-         <p class="ecom-product-price">£45.00</p>
+            {% if data.options|length > 0 %}
+            <div class="ecom-product-variation">
+            {% for option in data.options %}
+                <span class="ecom-product-vartitle">{{option.title}}</span>
+                <select data-option-name="{{option.title}}">
+                    <option value>Select</option>
+                    {% for value in option.values %}
+                        <option value="{{value.ref}}" {% if value.disabled or option.disabled %} disabled {% endif %}{% if option.valueRef == value.ref %} selected {% endif %}>{{value.title}}</option>
+                    {% endfor %}
+                </select>
+            {% endfor %}
+            </div>
+            {% endif %}
 
-        <div class="ecom-product-variation">
-            <span class="ecom-product-vartitle">Size</span>
-            <select data-option-name="size">
-                <option value="">Select</option>
-                <option value="1">large</option>
-                <option value="2">small</option>
-                <option value="3" selected="">medium</option>
-            </select>
-            <span class="ecom-product-vartitle">Colour</span>
-            <select data-option-name="colour">
-                <option value="">pink</option>
-                <option value="1">blue</option>
-                <option value="2">orange</option>
-                <option value="3" selected="">green</option>
-            </select>
-        </div>
-       
-                <div class="ecom-product-add-to-cart-btn-wrapper">
+            {% if data.notAvailable %}
+            <p>Currently unavailable</p>
+            {% endif %}
+
+            <div class="ecom-product-add-to-cart-btn-wrapper">
                 <button class="btn ecom-product-add-to-cart-btn" data-ref="{{ data.variationRef }}" {% if data.disableButton %} disabled {% endif %}>
                     <span class="text">Add to cart</span>
                 </button>
@@ -46,22 +49,33 @@
 
             <div class="ecom-product-go-to-checkout-btn-wrapper">
                 <button class="btn ecom-product-go-to-checkout-btn" hidden>
-                    <span class="text">Checkout</span>
+                    <span class="text">{{ 'widget.ecomb-product.checkout_link'|translate('Checkout') }}</span>
                 </button>
             </div>
 
-        <div class="ecom-product-cattag">
-            <span class="ecom-product-category">
-                Category: <a href="/store/categories/tvs" class="store-category-link">tvs</a>
-            </span>
-            <span class="ecom-product-tag">
-                Tags:
-                <a href="/store/tags/telly" class="ecom-product-tag-link">telly</a>
-                <a href="/store/tags/telly" class="ecom-product-tag-link">telly</a>
-            </span>
+            {% if (product.category is not null and product.category|length > 0) or (product.tags is not null and product.tags|length > 0) %}
+            <div class="ecom-product-cattag">
+                {% if product.category is not null and product.category|length > 0 %}
+                <span class="ecom-product-category">
+                    Category <a href="{{ requestBase }}/store/categories/{{product.category.name}}" class="store-category-link">{{product.category.name}}</a>
+                </span>
+                {% endif %}
+
+                {% if product.tags is not null and product.tags|length > 0 %}
+                    <span class="ecom-product-tag">
+                        Tags 
+                        {% for tag in product.tags %}
+                        <a href="{{ requestBase }}/store/tags/{{tag}}" class="ecom-product-tag-link">{{tag}}</a>
+                        {% endfor %}
+                    </span>
+                {% endif %}
+            </div>
+            {% endif %}
+
         </div>
-    </div>
 
-    <p class="ecom-product-long-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam gravida a orci sit amet lacinia. Cras consequat consectetur est, id imperdiet quam luctus vel. In commodo, quam tempus consequat scelerisque, eros nunc venenatis turpis, id facilisis nulla libero ut quam. Integer molestie ante nec sollicitudin vulputate. Pellentesque eu risus velit. Sed gravida neque mi, vel feugiat enim porttitor a. Pellentesque sollicitudin vel augue accumsan fringilla. Nam sit amet velit sit amet dolor volutpat pretium. In elementum purus elementum, dictum augue at, bibendum turpis. Quisque pulvinar metus ac lacinia pulvinar. Proin dapibus convallis risus eget egestas. Integer est magna, sodales ut auctor in, tristique vel eros. Donec vel tortor tempor, lobortis justo in, sagittis leo.</p>
-</article>
-
+    <p class="ecom-product-long-description">{{product.longDescription}}</p>
+    </article>
+{% else %}
+    <p>There aren't any products to display.</p>
+{% endif %}

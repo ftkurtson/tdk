@@ -3,6 +3,10 @@ localStorage.setItem('cart', JSON.stringify({1:2,2:1}));
 </script>
 <script language="javascript" type="text/javascript" src="js/core.js"></script>
 <script language="javascript" type="text/javascript" src="js/libs/jquery.js"></script>
+<script language="javascript">
+	bk$ = $;
+	jQuery.noConflict(true);
+</script>
 <script language="javascript" type="text/javascript" src="config/values.js"></script>
 <script language="javascript" type="text/javascript" src="config/values.custom.js"></script>
 <script type="text/javascript">
@@ -15,10 +19,11 @@ var Server = {
 <script language="javascript" type="text/javascript" src="templates/common/google-fonts.js"></script>
 <script language="javascript" type="text/javascript" src="widgets/widgetcore.js"></script>
 <script language="javascript" type="text/javascript" src="widgets/widgets.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/widgetcoreoveride.js"></script>
 <script language="javascript" type="text/javascript" src="js/iframe.js"></script>
 <script type="text/javascript">
-$( ".pull" ).click(function() {
-  $( ".extendednavigation > ul" ).toggleClass( "open" );
+bk$( ".pull" ).click(function() {
+  bk$( ".extendednavigation > ul" ).toggleClass( "open" );
 });
 </script>
 <style>

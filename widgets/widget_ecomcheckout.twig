@@ -1,395 +1,126 @@
-<h2 class="checkout-title">Checkout</h2>
-<table>
-    <tbody>
-        <tr>
-            <th>Items</th>
-            <th></th>
-            <th>Amount</th>
-        </tr>
-        <tr class="checkout-items">
-            <td>
-                <div class="image-wrap" style="background-repeat: no-repeat;background-image:url('http://placehold.it/250x250')">
-                    <img class="image" style="max-width: 150px" src="http://placehold.it/250x250">
+{% if plugins.ecommerce.store.stripePublishableKey != null or plugins.ecommerce.store.paypal != false %}
+
+    <h2 class="checkout-title js-checkout-title">{{ 'widgets.ecomcheckout.checkout_title'|translate('Checkout') }}</h2>
+    <table class='js-checkout-itemstable'>{# widget_checkout_items #}</table>
+
+    {% if plugins.ecommerce.store.chargeUrl|length > 0 and plugins.ecommerce.store.ref|length > 0 and plugins.ecommerce.store.paymentCompletionUrl|length > 0 and plugins.ecommerce.store.sitePrimaryDomain|length > 0 %}
+
+    <form class="checkout-form js-checkout-form" action="{{ plugins.ecommerce.store.chargeUrl }}" method="POST" novalidate>
+        <input type="hidden" name="storeRef" value="{{ plugins.ecommerce.store.ref }}">
+        <input type="hidden" name="storeUrl" value="http://{{ plugins.ecommerce.store.sitePrimaryDomain }}/store">
+        <input type="hidden" name="orderConfirmationUrl" value="http://{{ plugins.ecommerce.store.sitePrimaryDomain }}/store/order-confirmation">
+        <input type="hidden" name="paymentCompletionUrl" value="{{ plugins.ecommerce.store.paymentCompletionUrl }}">
+
+        <div class="delivery">
+            <h3 class="delivery-title">{{ 'widgets.ecomcheckout.delivery_title'|translate('Delivery details') }}</h3>
+            <div class="form-group">
+                <label for="firstname">First name:</label>
+                <input type="text" name="delivery[firstname]" id="firstname" required autocomplete="given-name">
+                <span>Please enter your first name</span>
+            </div>
+
+            <div class="form-group">
+                <label for="lastname">Last name:</label>
+                <input type="text" name="delivery[lastname]" id="lastname" required autocomplete="family-name">
+                <span>Please enter your last name</span>
+            </div>
+
+            <div class="form-group">
+                <label for="address1">Address line 1:</label>
+                <input type="text" name="delivery[address1]" id="address1" required autocomplete="address-line1">
+                <span>Please enter your address</span>
+            </div>
+
+            <div class="form-group">
+                <label for="address2">Address line 2 (optional):</label>
+                <input type="text" name="delivery[address2]" id="address2" autocomplete="address-line2">
+            </div>
+
+            <div class="form-group">
+                <label for="postcode">Postal code:</label>
+                <input type="text" name="delivery[postcode]" id="postcode" required autocomplete="postal-code">
+                <span>Please enter your postcode</span>
+            </div>
+
+            <div class="form-group">
+                <label for="country">{{ 'widgets.ecomcheckout.country'|translate('Country') }}</label>
+                <select id="country" name="delivery[countryCode]" required autocomplete="country-code">
+                    <option value="">{{ 'widgets.ecomcheckout.choose_country'|translate('Choose your country') }}</option>
+                    {% for code, country in plugins.ecommerce.countries %}
+                    <option value="{{ code }}">{{ country }}</option>
+                    {% endfor %}
+                </select>
+                <span>Please select your country</span>
+            </div>
+
+            <div class="form-group">
+                <label for="tel">Telephone (optional):</label>
+                <input type="tel" name="delivery[telephone]" id="tel" autocomplete="tel">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" name="customerEmail" id="email" required autocomplete="email">
+                <span>Please provide an email address</span>
+            </div>
+
+            <div class="form-group js-shipping-opts">
+                {# widget_ecomcheckout_shippingopts #}
+            </div>
+
+            <div class="delivery-price"></div>
+        </div>
+
+        {% if plugins.ecommerce.store.taxProducts == true %}
+            <div class="checkout-total-tax"></div>
+        {% endif %}
+
+        <div class="checkout-total-amount"></div>
+
+        {% if plugins.ecommerce.store.stripePublishableKey != null and plugins.ecommerce.store.paypal != false %}
+            <div class="checkout-payment-method">
+                <h3 class="checkout-payment-title">{{ "widgets.ecomcheckout.payments"|translate("Select a payment method") }}</h3>
+
+                <div class="checkout-payment-card">
+                    <input id="paywithstripe" type="radio" name="paymentMethod" value="stripe" checked>
+                    <label for="paywithstripe">{{ "widgets.ecomcheckout.paywithstripe"|translate("Pay with card") }}</label>
                 </div>
-            </td>
-            <td>
-                <span class="checkout-productname">Jackey (size: l)</span>
-                <span class="checkout-pricepu">3.99</span>
-                <span class="checkout-quantity">Quantity:</span>
-                <div class="checkout-quantitybtn">
-                    <button class="js-remove" data-ref="4">-</button>
-                    <span>5</span>
-                    <button class="js-add" data-ref="4">+</button>
+
+                <div class="checkout-payment-paypal">
+                    <input id="paywithpaypal" type="radio" name="paymentMethod" value="paypal">
+                    <label for="paywithpaypal">{{ "widgets.ecomcheckout.paywithpaypal"|translate("Pay with Paypal") }}</label>
                 </div>
-            </td>
-            <td class="checkout-amount">£19.95</td>
-        </tr>
-        <tr class="checkout-items">
-            <td>
-                <div class="image-wrap" style="background-repeat: no-repeat;background-image:url('http://placehold.it/250x250')">
-                    <img class="image" style="max-width: 150px" src="http://placehold.it/250x250">
-                </div>
-            </td>
-            <td>
-                <span class="checkout-productname">Kittens (age: month)</span>
-                <span class="checkout-pricepu">2.59</span>
-                <span class="checkout-quantity">Quantity:</span>
-                <div class="checkout-quantitybtn">
-                    <button class="js-remove" data-ref="7">-</button>
-                    <span>7</span>
-                    <button class="js-add" data-ref="7">+</button>
-                </div>
-            </td>
-            <td class="checkout-amount">£18.13</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td class="checkout-subtotal">Subtotal: £38.08</td>
-        </tr>
-    </tbody>
-</table>
+            </div>
+        {% elseif plugins.ecommerce.store.stripePublishableKey != null %}
+            <input id="paywithstripe" type="hidden" name="paymentMethod" value="stripe">
+        {% elseif plugins.ecommerce.store.paypal != false %}
+            <input id="paywithpaypal" type="hidden" name="paymentMethod" value="paypal">
+        {% endif %}
 
-<form class="checkout-form" action="http://plugins.basekit.dev/ecommerce/payment/start" method="POST">
-    <input type="hidden" name="storeRef" value="1">
-    <input type="hidden" name="storeUrl" value="http://test.basekit.dev/store">
-    <input type="hidden" name="storeName" value="Kitten shop">
-    <input type="hidden" name="orderConfirmationUrl" value="http://test.basekit.dev/store/order-confirmation">
-    <input type="hidden" name="paymentCompletionUrl" value="http://plugins.basekit.dev/ecommerce/payment/complete">
-    <input type="hidden" name="variations[4]" value="5">
-    <input type="hidden" name="variations[7]" value="7">
+        <button class="checkout-order-button btn js-create-order" type="submit">{{ 'widgets.ecomcheckout.proceed_payment'|translate('Continue to payment') }}</button>
 
-    <div class="delivery">
-        <h3 class="delivery-title">Delivery details</h3>
-        <div class="form-group">
-            <label for="firstname">First name:</label>
-            <input type="text" name="delivery[firstname]" id="firstname" required="" value="">
-            <span>Please enter your first name</span>
-        </div>
+        {# widget_ecomcheckout_itemsinput #}
+    </form>
 
-        <div class="form-group">
-            <label for="lastname">Last name:</label>
-            <input type="text" name="delivery[lastname]" id="lastname" required="" value="">
-            <span>Please enter your last name</span>
-        </div>
+    {% else %}
+        <div>{{ 'widgets.ecomcheckout.no_available'|translate('Checkout is not currently available, please try again later')}}</div>
+    {% endif %}
 
-        <div class="form-group invalid">
-            <label for="address1">Address line 1:</label>
-            <input type="text" name="delivery[address1]" id="address1" required="" value="">
-            <span>Please enter your address</span>
-        </div>
+    {% if plugins.ecommerce.store.legalPages is defined and plugins.ecommerce.store.legalPages|length > 0 %}
+    <ul class="checkout-legal-links">
+    	{% for page in plugins.ecommerce.store.legalPages %}
+    	{% set translation_key = 'widgets.ecomcheckout.legal_menu_' ~ page %}
+    	<li><a href="/{{ page }}"> {{ translation_key|translate(page|capitalize) }}</a></li>
+    	{% endfor %}
+    </ul>
+    {% endif %}
 
-        <div class="form-group">
-            <label for="address2">Address line 2 (optional):</label>
-            <input type="text" name="delivery[address2]" id="address2" value="">
-        </div>
+{% else %}
 
-        <div class="form-group">
-            <label for="postcode">Postal code:</label>
-            <input type="text" name="delivery[postcode]" id="postcode" required="" value="">
-            <span>Please enter your postcode</span>
-        </div>
+    {% if plugins.ecommerce.store.email|length > 0 %}
+        <div>{{ 'widgets.ecomcheckout.nopayment_available'|translate("This store doesn't currently support taking payments. Please contact the store owner at %1.", plugins.ecommerce.store.email)}}</div>
+    {% else %}
+        <div>{{ 'widgets.ecomcheckout.nopayment_available_general'|translate("This store doesn't currently support taking payments.")}}</div>
+    {% endif %}
 
-        <div class="form-group">
-            <label for="country">Country</label>
-            <select required="" name="delivery[country]" id="country">
-                <option value="">Choose your country</option>
-                <option value="AF">Afghanistan</option>
-                <option value="AX">Åland Islands</option>
-                <option value="AL">Albania</option>
-                <option value="DZ">Algeria</option>
-                <option value="AS">American Samoa</option>
-                <option value="AD">Andorra</option>
-                <option value="AO">Angola</option>
-                <option value="AI">Anguilla</option>
-                <option value="AQ">Antarctica</option>
-                <option value="AG">Antigua and Barbuda</option>
-                <option value="AR">Argentina</option>
-                <option value="AM">Armenia</option>
-                <option value="AW">Aruba</option>
-                <option value="AU">Australia</option>
-                <option value="AT">Austria</option>
-                <option value="AZ">Azerbaijan</option>
-                <option value="BS">Bahamas</option>
-                <option value="BH">Bahrain</option>
-                <option value="BD">Bangladesh</option>
-                <option value="BB">Barbados</option>
-                <option value="BY">Belarus</option>
-                <option value="BE">Belgium</option>
-                <option value="BZ">Belize</option>
-                <option value="BJ">Benin</option>
-                <option value="BM">Bermuda</option>
-                <option value="BT">Bhutan</option>
-                <option value="BO">Bolivia</option>
-                <option value="BA">Bosnia and Herzegovina</option>
-                <option value="BW">Botswana</option>
-                <option value="BV">Bouvet Island</option>
-                <option value="BR">Brazil</option>
-                <option value="IO">British Indian Ocean Territory</option>
-                <option value="VG">British Virgin Islands</option>
-                <option value="BN">Brunei</option>
-                <option value="BG">Bulgaria</option>
-                <option value="BF">Burkina Faso</option>
-                <option value="BI">Burundi</option>
-                <option value="KH">Cambodia</option>
-                <option value="CM">Cameroon</option>
-                <option value="CA">Canada</option>
-                <option value="CV">Cape Verde</option>
-                <option value="KY">Cayman Islands</option>
-                <option value="CF">Central African Republic</option>
-                <option value="TD">Chad</option>
-                <option value="CL">Chile</option>
-                <option value="CN">China</option>
-                <option value="CX">Christmas Island</option>
-                <option value="CC">Cocos [Keeling] Islands</option>
-                <option value="CO">Colombia</option>
-                <option value="KM">Comoros</option>
-                <option value="CG">Congo - Brazzaville</option>
-                <option value="CD">Congo - Kinshasa</option>
-                <option value="CK">Cook Islands</option>
-                <option value="CR">Costa Rica</option>
-                <option value="CI">Côte d’Ivoire</option>
-                <option value="HR">Croatia</option>
-                <option value="CU">Cuba</option>
-                <option value="CY">Cyprus</option>
-                <option value="CZ">Czech Republic</option>
-                <option value="DK">Denmark</option>
-                <option value="DJ">Djibouti</option>
-                <option value="DM">Dominica</option>
-                <option value="DO">Dominican Republic</option>
-                <option value="EC">Ecuador</option>
-                <option value="EG">Egypt</option>
-                <option value="SV">El Salvador</option>
-                <option value="GQ">Equatorial Guinea</option>
-                <option value="ER">Eritrea</option>
-                <option value="EE">Estonia</option>
-                <option value="ET">Ethiopia</option>
-                <option value="QU">European Union</option>
-                <option value="FK">Falkland Islands</option>
-                <option value="FO">Faroe Islands</option>
-                <option value="FJ">Fiji</option>
-                <option value="FI">Finland</option>
-                <option value="FR">France</option>
-                <option value="GF">French Guiana</option>
-                <option value="PF">French Polynesia</option>
-                <option value="TF">French Southern Territories</option>
-                <option value="GA">Gabon</option>
-                <option value="GM">Gambia</option>
-                <option value="GE">Georgia</option>
-                <option value="DE">Germany</option>
-                <option value="GH">Ghana</option>
-                <option value="GI">Gibraltar</option>
-                <option value="GR">Greece</option>
-                <option value="GL">Greenland</option>
-                <option value="GD">Grenada</option>
-                <option value="GP">Guadeloupe</option>
-                <option value="GU">Guam</option>
-                <option value="GT">Guatemala</option>
-                <option value="GG">Guernsey</option>
-                <option value="GN">Guinea</option>
-                <option value="GW">Guinea-Bissau</option>
-                <option value="GY">Guyana</option>
-                <option value="HT">Haiti</option>
-                <option value="HM">Heard Island and McDonald Islands</option>
-                <option value="HN">Honduras</option>
-                <option value="HK">Hong Kong SAR China</option>
-                <option value="HU">Hungary</option>
-                <option value="IS">Iceland</option>
-                <option value="IN">India</option>
-                <option value="ID">Indonesia</option>
-                <option value="IR">Iran</option>
-                <option value="IQ">Iraq</option>
-                <option value="IE">Ireland</option>
-                <option value="IM">Isle of Man</option>
-                <option value="IL">Israel</option>
-                <option value="IT">Italy</option>
-                <option value="JM">Jamaica</option>
-                <option value="JP">Japan</option>
-                <option value="JE">Jersey</option>
-                <option value="JO">Jordan</option>
-                <option value="KZ">Kazakhstan</option>
-                <option value="KE">Kenya</option>
-                <option value="KI">Kiribati</option>
-                <option value="KW">Kuwait</option>
-                <option value="KG">Kyrgyzstan</option>
-                <option value="LA">Laos</option>
-                <option value="LV">Latvia</option>
-                <option value="LB">Lebanon</option>
-                <option value="LS">Lesotho</option>
-                <option value="LR">Liberia</option>
-                <option value="LY">Libya</option>
-                <option value="LI">Liechtenstein</option>
-                <option value="LT">Lithuania</option>
-                <option value="LU">Luxembourg</option>
-                <option value="MO">Macau SAR China</option>
-                <option value="MK">Macedonia</option>
-                <option value="MG">Madagascar</option>
-                <option value="MW">Malawi</option>
-                <option value="MY">Malaysia</option>
-                <option value="MV">Maldives</option>
-                <option value="ML">Mali</option>
-                <option value="MT">Malta</option>
-                <option value="MH">Marshall Islands</option>
-                <option value="MQ">Martinique</option>
-                <option value="MR">Mauritania</option>
-                <option value="MU">Mauritius</option>
-                <option value="YT">Mayotte</option>
-                <option value="MX">Mexico</option>
-                <option value="FM">Micronesia</option>
-                <option value="MD">Moldova</option>
-                <option value="MC">Monaco</option>
-                <option value="MN">Mongolia</option>
-                <option value="ME">Montenegro</option>
-                <option value="MS">Montserrat</option>
-                <option value="MA">Morocco</option>
-                <option value="MZ">Mozambique</option>
-                <option value="MM">Myanmar [Burma]</option>
-                <option value="NA">Namibia</option>
-                <option value="NR">Nauru</option>
-                <option value="NP">Nepal</option>
-                <option value="NL">Netherlands</option>
-                <option value="AN">Netherlands Antilles</option>
-                <option value="NC">New Caledonia</option>
-                <option value="NZ">New Zealand</option>
-                <option value="NI">Nicaragua</option>
-                <option value="NE">Niger</option>
-                <option value="NG">Nigeria</option>
-                <option value="NU">Niue</option>
-                <option value="NF">Norfolk Island</option>
-                <option value="KP">North Korea</option>
-                <option value="MP">Northern Mariana Islands</option>
-                <option value="NO">Norway</option>
-                <option value="OM">Oman</option>
-                <option value="QO">Outlying Oceania</option>
-                <option value="PK">Pakistan</option>
-                <option value="PW">Palau</option>
-                <option value="PS">Palestinian Territories</option>
-                <option value="PA">Panama</option>
-                <option value="PG">Papua New Guinea</option>
-                <option value="PY">Paraguay</option>
-                <option value="PE">Peru</option>
-                <option value="PH">Philippines</option>
-                <option value="PN">Pitcairn Islands</option>
-                <option value="PL">Poland</option>
-                <option value="PT">Portugal</option>
-                <option value="PR">Puerto Rico</option>
-                <option value="QA">Qatar</option>
-                <option value="RE">Réunion</option>
-                <option value="RO">Romania</option>
-                <option value="RU">Russia</option>
-                <option value="RW">Rwanda</option>
-                <option value="BL">Saint Barthélemy</option>
-                <option value="SH">Saint Helena</option>
-                <option value="KN">Saint Kitts and Nevis</option>
-                <option value="LC">Saint Lucia</option>
-                <option value="MF">Saint Martin</option>
-                <option value="PM">Saint Pierre and Miquelon</option>
-                <option value="VC">Saint Vincent and the Grenadines</option>
-                <option value="WS">Samoa</option>
-                <option value="SM">San Marino</option>
-                <option value="ST">São Tomé and Príncipe</option>
-                <option value="SA">Saudi Arabia</option>
-                <option value="SN">Senegal</option>
-                <option value="RS">Serbia</option>
-                <option value="CS">Serbia and Montenegro</option>
-                <option value="SC">Seychelles</option>
-                <option value="SL">Sierra Leone</option>
-                <option value="SG">Singapore</option>
-                <option value="SK">Slovakia</option>
-                <option value="SI">Slovenia</option>
-                <option value="SB">Solomon Islands</option>
-                <option value="SO">Somalia</option>
-                <option value="ZA">South Africa</option>
-                <option value="GS">South Georgia and the South Sandwich Islands</option>
-                <option value="KR">South Korea</option>
-                <option value="ES">Spain</option>
-                <option value="LK">Sri Lanka</option>
-                <option value="SD">Sudan</option>
-                <option value="SR">Suriname</option>
-                <option value="SJ">Svalbard and Jan Mayen</option>
-                <option value="SZ">Swaziland</option>
-                <option value="SE">Sweden</option>
-                <option value="CH">Switzerland</option>
-                <option value="SY">Syria</option>
-                <option value="TW">Taiwan</option>
-                <option value="TJ">Tajikistan</option>
-                <option value="TZ">Tanzania</option>
-                <option value="TH">Thailand</option>
-                <option value="TL">Timor-Leste</option>
-                <option value="TG">Togo</option>
-                <option value="TK">Tokelau</option>
-                <option value="TO">Tonga</option>
-                <option value="TT">Trinidad and Tobago</option>
-                <option value="TN">Tunisia</option>
-                <option value="TR">Turkey</option>
-                <option value="TM">Turkmenistan</option>
-                <option value="TC">Turks and Caicos Islands</option>
-                <option value="TV">Tuvalu</option>
-                <option value="UM">U.S. Minor Outlying Islands</option>
-                <option value="VI">U.S. Virgin Islands</option>
-                <option value="UG">Uganda</option>
-                <option value="UA">Ukraine</option>
-                <option value="AE">United Arab Emirates</option>
-                <option value="GB">United Kingdom</option>
-                <option value="US">United States</option>
-                <option value="UY">Uruguay</option>
-                <option value="UZ">Uzbekistan</option>
-                <option value="VU">Vanuatu</option>
-                <option value="VA">Vatican City</option>
-                <option value="VE">Venezuela</option>
-                <option value="VN">Vietnam</option>
-                <option value="WF">Wallis and Futuna</option>
-                <option value="EH">Western Sahara</option>
-                <option value="YE">Yemen</option>
-                <option value="ZM">Zambia</option>
-                <option value="ZW">Zimbabwe</option>
-            </select>
-            <span>Please select your country</span>
-        </div>
-
-        <div class="form-group">
-            <label for="tel">Telephone (optional):</label>
-            <input type="tel" name="delivery[telephone]" id="tel" value="">
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required="" value="">
-            <span>Please provide an email address</span>
-        </div>
-
-        <div class="form-group">
-            <label for="shipping">Select your shipping method:</label>
-            <select id="shipping" name="deliveryRef" required="">
-                <option value="">Choose your shipping method</option>
-                <option value="38">Testing shipping cost 3</option>
-            </select>
-            <span>Please select a shipping method</span>
-        </div>
-
-        <div class="delivery-price">Delivery price: £6.99</div>
-    </div>
-
-    {# the element might be not existing if not charge tax #}
-    <div class="checkout-total-tax">Total tax: £0.90</div>
-    {# end #}
-
-    <div class="checkout-total-amount">Total amount: £45.97</div>
-
-    {# the element might be not existing if not charge tax #}
-    <div class="checkout-payment-method">
-        <h3 class="checkout-payment-title">Select a payment method</h3>
-        <div class="checkout-payment-card">
-            <input id="paywithstripe" type="radio" name="paymentMethod" value="stripe" checked>
-            <label for="paywithstripe">Pay with card</label>
-        </div>
-
-        <div class="checkout-payment-paypal">
-            <input id="paywithpaypal" type="radio" name="paymentMethod" value="paypal">
-            <label for="paywithpaypal">Pay with Paypal</label>
-        </div>
-    </div>
-    {# end #}
-
-    <button class="checkout-order-button btn js-create-order" type="submit" disabled="">Continue to payment</button>
-</form>
+{% endif %}
