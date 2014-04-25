@@ -1559,8 +1559,7 @@ var plugins = function(template) {
                 "paypal":'',
                 "chargeUrl":"/",
                 "paymentCompletionUrl": "/",
-                "calculateUrl":"/site/12345/ecom.calc.js",
-                "sitePrimaryDomain": '/' // it should be sitePrimaryDomain
+                "calculateUrl":"/site/12345/ecom.calc.js"
             },
             "products":[
             {

@@ -188,12 +188,13 @@ bk$(function() {
         var params = bk$.extend({}, initial, input);
 
         var data = {
+            sitePrimaryDomain: 'basekit.dev',
             profile: profile(template),
             data: params,
             pages: pages,
             plugins: plugins(template)
         };
-console.log(data);
+
         if (renderPartial === true) {
             var widget = loadTemplate(id, "widgets/" + type + ".twig");
         } else {

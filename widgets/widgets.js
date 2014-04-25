@@ -1043,6 +1043,7 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
+                dataType: 'json',
                 data: sendingData
             }).done(function (response) {
                 that.setBasketData(response);

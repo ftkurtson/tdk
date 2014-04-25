@@ -3,12 +3,12 @@
     <h2 class="checkout-title js-checkout-title">{{ 'widgets.ecomcheckout.checkout_title'|translate('Checkout') }}</h2>
     <table class='js-checkout-itemstable'>{# widget_checkout_items #}</table>
 
-    {% if plugins.ecommerce.store.chargeUrl|length > 0 and plugins.ecommerce.store.ref|length > 0 and plugins.ecommerce.store.paymentCompletionUrl|length > 0 and plugins.ecommerce.store.sitePrimaryDomain|length > 0 %}
+    {% if plugins.ecommerce.store.chargeUrl|length > 0 and plugins.ecommerce.store.ref|length > 0 and plugins.ecommerce.store.paymentCompletionUrl|length > 0 and sitePrimaryDomain|length > 0 %}
 
     <form class="checkout-form js-checkout-form" action="{{ plugins.ecommerce.store.chargeUrl }}" method="POST" novalidate>
         <input type="hidden" name="storeRef" value="{{ plugins.ecommerce.store.ref }}">
-        <input type="hidden" name="storeUrl" value="http://{{ plugins.ecommerce.store.sitePrimaryDomain }}/store">
-        <input type="hidden" name="orderConfirmationUrl" value="http://{{ plugins.ecommerce.store.sitePrimaryDomain }}/store/order-confirmation">
+        <input type="hidden" name="storeUrl" value="http://{{ sitePrimaryDomain }}/store">
+        <input type="hidden" name="orderConfirmationUrl" value="http://{{ sitePrimaryDomain }}/store/order-confirmation">
         <input type="hidden" name="paymentCompletionUrl" value="{{ plugins.ecommerce.store.paymentCompletionUrl }}">
 
         <div class="delivery">
