@@ -36,9 +36,11 @@
                 that = this,
                 t = null;
                 this.el.html(bk$(html).unwrap());
-                
+
             t = setTimeout (function () {
-                that.attachEvents();
+                if(typeof that.attachEvents === 'function') {
+                    that.attachEvents();
+                }
             }, 1000);
         },
 

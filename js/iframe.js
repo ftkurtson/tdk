@@ -17,8 +17,5 @@ bk$(function() {
         // Let the widget overrides kick in
         object.scope.rerender = BaseKit.WidgetCoreOverride.rerender;
         object.scope.rerenderPartial = BaseKit.WidgetCoreOverride.rerenderPartial;
-
-        object.scope.rerender();
-
     });
 });
