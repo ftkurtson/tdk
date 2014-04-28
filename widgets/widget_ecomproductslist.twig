@@ -8,10 +8,7 @@
                     <select id="productlist-itemcount" class="js-display-control" name="displayCount">
                         {% set displayCounts = [20, 32, 64] %}
                         {% for count in displayCounts %}
-                            <option
-                                value="{{ count }}"
-                                {% if count == request.query.displayCount %} selected{% endif %}
-                            >{{ count }}</option>
+                            <option value="{{ count }}" {% if count == request.query.displayCount %} selected{% endif %}>{{ count }}</option>
                         {% endfor %}
                     </select>
                 {{ 'widget.ecomproductlist.per_page'|translate('per page') }}</label>
@@ -20,13 +17,7 @@
         <div class="form-group">
             <label for="productlist-sort">{{ 'widget.ecomproductlist.order_label'|translate('Order by') }}</label>
             <select id="productlist-sort" class="js-display-control" name="orderBy">
-                {% set sortOptions = {
-                    'created-desc': 'Newest',
-                    'title-asc': 'Title: A-Z',
-                    'title-desc': 'Title: Z-A',
-                    'price-desc': 'Price: Highest to Lowest',
-                    'price-asc': 'Price: Lowest to Highest'
-                } %}
+                {% set sortOptions = {'created-desc': 'Newest','title-asc': 'Title: A-Z','title-desc': 'Title: Z-A','price-desc': 'Price: Highest to Lowest','price-asc': 'Price: Lowest to Highest'} %}
                 {% for option, title in sortOptions %}
                     <option value="{{ option }}"{% if option == request.query.orderBy %} selected{% endif %}>
                         {% set key = 'widget.ecomproductlist.order_' ~ option|replace({'-':'_'}) %}
@@ -43,10 +34,7 @@
                     <option value="">{{ 'widget.ecomproductlist.categories_placeholder'|translate('Filter by category') }}</option>
                     <option disabled>---</option>
                     {% for category in plugins.ecommerce.store.categories %}
-                        <option
-                            value="{{ category.name }}"
-                            {% if request.query.category == category.name %} selected{% endif %}
-                        >
+                        <option value="{{ category.name }}" {% if request.query.category == category.name %} selected{% endif %}>
                             {{ category.name }}
                         </option>
                     {% endfor %}
