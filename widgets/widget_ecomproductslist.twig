@@ -49,10 +49,7 @@
                     <option value="">{{ 'widget.ecomproductlist.tags_placeholder'|translate('Filter by tag') }}</option>
                     <option disabled>---</option>
                     {% for tag in plugins.ecommerce.store.tags %}
-                        <option
-                            value="{{ tag.title }}"
-                            {% if request.query.tag == tag.title %} selected{% endif %}
-                        >
+                        <option value="{{ tag.title }}" {% if request.query.tag == tag.title %} selected{% endif %}>
                             {{ tag.title }}
                         </option>
                     {% endfor %}
@@ -62,14 +59,8 @@
     </form>
 
     {% if products|length %}
-        {% set firstProduct = plugins.ecommerce.pageOffset + 1 %}
         <p class="productlist-item-count">
-            {{ 'widget.ecomproductlist.item_count'|translate(
-                'Showing %1–%2 of %3 products',
-                firstProduct,
-                plugins.ecommerce.pageOffset + products|length,
-                plugins.ecommerce.filteredProducts.totalCount
-            ) }}
+            {{ 'widget.ecomproductlist.item_count'|translate('Showing %1–%2 of %3 products', firstProduct, plugins.ecommerce.pageOffset + products|length, plugins.ecommerce.filteredProducts.totalCount) }}
         </p>
     {% elseif request.query.tag|length or request.query.category|length %}
         <p class="productlist-item-count">{{ 'widget.ecomproductlist.no_products'|translate('No results found') }}</p>
