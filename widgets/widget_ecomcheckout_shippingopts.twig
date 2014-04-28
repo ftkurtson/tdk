@@ -11,13 +11,13 @@
         <span class='no-shipping'>{{ 'widgets.ecomcheckout.noshipping_general'|translate("There currently aren't any shipping options available to %1", country) }}</span>
     {% endif %}
 {% else %}
-    <select id="shipping" name="deliveryRef" required {% if shippingOpts|length == 0 %}disabled{% endif %}>
+    <select id="shipping" name="deliveryRef" required {% if data.shippingOpts|length == 0 %}disabled{% endif %}>
         <option value="">{{ 'widgets.ecomcheckout.choose_shipping'|translate('Choose your shipping method') }}</option>
         {% for shippingRef, shippingPrice in data.shippingOpts %}
-        <option {% if deliveryRef == shippingRef %} selected{% endif %} value="{{ shippingRef }}">
+        <option {% if data.deliveryRef == shippingRef %} selected{% endif %} value="{{ shippingRef }}">
             {# use the refs in shipping options to get the shipping name from plugin shipping data #}
             {% for shipping in data.shippings %}
-                {% if shipping.ref == shippingRef %}{{ shipping.name }} {{ shippingPrice }}{% endif %}
+                {% if shipping.ref == shippingRef %}{{ shipping.name }} – {{ shippingPrice }}{% endif %}
             {% endfor %}
         </option>
         {% endfor %}

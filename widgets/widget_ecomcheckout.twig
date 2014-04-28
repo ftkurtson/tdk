@@ -106,12 +106,9 @@
         <div>{{ 'widgets.ecomcheckout.no_available'|translate('Checkout is not currently available, please try again later')}}</div>
     {% endif %}
 
-    {% if plugins.ecommerce.store.legalPages is defined and plugins.ecommerce.store.legalPages|length > 0 %}
+    {% if plugins.ecommerce.store.termsAndConditions %}
     <ul class="checkout-legal-links">
-    	{% for page in plugins.ecommerce.store.legalPages %}
-    	{% set translation_key = 'widgets.ecomcheckout.legal_menu_' ~ page %}
-    	<li><a href="/{{ page }}"> {{ translation_key|translate(page|capitalize) }}</a></li>
-    	{% endfor %}
+        <li><a href="/terms-and-conditions"> {{ 'widgets.ecomcheckout.legal_menu_tandc'|translate("Terms and conditions") }}</a></li>
     </ul>
     {% endif %}
 

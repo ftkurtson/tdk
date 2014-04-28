@@ -28,7 +28,7 @@ function ProcessHTML($html) {
     return $html;
 }
 
-$basekitDir = '/Library/WebServer/Documents/v7';
+$basekitDir = '/Users/admin/code/basekit';
 $sdkDir = '/Library/WebServer/Documents/emulator';
 
 // Copy widget Twig files

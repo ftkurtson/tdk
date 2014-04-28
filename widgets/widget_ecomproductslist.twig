@@ -1,9 +1,93 @@
-{% if plugins.ecommerce.products|length or plugins.ecommerce.filteredProducts|length %}
 <section class="ecom-productslist-products">
-    {% if plugins.ecommerce.filteredProducts|length %}
-        {% set products = plugins.ecommerce.filteredProducts %}
+    {% set products = plugins.ecommerce.filteredProducts.products %}
+
+    <form class="productlist-display-form" method="GET" action="/store">
+        {% if plugins.ecommerce.filteredProducts.totalCount > 20 %}
+            <div class="form-group">
+                <label for="productlist-itemcount">{{ 'widget.ecomproductlist.show'|translate('Show') }}
+                    <select id="productlist-itemcount" class="js-display-control" name="displayCount">
+                        {% set displayCounts = [20, 32, 64] %}
+                        {% for count in displayCounts %}
+                            <option
+                                value="{{ count }}"
+                                {% if count == request.query.displayCount %} selected{% endif %}
+                            >{{ count }}</option>
+                        {% endfor %}
+                    </select>
+                {{ 'widget.ecomproductlist.per_page'|translate('per page') }}</label>
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="productlist-sort">{{ 'widget.ecomproductlist.order_label'|translate('Order by') }}</label>
+            <select id="productlist-sort" class="js-display-control" name="orderBy">
+                {% set sortOptions = {
+                    'created-desc': 'Newest',
+                    'title-asc': 'Title: A-Z',
+                    'title-desc': 'Title: Z-A',
+                    'price-desc': 'Price: Highest to Lowest',
+                    'price-asc': 'Price: Lowest to Highest'
+                } %}
+                {% for option, title in sortOptions %}
+                    <option value="{{ option }}"{% if option == request.query.orderBy %} selected{% endif %}>
+                        {% set key = 'widget.ecomproductlist.order_' ~ option|replace({'-':'_'}) %}
+                        {{ key|translate(title) }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        {% if plugins.ecommerce.store.categories|length %}
+            <div class="form-group">
+                <label for="productlist-categories">{{ 'widget.ecomproductlist.categories_label'|translate('Categories') }}</label>
+                <select id="productlist-categories" class="js-display-control" name="category">
+                    <option value="">{{ 'widget.ecomproductlist.categories_placeholder'|translate('Filter by category') }}</option>
+                    <option disabled>---</option>
+                    {% for category in plugins.ecommerce.store.categories %}
+                        <option
+                            value="{{ category.name }}"
+                            {% if request.query.category == category.name %} selected{% endif %}
+                        >
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
+
+        {% if plugins.ecommerce.store.tags|length %}
+            <div class="form-group">
+                <label for="productlist-tags">{{ 'widget.ecomproductlist.tags_label'|translate('Tags') }}</label>
+                <select id="productlist-tags" class="js-display-control" name="tag">
+                    <option value="">{{ 'widget.ecomproductlist.tags_placeholder'|translate('Filter by tag') }}</option>
+                    <option disabled>---</option>
+                    {% for tag in plugins.ecommerce.store.tags %}
+                        <option
+                            value="{{ tag.title }}"
+                            {% if request.query.tag == tag.title %} selected{% endif %}
+                        >
+                            {{ tag.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
+    </form>
+
+    {% if products|length %}
+        {% set firstProduct = plugins.ecommerce.pageOffset + 1 %}
+        <p class="productlist-item-count">
+            {{ 'widget.ecomproductlist.item_count'|translate(
+                'Showing %1–%2 of %3 products',
+                firstProduct,
+                plugins.ecommerce.pageOffset + products|length,
+                plugins.ecommerce.filteredProducts.totalCount
+            ) }}
+        </p>
+    {% elseif request.query.tag|length or request.query.category|length %}
+        <p class="productlist-item-count">{{ 'widget.ecomproductlist.no_products'|translate('No results found') }}</p>
+        <a class="btn" href="/store">{{ 'widget.ecomproductlist.reset_search'|translate('Clear search') }}</a>
     {% else %}
-        {% set products = plugins.ecommerce.products %}
+        <p class="productlist-item-count">{{ 'widget.ecomproductlist.no_products'|translate('No products found') }}</p>
     {% endif %}
 
     {% for product in products %}
@@ -29,9 +113,36 @@
                 {% endif %}
             </span>
         </div>
-
     </article>
     {% endfor%}
-{% else %}
-    <p>There aren't any products to display.</p>
-{% endif %}
+
+    {% if plugins.ecommerce.totalPages > 1 %}
+        {% set query = request.query %}
+        {% set params = ['displayCount', 'orderBy', 'tag', 'category'] %}
+        {% set displayParams = '' %}
+        {% for param in params %}
+            {% if query[param] != '' %}
+                {% if loop.index == 1 %}
+                    {% set displayParams = displayParams ~ param ~ '=' ~ query[param] %}
+                {% else %}
+                    {% set displayParams = displayParams ~ '&' ~ param ~ '=' ~ query[param] %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <div class="productlist-pagination">
+            <ol class="productlist-pagination-pages">
+                {% for i in range(1, plugins.ecommerce.totalPages) %}
+                    {% if i == plugins.ecommerce.currentPage %}
+                        <li class="productlist-pagination-page current">
+                            <span>{{ i }}</span>
+                        </li>
+                    {% else %}
+                        <li class="productlist-pagination-page">
+                            <a href="{{ requestBase }}/store/page/{{ i }}{{ displayParams != '' ? '?' ~ displayParams }}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </div>
+    {% endif %}
+</section>

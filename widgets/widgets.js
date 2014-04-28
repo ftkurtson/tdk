@@ -1043,8 +1043,8 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                dataType: 'json',
-                data: sendingData
+                data: sendingData,
+                dataType: 'json'
             }).done(function (response) {
                 that.setBasketData(response);
                 that.rerender();
@@ -1614,13 +1614,16 @@
                 && Server.plugins.ecommerce.product.variations.length === 1) {
                 variation = Server.plugins.ecommerce.product.variations[0];
 
-                this.set('variationRef', variation.ref, true);
-                this.set('price', variation.formattedPrice, true);
-
-                if (variation.stock > 0 || (variation.stock <= 0 && this.get('product').stockUnlimited)) {
+                if (
+                    (variation.stock > 0 && this.get('product').stockTrack)
+                    || this.get('product').stockUnlimited
+                    || !this.get('product').stockTrack
+                ) {
+                    this.set('variationRef', variation.ref, true);
+                    this.set('price', variation.formattedPrice, true);
                     this.set('disableButton', 0, true);
                 } else {
-                    this.set('notAvailable', this.get('product').stockTrack, true);
+                    this.set('notAvailable', 1, true);
                 }
             }
 
@@ -1742,13 +1745,21 @@
             });
 
             variation = this.getUniqueVariation();
-            if (variation !== null && this.isAllOptionsSelected()) {
+            this.set('price', variation.formattedPrice, true);
+
+            if (
+                (variation !== null && this.isAllOptionsSelected())
+                &&
+                    (variation.stock > 0 && this.get('product').stockTrack)
+                    || this.get('product').stockUnlimited
+                    || !this.get('product').stockTrack
+            ) {
                 this.set('variationRef', variation.ref, true);
-                this.set('price', variation.formattedPrice, true);
                 this.set('disableButton', 0, true);
+                this.set('notAvailable', 0, true);
             } else {
                 this.set('disableButton', 1, true);
-                this.set('price', 0.00, true);
+                this.set('notAvailable', 1, true);
             }
         },
 
@@ -1899,6 +1910,12 @@
         },
 
         attachEvents: function () {
+            var that = this,
+                displayControl = bk$(this.el).find('.js-display-control');
+
+            displayControl.on('change', function () {
+                bk$(this).parents('.productlist-display-form').submit();
+            });
         }
     };
 
