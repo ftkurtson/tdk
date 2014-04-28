@@ -1561,6 +1561,616 @@ var plugins = function(template) {
                 "paymentCompletionUrl": "/",
                 "calculateUrl":"/site/12345/ecom.calc.js"
             },
+            "filteredProducts": [
+            {
+                "ref":1,
+                "title":"Aliquam Handbag",
+                "shortDescription":null,
+                "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
+                "visibility":0,
+                "availability":1,
+                "sku":null,
+                "assets":[
+                {
+                   "ref":15,
+                   "assetRef":1
+                }],
+                "category":{
+                    "ref":10,
+                    "name":"Handheld"
+                },
+                 "tags":[
+
+                 ],
+                 "options":[
+                    {
+                       "ref":21,
+                       "title":"Colour",
+                       "values":[
+                          {
+                             "ref":66,
+                             "title":"pink"
+                          },
+                          {
+                             "ref":67,
+                             "title":"blue"
+                          },
+                          {
+                             "ref":68,
+                             "title":"turquoise"
+                          },
+                          {
+                             "ref":69,
+                             "title":"brown"
+                          }
+                       ]
+                    }
+                 ],
+                 "created":{
+                    "date":"2014-03-20 09:29:34",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-03-20 09:32:02",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "variations":[
+                    {
+                       "ref":1,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "formattedPrice":"£32.00",
+                       "stock":3,
+                       "values":[
+                          {
+                             "ref":92,
+                             "optionTitle":"Colour",
+                             "valueTitle":"blue"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":3,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "formattedPrice":"£32.00",
+                       "stock":8,
+                       "values":[
+                          {
+                             "ref":93,
+                             "optionTitle":"Colour",
+                             "valueTitle":"turquoise"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":5,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "formattedPrice":"£32.00",
+                       "stock":9,
+                       "values":[
+                          {
+                             "ref":94,
+                             "optionTitle":"Colour",
+                             "valueTitle":"pink"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":7,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"30.00",
+                       "formattedPrice":"£32.00",
+                       "stock":7,
+                       "values":[
+                          {
+                             "ref":95,
+                             "optionTitle":"Colour",
+                             "valueTitle":"brown"
+                          }
+                       ]
+                    }
+                ]
+            },
+            {
+                 "ref":2,
+                 "title":"Commodo Handbag",
+                 "shortDescription":null,
+                 "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":21,
+                       "assetRef":2
+                    }
+                 ],
+                 "category":{
+                    "ref":10,
+                    "name":"Handheld"
+                 },
+                 "tags":[
+                    "blue",
+                    "brown",
+                    "pink",
+                    "turquoise"
+                 ],
+                 "options":[
+                    {
+                       "ref":21,
+                       "title":"Colour",
+                       "values":[
+                          {
+                             "ref":66,
+                             "title":"pink"
+                          },
+                          {
+                             "ref":67,
+                             "title":"blue"
+                          },
+                          {
+                             "ref":68,
+                             "title":"turquoise"
+                          },
+                          {
+                             "ref":69,
+                             "title":"brown"
+                          }
+                       ]
+                    }
+                 ],
+                 "created":{
+                    "date":"2014-03-20 09:41:35",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-03-20 09:41:35",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "variations":[
+                    {
+                       "ref":2,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "formattedPrice":"£32.00",
+                       "stock":3,
+                       "values":[
+                          {
+                             "ref":92,
+                             "optionTitle":"Colour",
+                             "valueTitle":"blue"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":4,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "formattedPrice":"£32.00",
+                       "stock":8,
+                       "values":[
+                          {
+                             "ref":93,
+                             "optionTitle":"Colour",
+                             "valueTitle":"turquoise"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":6,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"32.00",
+                       "formattedPrice":"£32.00",
+                       "stock":9,
+                       "values":[
+                          {
+                             "ref":94,
+                             "optionTitle":"Colour",
+                             "valueTitle":"pink"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":8,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"30.00",
+                       "formattedPrice":"£32.00",
+                       "stock":7,
+                       "values":[
+                          {
+                             "ref":95,
+                             "optionTitle":"Colour",
+                             "valueTitle":"brown"
+                          }
+                       ]
+                    }
+                ]
+            },
+            {
+                 "ref":3,
+                 "title":"Conubia Nostra Handbag",
+                 "shortDescription":null,
+                 "longDescription":"Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut a ligula non tortor pretium laoreet at vel mi. ",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":22,
+                       "assetRef":3
+                    }
+                 ],
+                 "category":{
+                    "ref":11,
+                    "name":"Weekend Bag"
+                 },
+                 "tags":[
+                    "red"
+                 ],
+                 "options":[
+                    {
+                       "ref":22,
+                       "title":"Size",
+                       "values":[
+                          {
+                             "ref":70,
+                             "title":"small"
+                          },
+                          {
+                             "ref":71,
+                             "title":"large"
+                          }
+                       ]
+                    }
+                 ],
+                 "created":{
+                    "date":"2014-03-20 09:46:03",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-03-20 09:46:03",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "variations":[
+                    {
+                       "ref":11,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"42.00",
+                       "formattedPrice":"£42.00",
+                       "stock":4,
+                       "values":[
+                          {
+                             "ref":96,
+                             "optionTitle":"Size",
+                             "valueTitle":"small"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":13,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"58.00",
+                       "formattedPrice":"£58.00",
+                       "stock":15,
+                       "values":[
+                          {
+                             "ref":97,
+                             "optionTitle":"Size",
+                             "valueTitle":"large"
+                          }
+                       ]
+                    }
+                ]
+            },
+            {
+                 "ref":4,
+                 "title":"Magnis Handbag",
+                 "shortDescription":null,
+                 "longDescription":"Cum sociis natoque penatibus et magnis dis parturient montes.",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":20,
+                       "assetRef":4
+                    }
+                 ],
+                 "category":{
+                    "ref":10,
+                    "name":"Handheld"
+                 },
+                 "tags":[
+                    "leather",
+                    "brown"
+                 ],
+                 "options":[
+                    {
+                       "ref":22,
+                       "title":"Size",
+                       "values":[
+                          {
+                             "ref":70,
+                             "title":"small"
+                          },
+                          {
+                             "ref":71,
+                             "title":"large"
+                          }
+                       ]
+                    }
+                 ],
+                 "created":{
+                    "date":"2014-03-20 09:38:16",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-03-20 09:38:16",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                },
+                "variations":[
+                    {
+                       "ref":10,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"42.00",
+                       "formattedPrice":"£42.00",
+                       "stock":4,
+                       "values":[
+                          {
+                             "ref":96,
+                             "optionTitle":"Size",
+                             "valueTitle":"small"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":12,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"58.00",
+                       "formattedPrice":"£58.00",
+                       "stock":15,
+                       "values":[
+                          {
+                             "ref":97,
+                             "optionTitle":"Size",
+                             "valueTitle":"large"
+                          }
+                       ]
+                    }
+                ]
+            },
+            {
+                 "ref":5,
+                 "title":"Montes Handheld Bag",
+                 "shortDescription":null,
+                 "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes.",
+                 "visibility":0,
+                 "availability":1,
+                 "sku":null,
+                 "assets":[
+                    {
+                       "ref":19,
+                       "assetRef":5
+                    }
+                 ],
+                 "category":{
+                    "ref":10,
+                    "name":"Handheld"
+                 },
+                 "tags":[
+                    "brown"
+                 ],
+                 "options":[
+                    {
+                       "ref":22,
+                       "title":"Size",
+                       "values":[
+                          {
+                             "ref":70,
+                             "title":"small"
+                          },
+                          {
+                             "ref":71,
+                             "title":"large"
+                          }
+                       ]
+                    }
+                 ],
+                 "created":{
+                    "date":"2014-03-20 09:36:42",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                 "updated":{
+                    "date":"2014-03-20 09:36:42",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                 },
+                "variations":[
+                    {
+                       "ref":22,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"42.00",
+                       "formattedPrice":"£42.00",
+                       "stock":4,
+                       "values":[
+                          {
+                             "ref":96,
+                             "optionTitle":"Size",
+                             "valueTitle":"small"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":24,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"58.00",
+                       "stock":15,
+                       "values":[
+                          {
+                             "ref":97,
+                             "optionTitle":"Size",
+                             "valueTitle":"large"
+                          }
+                       ]
+                    }
+                ]
+            },
+            {
+                "ref":6,
+                "title":"Tristique Handbag",
+                "shortDescription":null,
+                "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique.",
+                "visibility":0,
+                "availability":1,
+                "sku":null,
+                "assets":[
+                    {
+                       "ref":23,
+                       "assetRef":6
+                    }
+                ],
+                "category":{
+                    "ref":12,
+                    "name":"Tote Bag"
+                },
+                "tags":[
+
+                ],
+                "options":[
+                    {
+                       "ref":20,
+                       "title":"Colour",
+                       "values":[
+                          {
+                             "ref":64,
+                             "title":"red"
+                          },
+                          {
+                             "ref":65,
+                             "title":"brown"
+                          }
+                       ]
+                    }
+                ],
+                "created":{
+                    "date":"2014-03-20 09:34:38",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                },
+                "updated":{
+                    "date":"2014-03-20 09:46:41",
+                    "timezone_type":3,
+                    "timezone":"Europe/London"
+                },
+                "variations":[
+                    {
+                       "ref":21,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"67.00",
+                       "formattedPrice":"£67.00",
+                       "stock":3,
+                       "values":[
+                          {
+                             "ref":90,
+                             "optionTitle":"Colour",
+                             "valueTitle":"brown"
+                          }
+                       ]
+                    },
+                    {
+                       "ref":23,
+                       "title":"productVariation",
+                       "sku":"1234",
+                       "price":"67.00",
+                       "formattedPrice":"£67.00",
+                       "stock":1,
+                       "values":[
+                          {
+                             "ref":91,
+                             "optionTitle":"Colour",
+                             "valueTitle":"red"
+                          }
+                       ]
+                    }
+                ]
+            }],
+            "product": {
+              "assets": [
+                {
+                  "assetRef": 1,
+                  "ref": 1
+                }
+              ],
+              "category": {
+                "name": "skirt",
+                "ref": 59
+              },
+              "created": {
+                "date": "2014-04-28 10:12:57",
+                "timezone": "Europe/London",
+                "timezone_type": 3
+              },
+              "formattedPrice": "£34.00",
+              "longDescription": "Donec id elit non sapien tincidunt pellentesque vitae lacinia quam. Maecenas id ipsum in est sagittis porttitor. Suspendisse potenti. Nullam dictum massa augue, at aliquam purus mattis non. Aliquam ac sagittis elit.",
+              "mapValueToVariation": [],
+              "multiplePrices": false,
+              "options": [],
+              "ref": 1,
+              "stockTrack": 1,
+              "stockUnlimited": 0,
+              "stockWarningLevel": 10,
+              "tags": [
+                "stripes",
+                "black and white",
+                "knee lenght"
+              ],
+              "title": "Donec id elit non sapien tincidunt",
+              "updated": {
+                "date": "2014-04-28 10:13:31",
+                "timezone": "Europe/London",
+                "timezone_type": 3
+              },
+              "variations": [
+                {
+                  "formattedPrice": "£34.00",
+                  "price": "34.00",
+                  "productRef": 1,
+                  "ref": 1,
+                  "sku": "",
+                  "stock": 0,
+                  "title": "Donec id elit non sapien tincidunt",
+                  "values": [],
+                  "weight": "0.000"
+                }
+              ],
+              "visibility": 1
+            },
             "products":[
             {
                 "ref":1,

@@ -48,8 +48,7 @@ bk$(function() {
 
         switch (name) {
             case "main":
-                html += renderWidget('ecomproduct', 'ecomproduct1');
-                html += renderWidget('ecomcheckout', 'ecomcheckout1');
+                html += renderWidget('ecomproductslist', 'ecomproductslist1');
                 
                 break;
         }

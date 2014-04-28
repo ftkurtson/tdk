@@ -110,7 +110,17 @@
                     }
 
                     this.el.html('');
-                    this.renderTemplate(properties.type, properties, true);
+
+                    var html = window.parent.renderWidget(properties.type, this.el.attr('id'), properties.temporary, true),
+                        that = this,
+                        t = null;
+                        this.el.html(bk$(html).unwrap());
+
+                    t = setTimeout (function () {
+                        if(typeof that.attachEvents === 'function') {
+                            that.attachEvents();
+                        }
+                    }, 1000);
                 },
 
                 /**
@@ -194,11 +204,8 @@
                 },
 
                 rerenderPartial: function (tplName, tplData) {
-                    if (typeof window[tplName] === 'function') {
-                        return Twig.render(window[tplName], {'data':tplData});
-                    } else {
-                        throw new Error('No such template:' + tplName);
-                    }
+                    var html = window.parent.renderWidget(tplName, this.el.attr('id') + tplName.replace('widget_', ''), tplData, true);
+                    return bk$(html);
                 }
             }
         });
