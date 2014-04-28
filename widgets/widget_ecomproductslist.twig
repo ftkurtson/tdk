@@ -59,6 +59,7 @@
     </form>
 
     {% if products|length %}
+        {% set firstProduct = plugins.ecommerce.pageOffset + 1 %}
         <p class="productlist-item-count">
             {{ 'widget.ecomproductlist.item_count'|translate('Showing %1–%2 of %3 products', firstProduct, plugins.ecommerce.pageOffset + products|length, plugins.ecommerce.filteredProducts.totalCount) }}
         </p>
