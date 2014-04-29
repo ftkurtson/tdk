@@ -102,6 +102,12 @@ bk$(function() {
     });
 
     Twig.extendFilter("translate", function(key, values) {
+        var i = 1;
+        if (bk$.isArray(values) && values.length > 1) {
+            for (i; i < values.length; i = i + 1) {
+                values[0] = values[0].replace('%' + i, values[i]);
+            }
+        }
         return bk$.isArray(values) ? values[0] : values;
     });
 
@@ -113,7 +119,7 @@ bk$(function() {
 
         var error = null;
 
-        scope = scope || parent.window
+        scope = scope || parent.window;
 
         // The only way to catch exceptions here is via window.onerror
         // This is horrible, but a simple try / catch doesn't seem to work

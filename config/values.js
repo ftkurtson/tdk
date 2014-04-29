@@ -1684,7 +1684,7 @@ var plugins = function(template) {
                 },
                 {
                      "ref":2,
-                     "multiplePrices": false,
+                     "multiplePrices": true,
                      "formattedPrice": "£32",
                      "title":"Commodo Handbag",
                      "shortDescription":null,
