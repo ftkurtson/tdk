@@ -1879,7 +1879,6 @@
     // Base Widget Functionality - What ever is required
     // to get the widget working in normal mode goes in here.
     BaseKit.Widget.Ecomproduct = function () {
-        console.log(arguments);
         var o = new BaseKit.WidgetCore(this, arguments, {
             properties: BaseKit.Widget.EcomproductProperties,
             methods: BaseKit.Widget.EcomproductMethods

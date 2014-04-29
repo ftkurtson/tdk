@@ -1565,6 +1565,8 @@ var plugins = function(template) {
             "filteredProducts": {
                 "products": [{
                     "ref":1,
+                    "multiplePrices": false,
+                    "formattedPrice": "£32",
                     "title":"Aliquam Handbag",
                     "shortDescription":null,
                     "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
@@ -1682,6 +1684,8 @@ var plugins = function(template) {
                 },
                 {
                      "ref":2,
+                     "multiplePrices": false,
+                     "formattedPrice": "£32",
                      "title":"Commodo Handbag",
                      "shortDescription":null,
                      "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes",
@@ -1803,6 +1807,8 @@ var plugins = function(template) {
                 },
                 {
                      "ref":3,
+                     "multiplePrices": false,
+                     "formattedPrice": "£32",
                      "title":"Conubia Nostra Handbag",
                      "shortDescription":null,
                      "longDescription":"Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut a ligula non tortor pretium laoreet at vel mi. ",
@@ -1883,6 +1889,8 @@ var plugins = function(template) {
                 },
                 {
                      "ref":4,
+                     "multiplePrices": false,
+                     "formattedPrice": "£32",
                      "title":"Magnis Handbag",
                      "shortDescription":null,
                      "longDescription":"Cum sociis natoque penatibus et magnis dis parturient montes.",
@@ -1964,6 +1972,8 @@ var plugins = function(template) {
                 },
                 {
                      "ref":5,
+                     "multiplePrices": false,
+                     "formattedPrice": "£32",
                      "title":"Montes Handheld Bag",
                      "shortDescription":null,
                      "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes.",
@@ -2043,6 +2053,8 @@ var plugins = function(template) {
                 },
                 {
                     "ref":6,
+                    "multiplePrices": false,
+                    "formattedPrice": "£32",
                     "title":"Tristique Handbag",
                     "shortDescription":null,
                     "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique.",
