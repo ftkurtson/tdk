@@ -2140,6 +2140,14 @@ var plugins = function(template) {
                 {
                   "assetRef": 1,
                   "ref": 1
+                },
+                {
+                  "assetRef": 2,
+                  "ref": 2
+                },
+                {
+                  "assetRef": 3,
+                  "ref": 3
                 }
               ],
               "category": {
