@@ -2415,6 +2415,11 @@ var Twig = (function (Twig) {
         // Ignore whitespace around expressions.
         expression = expression.trim();
 
+        // HC: remove 2 and more whitespaces in the expressions
+        // we use those whitespaces for formatting twig but they
+        // aren't valid when parsing
+        expression = expression.replace(/\s{2,}/g, ' ');
+
         for (token_template_type in Twig.logic.handler) {
             if (Twig.logic.handler.hasOwnProperty(token_template_type)) {
                 // Get the type and regex for this template type
