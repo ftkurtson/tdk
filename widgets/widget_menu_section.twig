@@ -12,7 +12,13 @@
 
         {% if subsection.items|length %}
             {% set numClass = 'odd' %}
-            {% set count = subsection.items|length %}
+            {% set count = 0 %}
+
+            {% for item in subsection.items %}
+                {% if item.active == 1 %}
+                    {% set count = count + 1 %}
+                {% endif %}
+            {% endfor %}
 
             {% if count % 2 == 0 %}
                 {% set numClass = 'even' %}
