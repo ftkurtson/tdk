@@ -1559,7 +1559,25 @@ var plugins = function(template) {
                 "paypal":'',
                 "chargeUrl":"/",
                 "paymentCompletionUrl": "/",
-                "calculateUrl":"/site/12345/ecom.calc.js"
+                "calculateUrl":"/site/12345/ecom.calc.js",
+                "categories" :[
+                    {
+                        "name": "woman",
+                        "ref": 1
+                    },{
+                        "name": "man",
+                        "ref": 2
+                    }
+                ],
+                "tags": [
+                    {
+                        "title": "summer",
+                        "ref": 1
+                    },{
+                        "title": "winter",
+                        "ref": 2
+                    }
+                ]
             },
             "pageOffset": "0",
             "filteredProducts": {
