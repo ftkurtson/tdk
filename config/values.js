@@ -368,7 +368,7 @@ var plugins = function(template) {
                      "menuType":"item",
                      "displayOrder":1,
                      "sectionRef":373,
-                     "active":1,
+                     "active":0,
                      "dietaryInfo":{
                         "foodVegetarian":1,
                         "foodVegan":0,
