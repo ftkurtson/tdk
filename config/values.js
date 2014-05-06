@@ -1559,12 +1559,32 @@ var plugins = function(template) {
                 "paypal":'',
                 "chargeUrl":"/",
                 "paymentCompletionUrl": "/",
-                "calculateUrl":"/site/12345/ecom.calc.js"
+                "calculateUrl":"/site/12345/ecom.calc.js",
+                "categories" :[
+                    {
+                        "name": "woman",
+                        "ref": 1
+                    },{
+                        "name": "man",
+                        "ref": 2
+                    }
+                ],
+                "tags": [
+                    {
+                        "title": "summer",
+                        "ref": 1
+                    },{
+                        "title": "winter",
+                        "ref": 2
+                    }
+                ]
             },
             "pageOffset": "0",
             "filteredProducts": {
                 "products": [{
                     "ref":1,
+                    "multiplePrices": false,
+                    "formattedPrice": "£32",
                     "title":"Aliquam Handbag",
                     "shortDescription":null,
                     "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
@@ -1682,6 +1702,8 @@ var plugins = function(template) {
                 },
                 {
                      "ref":2,
+                     "multiplePrices": true,
+                     "formattedPrice": "£32",
                      "title":"Commodo Handbag",
                      "shortDescription":null,
                      "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes",
@@ -1803,6 +1825,8 @@ var plugins = function(template) {
                 },
                 {
                      "ref":3,
+                     "multiplePrices": false,
+                     "formattedPrice": "£32",
                      "title":"Conubia Nostra Handbag",
                      "shortDescription":null,
                      "longDescription":"Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut a ligula non tortor pretium laoreet at vel mi. ",
@@ -1883,6 +1907,8 @@ var plugins = function(template) {
                 },
                 {
                      "ref":4,
+                     "multiplePrices": false,
+                     "formattedPrice": "£32",
                      "title":"Magnis Handbag",
                      "shortDescription":null,
                      "longDescription":"Cum sociis natoque penatibus et magnis dis parturient montes.",
@@ -1964,6 +1990,8 @@ var plugins = function(template) {
                 },
                 {
                      "ref":5,
+                     "multiplePrices": false,
+                     "formattedPrice": "£32",
                      "title":"Montes Handheld Bag",
                      "shortDescription":null,
                      "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes.",
@@ -2043,6 +2071,8 @@ var plugins = function(template) {
                 },
                 {
                     "ref":6,
+                    "multiplePrices": false,
+                    "formattedPrice": "£32",
                     "title":"Tristique Handbag",
                     "shortDescription":null,
                     "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique.",
@@ -2128,6 +2158,14 @@ var plugins = function(template) {
                 {
                   "assetRef": 1,
                   "ref": 1
+                },
+                {
+                  "assetRef": 2,
+                  "ref": 2
+                },
+                {
+                  "assetRef": 3,
+                  "ref": 3
                 }
               ],
               "category": {
