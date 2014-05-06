@@ -4,7 +4,6 @@
     // to get the widget working in normal mode goes in here.
     BaseKit.WidgetCore = function (scope, args, options) {
         var o = new BaseKit.Component(scope, args, {
-
             methods: {
                 construct: function () {
                     // RH: Set the core variables here

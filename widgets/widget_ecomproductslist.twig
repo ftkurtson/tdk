@@ -34,7 +34,7 @@
                     <option value="">{{ 'widget.ecomproductlist.categories_placeholder'|translate('Filter by category') }}</option>
                     <option disabled>---</option>
                     {% for category in plugins.ecommerce.store.categories %}
-                        <option value="{{ category.name }}" {% if request.query.category == category.name %} selected{% endif %}>
+                        <option value="{{ category.slug }}" {% if request.query.category == category.slug %} selected{% endif %}>
                             {{ category.name }}
                         </option>
                     {% endfor %}
@@ -49,7 +49,7 @@
                     <option value="">{{ 'widget.ecomproductlist.tags_placeholder'|translate('Filter by tag') }}</option>
                     <option disabled>---</option>
                     {% for tag in plugins.ecommerce.store.tags %}
-                        <option value="{{ tag.title }}" {% if request.query.tag == tag.title %} selected{% endif %}>
+                        <option value="{{ tag.slug }}" {% if request.query.tag == tag.slug %} selected{% endif %}>
                             {{ tag.title }}
                         </option>
                     {% endfor %}
@@ -61,7 +61,7 @@
     {% if products|length %}
         {% set firstProduct = plugins.ecommerce.pageOffset + 1 %}
         <p class="productlist-item-count">
-            {{ 'widget.ecomproductlist.item_count'|translate('Showing %1–%2 of %3 products', firstProduct, plugins.ecommerce.pageOffset + products|length, plugins.ecommerce.filteredProducts.totalCount) }}
+            {{ 'widget.ecomproductlist.item_count'|translate('Showing %1–%2 of %3 products',firstProduct,plugins.ecommerce.pageOffset + products|length,plugins.ecommerce.filteredProducts.totalCount) }}
         </p>
     {% elseif request.query.tag|length or request.query.category|length %}
         <p class="productlist-item-count">{{ 'widget.ecomproductlist.no_products'|translate('No results found') }}</p>
@@ -71,29 +71,28 @@
     {% endif %}
 
     {% for product in products %}
-    <article class="ecom-productslist-product">
-        {% if product.assets is not null %}
-            {% for asset in product.assets %}
-                {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
-                    {% set imageSrc = plugins.assets.images[asset.assetRef].url %}
-                    <a class="ecom-productslist-image-wrap" style="background-image:url('{{ imageSrc }}')" href="{{ requestBase }}/store/product/{{product.ref}}" title="{{product.title}}">
-                        <img class="ecom-productslist-image" src="{{imageSrc}}">
+        <article class="ecom-productslist-product">
+            {% if product.assets is not null %}
+                {% set asset = plugins.assets.images[product.assets[0].assetRef] %}
+                {% if asset.fileType == 'image' %}
+                    {% set imageSrc = asset.url %}
+                    <a class="ecom-productslist-image-wrap" style="background-image:url('{{ imageSrc }}')" href="{{ requestBase }}/store/{{ product.slug }}">
+                        <img class="ecom-productslist-image" src="{{ imageSrc }}" alt="">
                     </a>
                 {% endif %}
-            {% endfor %}
-        {% endif %}
+            {% endif %}
 
-        <div class="ecom-productlist-info">
-            <h2 class="ecom-productslist-title"><a href="{{ requestBase }}/store/product/{{product.ref}}">{{product.title}}</a></h2>
-            <span class="ecom-productlist-price">
-                {% if product.multiplePrices %}
-                    {{ "shared_views.ecom-products-list.minimum_price" | translate("From %1", product.formattedPrice) }}
-                {% else %}
-                    {{ product.formattedPrice }}
-                {% endif %}
-            </span>
-        </div>
-    </article>
+            <div class="ecom-productlist-info">
+                <h2 class="ecom-productslist-title"><a href="{{ requestBase }}/store/{{product.slug}}">{{product.title}}</a></h2>
+                <span class="ecom-productlist-price">
+                    {% if product.multiplePrices %}
+                        {{ "shared_views.ecom-products-list.minimum_price" | translate("From %1", product.formattedPrice) }}
+                    {% else %}
+                        {{ product.formattedPrice }}
+                    {% endif %}
+                </span>
+            </div>
+        </article>
     {% endfor%}
 
     {% if plugins.ecommerce.totalPages > 1 %}

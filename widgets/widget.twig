@@ -1,6 +1,5 @@
 
-<div id="{{widget.id}}" class="widget {{widget.type}}{{widget.parameters.preset ? " " ~ widget.parameters.preset : ''}} {% if widget.parameters.showTplWidget is defined and widget.parameters.showTplWidget == 0 %}bk-tpl-hidden{% endif %}">
-
+<div id="{{widget.id}}" class="widget {{widget.type}}{{widget.parameters.preset ? " " ~ widget.parameters.preset : ''}} {% if widget.parameters.showTplWidget|length > 0 and widget.parameters.showTplWidget == 0 %}bk-tpl-hidden{% endif %}">
   {% include "widgets/widget_" ~ widget.type ~ ".twig" with {'data':widget.parameters} only %}
 
 </div>

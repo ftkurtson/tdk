@@ -14,15 +14,9 @@
         <div class="delivery">
             <h3 class="delivery-title">{{ 'widgets.ecomcheckout.delivery_title'|translate('Delivery details') }}</h3>
             <div class="form-group">
-                <label for="firstname">First name:</label>
-                <input type="text" name="delivery[firstname]" id="firstname" required autocomplete="given-name">
-                <span>Please enter your first name</span>
-            </div>
-
-            <div class="form-group">
-                <label for="lastname">Last name:</label>
-                <input type="text" name="delivery[lastname]" id="lastname" required autocomplete="family-name">
-                <span>Please enter your last name</span>
+                <label for="name">Name:</label>
+                <input type="text" name="delivery[name]" id="name" required autocomplete="name">
+                <span>Please enter your name</span>
             </div>
 
             <div class="form-group">
@@ -45,17 +39,20 @@
             <div class="form-group">
                 <label for="country">{{ 'widgets.ecomcheckout.country'|translate('Country') }}</label>
                 <select id="country" name="delivery[countryCode]" required autocomplete="country-code">
-                    <option value="">{{ 'widgets.ecomcheckout.choose_country'|translate('Choose your country') }}</option>
+                    {% set uaCountryCode = plugins.ecommerce.uaCountryCode %}
+                    {% if uaCountryCode|length and plugins.ecommerce.countries[uaCountryCode]|length %}
+                        <option value="{{ uaCountryCode }}" selected>{{ plugins.ecommerce.countries[uaCountryCode] }}</option>
+                    {% else %}
+                        <option value="">{{ 'widgets.ecomcheckout.choose_country'|translate('Choose your country') }}</option>
+                    {% endif %}
+                    <option vale="" disabled>---</option>
                     {% for code, country in plugins.ecommerce.countries %}
-                    <option value="{{ code }}">{{ country }}</option>
+                        {% if code != uaCountryCode %}
+                            <option value="{{ code }}">{{ country }}</option>
+                        {% endif %}
                     {% endfor %}
                 </select>
                 <span>Please select your country</span>
-            </div>
-
-            <div class="form-group">
-                <label for="tel">Telephone (optional):</label>
-                <input type="tel" name="delivery[telephone]" id="tel" autocomplete="tel">
             </div>
 
             <div class="form-group">

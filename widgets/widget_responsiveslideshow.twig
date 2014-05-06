@@ -23,14 +23,20 @@
     {% endif %}    
 {% endif %}
 <div class="slideshow-widget-wrapper">
-    <div class="slideshow-widget {% if showWidget == false %}hidden{% endif %}">
-        <div class="{% if data.showButtons == false %}hidden{% endif %} btns-move">
+    {% if showWidget != false %}
+    <div class="slideshow-widget">
+
+        {% if data.showButtons != false %}
+        <div class="btns-move">
             <span class="btn-prev slide-ctrl" data-ref="{{prevDataRef}}">prev</span>
             <span class="btn-next slide-ctrl" data-ref="{{nextDataRef}}">next</span>
-
         </div>
+        {% endif %}
 
-        <span class="btn-play pause" data-ref="0" {% if data.allowPause == false %}style="display: none"{% endif %}>play</span>
+        {% if data.allowPause != false %}
+        <span class="btn-play pause" data-ref="0">play</span>
+        {% endif %}
+
         <ul class="slideshow-image-list{% if data.crop == 1 %} crop{% endif %}">
             {% if data.albumRef != 0 and data.albumRef is not null %}
                 {% set images = plugins.assets.albums[data.albumRef] %}
@@ -84,13 +90,15 @@
             
         </ul>
     </div>
+    {% endif %}
 
-   
-    <div class="slideshow-widget-controls {% if data.showBullets == false %}hidden{% endif %}">
-        {% for key, image in images %} 
+    {% if data.showBullets != false %}
+    <div class="slideshow-widget-controls">
+        {% for key, image in images %}
             <span data-ref="{{key}}" class="dot slide-ctrl{% if loop.index0 == 0 %} selected{% endif %}"></span>
         {% endfor %}
     </div>
+    {% endif %}
 
     {% if showWidget == false %}
         <div class="slideshow-empty hidden">

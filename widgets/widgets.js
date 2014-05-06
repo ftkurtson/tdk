@@ -1024,7 +1024,7 @@
 
                     variations[ref] = parseInt(cart[ref], 10);
 
-                    quantity = quantity + 1;
+                    quantity = quantity + cart[ref];
                 }
             });
 
@@ -1043,8 +1043,7 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                data: sendingData,
-                dataType: 'json'
+                data: sendingData
             }).done(function (response) {
                 that.setBasketData(response);
                 that.rerender();
@@ -1290,18 +1289,16 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                data: sendingData,
-                dataType: 'json'
+                data: sendingData
             }).done(function (response) {
                 that.setCheckoutTotal(response);
-                // that.rerender();
                 that.updateCheckoutUI();
             });
         },
 
         setCheckoutTotal: function (response) {
             var itemRef = null,
-                currentItems = this.get('items'); // store the reference
+                currentItems = this.items; // store the reference
 
             bk$.each(currentItems, function (index, product) {
                 itemRef = product.ref;
@@ -1601,7 +1598,6 @@
             var variation = null;
 
             this.set('options', this.getOptions(), true);
-            this.setProductAssets();
 
             bk$.each(this.get('options'), function (index, option) {
                 if (index > 0) {
@@ -1623,11 +1619,12 @@
                     this.set('price', variation.formattedPrice, true);
                     this.set('disableButton', 0, true);
                 } else {
+                    this.set('price', variation.formattedPrice, true);
                     this.set('notAvailable', 1, true);
                 }
             }
-
-            if (Server.plugins.ecommerce.product.variations.length > 1) {
+            
+            if (Server.plugins.ecommerce.product !== null && Server.plugins.ecommerce.product.variations.length > 1) {
                 this.selectVariation(Server.plugins.ecommerce.product.variations[0]);
             }
 
@@ -1667,16 +1664,6 @@
                 previewImg.attr('src', src);
                 previewWrapper.css('background-image', 'url(' + src + ')');
             });
-        },
-
-        setProductAssets: function () {
-            if (Server.plugins.ecommerce && Server.plugins.ecommerce.product !== null) {
-                bk$.each(this.get('product').assets, function (index, asset) {
-                    if (Server.plugins.assets.images[asset.assetRef].fileType === 'image') {
-                        asset.imageSrc = Server.plugins.assets.images[asset.assetRef].url;
-                    }
-                });
-            }
         },
 
         getOptions: function () {
