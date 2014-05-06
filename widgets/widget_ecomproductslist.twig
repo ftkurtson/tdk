@@ -73,7 +73,9 @@
     {% for product in products %}
         <article class="ecom-productslist-product">
             {% if product.assets is not null %}
-                {% set asset = plugins.assets.images[product.assets[0].assetRef] %}
+            {{}}
+                {% set assetRef = product.assets[0].assetRef %}
+                {% set asset = plugins.assets.images[assetRef] %}
                 {% if asset.fileType == 'image' %}
                     {% set imageSrc = asset.url %}
                     <a class="ecom-productslist-image-wrap" style="background-image:url('{{ imageSrc }}')" href="{{ requestBase }}/store/{{ product.slug }}">
