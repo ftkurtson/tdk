@@ -184,6 +184,11 @@ var properties = {
     blogpost: function(templateName, templateValues) {
         return bk$.extend({}, templateValues);
     },
+    blogpostlist: function(templateName, templateValues) {
+        return bk$.extend({
+            postDisplayType: 'summary'
+        }, templateValues);
+    },
     ecombasket: function(templateName, templateValues) {
         return bk$.extend({}, templateValues);
     }
