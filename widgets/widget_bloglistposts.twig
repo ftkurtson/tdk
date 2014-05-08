@@ -26,7 +26,9 @@
                 {% if post.summary|length > 0 %}
                     {% if data.postDisplayType == 'summary' %}
                         <p class="blog-post-summary">{{ post.summary }}</p>
-                        <a href="{{ postPermalink }}" class="blog-post-more-link">Read more</a>
+                        <p class="blog-post-more-link">
+                        	<a href="{{ postPermalink }}">{{ 'widgets.blogpostlist.read_more'|translate('Read more') }}</a>
+                        </p>
                     {% else %}
                         <section class="blog-post-body">
                             {{ post.content|raw }}
