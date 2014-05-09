@@ -5,157 +5,105 @@
 `Quality of Build` is of the upmost importance to BaseKit Template Designers. Building templates for BaseKit customer comsumption requires a level of quality that must be hit before we release them into the wild. Every feature in the template must work with its respective editor feature.  Every point on this list must be checked before we release your template.
 
 ###Publish Site
-  - Publish the template to bksites.net domain
-  - Put URL into Templates Spreadsheet
+* Publish the template to bksites.net domain
+* Put URL into Templates Spreadsheet
 
-###Browsers
-  - Firefox (latest)
-  - Chrome (latest)
-  - IE (10 + 11)
-  - Android (mobile + tablet)
-  - Window (mobile tablet)
-  - iOS (latest: mobile + tablet)
-  - Safari (Mac latest)
+###Browsers / Responsive Testing
+* Test in all desktop browsers (Firefox, Chrome, IE, Safari)
+* Test for different devices / browser sizes
+* Test image sizes and positioning
+* Test navigation
 
 ###Optimisation
-  - File sizes (nothing more than 500KB)
+* File sizes (nothing more than 500KB)
 
 ###Font Swatches
-  - Check all type relevant styles are linked to the metadata.json file correctly 1 comment
-  - Check font family for correct font stack and linked in the styles
-  - Check font sizing is linked in the styles
-  - Check font weight is linked in the styles
-  - Check line height is linked in the styles
-  - Check font colours are linked to the correct colour swatches
-  - Check font background colours are linked to the correct colour swatches (including optional over colour)
-  - Check letter spacing is linked in the styles
-  - Check Font Stack is valid
-
-###Typography
-
-Style accordingly in your template and then test in the editor. More information can be found in the documentation; [LESS](http://developers.basekit.com/less) and [Advanced Meta Data](http://developers.basekit.com/advanced-metadata)
-  
-  - Heading 1
-  - Heading 2
-  - Heading 3
-  - Heading 4
-  - Heading 5
-  - Heading 6
-  - Small
-  - a (hover & active optional)
-  - Paragraph
-  - Bulleted list
-  - Numbered list
-  - Bold
-  - Italics
-  - Strikethrough
-  - Text alignment
-  - Underline
-  - Text background colour
-  - Text resizing
-  - Blockquote
-  - Code (pre)
-  - Text colour
-  - Span element
-  - Div element
-
-###Template Files & Assets
-
-Create files but also test if editor is using the correct templates.
-  
-  - Check graphics are linked in the template correctly
-  - Check if thumbnail matches template and is linked correctly
-  - default.twig
-  - home.twig
-  - about.twig (optional)
-  - contact.twig (optional)
-  - gallery.twig (optional)
-  - menu.twig
-  - bloglist.twig
-  - blogpost.twig
-  - metadata.json
-  - screenshot.png
-
-###Responsive Design
-  
-  - Test grid structure (resize browser)
-  - Check typography sizing
-  - Check typography ledgibility
-  - Test UI / navigation
-  - Test device specific UI
-  - Check image sizes (Image resizes properly)
-
-###Content Accommodation
-
-  - Check and remove and forced font casing (no uppercase or capitalisation)
-  - Check images are not restricted and fit the editable area correctly
-  - Check both portrait and landscape images are accounted for
-  - Check if all images are editable
-  - Check if all text is editable
-  - Check text content is styled correctly
-  - Check that logo area works with portrait and landscape graphics
-  - Check that design doesn't break when hiding the logo and / or site title
+* Check all type relevant styles are linked to the metadata.json file correctly 1 comment
+* Check font family and stack
+* Check font colours are linked to the correct colour swatches
 
 ###Colour Swatches
+* All colours are linked to the metadata.json file correctly
+* At least 2 colour swatches, optimum of 5
+* Overall legibility and visibility
 
-  - All colours are linked to the metadata.json file correctly
-  - At least 2 colour swatches
-  - Navigation and UI visibility (e.g. dropdown navigation)
-  - Icon visibility
-  - Link visibility
-  - Widget design visibility
-  - Overall legibility and visibility
+###Typography
+* Style accordingly in your template and then test in the editor
+* Headings (h1 to h4 in particular)
+* a (hover & active optional)
+* Paragraph
+* Lists (bulleted and numbered)
+* Bold, Italics, Strikethrough and Underline
+* Text alignment
+* Text resizing
+* Blockquote
+* Code (pre)
+
+###Template Files & Assets
+* Create files but also test if editor is using the correct templates
+* Check graphics are linked in the template correctly
+* Check if thumbnail matches template and is linked correctly
+* default.twig
+* home.twig (optional)
+* about.twig (optional)
+* contact.twig (optional)
+* gallery.twig (optional)
+* menu.twig (optional)
+* bloglist.twig (optional)
+* blogpost.twig (optional)
+* metadata.json
+* thumbnail.png
+
+###Content Accommodation
+* Check if all images are editable
+* Check if all text is editable
+* Check that logo area works with portrait and landscape graphics
+* Check that design doesn't break when hiding a 'baked in' widget
 
 ###Widget Checklist
-  
-  - General form design
-  - Sign-up form design
-  - General button design
-  - PayPal button design (with icon)
-  - Dropbox button design (with icon)
-  - Social button designs (with icons)
-  - Tweet button design (with icon)
-  - Twitter feed design
-  - Column widget structure and styling
-  - Alignment options work correctly
-  - Gallery grid
-  - Slideshow buttons and captions
-  - YouTube embed (just make sure its visible, no design work required)
-  - Feature section design and styling
+* General form design
+* Sign-up form design
+* General button design
+* PayPal button design (with icon)
+* Dropbox button design (with icon)
+* Social button designs (with icons)
+* Tweet button design (with icon)
+* Twitter feed design
+* Column widget structure and styling
+* Alignment options work correctly
+* Gallery grid
+* Slideshow buttons and captions
+* YouTube embed (just make sure its visible, no design work required)
+* Feature section design and styling
 
 ###Menu Checklist
-
-  - Menu item design
-  - Menu section design
-  - Menu column design
-  - Responsive column styling
-  - Item image sizing and styling (image wrap accounted for)
-  - Price styling
-  - Dietary icon styling
+* Menu item and promoted item design
+* Menu section design
+* Menu column design
+* Dietary icon styling
+* Menu subsection and promoted subsection design
 
 ###Blog Checklist
-  
-  - Blog post design
-  - Category and Tags styling
-  - Timestamp styling
-  - Post summary styling
-  - Blog list post design
-  - Blog single post design
-  - Blog image styling
-  - Blog search form styling
-  
+* Blog post design
+* Categories and Tags design
+* Timestamp design
+* Blog post list design
+* Blog post single design
+* Blog image styling
+* Blog search form styling
+
 ###Ecommerce Checklist
-  - Checkout section design
-  - Delivery form design
-  - Delivery select box styling
-  - Order, categories, tags, select boxes styling
-  - Product list styling
-  - Product item styling
-  - Checkout button styling
-  - Checkout page styling
-  - Category, Tags, Item name links all work
-  - Image column check
-  - Select box design
+* Checkout section design
+* Delivery form design
+* Delivery select box styling
+* Order, categories, tags, select boxes styling
+* Product list styling
+* Product item styling
+* Checkout button styling
+* Checkout page styling
+* Category, Tags, Item name links all work
+* Image column check
+* Select box design
 
 ###Sample Text Content for Text Widget
 
