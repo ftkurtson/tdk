@@ -191,7 +191,12 @@ var properties = {
     },
     ecombasket: function(templateName, templateValues) {
         return bk$.extend({}, templateValues);
-    }
+    },
+    ecomfeaturedproducts: function(templateName, templateValues) {
+        return bk$.extend({
+            selectedTag: 'summer'
+        }, templateValues);
+    },
 };
 
 /**
@@ -1606,7 +1611,15 @@ var plugins = function(template) {
                         "name":"Handheld"
                     },
                      "tags":[
-
+                        {
+                            "ref": 1,
+                            "slug": "summer",
+                            "title": "summer"
+                        },{
+                            "ref": 2,
+                            "slug": "winter",
+                            "title": "winter"
+                        }
                      ],
                      "options":[
                         {
@@ -1726,10 +1739,11 @@ var plugins = function(template) {
                         "name":"Handheld"
                      },
                      "tags":[
-                        "blue",
-                        "brown",
-                        "pink",
-                        "turquoise"
+                        {
+                            "ref": 1,
+                            "slug": "summer",
+                            "title": "summer"
+                        }
                      ],
                      "options":[
                         {
@@ -1849,7 +1863,11 @@ var plugins = function(template) {
                         "name":"Weekend Bag"
                      },
                      "tags":[
-                        "red"
+                        {
+                            "ref": 2,
+                            "slug": "winter",
+                            "title": "winter"
+                        }
                      ],
                      "options":[
                         {
@@ -1931,8 +1949,15 @@ var plugins = function(template) {
                         "name":"Handheld"
                      },
                      "tags":[
-                        "leather",
-                        "brown"
+                        {
+                            "ref": 1,
+                            "slug": "summer",
+                            "title": "summer"
+                        },{
+                            "ref": 2,
+                            "slug": "winter",
+                            "title": "winter"
+                        }
                      ],
                      "options":[
                         {
@@ -2014,7 +2039,15 @@ var plugins = function(template) {
                         "name":"Handheld"
                      },
                      "tags":[
-                        "brown"
+                        {
+                            "ref": 1,
+                            "slug": "summer",
+                            "title": "summer"
+                        },{
+                            "ref": 2,
+                            "slug": "winter",
+                            "title": "winter"
+                        }
                      ],
                      "options":[
                         {
@@ -2095,7 +2128,15 @@ var plugins = function(template) {
                         "name":"Tote Bag"
                     },
                     "tags":[
-
+                        {
+                            "ref": 1,
+                            "slug": "summer",
+                            "title": "summer"
+                        },{
+                            "ref": 2,
+                            "slug": "winter",
+                            "title": "winter"
+                        }
                     ],
                     "options":[
                         {

@@ -1553,6 +1553,37 @@
 }());
 (function () {
 
+    BaseKit.Widget.Ecomfeaturedproducts = null;
+
+    BaseKit.Widget.EcomfeaturedproductsProperties = {
+    };
+
+    BaseKit.Widget.EcomfeaturedproductsMethods = {
+        construct: function (el, options) {
+            this.options = options;
+
+            this.load();
+        },
+
+        load: function () {
+        }
+    };
+
+    BaseKit.Widget.Ecomfeaturedproducts = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.EcomfeaturedproductsProperties,
+            methods: BaseKit.Widget.EcomfeaturedproductsMethods
+        });
+    };
+
+    bk$.fn.basekitWidgetEcomfeaturedproducts = function (options) {
+        this.each(function (index, el) {
+            bk$(el).data('bkob', new BaseKit.Widget.Ecomfeaturedproducts(el, options));
+        });
+    };
+}());
+(function () {
+
     BaseKit.Widget.Ecomlegal = null;
 
     BaseKit.Widget.EcomlegalProperties = {
@@ -1655,10 +1686,6 @@
 
             thiseEl.find('.ecom-product-add-to-cart-btn').on('click', function (e) {
                 that.addToBasket(bk$(this).data('ref'));
-            });
-
-            thiseEl.find('.ecom-product-go-to-checkout-btn').on('click', function () {
-                window.location.href = window.location.origin + '/store/checkout';
             });
 
             thiseEl.find('.ecom-product-image-wrap').on('mousedown', function () {

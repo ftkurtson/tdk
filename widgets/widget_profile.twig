@@ -1,38 +1,38 @@
 {# ADDRESS #}
 {% if data.profileType == 'address' %}
-  {% if (data.address != 'profile' and data.address|length > 0) or (profile.address|length > 0) %}
-    <span>{% if data.address|length > 0 and data.address != 'profile' %}{{ data.address }}{% else %}{{profile.address}} {% endif %}</span>
-  {% else %}
-    {% set noAddress = true %}
-  {% endif %}
+    {% if (data.address != 'profile' and data.address|length > 0) or (profile.address|length > 0) %}
+        <p class="address">{% if data.address|length > 0 and data.address != 'profile' %}{{ data.address }}{% else %}{{profile.address}} {% endif %}</p>
+    {% else %}
+        {% set noAddress = true %}
+    {% endif %}
 
-  {% if (data.address1 != 'profile' and data.address1|length > 0) or (profile.address1|length > 0) %}
-    <span>{% if data.address1|length > 0 and data.address1 != 'profile' %}{{ data.address1 }}{% else %}{{profile.address1}} {% endif %}</span>
-  {% else %}
-    {% set noAddress1 = true %}
-  {% endif %}
+    {% if (data.address1 != 'profile' and data.address1|length > 0) or (profile.address1|length > 0) %}
+        <p class="address1">{% if data.address1|length > 0 and data.address1 != 'profile' %}{{ data.address1 }}{% else %}{{profile.address1}} {% endif %}</p>
+    {% else %}
+        {% set noAddress1 = true %}
+    {% endif %}
 
-  {% if (data.address2 != 'profile' and data.address2|length > 0) or (profile.address2|length > 0) %}
-    <span>{% if data.address2|length > 0 and data.address2 != 'profile' %}{{ data.address2 }}{% else %}{{profile.address2}} {% endif %}</span>
-  {% else %}
-    {% set noAddress2 = true %}
-  {% endif %}
+    {% if (data.address2 != 'profile' and data.address2|length > 0) or (profile.address2|length > 0) %}
+        <p class="address2">{% if data.address2|length > 0 and data.address2 != 'profile' %}{{ data.address2 }}{% else %}{{profile.address2}} {% endif %}</p>
+    {% else %}
+        {% set noAddress2 = true %}
+    {% endif %}
 
-  {% if (data.country != 'profile' and data.country|length > 0) or (profile.country|length > 0) %}
-    <span>{% if data.country|length > 0 and data.country != 'profile' %}{{ data.country }}{% else %}{{profile.country}} {% endif %}</span>
-  {% else %}
-    {% set noCountry = true %}
-  {% endif %}
+    {% if (data.country != 'profile' and data.country|length > 0) or (profile.country|length > 0) %}
+        <p class="country">{% if data.country|length > 0 and data.country != 'profile' %}{{ data.country }}{% else %}{{profile.country}} {% endif %}</p>
+    {% else %}
+        {% set noCountry = true %}
+    {% endif %}
 
-  {% if (data.addressPostalCode != 'profile' and data.addressPostalCode|length > 0) or (profile.postalcode|length > 0) %}
-    <span>{% if data.addressPostalCode|length > 0 and data.addressPostalCode != 'profile' %}{{ data.addressPostalCode }}{% else %}{{profile.postalcode}} {% endif %}</span>
-  {% else %}
-    {% set noPostalcode = true %}
-  {% endif %}
+    {% if (data.addressPostalCode != 'profile' and data.addressPostalCode|length > 0) or (profile.postalcode|length > 0) %}
+        <p class="postal-code">{% if data.addressPostalCode|length > 0 and data.addressPostalCode != 'profile' %}{{ data.addressPostalCode }}{% else %}{{profile.postalcode}} {% endif %}</p>
+    {% else %}
+        {% set noPostalcode = true %}
+    {% endif %}
 
-  {% if noAddress and noAddress1 and noAddress2 and noCountry and noPostalcode %}
-    <span>No address</span>
-  {% endif %}
+    {% if noAddress and noAddress1 and noAddress2 and noCountry and noPostalcode %}
+        <p class="no-address">No address</p>
+    {% endif %}
 {% endif %}
 
 {# EMAIL #}

@@ -2,13 +2,25 @@
 
 {% if data.shippingOpts|length == 0 and data.countryCode|length > 0 %}
     {% if data.noShippingsReason == 'weight' and data.email|length > 0 %}
-        <span class="no-shipping">{{ 'widgets.ecomcheckout.noshipping_weight'|translate("There currently aren't any shipping options available for your order. Please contact us at %1 for assistance.",data.email) }}</span>
+        <span class="no-shipping">
+            {{ 'widgets.ecomcheckout.noshipping_weight'|translate(
+                "There currently aren't any shipping options available for your order. Please contact us at %1 for assistance.",
+                data.email
+            ) }}
+        </span>
     {% elseif data.noShippingsReason == 'weight' and data.email|length == 0 %}
-        <span class="no-shipping">{{ 'widgets.ecomcheckout.noshipping_weight_general'|translate("There currently aren't any shipping options available for your order. Please contact us at %1 for assistance.",data.email) }}</span>
+        <span class="no-shipping">
+            {{ 'widgets.ecomcheckout.noshipping_weight_general'|translate( "There currently aren't any shipping options available for your order. Please contact us at %1 for assistance.", data.email) }}
+        </span>
     {% elseif data.noShippingsReason == 'country' and data.business|length > 0 and data.email|length > 0 %}
-        <span class="no-shipping">{{ 'widgets.ecomcheckout.noshipping'|translate('%1 does not currently support shipping to %2. Get in touch with us at %3 and we’ll see if we can help you out.',data.business,data.country,data.email) }}</span>
+        <span class="no-shipping">
+            {{ 'widgets.ecomcheckout.noshipping'|translate('%1 does not currently support shipping to %2. Get in touch with us at %3 and we’ll see if we can help you out.', data.business, data.country, data.email d) }}
+        </span>
     {% else %}
-        <span class="no-shipping">{{ 'widgets.ecomcheckout.noshipping_general'|translate("There currently aren't any shipping options available, please get in touch with us for assistance.") }}</span>
+        <span class="no-shipping">
+            {{ 'widgets.ecomcheckout.noshipping_general'|translate("There currently aren't any shipping options available, please get in touch with us for assistance."
+            ) }}
+        </span>
     {% endif %}
 {% else %}
     <select id="shipping" name="deliveryRef" required {% if data.shippingOpts|length == 0 %}disabled{% endif %}>

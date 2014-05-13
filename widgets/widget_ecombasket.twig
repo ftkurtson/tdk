@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="ecombasket-item-info">
-                    <a class="ecombasket-item-title" href="{{ requestBase }}/store/product/{{ item.productRef }}">{{item.title}}</a>
+                    <a class="ecombasket-item-title" href="{{ requestBase }}/store/product/{{ item.slug }}">{{item.title}}</a>
                     <div class="ecombasket-item-count-wrapper">
                         <span class="ecombasket-item-count-label">{{'widgets.ecombasket.quantity'|translate('Quantity:')}}</span>
                         <span class="ecombasket-item-count">{{item.quantity}}</span>
