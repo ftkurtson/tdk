@@ -8,7 +8,9 @@
                     <select id="productlist-itemcount" class="js-display-control" name="displayCount">
                         {% set displayCounts = [20, 32, 64] %}
                         {% for count in displayCounts %}
-                            <option value="{{ count }}" {% if count == request.query.displayCount %} selected{% endif %}>{{ count }}</option>
+                            <option value="{{ count }}" {% if count == request.query.displayCount %} selected{% endif %}>
+                                {{ count }}
+                            </option>
                         {% endfor %}
                     </select>
                 {{ 'widget.ecomproductlist.per_page'|translate('per page') }}</label>

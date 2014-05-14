@@ -186,7 +186,8 @@
 }());
 (function () {
     BaseKit.Widget.BuynowProperties = {
-        'showNames': 0
+        'showNames': 0,
+        'buttonText': ''
     };
 
     BaseKit.Widget.BuynowMethods = {
@@ -992,6 +993,12 @@
 
             thisEl.find('.js-pull').on('click', function () {
                 thisEl.toggleClass('show-content');
+                bk$(document).on('click', function(evt) {
+                    if (!bk$(evt.target).parents('.ecombasket').length){
+                        thisEl.toggleClass('show-content');
+                        bk$(document).off('click');
+                    }
+                });
             });
 
             thisEl.find('.js-remove').on('click', function (e) {
@@ -3113,10 +3120,6 @@
         },
 
         load: function () {
-            this.attachProfileEvents();
-        },
-
-        renderFinish: function () {
             this.attachProfileEvents();
         },
 

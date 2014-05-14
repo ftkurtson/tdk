@@ -40,8 +40,8 @@
                             </div>
                         </article>
                     {% endif %}
-                {% endfor %}
-            {% endfor %}
+                {% endfor %} {# end tags loop #}
+            {% endfor %} {# end products loop #}
         </section>
         {% else %}
             <p>{{"widgets.ecomfeaturedproducts.notags"|translate("This widget uses product tags to display specific groups of products. Add tags to your products to use this widget."|raw)}}</p>

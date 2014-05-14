@@ -94,7 +94,10 @@
             <input type="checkbox" class="widget-buynow-newsletter" name="newsletter" title=newsletter>
         </label>
     </div>
-    {% if freePackage == false %}
+
+    {% if data.buttonText|length > 0 %}
+        <button class="widget-buynow-make-payment" title="{{buttonText}}" type="submit" {% if noPaymentMethods or noPackageInfo %} disabled {% endif %}>{{data.buttonText}}</button>
+    {% elseif freePackage == false %}
         <button class="widget-buynow-make-payment" title="{{'widgets.buynow.submit'|translate('Make a payment using your selected package options')}}" type="submit" {% if noPaymentMethods or noPackageInfo %} disabled {% endif %}>Buy now</button>
     {% else %}
         <button class="widget-buynow-make-payment" title="{{'widgets.buynow.free.submit'|translate('Register')}}" type="submit">Register</button>
