@@ -4,7 +4,7 @@
     <form class="productlist-display-form" method="GET" action="{{ requestBase }}/store">
         {% if plugins.ecommerce.filteredProducts.totalCount > 20 %}
             <div class="form-group">
-                <label for="productlist-itemcount">{{ 'widget.ecomproductlist.show'|translate('Show') }}
+                <label for="productlist-itemcount">{{ 'widgets.ecomproductlist.show'|translate('Show') }}
                     <select id="productlist-itemcount" class="js-display-control" name="displayCount">
                         {% set displayCounts = [20, 32, 64] %}
                         {% for count in displayCounts %}
@@ -13,11 +13,11 @@
                             </option>
                         {% endfor %}
                     </select>
-                {{ 'widget.ecomproductlist.per_page'|translate('per page') }}</label>
+                {{ 'widgets.ecomproductlist.per_page'|translate('per page') }}</label>
             </div>
         {% endif %}
         <div class="form-group">
-            <label for="productlist-sort">{{ 'widget.ecomproductlist.order_label'|translate('Order by') }}</label>
+            <label for="productlist-sort">{{ 'widgets.ecomproductlist.order_label'|translate('Order by') }}</label>
             <select id="productlist-sort" class="js-display-control" name="orderBy">
                 {% set sortOptions = {
                     'created-desc': 'Newest',
@@ -28,7 +28,7 @@
                 } %}
                 {% for option, title in sortOptions %}
                     <option value="{{ option }}"{% if option == request.query.orderBy %} selected{% endif %}>
-                        {% set key = 'widget.ecomproductlist.order_' ~ option|replace({'-':'_'}) %}
+                        {% set key = 'widgets.ecomproductlist.order_' ~ option|replace({'-':'_'}) %}
                         {{ key|translate(title) }}
                     </option>
                 {% endfor %}
@@ -37,9 +37,9 @@
 
         {% if plugins.ecommerce.store.categories|length %}
             <div class="form-group">
-                <label for="productlist-categories">{{ 'widget.ecomproductlist.categories_label'|translate('Categories') }}</label>
+                <label for="productlist-categories">{{ 'widgets.ecomproductlist.categories_label'|translate('Categories') }}</label>
                 <select id="productlist-categories" class="js-display-control" name="category">
-                    <option value="">{{ 'widget.ecomproductlist.categories_placeholder'|translate('Filter by category') }}</option>
+                    <option value="">{{ 'widgets.ecomproductlist.categories_placeholder'|translate('Filter by category') }}</option>
                     <option disabled>---</option>
                     {% for category in plugins.ecommerce.store.categories %}
                         <option value="{{ category.slug }}" {% if request.query.category == category.slug %} selected{% endif %}>
@@ -52,9 +52,9 @@
 
         {% if plugins.ecommerce.store.tags|length %}
             <div class="form-group">
-                <label for="productlist-tags">{{ 'widget.ecomproductlist.tags_label'|translate('Tags') }}</label>
+                <label for="productlist-tags">{{ 'widgets.ecomproductlist.tags_label'|translate('Tags') }}</label>
                 <select id="productlist-tags" class="js-display-control" name="tag">
-                    <option value="">{{ 'widget.ecomproductlist.tags_placeholder'|translate('Filter by tag') }}</option>
+                    <option value="">{{ 'widgets.ecomproductlist.tags_placeholder'|translate('Filter by tag') }}</option>
                     <option disabled>---</option>
                     {% for tag in plugins.ecommerce.store.tags %}
                         <option value="{{ tag.slug }}" {% if request.query.tag == tag.slug %} selected{% endif %}>
@@ -69,7 +69,7 @@
     {% if products|length %}
         {% set firstProduct = plugins.ecommerce.pageOffset + 1 %}
         <p class="productlist-item-count">
-            {{ 'widget.ecomproductlist.item_count'|translate(
+            {{ 'widgets.ecomproductlist.item_count'|translate(
                 'Showing %1–%2 of %3 products',
                 firstProduct,
                 plugins.ecommerce.pageOffset + products|length,
@@ -77,35 +77,36 @@
             ) }}
         </p>
     {% elseif request.query.tag|length or request.query.category|length %}
-        <p class="productlist-item-count">{{ 'widget.ecomproductlist.no_products'|translate('No results found') }}</p>
-        <a class="btn" href="/store">{{ 'widget.ecomproductlist.reset_search'|translate('Clear search') }}</a>
+        <p class="productlist-item-count">{{ 'widgets.ecomproductlist.no_products'|translate('No results found') }}</p>
+        <a class="btn" href="/store">{{ 'widgets.ecomproductlist.reset_search'|translate('Clear search') }}</a>
     {% else %}
-        <p class="productlist-item-count">{{ 'widget.ecomproductlist.no_products'|translate('No products found') }}</p>
+        <p class="productlist-item-count">{{ 'widgets.ecomproductlist.no_products'|translate('No products found') }}</p>
     {% endif %}
 
     {% for product in products %}
         <article class="ecom-productslist-product">
-            {% if product.assets is not null %}
-                {% set assetRef = product.assets[0].assetRef %}
-                {% set asset = plugins.assets.images[assetRef] %}
-                {% if asset.fileType == 'image' %}
-                    {% set imageSrc = asset.url %}
-                    <a class="ecom-productslist-image-wrap" style="background-image:url('{{ imageSrc }}')" href="{{ requestBase }}/store/product/{{ product.slug }}">
-                        <img class="ecom-productslist-image" src="{{ imageSrc }}" alt="">
-                    </a>
-                {% endif %}
-            {% endif %}
-
-            <div class="ecom-productlist-info">
-                <h2 class="ecom-productslist-title"><a href="{{ requestBase }}/store/product/{{product.slug}}">{{product.title}}</a></h2>
-                <span class="ecom-productlist-price">
-                    {% if product.multiplePrices %}
-                        {{ "shared_views.ecom-products-list.minimum_price" | translate("From %1", product.formattedPrice) }}
-                    {% else %}
-                        {{ product.formattedPrice }}
+            <a href="{{ requestBase }}/store/product/{{ product.slug }}">
+                {% if product.assets is not null %}
+                    {% set assetRef = product.assets[0].assetRef %}
+                    {% set asset = plugins.assets.images[assetRef] %}
+                    {% if asset.fileType == 'image' %}
+                        {% set imageSrc = asset.url %}
+                        <div class="ecom-productslist-image-wrap" style="background-image:url('{{ imageSrc }}')">
+                            <img class="ecom-productslist-image" src="{{ imageSrc }}" alt="">
+                        </div>
                     {% endif %}
-                </span>
-            </div>
+                {% endif %}
+                <div class="ecom-productlist-info">
+                    <h2 class="ecom-productslist-title">{{product.title}}</h2>
+                    <span class="ecom-productlist-price">
+                        {% if product.multiplePrices %}
+                            {{ "shared_views.ecom-products-list.minimum_price" | translate("From %1", product.formattedPrice) }}
+                        {% else %}
+                            {{ product.formattedPrice }}
+                        {% endif %}
+                    </span>
+                </div>
+            </a>
         </article>
     {% endfor%}
 

@@ -46,7 +46,7 @@
             <div class="ecom-product-add-to-cart-btn-wrapper">
                 <button class="btn ecom-product-add-to-cart-btn" data-ref="{{ data.variationRef }}" {% if data.disableButton %} disabled {% endif %}>
                     {% if data.notAvailable %}
-                        <span class="text">{{ 'widget.ecomproduct.buy_unavailable'|translate('Currently unavailable') }}</span>
+                        <span class="text">{{ 'widgets.ecomproduct.buy_unavailable'|translate('Currently unavailable') }}</span>
                     {% else %}
                         <span class="text">Add to cart</span>
                     {% endif %}
@@ -55,7 +55,7 @@
 
             <div class="ecom-product-go-to-checkout-btn-wrapper">
                 <a href="{{ requestBase }}/store/checkout" class="btn ecom-product-go-to-checkout-btn" hidden>
-                    {{ 'widget.ecomb-product.checkout_link'|translate('Checkout') }}
+                    {{ 'widgets.ecomproduct.checkout_link'|translate('Checkout') }}
                 </a>
             </div>
 
