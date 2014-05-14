@@ -17,27 +17,29 @@
                     {% if tag.slug == data.selectedTag %}
                         {% set productFound = true %}
                         <article class="ecom-featuredproducts-product">
-                            {% if product.assets is not null %}
-                                {% set assetRef = product.assets[0].assetRef %}
-                                {% set asset = plugins.assets.images[assetRef] %}
-                                {% if asset.fileType == 'image' %}
-                                    {% set imageSrc = asset.url %}
-                                    <a class="ecom-featuredproducts-image-wrap" style="background-image:url('{{ imageSrc }}')" href="{{ requestBase }}/store/product/{{ product.slug }}">
-                                        <img class="ecom-featuredproducts-image" src="{{ imageSrc }}" alt="">
-                                    </a>
-                                {% endif %}
-                            {% endif %}
-
-                            <div class="ecom-featuredproducts-info">
-                                <h2 class="ecom-featuredproducts-title"><a href="{{ requestBase }}/store/product/{{product.slug}}">{{product.title}}</a></h2>
-                                <span class="ecom-featuredproducts-price">
-                                    {% if product.multiplePrices %}
-                                        {{ "widgets.ecomfeaturedproducts.minimum_price"|translate("From %1", product.formattedPrice) }}
-                                    {% else %}
-                                        {{ product.formattedPrice }}
+                            <a href="{{ requestBase }}/store/product/{{ product.slug }}">
+                                {% if product.assets is not null %}
+                                    {% set assetRef = product.assets[0].assetRef %}
+                                    {% set asset = plugins.assets.images[assetRef] %}
+                                    {% if asset.fileType == 'image' %}
+                                        {% set imageSrc = asset.url %}
+                                        <div class="ecom-featuredproducts-image-wrap" style="background-image:url('{{ imageSrc }}')">
+                                            <img class="ecom-featuredproducts-image" src="{{ imageSrc }}" alt="">
+                                        </div>
                                     {% endif %}
-                                </span>
-                            </div>
+                                {% endif %}
+
+                                <div class="ecom-featuredproducts-info">
+                                    <h2 class="ecom-featuredproducts-title">{{ product.title }}</h2>
+                                    <span class="ecom-featuredproducts-price">
+                                        {% if product.multiplePrices %}
+                                            {{ "widgets.ecomfeaturedproducts.minimum_price"|translate("From %1", product.formattedPrice) }}
+                                        {% else %}
+                                            {{ product.formattedPrice }}
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </a>
                         </article>
                     {% endif %}
                 {% endfor %} {# end tags loop #}
