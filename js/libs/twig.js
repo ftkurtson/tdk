@@ -513,6 +513,7 @@ var Twig = (function (Twig) {
             }
             return output;
         } catch (ex) {
+            console.log('Error template is in the widget', this.id);
             Twig.log.error("Error compiling twig template " + this.id + ": ");
             if (ex.stack) {
                 Twig.log.error(ex.stack);
