@@ -3,21 +3,25 @@
     <article class="ecom-product">
         {% if product.assets is not null %}
         <div class="ecom-product-images-container">
-            {% set imageSrcPreview = plugins.assets.images[product.assets|first.assetRef].url %}
+            {% if product.featureImageAssetRef %}
+                {% set imageSrcPreview = plugins.assets.images[product.featureImageAssetRef].url %}
+            {% else %}
+                {% set imageSrcPreview = plugins.assets.images[product.assets|first.assetRef].url %}
+            {% endif %}
             <div class="ecom-product-preview-image-wrap" style="background-image:url('{{ imageSrcPreview }}')">
                 <img class="ecom-product-preview-image" src="{{imageSrcPreview}}" alt>
             </div>
             {% if product.assets|length > 1 %}
-            <ul class="ecom-product-image-list">
-            {% for asset in product.assets %}
-                {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
-                {% set imageSrc = plugins.assets.images[asset.assetRef].url%}
-                <li class="ecom-product-image-wrap" style="background-image:url('{{ imageSrc }}')">
-                    <img class="ecom-product-image" src="{{ imageSrc }}" alt>
-                </li>
-                {% endif %}
-            {% endfor %}
-            </ul>
+                <ul class="ecom-product-image-list">
+                    {% for asset in product.assets %}
+                        {% if plugins.assets.images[asset.assetRef].fileType == 'image' %}
+                            {% set imageSrc = plugins.assets.images[asset.assetRef].url%}
+                            <li class="ecom-product-image-wrap" style="background-image:url('{{ imageSrc }}')">
+                                <img class="ecom-product-image" src="{{ imageSrc }}" alt>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
             {% endif %}
         </div>
         {% endif %}

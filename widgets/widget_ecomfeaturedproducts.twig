@@ -19,7 +19,11 @@
                         <article class="ecom-featuredproducts-product">
                             <a href="{{ requestBase }}/store/product/{{ product.slug }}">
                                 {% if product.assets is not null %}
-                                    {% set assetRef = product.assets[0].assetRef %}
+                                    {% if product.featureImageAssetRef %}
+                                        {% set assetRef = product.featureImageAssetRef %}
+                                    {% else %}
+                                        {% set assetRef = product.assets[0].assetRef %}
+                                    {% endif %}
                                     {% set asset = plugins.assets.images[assetRef] %}
                                     {% if asset.fileType == 'image' %}
                                         {% set imageSrc = asset.url %}

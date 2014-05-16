@@ -196,7 +196,7 @@ var properties = {
         return bk$.extend({
             selectedTag: 'summer'
         }, templateValues);
-    },
+    }
 };
 
 /**
@@ -2273,8 +2273,9 @@ var plugins = function(template) {
                    "assetRef":1
                 }],
                 "category":{
-                    "ref":10,
-                    "name":"Handheld"
+                    "ref":1,
+                    "slug": "woman",
+                    "name":"woman"
                 },
                  "tags":[
 
@@ -2391,8 +2392,9 @@ var plugins = function(template) {
                     }
                  ],
                  "category":{
-                    "ref":10,
-                    "name":"Handheld"
+                    "ref":2,
+                    "slug": "man",
+                    "name":"man"
                  },
                  "tags":[
                     "blue",
@@ -2512,8 +2514,9 @@ var plugins = function(template) {
                     }
                  ],
                  "category":{
-                    "ref":11,
-                    "name":"Weekend Bag"
+                    "ref":2,
+                    "slug": "man",
+                    "name":"man"
                  },
                  "tags":[
                     "red"
@@ -2592,8 +2595,9 @@ var plugins = function(template) {
                     }
                  ],
                  "category":{
-                    "ref":10,
-                    "name":"Handheld"
+                    "ref":2,
+                    "slug": "man",
+                    "name":"man"
                  },
                  "tags":[
                     "leather",
@@ -2673,8 +2677,9 @@ var plugins = function(template) {
                     }
                  ],
                  "category":{
-                    "ref":10,
-                    "name":"Handheld"
+                    "ref":2,
+                    "slug": "man",
+                    "name":"man"
                  },
                  "tags":[
                     "brown"
@@ -2752,8 +2757,9 @@ var plugins = function(template) {
                     }
                 ],
                 "category":{
-                    "ref":12,
-                    "name":"Tote Bag"
+                    "ref":1,
+                    "slug": "woman",
+                    "name":"woman"
                 },
                 "tags":[
 

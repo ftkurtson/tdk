@@ -1125,6 +1125,39 @@
     };
 }());
 (function () {
+    BaseKit.Widget.Ecomcategorieslist = null;
+
+    BaseKit.Widget.EcomcategorieslistProperties = {
+        title: App.t('widgets.ecomcategorieslist.default_title', 'Categories'),
+        showCount: true
+    };
+
+    BaseKit.Widget.EcomcategorieslistMethods = {
+        construct: function (el, options) {
+            this.load();
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Ecomcategorieslist = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.EcomcategorieslistProperties,
+            methods: BaseKit.Widget.EcomcategorieslistMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    bk$.fn.basekitWidgetEcomcategorieslist = function (options) {
+        this.each(function (index, el) {
+            bk$(el).data('bkob', new BaseKit.Widget.Ecomcategorieslist(el, options));
+        });
+    };
+}());(function () {
 
     BaseKit.Widget.Ecomcheckout = null;
 

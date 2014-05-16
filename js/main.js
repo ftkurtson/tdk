@@ -86,7 +86,8 @@ bk$(function() {
                 html += renderWidget('ecomproductslist', 'ecomproductslist1');
                 html += renderWidget('ecomproduct', 'ecomproduct1');
                 html += renderWidget('ecomcheckout', 'ecomecomcheckout1');
-                
+                html += renderWidget('ecomcategorieslist', 'ecomcategorieslist1');
+                html += renderWidget('ecomfeaturedproducts', 'ecomfeaturedproducts');
                 break;
         }
 
