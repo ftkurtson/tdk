@@ -34,45 +34,20 @@
 
                         {% if loop.first == true %}
 
-                            {% set count = 0 %}
-                            {% set doLoop = true %}
-                            {% set numClass = 'odd' %}
+                            {# HC: in widget_menu_partial1, there is a count function in loop #}
+                            {# due to TDK twig lib has scope issue with set function in naseted loop, #}
+                            {# I broken it down into another twig for a workaround #}
+                            {% include "widgets/widget_menu_partial1.twig" %}
 
-                            {% for item in topSection.items %}
-                                {% if item.menuType != 'section' and item.active == 1 and doLoop == true %}
-                                    {% set count = count + 1 %}
-                                {% elseif item.menuType == 'section' %}
-                                    {% set doLoop = false %}
-                                {% endif %}
-                            {% endfor %}
-
-                            {% if count % 2 == 0 %}
-                                {% set numClass = 'even' %}
-                            {% endif %}
-
-                            <ol class="menu-items {{ numClass }} bk{{ count }}-columns">
                         {% elseif topSection.items[loop.index0 - 1 ].menuType != item.menuType %}
                         {# close the preview ol if previous is not item #}
-                            </ol>
 
-                            {% set count = 0 %}
-                            {% set doLoop = true %}
-                            {% set currentIndex = loop.index %}
-                            {% set numClass = 'odd' %}
+                            {# HC: in widget_menu_partial2, there is a count function in loop #}
+                            {# due to TDK twig lib has scope issue with set function in naseted loop, #}
+                            {# I broken it down into another twig for a workaround #}
+                            {% include "widgets/widget_menu_partial2.twig" %}
 
-                            {% for item in topSection.items %}
-                                {% if item.menuType != 'section' and item.active == 1 and loop.index - currentIndex >= 0 and doLoop == true %}
-                                    {% set count = count + 1 %}
-                                {% elseif item.menuType == 'section' and loop.index - currentIndex >= 0 %}
-                                    {% set doLoop = false %}
-                                {% endif %}
-                            {% endfor %}
-
-                            {% if count % 2 == 0 %}
-                                {% set numClass = 'even' %}
-                            {% endif %}
-                                <ol class="menu-items {{ numClass }} bk{{ count }}-columns">
-                            {% endif %}
+                        {% endif %}
 
                         {% if item.active == 1 %}
                             {% include "widgets/widget_menu_item.twig" with {'item': item, 'plugins': plugins} %}

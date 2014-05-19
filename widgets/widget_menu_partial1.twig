@@ -1,0 +1,17 @@
+{% set count = 0 %}
+{% set doLoop = true %}
+{% set numClass = 'odd' %}
+
+{% for item in topSection.items %}
+    {% if item.menuType != 'section' and item.active == 1 and doLoop == true %}
+        {% set count = count + 1 %}
+    {% elseif item.menuType == 'section' %}
+        {% set doLoop = false %}
+    {% endif %}
+{% endfor %}
+
+{% if count % 2 == 0 %}
+    {% set numClass = 'even' %}
+{% endif %}
+
+<ol class="menu-items {{ numClass }} bk{{ count }}-columns">
