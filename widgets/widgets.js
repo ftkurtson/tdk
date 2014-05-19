@@ -1075,7 +1075,7 @@
 
             if (cart[ref] === 1) {
                 delete cart[ref];
-            } else {
+            } else if (cart[ref] > 0) {
                 cart[ref] = cart[ref] - 1;
             }
 
@@ -1298,7 +1298,7 @@
 
             if (cart[ref] === 1) {
                 delete cart[ref];
-            } else {
+            } else if (cart[ref] > 0) {
                 cart[ref] = cart[ref] - 1;
             }
 
@@ -1696,7 +1696,7 @@
                     this.set('notAvailable', 1, true);
                 }
             }
-            
+
             if (Server.plugins.ecommerce.product !== null && Server.plugins.ecommerce.product.variations.length > 1) {
                 this.selectVariation(Server.plugins.ecommerce.product.variations[0]);
             }
@@ -1953,6 +1953,7 @@
     BaseKit.Widget.Ecomproductslist = null;
 
     BaseKit.Widget.EcomproductslistProperties = {
+        productFiltering: 1
     };
 
     BaseKit.Widget.EcomproductslistMethods = {

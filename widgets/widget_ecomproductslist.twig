@@ -16,6 +16,7 @@
                 {{ 'widgets.ecomproductlist.per_page'|translate('per page') }}</label>
             </div>
         {% endif %}
+        {% if data.productFiltering == 1 %}
         <div class="form-group">
             <label for="productlist-sort">{{ 'widgets.ecomproductlist.order_label'|translate('Order by') }}</label>
             <select id="productlist-sort" class="js-display-control" name="orderBy">
@@ -34,7 +35,7 @@
                 {% endfor %}
             </select>
         </div>
-
+        {% endif %}
         {% if plugins.ecommerce.store.categories|length %}
             <div class="form-group">
                 <label for="productlist-categories">{{ 'widgets.ecomproductlist.categories_label'|translate('Categories') }}</label>

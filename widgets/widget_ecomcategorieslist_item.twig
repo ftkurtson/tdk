@@ -1,0 +1,10 @@
+{% set count = 0 %}
+{% for product in products %}
+    {% if product.category.ref == category.ref %}
+        {% set count = count + 1 %}
+    {% endif %}
+{% endfor %}
+
+{% if count > 0 %}
+    <li><a href="{{ requestBase }}/store?category={{ category.slug }}">{{ category.name }} {% if data.showCount %}<span>({{ count }})</span>{% endif %}</a></li>
+{% endif %}

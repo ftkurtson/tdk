@@ -28,15 +28,21 @@
 
         <div class="ecom-product-info">
             <h2 class="ecom-product-title">{{product.title}}</h2>
-            <p class="ecom-product-price">{{data.price}}</p>
+            <p class="ecom-product-price">
+                {% if data.price is null %}
+                    {{product.formattedPrice}}
+                {% else %}
+                    {{data.price}}
+                {% endif %}
+            </p>
 
             {% if data.notAvailable %}
                 <p>Currently unavailable</p>
             {% endif %}
 
-            {% if data.options|length > 0 %}
+            {% if product.options|length > 0 %}
             <div class="ecom-product-variation">
-            {% for option in data.options %}
+            {% for option in product.options %}
                 <span class="ecom-product-vartitle">{{option.title}}</span>
                 <select data-option-name="{{option.title}}">
                     {% for value in option.values %}

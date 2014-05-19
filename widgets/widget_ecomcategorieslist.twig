@@ -1,7 +1,44 @@
-<aside class="product-category">
-    <h3>Categories</h3>
-    <ul class="product-category-items">
-        <li><a href="/store?category=man">Man <span>(3)</span></a></li>
-        <li><a href="/store?category=woman">Woman <span>(3)</span></a></li>
-    </ul>
-</aside>
+{% set categories = plugins.ecommerce.store.categories %}
+{% set products = plugins.ecommerce.products %}
+
+{% if products|length > 0 %}
+    {% if categories|length > 0 %}
+        {% set foundProduct = false %}
+        {% for product in products %}
+            {% if product.category != null and product.category|length > 0 %}
+                {% set foundProduct = true %}
+            {% endif %}
+        {% endfor %}
+
+        {% if foundProduct %}
+            <aside class="product-category">
+
+                {% if data.title|length > 0 %}
+                <h3>{{ data.title }}</h3>
+                {% endif %}
+
+                <ul class="product-category-items">
+                    {% for category in categories %}
+                        {% include "widgets/widget_ecomcategorieslist_item.twig" %}
+                    {% endfor %}
+                </ul>
+            </aside>
+
+        {% else %} {# end products in categories check #}
+
+            <p>None of the categories in your store have any products. Add a product to a category to use this widget.</p>
+
+        {% endif %}
+
+    {% else %}
+
+        <p>Your store does not have any categories yet. Add a product to a category to use this widget.</p>
+
+    {% endif %} {# end categories check #}
+
+{% else %}
+
+    <p>Your store does not have any products. Add a product to a category to use this widget.</p>
+
+{% endif %} {# end products check #}
+
