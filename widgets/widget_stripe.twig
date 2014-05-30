@@ -1,8 +1,0 @@
-<button class="checkout-stripe js-checkout-stripe" type="button" disabled>
-    <span class="text">{{ 'widgets.stripe.checkout_stripe'|translate('Pay with card') }}</span>
-</button>
-
-<form class="js-charge-stripe" action="{{ plugins.ecommerce.store.chargeUrl }}" method="POST" hidden>
-    <input type="hidden" name="storeRef" value="{{ plugins.ecommerce.store.ref }}">
-    <input type="hidden" name="sitePrimaryDomain" value="{{ sitePrimaryDomain }}">
-</form>
