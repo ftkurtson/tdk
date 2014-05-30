@@ -24,12 +24,13 @@
             {% set numClass = 'even' %}
         {% endif %}
 
+        {% if data.title|length > 0 %}
+        <header class="ecom-featuredproducts-header">
+            <h2>{{ data.title }}</h2>
+        </header>
+        {% endif %}
+
         <section class="ecom-featuredproducts-wrap {{ numClass }} {{ count }}-products">
-            {% if data.title|length > 0 %}
-            <header class="ecom-featuredproducts-header">
-                <h2>{{ data.title }}</h2>
-            </header>
-            {% endif %}
 
             {% for product in products %}
                 {% if product.visibility == 1 %}
@@ -78,7 +79,7 @@
 
 
 {% elseif app.mode != 'published' %}
-    <p><b>{{"widgets.ecomfeaturedproducts.notag_selected"|translate("No tags selected")}}</b></p>
+    <p><b>No tags selected</b></p>
     <p>{{"widgets.ecomfeaturedproducts.notag_selected_text"|translate("This widget uses product tags to display specific groups of products. Select a tag in the widget settings panel to show all products with that tag.")|raw}}</p>
 {% endif %}
 

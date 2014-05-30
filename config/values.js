@@ -194,7 +194,8 @@ var properties = {
     },
     ecomfeaturedproducts: function(templateName, templateValues) {
         return bk$.extend({
-            selectedTag: 'summer'
+            selectedTag: 'summer',
+            title: 'Featured Products'
         }, templateValues);
     }
 };
