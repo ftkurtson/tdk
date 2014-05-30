@@ -48,8 +48,8 @@
         {% endif %}
         </li>
     {% endfor %}
-</ul>    
-{% else %}
+</ul>
+{% elseif app.mode != 'published' %}
     <p><b>No Images</b></p>
     <p>{{"widgets.gallery.no_images_text"|translate("In order to use the gallery widget, you need to select an album. If you have no albums please upload images under the Images panel, or organize your images into albums by going to your Manage section.")|raw}}</p>
 {% endif %}

@@ -1598,7 +1598,7 @@ var plugins = function(template) {
                     "title":"Aliquam Handbag",
                     "shortDescription":null,
                     "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-                    "visibility":0,
+                    "visibility":1,
                     "availability":1,
                     "sku":null,
                     "assets":[
@@ -1725,7 +1725,7 @@ var plugins = function(template) {
                      "title":"Commodo Handbag",
                      "shortDescription":null,
                      "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes",
-                     "visibility":0,
+                     "visibility":1,
                      "availability":1,
                      "sku":null,
                      "assets":[
@@ -1849,7 +1849,7 @@ var plugins = function(template) {
                      "title":"Conubia Nostra Handbag",
                      "shortDescription":null,
                      "longDescription":"Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut a ligula non tortor pretium laoreet at vel mi. ",
-                     "visibility":0,
+                     "visibility":1,
                      "availability":1,
                      "sku":null,
                      "assets":[
@@ -1935,7 +1935,7 @@ var plugins = function(template) {
                      "title":"Magnis Handbag",
                      "shortDescription":null,
                      "longDescription":"Cum sociis natoque penatibus et magnis dis parturient montes.",
-                     "visibility":0,
+                     "visibility":1,
                      "availability":1,
                      "sku":null,
                      "assets":[
@@ -2025,7 +2025,7 @@ var plugins = function(template) {
                      "title":"Montes Handheld Bag",
                      "shortDescription":null,
                      "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes.",
-                     "visibility":0,
+                     "visibility":1,
                      "availability":1,
                      "sku":null,
                      "assets":[
@@ -2114,7 +2114,7 @@ var plugins = function(template) {
                     "title":"Tristique Handbag",
                     "shortDescription":null,
                     "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique.",
-                    "visibility":0,
+                    "visibility":1,
                     "availability":1,
                     "sku":null,
                     "assets":[
@@ -2264,7 +2264,7 @@ var plugins = function(template) {
                 "title":"Aliquam Handbag",
                 "shortDescription":null,
                 "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-                "visibility":0,
+                "visibility":1,
                 "availability":1,
                 "sku":null,
                 "assets":[
@@ -2277,8 +2277,16 @@ var plugins = function(template) {
                     "slug": "woman",
                     "name":"woman"
                 },
-                 "tags":[
-
+                "tags":[
+                    {
+                        "ref": 1,
+                        "slug": "summer",
+                        "title": "summer"
+                    },{
+                        "ref": 2,
+                        "slug": "winter",
+                        "title": "winter"
+                    }
                  ],
                  "options":[
                     {
@@ -2382,7 +2390,7 @@ var plugins = function(template) {
                  "title":"Commodo Handbag",
                  "shortDescription":null,
                  "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes",
-                 "visibility":0,
+                 "visibility":1,
                  "availability":1,
                  "sku":null,
                  "assets":[
@@ -2396,11 +2404,16 @@ var plugins = function(template) {
                     "slug": "man",
                     "name":"man"
                  },
-                 "tags":[
-                    "blue",
-                    "brown",
-                    "pink",
-                    "turquoise"
+                "tags":[
+                    {
+                        "ref": 1,
+                        "slug": "summer",
+                        "title": "summer"
+                    },{
+                        "ref": 2,
+                        "slug": "winter",
+                        "title": "winter"
+                    }
                  ],
                  "options":[
                     {
@@ -2504,7 +2517,7 @@ var plugins = function(template) {
                  "title":"Conubia Nostra Handbag",
                  "shortDescription":null,
                  "longDescription":"Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut a ligula non tortor pretium laoreet at vel mi. ",
-                 "visibility":0,
+                 "visibility":1,
                  "availability":1,
                  "sku":null,
                  "assets":[
@@ -2518,8 +2531,16 @@ var plugins = function(template) {
                     "slug": "man",
                     "name":"man"
                  },
-                 "tags":[
-                    "red"
+                "tags":[
+                    {
+                        "ref": 1,
+                        "slug": "summer",
+                        "title": "summer"
+                    },{
+                        "ref": 2,
+                        "slug": "winter",
+                        "title": "winter"
+                    }
                  ],
                  "options":[
                     {
@@ -2585,7 +2606,7 @@ var plugins = function(template) {
                  "title":"Magnis Handbag",
                  "shortDescription":null,
                  "longDescription":"Cum sociis natoque penatibus et magnis dis parturient montes.",
-                 "visibility":0,
+                 "visibility":1,
                  "availability":1,
                  "sku":null,
                  "assets":[
@@ -2599,9 +2620,16 @@ var plugins = function(template) {
                     "slug": "man",
                     "name":"man"
                  },
-                 "tags":[
-                    "leather",
-                    "brown"
+                "tags":[
+                    {
+                        "ref": 1,
+                        "slug": "summer",
+                        "title": "summer"
+                    },{
+                        "ref": 2,
+                        "slug": "winter",
+                        "title": "winter"
+                    }
                  ],
                  "options":[
                     {
@@ -2667,7 +2695,7 @@ var plugins = function(template) {
                  "title":"Montes Handheld Bag",
                  "shortDescription":null,
                  "longDescription":"Suspendisse consequat pharetra malesuada. Nullam luctus felis in commodo vehicula. Cum sociis natoque penatibus et magnis dis parturient montes.",
-                 "visibility":0,
+                 "visibility":1,
                  "availability":1,
                  "sku":null,
                  "assets":[
@@ -2681,8 +2709,16 @@ var plugins = function(template) {
                     "slug": "man",
                     "name":"man"
                  },
-                 "tags":[
-                    "brown"
+                "tags":[
+                    {
+                        "ref": 1,
+                        "slug": "summer",
+                        "title": "summer"
+                    },{
+                        "ref": 2,
+                        "slug": "winter",
+                        "title": "winter"
+                    }
                  ],
                  "options":[
                     {
@@ -2747,7 +2783,7 @@ var plugins = function(template) {
                 "title":"Tristique Handbag",
                 "shortDescription":null,
                 "longDescription":"Aliquam iaculis risus ut orci pharetra, eu interdum orci tempus. Sed non malesuada dui. Pellentesque habitant morbi tristique.",
-                "visibility":0,
+                "visibility":1,
                 "availability":1,
                 "sku":null,
                 "assets":[
@@ -2762,8 +2798,16 @@ var plugins = function(template) {
                     "name":"woman"
                 },
                 "tags":[
-
-                ],
+                    {
+                        "ref": 1,
+                        "slug": "summer",
+                        "title": "summer"
+                    },{
+                        "ref": 2,
+                        "slug": "winter",
+                        "title": "winter"
+                    }
+                 ],
                 "options":[
                     {
                        "ref":20,

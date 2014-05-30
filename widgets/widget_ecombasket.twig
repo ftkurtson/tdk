@@ -7,10 +7,12 @@
 <div class="ecombasket-list-container">
     <ul>
         {% for item in data.items %}
-            <li data-ref="{{item.ref}}">
-                <div class="ecombasket-item-image" style="background-image:url({{item.assetUrl}});">
-                    <img src="{{item.assetUrl}}">
-                </div>
+            <li data-ref="{{ item.ref }}">
+                <a class="ecombasket-item-title" href="{{ requestBase }}/store/product/{{ item.slug }}">
+                    <div class="ecombasket-item-image" style="background-image:url({{ item.assetUrl }});">
+                        <img src="{{ item.assetUrl }}">
+                    </div>
+                </a>
 
                 <div class="ecombasket-item-info">
                     <a class="ecombasket-item-title" href="{{ requestBase }}/store/product/{{ item.slug }}">{{item.title}}</a>

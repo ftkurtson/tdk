@@ -260,6 +260,7 @@
         buttonClickEvent: function () {
             var that = this,
                 thisEl = bk$(this.el),
+                button = thisEl.find('.widget-buynow-make-payment'),
                 submitData = {};
 
             thisEl.find('form').on('submit', function (e) {
@@ -288,7 +289,13 @@
                         data: submitData,
                         async: false,
                         beforeSend: function () {
-                            that.showMessageBox();
+                            that.showMessageBox(
+                                App.t(
+                                    'widgets.buynow.processing',
+                                    'Creating your account...please wait'
+                                )
+                            );
+                            button.addClass('spinner').attr('disabled', 'disabled');
                         }
                     }).done(function (response) {
                         document.location = response.url;
@@ -304,6 +311,7 @@
                             that.showText(false, App.t('widgets.buynow.failed', 'Sorry we were unable to create your account. Please contact support.'));
                         }
                     }).always(function () {
+                        button.removeClass('spinner');
                         that.removeMessageBox();
                     });
                 };
@@ -374,9 +382,10 @@
             thisEl.find('.overlay').addClass(className).append('<div class="message-box"><span class="message-text">' + message + '</span></div>');
         },
 
-        showMessageBox: function () {
+        showMessageBox: function (message) {
             var thisEl = bk$(this.el),
-                overlay = bk$('<div class="overlay"></div>');
+                msg = message || '',
+                overlay = bk$('<div class="overlay">'+msg+'</div>');
 
             if (thisEl.find('.overlay').length === 0) {
                 thisEl.append(overlay);
@@ -1025,6 +1034,7 @@
                         productRef: variation.productRef,
                         ref: parseInt(ref, 10),
                         title: variation.title,
+                        slug: variation.slug,
                         quantity: cart[ref],
                         assetUrl: variation.assetUrl
                     });
@@ -1091,15 +1101,18 @@
 
             bk$.each(products, function (key, product) {
                 var result = bk$.grep(product.variations, function (variation) {
-                    return parseInt(variation.ref, 10) === parseInt(ref, 10);
-                });
+                        return parseInt(variation.ref, 10) === parseInt(ref, 10);
+                    }),
+                    assetRef = null;
 
                 if (typeof result === 'object' && result.length === 1) {
                     variation = result[0];
                     variation.productRef = product.ref;
+                    variation.slug = product.slug;
 
                     if (typeof product === 'object' && typeof product.assets === 'object' && product.assets.length > 0) {
-                        variation.assetUrl = Server.plugins.assets.images[product.assets[0].assetRef].url;
+                        assetRef = product.featureImageAssetRef ? product.featureImageAssetRef : product.assets[0].assetRef;
+                        variation.assetUrl = Server.plugins.assets.images[assetRef].url;
                     }
                 }
             });
@@ -1108,8 +1121,6 @@
         }
     };
 
-    // Base Widget Functionality - What ever is required
-    // to get the widget working in normal mode goes in here.
     BaseKit.Widget.Ecombasket = function () {
         var o = new BaseKit.WidgetCore(this, arguments, {
             properties: BaseKit.Widget.EcombasketProperties,
@@ -1117,7 +1128,6 @@
         });
     };
 
-    // JQuery plugin so that a widget can be attached to an element
     bk$.fn.basekitWidgetEcombasket = function (options) {
         this.each(function (index, el) {
             bk$(el).data('bkob', new BaseKit.Widget.Ecombasket(el, options));
@@ -1656,9 +1666,6 @@
     BaseKit.Widget.Ecomproduct = null;
 
     BaseKit.Widget.EcomproductProperties = {
-        price: 0,
-        product: (Server.plugins.ecommerce) ? Server.plugins.ecommerce.product : [],
-        disableButton: 1
     };
 
     BaseKit.Widget.EcomproductMethods = {
@@ -1668,250 +1675,35 @@
         },
 
         load: function () {
-            var variation = null;
+            this.set('translations', {
+                'Add to cart' : App.t('shared_views.ecom-product.add-to-cart', 'Add to cart'),
+                'Added'       : App.t('shared_views.ecom-product.added', 'Added')
+            }, true);
 
-            this.set('options', this.getOptions(), true);
-
-            bk$.each(this.get('options'), function (index, option) {
-                if (index > 0) {
-                    option.disabled = 1;
-                }
-            });
-
-            // Product with no variation
-            if (Server.plugins.ecommerce && Server.plugins.ecommerce.product !== null
-                && Server.plugins.ecommerce.product.variations.length === 1) {
-                variation = Server.plugins.ecommerce.product.variations[0];
-
-                if (
-                    (variation.stock > 0 && this.get('product').stockTrack)
-                    || this.get('product').stockUnlimited
-                    || !this.get('product').stockTrack
-                ) {
-                    this.set('variationRef', variation.ref, true);
-                    this.set('price', variation.formattedPrice, true);
-                    this.set('disableButton', 0, true);
-                } else {
-                    this.set('price', variation.formattedPrice, true);
-                    this.set('notAvailable', 1, true);
-                }
-            }
-
-            if (Server.plugins.ecommerce.product !== null && Server.plugins.ecommerce.product.variations.length > 1) {
-                this.selectVariation(Server.plugins.ecommerce.product.variations[0]);
-            }
-
+            this.set('variationRef', Server.plugins.ecommerce.product.variations[0].ref, true);
             this.rerender();
         },
 
-        selectVariation: function(variation) {
-            var i = 0,
-                value = null;
-            for (i = 0; i < variation.values.length; i = i + 1) {
-                value = variation.values[i];
-                this.updateOptions(value.optionTitle, value.valueRef);
-            }
-        },
-
         attachEvents: function () {
-            var that = this,
-                thiseEl = bk$(this.el),
-                previewWrapper = thiseEl.find('.ecom-product-preview-image-wrap'),
-                previewImg = thiseEl.find('.ecom-product-preview-image');
-
-            thiseEl.find('select').on('change', function (e) {
-                that.updateOptions(bk$(this).data('option-name'), bk$(this).val());
-                that.rerender();
-            });
-
-            thiseEl.find('.ecom-product-add-to-cart-btn').on('click', function (e) {
-                that.addToBasket(bk$(this).data('ref'));
-            });
-
-            thiseEl.find('.ecom-product-image-wrap').on('mousedown', function () {
-                var src = bk$(this).find('img').attr('src');
-                previewImg.attr('src', src);
-                previewWrapper.css('background-image', 'url(' + src + ')');
-            });
+            bk$(this.el).find('.ecom-product-add-to-cart-btn').on('click', this.addToCartButtonClicked.bind(this));
         },
 
-        getOptions: function () {
-            if (Server.plugins.ecommerce && Server.plugins.ecommerce.product !== null) {
-                return this.get('product').options;
-            }
-
-            return [];
-        },
-
-        getMapValueToVariation: function () {
-            if (Server.plugins.ecommerce && Server.plugins.ecommerce.product !== null) {
-                return this.get('product').mapValueToVariation;
-            }
-
-            return [];
-        },
-
-        updateOptions: function (optionName, valueRef) {
-            var that = this,
-                mapValueToVariation = this.getMapValueToVariation(),
-                variationRefs = null,
-                from = 0,
-                found = false,
-                variation = null;
-
-            bk$.each(this.get('options'), function (index, option) {
-                //Every select box after we found the last changed are reset
-                //for calculating the possibilities in findVariationList()
-                if (found) {
-                    option.valueRef = null;
-                }
-
-                if (option.title === optionName) {
-                    from = index;
-                    option.valueRef = parseInt(valueRef, 10);
-                    found = true;
-                }
-            });
-
-            variationRefs = this.findVariationList() || [];
-
-            bk$.each(this.get('options'), function (index, option) {
-                //First option is never disabled then
-                //calculate possiblities for the next select
-                //Until previous select hasn't been choosen values stay disabled.
-                if (index === 0) {
-                    option.disabled = 0;
-                } else if (index === from + 1) {
-                    option.disabled = 0;
-
-                    bk$.each(option.values, function (index, value) {
-                        var possibleList = mapValueToVariation[value.ref] || [];
-                        value.disabled = 1;
-
-                        //If the next options' values intersect with the previous values' variations
-                        //then make them selectable
-                        if (that._intersection(possibleList, variationRefs).length) {
-                            value.disabled = 0;
-                            option.disabled = 0;
-                        }
-                    });
-                } else if (index > from + 1) {
-                    option.disabled = 1;
-                }
-            });
-
-            variation = this.getUniqueVariation();
-            this.set('price', variation.formattedPrice, true);
-
-            if (
-                (variation !== null && this.isAllOptionsSelected())
-                &&
-                    (variation.stock > 0 && this.get('product').stockTrack)
-                    || this.get('product').stockUnlimited
-                    || !this.get('product').stockTrack
-            ) {
-                this.set('variationRef', variation.ref, true);
-                this.set('disableButton', 0, true);
-                this.set('notAvailable', 0, true);
-            } else {
-                this.set('disableButton', 1, true);
-                this.set('notAvailable', 1, true);
-            }
-        },
-
-        getUniqueVariation: function () {
-            var variationRefs = [];
-
-            variationRefs = this.findVariationList();
-
-            if (variationRefs !== undefined) {
-                if (variationRefs.length === 1) {
-                    return this.findVariationByRef(variationRefs[0]);
-                } else if (variationRefs.length > 1) {
-                    this.set('notAvailable', 0, true);
-                }
-            } else {
-                this.set('notAvailable', 1, true);
-                this.set('price', 0.00, true);
-            }
-
-            return null;
-        },
-
-        isAllOptionsSelected: function () {
-            var options = bk$.grep(this.get('options'), function (option) {
-                return option.valueRef;
-            });
-
-            return options.length === this.get('options').length;
-        },
-
-        findVariationList: function () {
-            var that = this,
-                result = [],
-                mapValueToVariation = this.getMapValueToVariation(),
-                options = bk$.grep(this.get('options'), function (option) {
-                    return option.valueRef;
-                });
-
-            //Find unique variation by intersecting all possible values found by options selected
-            bk$.each(options, function (index, option) {
-                var list = mapValueToVariation[option.valueRef] || [];
-
-                if (that._intersection(list, result).length === 0) {
-                    result = mapValueToVariation[option.valueRef];
-                } else {
-                    result = that._intersection(list, result);
-                }
-            });
-
-            return result;
-        },
-
-        findVariationByRef: function (ref) {
-            var variations = Server.plugins.ecommerce.product.variations,
-                result = [];
-
-            result = bk$.grep(variations, function (variation) {
-                return parseInt(variation.ref, 10) === parseInt(ref, 10);
-            });
-
-            if (result.length === 1) {
-                return result[0];
-            }
-
-            return null;
-        },
-
-        _intersection: function (array1, array2) {
-            var result = [],
-                i = 0;
-
-            for (i = 0; i < array1.length; i = i + 1) {
-                if (array2.indexOf(array1[i]) !== -1) {
-                    result.push(array1[i]);
-                }
-            }
-
-            return result;
+        addToCartButtonClicked: function (event) {
+            this.switchToCheckoutButton();
+            this.addToCart(this.get('variationRef'));
+            setTimeout(this.switchBackToAddToCartButton.bind(this), 2000);
         },
 
         getCart: function () {
             return JSON.parse(localStorage.getItem('cart')) || {};
         },
 
-        addToBasket: function (variationRef) {
-            var cart = this.getCart(),
-                addButtonText = App.t('shared_views.ecom-product.add-to-cart', 'Add to cart'),
-                addedButtonText = App.t('shared_views.ecom-product.added', 'Added'),
-                thisEl = bk$(this.el),
-                addBtnEl = thisEl.find('.ecom-product-add-to-cart-btn'),
-                checkoutBtnEl = thisEl.find('.ecom-product-go-to-checkout-btn'),
-                t = null;
+        setCart: function (cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        },
 
-            addBtnEl.attr('disabled', 'disabled').addClass('added')
-                .find('.text').text(addedButtonText);
-            checkoutBtnEl.attr('hidden', true);
+        addToCart: function (variationRef) {
+            var cart = this.getCart();
 
             if (cart[variationRef] !== undefined) {
                 cart[variationRef] = cart[variationRef] + 1;
@@ -1919,17 +1711,32 @@
                 cart[variationRef] = 1;
             }
 
-            localStorage.setItem('cart', JSON.stringify(cart));
-
+            this.setCart(cart);
             Globals.notifyHooks('ecom.basket.changed', {});
+        },
 
-            t = setTimeout(function () {
-                clearTimeout(t);
-                addBtnEl.removeAttr('disabled').removeClass('added')
-                    .find('.text').text(addButtonText);
-                checkoutBtnEl.removeAttr('hidden');
-            }, 2000);
+        switchToCheckoutButton: function () {
+            var addButton = bk$(this.el).find('.ecom-product-add-to-cart-btn'),
+                checkoutButton = bk$(this.el).find('.ecom-product-go-to-checkout-btn');
+            addButton
+                .attr('disabled', 'disabled')
+                .addClass('added')
+                .find('.text')
+                .text(this.get('translations')['Added']);
+            checkoutButton.attr('hidden', true);
+        },
+
+        switchBackToAddToCartButton: function () {
+            var addButton = bk$(this.el).find('.ecom-product-add-to-cart-btn'),
+                checkoutButton = bk$(this.el).find('.ecom-product-go-to-checkout-btn');
+            addButton
+                .removeAttr('disabled')
+                .removeClass('added')
+                .find('.text')
+                .text(this.get('translations')['Add to cart']);
+            checkoutButton.removeAttr('hidden');
         }
+
     };
 
     // Base Widget Functionality - What ever is required
@@ -1968,10 +1775,21 @@
 
         attachEvents: function () {
             var that = this,
-                displayControl = bk$(this.el).find('.js-display-control');
+                displayControl = bk$(this.el).find('.js-display-control'),
+                form = bk$(this.el).find('.productlist-display-form');
 
             displayControl.on('change', function () {
                 bk$(this).parents('.productlist-display-form').submit();
+            });
+
+            form.on('submit', function (e) {
+                var orderBy = bk$(e.currentTarget).find('[name="orderBy"] option[value="score-desc"]'),
+                    search = bk$(e.currentTarget).find('[name="search"]');
+
+                if (!orderBy.length && search.val().length) {
+                    bk$(e.currentTarget).find('[name="orderBy"]').append('<option value="score-desc"></option>');
+                    bk$(e.currentTarget).find('[name="orderBy"]').val('score-desc');
+                }
             });
         }
     };

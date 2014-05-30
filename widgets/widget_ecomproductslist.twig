@@ -18,6 +18,10 @@
         {% endif %}
         {% if data.productFiltering == 1 %}
         <div class="form-group">
+            <input id="productlist-search" class="js-display-control" name="search" value="{{ request.query['search'] }}"/>
+            <button type="submit" class="btn">{{ 'widgets.ecomproductlist.search_submit'|translate('Search') }}</button>
+        </div>
+        <div class="form-group">
             <label for="productlist-sort">{{ 'widgets.ecomproductlist.order_label'|translate('Order by') }}</label>
             <select id="productlist-sort" class="js-display-control" name="orderBy">
                 {% set sortOptions = {
@@ -27,6 +31,9 @@
                     'price-desc': 'Price: Highest to Lowest',
                     'price-asc': 'Price: Lowest to Highest'
                 } %}
+                {% if request.query['search'] %}
+                    {% set sortOptions = sortOptions|merge({'score-desc': 'Relevance'}) %}
+                {% endif %}
                 {% for option, title in sortOptions %}
                     <option value="{{ option }}"{% if option == request.query.orderBy %} selected{% endif %}>
                         {% set key = 'widgets.ecomproductlist.order_' ~ option|replace({'-':'_'}) %}
@@ -79,9 +86,16 @@
         </p>
     {% elseif request.query.tag|length or request.query.category|length %}
         <p class="productlist-item-count">{{ 'widgets.ecomproductlist.no_products'|translate('No results found') }}</p>
-        <a class="btn" href="/store">{{ 'widgets.ecomproductlist.reset_search'|translate('Clear search') }}</a>
     {% else %}
-        <p class="productlist-item-count">{{ 'widgets.ecomproductlist.no_products'|translate('No products found') }}</p>
+        {% if request.query.search|length <=3 %}
+            <p class="productlist-item-count">{{ 'widgets.ecomproductlist.vague_search'|translate('It looks like your search term is not specific enough') }}</p>
+        {% else %}
+            <p class="productlist-item-count">{{ 'widgets.ecomproductlist.no_products'|translate('No products found') }}</p>
+        {% endif %}
+    {% endif %}
+
+    {% if not products|length and (request.query.tag|length or request.query.category|length or request.query.search|length) %}
+        <a class="btn" href="/store">{{ 'widgets.ecomproductlist.reset_search'|translate('Clear search') }}</a>
     {% endif %}
 
     {% for product in products %}
@@ -117,7 +131,7 @@
 
     {% if plugins.ecommerce.totalPages > 1 %}
         {% set query = request.query %}
-        {% set params = ['displayCount', 'orderBy', 'tag', 'category'] %}
+        {% set params = ['displayCount', 'orderBy', 'tag', 'category', 'search'] %}
         {% set displayParams = '' %}
         {% for param in params %}
             {% if query[param] != '' %}

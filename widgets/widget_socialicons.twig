@@ -41,7 +41,7 @@
 </span>
 {% endif %}
 
-{% if (((data.linkedin == 'profile' and profile.linkedin|length == 0) or data.linkedin|length == 0) and ((data.twitter == 'profile' and profile.twitter|length == 0) or data.twitter|length == 0) and ((data.facebook == 'profile' and profile.facebook|length == 0) or data.facebook|length == 0) and ((data.rss == 'profile' and profile.rss|length == 0) or data.rss|length == 0) and ((data.googleplus == 'profile' and profile.googleplus|length == 0) or data.googleplus|length == 0) and ((data.youtube == 'profile' and profile.youtube|length == 0) or data.youtube|length == 0)) %}
+{% if (((data.linkedin == 'profile' and profile.linkedin|length == 0) or data.linkedin|length == 0) and ((data.twitter == 'profile' and profile.twitter|length == 0) or data.twitter|length == 0) and ((data.facebook == 'profile' and profile.facebook|length == 0) or data.facebook|length == 0) and ((data.rss == 'profile' and profile.rss|length == 0) or data.rss|length == 0) and ((data.googleplus == 'profile' and profile.googleplus|length == 0) or data.googleplus|length == 0) and ((data.youtube == 'profile' and profile.youtube|length == 0) or data.youtube|length == 0)) and app.mode != 'published' %}
 <span>No social icons</span>
 {% endif %}
 </div>

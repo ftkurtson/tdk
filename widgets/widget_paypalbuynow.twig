@@ -11,7 +11,7 @@
             <input value="{{data.paypalbuynow_text}}" type="submit" name="submit" class="widget button paypal">
         </form>
     </div>
-{% else %}
+{% elseif app.mode != 'published' %}
     <p><b>No Business email or Currency detected</b></p>
     <p>{{"widgets.paypalbuynow.profile_not_set_text"|translate("In order to use the PayPal Buy Now widget, you need to set a Business Email and a Currency.")|raw}}</p>
 {% endif %}

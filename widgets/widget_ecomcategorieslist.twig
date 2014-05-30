@@ -24,19 +24,19 @@
                 </ul>
             </aside>
 
-        {% else %} {# end products in categories check #}
+        {% elseif app.mode != 'published' %} {# end products in categories check #}
 
             <p>None of the categories in your store have any products. Add a product to a category to use this widget.</p>
 
         {% endif %}
 
-    {% else %}
+    {% elseif app.mode != 'published' %}
 
         <p>Your store does not have any categories yet. Add a product to a category to use this widget.</p>
 
     {% endif %} {# end categories check #}
 
-{% else %}
+{% elseif app.mode != 'published' %}
 
     <p>Your store does not have any products. Add a product to a category to use this widget.</p>
 

@@ -9,9 +9,9 @@
         {% endfor %}
     </ul>
     <a href='#' class='menu-pull'></a>
-    {% if activeCount == 0 %}
+    {% if activeCount == 0 and app.mode != 'published' %}
         <p>You have no active sections</p>
     {% endif %}
-{% else %}
+{% elseif app.mode != 'published' %}
     <p>You have no menu</p>
 {% endif %}
