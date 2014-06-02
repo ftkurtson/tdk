@@ -96,8 +96,7 @@ file_put_contents($to, $widgetsJs);
 $rules = array(
     $basekitDir . '/assets/public/responsive/site/widgets/widgetcore.js' => $sdkDir . '/widgets/widgetcore.js',
     $basekitDir . '/assets/public/apps/js/framework/components/component/component.js' => $sdkDir . '/templates/common/component.js',
-    $basekitDir . '/assets/public/apps/js/framework/basekit.js' => $sdkDir . '/templates/common/basekit.js'//,
-    //$basekitDir . '/assets/public/libs/google-fonts-.js' => $sdkDir . '/templates/common/google-fonts.js'
+    $basekitDir . '/assets/public/apps/js/framework/basekit.js' => $sdkDir . '/templates/common/basekit.js'
 );
 
 foreach ($rules as $from => $to) {

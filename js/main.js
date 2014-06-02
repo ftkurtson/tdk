@@ -2,6 +2,53 @@ var Server = {
     "plugins": plugins
 };
 
+// RH: These are the google fonts that
+// are required by the template.
+var requiredGoogleFonts = [];
+
+// RH: These are the google fonts that
+// are required by the template.
+var availableGoogleFonts = {
+    "\"Droid Sans\", Helvetica, Arial, sans-serif":'Droid+Sans:400,700:latin',
+    "\"Arvo\", Georgia, serif":'Arvo:400,700:latin',
+    "\"Corben\", Georgia, serif":'Corben:400,700:latin',
+    "\"Lobster\", Verdana, sans-serif":'Lobster::latin',
+    "\"Droid Serif\", Georgia, serif":'Droid+Serif::latin',
+    "\"Raleway\", \"Lucida Grande\", Helvetica, sans-serif":'Raleway:300,400,700:latin',
+    "\"Goudy Bookletter 1911\", \"Times New Roman\", Georgia, serif":'Goudy+Bookletter+1911::latin',
+    "\"Abril Fatface\", \"Palatino Linotype\", serif":'Abril+Fatface::latin',
+    "\"Yanone Kaffeesatz\", Georgia, serif":'Yanone+Kaffeesatz:400,700:latin',
+    "\"Hammersmith One\", Tahoma, Verdana, sans-serif":'Hammersmith+One::latin',
+    "\"Lato\", Geneva, Tahoma, sans-serif":'Lato:300,400,700:latin',
+    "\"PT Sans Narrow\", Arial, sans-serif":'PT+Sans+Narrow:400,700:latin',
+    "\"Open Sans\", Helvetica, Verdana, sans-serif":'Open+Sans:300,400,700:latin',
+    "\"Open Sans Condensed\", Arial, Helvetica, sans-serif":'Open+Sans+Condensed:300,700:latin',
+    "\"Old Standard TT\", \"Book Antiqua\", \"Palatino Linotype\", serif":'Old+Standard+TT:400,700:latin',
+    "\"Merriweather\", Georgia, serif":'Merriweather:300,400,700:latin',
+    "\"Montserrat\", \"Trebuchet MS\", Helvetica, sans-serif":'Montserrat:400,700:latin',
+    "\"Roboto\", Geneva, \"Lucida Console\", sans-serif":'Roboto:300,400,700:latin',
+    "\"Titillium Web\", Geneva, Tahoma, sans-serif":'Titillium+Web:300,400,700:latin',
+    "\"Karla\", Verdana, Geneva, sans-serif":'Karla:400,700:latin',
+    "\"Oswald\", Arial, sans-serif":'Oswald:300,400,700:latin',
+    "\"Glegoo\", Monaco, \"Lucida Console\", monospace":'Glegoo::latin',
+    "\"Vollkorn\", Georgia, serif":'Vollkorn:400,700:latin',
+    "\"Courgette\", \"Lucida Grande\", sans-serif":'Courgette:400:latin',
+    "\"Abel\", \"Lucida Console\", monospace":'Abel:400:latin',
+    "\"Sniglet\", Geneva, Gadget, sans-serif":'Sniglet:400:latin',
+    "\"Ubuntu\", Candara, Futura, sans-serif":'Ubuntu:300,400,700:latin',
+    "\"PT Sans\", Tahoma, Geneva, sans-serif":'PT+Sans:400,700:latin',
+    "\"PT Serif\", Georgia, serif":'PT+Serif:400,700:latin',
+    "\"PT Mono\", \"Courier New\", Courier, monospace":'PT+Mono::latin',
+    "\"Quicksand\", \"Raleway\", \"Lucida Grande\", Helvetica, sans-serif":'Quicksand:300,400,700:latin',
+    "\"Josefin Sans\", \"Raleway\", \"Lucida Grande\", Helvetica, sans-serif":'Josefin+Sans:300,400,700:latin',
+    "\"Montserrat Alternates\", \"Montserrat\", \"Trebuchet MS\", Helvetica, sans-serif":'Montserrat+Alternates:400,700:latin',
+    "\"Oleo Script\", \"Lobster\", Verdana, sans-serif":'Oleo+Script:400,700:latin',
+    "\"Cabin\", \"Oswald\", Arial, sans-serif":'Cabin:300,400,700:latin',
+    "\"Squada One\", \"Oswald\", Arial, sans-serif":'Squada+One:400:latin',
+    "\"Pacifico\", \"Lobster\", Verdana, sans-serif":'Pacifico:400:latin',
+    "\"Oxygen\", \"Helvetica\", Arial, sans-serif":'Oxygen:300,400,700:latin'
+}
+
 bk$(function() {
     Twig.extend(function(Twig) {
         Twig.exports.extendTag({
@@ -263,22 +310,40 @@ bk$(function() {
 
             // Add Twig Page Types
             if (data.pageTypes) {
+
+                var defaultFoundFlag = false;
+
                 bk$("#layout").empty();
 
                 bk$.each(data.pageTypes, function (i, pageType) {
+
+                    if(pageType.toLowerCase() === 'default') {
+                        defaultFoundFlag = true;
+                    }
+
                     bk$("#layout")
                         .append(bk$("<option></option>")
                             .attr("value", pageType.toLowerCase()+ '.twig')
                             .text(pageType)
                         );
                 });
+
+                bk$("#layout")
+                .append(bk$("<option></option>")
+                    .attr("value", 'default.twig')
+                    .text('default')
+                );
+
+                console.log(file);
+
+                bk$("#layout").val(file);
             } else {
                 bk$("#layout").empty();
                 
 	            bk$("#layout")
                 .append(bk$("<option></option>")
                     .attr("value", 'default.twig')
-                    .text('Default')
+                    .text('default')
                 );
             }
 
@@ -313,7 +378,6 @@ bk$(function() {
                 varsLess += '@color-swatch1:#ffffff;@color-swatch2:#4a7491;@color-swatch3:#c26b57;@color-swatch4:#111111;@color-swatch5:#bcbcbc;@color-swatch6:#ffffff;@color-swatch7:#235071;'
             }
 
-
             if (data.fontSwatch) {
                 for (var fontNumber = 1; fontNumber < 11; fontNumber++) {
                     if (typeof data.fontSwatch["font" + fontNumber] === "undefined") {
@@ -322,7 +386,14 @@ bk$(function() {
                         throw error;
                     }
 
-                    var font = data.fontSwatch["font" + fontNumber];
+                    var font = data.fontSwatch["font" + fontNumber],
+                        fontFamily = font['font-family'];
+
+                    for (var key in availableGoogleFonts) {
+                        if ((fontFamily === key) && bk$.inArray(availableGoogleFonts[key], requiredGoogleFonts) === -1 ) {
+                            requiredGoogleFonts.push(availableGoogleFonts[key]);
+                        }
+                    }
 
                     for (var attribute in font) {
                         varsLess += "@font-swatch" + (fontNumber) + "-" + attribute + ":" + font[attribute] + ";\n";
@@ -409,10 +480,17 @@ bk$(function() {
                     throw e;
                 }
 
+
+
                 // Construct the widgets Javascript
                 // Note that this is base64 encoded to prevent XSS protection from kicking in
                 var js = 'var sdkWidgets = ' + JSON.stringify(widgets) + ';';
                 js += 'var sdkPlugins = ' + JSON.stringify(plugins(template)) + ';';
+
+                
+                console.log('Calling the following fonts: '+  JSON.stringify(requiredGoogleFonts));
+                // Load in the found google fonts in this template
+                js += 'var requiredGoogleFonts = ' + JSON.stringify(requiredGoogleFonts) + ';';
 
                 // Submit the form to the iframe
                 bk$("#html").val(B64.encode(html));
