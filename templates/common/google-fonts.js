@@ -38,7 +38,9 @@ WebFontConfig = {
             'Montserrat+Alternates:400,700:latin',
             'Oleo+Script:400,700:latin',
             'Cabin:300,400,700:latin',
-            'Squada+One:400:latin'
+            'Squada+One:400:latin',
+            'Pacifico:400:latin',
+            'Oxygen:300,400,700:latin'
         ]
     }
 };
