@@ -104,7 +104,7 @@
         {% endif %}
 
         {% if not products|length and (request.query.tag|length or request.query.category|length or request.query.search|length) %}
-            <a class="btn productlist-clear-search" href="/store">{{ 'widgets.ecomproductlist.reset_search'|translate('Clear search') }}</a>
+            <a class="productlist-clear-search" href="/store">{{ 'widgets.ecomproductlist.reset_search'|translate('Clear search') }}</a>
         {% endif %}
 
     </div>
