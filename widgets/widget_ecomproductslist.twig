@@ -1,26 +1,9 @@
 <section class="ecom-productslist-products">
     {% set products = plugins.ecommerce.filteredProducts.products %}
 
-    <form class="productlist-display-form" method="GET" action="{{ requestBase }}/store">
-        {% if plugins.ecommerce.filteredProducts.totalCount > 20 %}
-            <div class="form-group">
-                <label for="productlist-itemcount">{{ 'widgets.ecomproductlist.show'|translate('Show') }}
-                    <select id="productlist-itemcount" class="js-display-control" name="displayCount">
-                        {% set displayCounts = [20, 32, 64] %}
-                        {% for count in displayCounts %}
-                            <option value="{{ count }}" {% if count == request.query.displayCount %} selected{% endif %}>
-                                {{ count }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                {{ 'widgets.ecomproductlist.per_page'|translate('per page') }}</label>
-            </div>
-        {% endif %}
+    <form class="productlist-display-form clearfix" method="GET" action="{{ requestBase }}/store">
+
         {% if data.productFiltering == 1 %}
-        <div class="form-group">
-            <input id="productlist-search" class="js-display-control" name="search" value="{{ request.query['search'] }}"/>
-            <button type="submit" class="btn">{{ 'widgets.ecomproductlist.search_submit'|translate('Search') }}</button>
-        </div>
         <div class="form-group">
             <label for="productlist-sort">{{ 'widgets.ecomproductlist.order_label'|translate('Order by') }}</label>
             <select id="productlist-sort" class="js-display-control" name="orderBy">
@@ -43,6 +26,7 @@
             </select>
         </div>
         {% endif %}
+
         {% if plugins.ecommerce.store.categories|length %}
             <div class="form-group">
                 <label for="productlist-categories">{{ 'widgets.ecomproductlist.categories_label'|translate('Categories') }}</label>
@@ -72,6 +56,29 @@
                 </select>
             </div>
         {% endif %}
+
+        {% if plugins.ecommerce.filteredProducts.totalCount > 20 %}
+            <div class="form-group">
+                <label for="productlist-itemcount">{{ 'widgets.ecomproductlist.show'|translate('Show') }}
+                    <select id="productlist-itemcount" class="js-display-control" name="displayCount">
+                        {% set displayCounts = [20, 32, 64] %}
+                        {% for count in displayCounts %}
+                            <option value="{{ count }}" {% if count == request.query.displayCount %} selected{% endif %}>
+                                {{ count }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                {{ 'widgets.ecomproductlist.per_page'|translate('per page') }}</label>
+            </div>
+        {% endif %}
+
+        {% if data.productFiltering == 1 %}
+        <div class="form-group productlist-search">
+            <input id="productlist-search" class="js-display-control" name="search" value="{{ request.query['search'] }}"/>
+            <button type="submit" class="btn">{{ 'widgets.ecomproductlist.search_submit'|translate('Search') }}</button>
+        </div>
+        {% endif %}
+
     </form>
 
     {% if products|length %}
