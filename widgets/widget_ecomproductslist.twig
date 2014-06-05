@@ -59,7 +59,7 @@
                 </div>
             {% endif %}
 
-            {% if plugins.ecommerce.filteredProducts.totalCount > 20 %}
+            {% if plugins.ecommerce.filteredProducts.totalCount > 1 %}
                 <div class="form-group">
                     <label for="productlist-itemcount">{{ 'widgets.ecomproductlist.show'|translate('Show') }}
                         <select id="productlist-itemcount" class="js-display-control" name="displayCount">
@@ -76,7 +76,7 @@
 
             {% if data.productFiltering == 1 %}
             <div class="form-group productlist-search">
-                <input id="productlist-search" class="js-display-control" name="search" value="{{ request.query['search'] }}"/>
+                <input id="productlist-search" class="js-display-control" name="search" type="search" value="{{ request.query['search'] }}"/>
                 <button type="submit" class="btn">{{ 'widgets.ecomproductlist.search_submit'|translate('Search') }}</button>
             </div>
             {% endif %}
