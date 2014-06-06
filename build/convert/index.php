@@ -21,6 +21,60 @@ if (!is_dir($dir) || is_link($dir)) return unlink($dir);
     return rmdir($dir); 
 }
 
+function returnUploadError() {
+    $message = 'There was a problem with the upload. Please try again.';
+    switch( $_FILES['zip']['error'] ) {
+        case UPLOAD_ERR_OK:
+            $message = false;;
+            break;
+        case UPLOAD_ERR_INI_SIZE:
+        case UPLOAD_ERR_FORM_SIZE:
+            $message .= ' - file too large (limit of '.get_max_upload().' bytes).';
+            break;
+        case UPLOAD_ERR_PARTIAL:
+            $message .= ' - file upload was not completed.';
+            break;
+        case UPLOAD_ERR_NO_FILE:
+            $message .= ' - zero-length file uploaded.';
+            break;
+        default:
+            $message .= ' - internal error #'.$_FILES['zip']['error'];
+            break;
+    }
+
+    return $message;
+}
+
+function get_max_upload() {
+    return convertBytes(ini_get('upload_max_filesize'));
+}
+
+function convertBytes( $value ) {
+    if ( is_numeric( $value ) ) {
+        return $value;
+    } else {
+        $value_length = strlen($value);
+        $qty = substr( $value, 0, $value_length - 1 );
+        $unit = strtolower( substr( $value, $value_length - 1 ) );
+        switch ( $unit ) {
+            case 'k':
+                $qty *= 1024;
+                break;
+            case 'm':
+                $qty *= 1048576;
+                break;
+            case 'g':
+                $qty *= 1073741824;
+                break;
+        }
+        return $qty;
+    }
+}
+
+/* START OF TEMPLATE PROCESS */
+// After all the checks... are we good to process the template?
+$goodToGo = true;
+
 if(isset($_FILES["zip"])) {
     $filename = $_FILES["zip"]["name"];
     $source = $_FILES["zip"]["tmp_name"];
@@ -35,18 +89,35 @@ if(isset($_FILES["zip"])) {
         } 
     }
 
+    // Check to see if the file uploaded is a zip file.
     $continue = (count($name) > 1 && strtolower(end($name)) == 'zip') ? true : false;
-
     if(!$continue) {
         $error = "The file you are trying to upload is not a .zip file. Please try again.";
+        $goodToGo = false;
     }
 
     $targetPath = $uploadDir . '/' . $filename;
     $folderName = current(explode('.', $filename));
+
     if(move_uploaded_file($source, $targetPath)) {
         $zip = new ZipArchive();
         $exists = $zip->open($targetPath);
-        if ($exists === true) {
+
+        // If file hasn't moved correctly...or upload errors
+        if ($exists !== true) {
+            $error = returnUploadError();
+            $goodToGo = false;
+        }
+
+        // The template files need to be in the top level directory of the archive
+        if ($zip->locateName('index.html') === false && $zip->locateName('index.htm') === false) {
+            $error = "No index.htm or index.html file found in the top level directory within the archive.";
+            $goodToGo = false;
+        }
+
+        // If we have passed all checks... rock and roll!
+        if ($goodToGo === true) {
+
             // It removes the directory if it exists
             if (is_dir($uploadDir . '/' . $folderName)) {
                 destroyDir($uploadDir . '/' . $folderName);
@@ -55,14 +126,14 @@ if(isset($_FILES["zip"])) {
             mkdir($uploadDir . '/' . $folderName);
             $zip->extractTo($uploadDir . '/' . $folderName); 
 
-            // New Convert Process
+            // New convert process
             $process = new Convert();
             $process->setStrictMode($strictMode);
             $process->setHtmlDir($uploadDir . '/' . $folderName);
             $process->setTemplatesDir($installTemplateDir);
             $process->setWorkingDirectory($uploadDir);
             $process->setMetaData($metaData);
-            $process->process($conversionResult == 'zip' ? true : false);
+            $process->process($conversionResult === 'zip' ? true : false);
 
             $zip->close();
             
@@ -70,13 +141,12 @@ if(isset($_FILES["zip"])) {
             unlink($targetPath);
 
             // As the file is being downloaded, exit;
-            if($conversionResult == 'zip' ? true : false) {
+            if($conversionResult === 'zip' ? true : false) {
                 exit;
+            } else {
+                $message = 'Template installed!';
             }
         }
-        $message = "Your .zip file was uploaded and unpacked.";
-    } else {    
-        $error = "There was a problem with the upload. Please try again.";
     }
 }
 ?>
@@ -102,7 +172,7 @@ if(isset($_FILES["zip"])) {
             </div>
 <?php } else if(strlen($error) > 0) { ?>
             <div class="alert-message error">
-                <p><strong><?php echo($error) ?></p>
+                <p><strong><?php echo($error) ?></strong></p>
             </div>
 <?php } ?>
             <!-- Add your site or application content here -->
@@ -271,7 +341,25 @@ aTemplate-timestamp.zip
 @import "@{templateLocal}/css/font-awesome.min.less";
 @import "@{templateLocal}/css/colors/color-red.less";
 </pre></p></li>
-<li><p>LESS is very sensitive to CSS semantic errors. If you are using the TDK, Check your browser's Developer console bar as LESS.js will most likely return back a parse error. From this, you will be able to see the offending file and line number of the syntax error.</p></li>
+<li><p>LESS is very sensitive to CSS semantic errors. If you are using the TDK, Check your browser's Developer console bar as LESS.js will most likely return back a parse error. From this, you will be able to see the offending file and line number of the syntax error. <strong>If your template isn't rendering, please check the Developer Tools console of your Browser. There'll be clues in there regarding the issue.</strong></p></li>
+</ul>
+
+<h2>Running the convertor locally</h2>
+
+<p>Requirements:</p>
+
+<ul>
+<li>PHP 5.4 or greater</li>
+<li>php-zip extension enabled</li>
+</ul>
+
+
+<p>Common issues:</p>
+
+<ul>
+<li>Make sure you can read from the <code>$htmlDir</code> (location of the HTML template)</li>
+<li>Make sure you have write permissions to the <code>$templatesDir</code>  (location where the BaseKit Template will be written to) and <code>$workingDirectory</code>  (unzipping folder and general working dir)</li>
+<li><code>screenshot.png</code> has the correct read permissions</li>
 </ul>
 
 
@@ -279,7 +367,7 @@ aTemplate-timestamp.zip
 
 <p>If you're interested in finding out more about BaseKit Template Development, please find the documentation at this URL.</p>
 
-<p><a href="http://basekit-templates.github.io/template-docs/">http://basekit-templates.github.io/template-docs/</a></p>
+<p><a href="http://developers.basekit.com/">http://developers.basekit.com/</a></p>
 
 <p>Or contact me directly:</p>
 

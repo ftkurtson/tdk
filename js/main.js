@@ -335,8 +335,6 @@ bk$(function() {
                     .text('default')
                 );
 
-                console.log(file);
-
                 bk$("#layout").val(file);
             } else {
                 bk$("#layout").empty();

@@ -217,6 +217,12 @@ HTML;
                 $html = file_get_contents($from);
                 $html = $this->addImageToHtml($html);
                 file_put_contents($to, $html);
+
+                // As there isn't a way to work out what the `default` page will be,
+                // just use the home.twig as the `default.twig` as well... 
+                if ($filename === 'home.twig') {
+                    file_put_contents($to = $this->templateDestination . '/default.twig', $html);                    
+                }
             } else if ($fileInfo->isFile() && in_array($extension, array('css','less')) ) {
                 
                 $filename = str_replace(array('css'), 'less', $filename);
