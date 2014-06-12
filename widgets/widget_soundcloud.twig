@@ -1,0 +1,7 @@
+<div class='audio-wrapper'>
+    {% if data.iframeCode %}
+        {{data.iframeCode|raw}}
+    {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
+        <p>Sound Cloud embed code is missing.</p>
+    {% endif %}
+</div>

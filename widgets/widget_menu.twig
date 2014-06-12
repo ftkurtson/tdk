@@ -84,9 +84,9 @@
             {% set activeCount = activeCount + 1 %}
         {% endif %}
     {% endfor %}
-    {% if activeCount == 0 and app.mode != 'published'%}
+    {% if activeCount == 0 and app.mode != 'published' and app.mode != 'site-preview' %}
         <p>You have no active sections</p>
     {% endif %}
-{% elseif app.mode != 'published' %}
+{% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <p>You have no menu</p>
 {% endif %}

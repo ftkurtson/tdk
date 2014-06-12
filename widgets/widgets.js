@@ -1,7 +1,5 @@
 (function () {
-    BaseKit.Widget.BlogpostProperties = {
-        dateFormat: 'international'
-    };
+    BaseKit.Widget.BlogpostProperties = {};
 
     BaseKit.Widget.BlogpostMethods = {
         construct: function (el, options) {
@@ -1060,8 +1058,7 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                data: sendingData,
-                dataType:'json'
+                data: sendingData
             }).done(function (response) {
                 that.setBasketData(response);
                 that.rerender();
@@ -1100,7 +1097,8 @@
                 products = Server.plugins.ecommerce.products;
 
             bk$.each(products, function (key, product) {
-                var result = bk$.grep(product.variations, function (variation) {
+                var variations = bk$.merge(product.variations, product.inactiveVariations),
+                    result = bk$.grep(variations, function (variation) {
                         return parseInt(variation.ref, 10) === parseInt(ref, 10);
                     }),
                     assetRef = null;
@@ -1193,8 +1191,9 @@
                 that.updateCheckout();
             });
 
-            this.updateCheckout();
             this.handleCountryAutoFill();
+            this.updateTax();
+            this.updateCheckout();
         },
 
         attachEvents: function () {
@@ -1303,6 +1302,12 @@
             }
         },
 
+        getTaxRef: function () {
+            var taxRef = this.el.find('[name="taxRef"]').val();
+            this.taxRef = taxRef;
+            return taxRef;
+        },
+
         removeItem: function (ref) {
             var cart = this.getCart();
 
@@ -1334,14 +1339,14 @@
                     storeRef: Server.plugins.ecommerce.store.ref,
                     productVariationRefs: this.variations,
                     countryCode: this.getCountryCode(),
-                    deliveryRef: this.getDeliveryRef()
+                    deliveryRef: this.getDeliveryRef(),
+                    taxRef: this.getTaxRef()
                 };
 
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                data: sendingData,
-                dataType:'json'
+                data: sendingData
             }).done(function (response) {
                 that.setCheckoutTotal(response);
                 that.updateCheckoutUI();
@@ -1370,9 +1375,31 @@
             this.updateItemsTableUI();
             this.updateItemsInputUI();
             this.updateShippingOptsUI();
+            this.updateTax();
             this.updateTaxAndTotalValues();
             this.updateSubmitBtnUI();
             this.attachEvents();
+        },
+
+        updateTax: function () {
+
+            var thisEl = bk$(this.el),
+            taxData = {
+                countryCode:       this.getCountryCode(),
+                tax:        Server.plugins.ecommerce.taxes
+            },
+            taxHtml = this.rerenderPartial('widget_ecomcheckout_tax', taxData);
+
+            if (this.el.find('[name="taxRef"]').length > 0) {
+                this.el.find('[name="taxRef"]').remove();
+            }
+
+            thisEl.find('.js-checkout-form').append(taxHtml);
+
+            if(!this.el.find('[name="taxRef"]').val()){
+                this.el.find('[name="taxRef"]').remove();
+            }
+
         },
 
         updateEmptyUI: function () {
@@ -1484,7 +1511,8 @@
                 products = Server.plugins.ecommerce.products;
 
             bk$.each(products, function (key, product) {
-                var result = bk$.grep(product.variations, function (variation) {
+                var variations = bk$.merge(product.variations, product.inactiveVariations),
+                    result = bk$.grep(variations, function (variation) {
                     return parseInt(variation.ref, 10) === parseInt(ref, 10);
                 });
 
@@ -1680,12 +1708,113 @@
                 'Added'       : App.t('shared_views.ecom-product.added', 'Added')
             }, true);
 
-            this.set('variationRef', Server.plugins.ecommerce.product.variations[0].ref, true);
+            this.set('product', Server.plugins.ecommerce.product, true);
+            this.set('variations', Server.plugins.ecommerce.product.variations, true);
+            this.set('options', Server.plugins.ecommerce.product.options, true);
+
+            if (this.get('variations').length === 1) {
+                this.selectVariation(this.get('variations')[0]);
+            } else {
+                this.chooseSensibleDefaultVariation();
+            }
             this.rerender();
         },
 
         attachEvents: function () {
+            bk$(this.el).find('select').on('change', this.dropdownChanged.bind(this));
             bk$(this.el).find('.ecom-product-add-to-cart-btn').on('click', this.addToCartButtonClicked.bind(this));
+        },
+
+        chooseSensibleDefaultVariation: function () {
+            var product = this.get('product'),
+                purchasableVariations = [];
+            purchasableVariations = this.get('variations').filter(function (variation) {
+                return (
+                    product.stockUnlimited === 1
+                    || product.stockTrack === 0
+                    || variation.stock > 0
+                );
+            });
+            if (purchasableVariations.length > 0) {
+                this.selectVariation(purchasableVariations[0]);
+            } else {
+                this.selectVariation(this.get('variations')[0]);
+            }
+        },
+
+        getCurrentOptionChoices: function () {
+            var choices = {};
+            bk$(this.el).find('select option:selected').each(function (i, option) {
+                choices[option.parentNode.name] = option.text;
+            });
+            return choices;
+        },
+
+        dropdownChanged: function (event) {
+            var changedOptionName = event.target.name,
+                selectedValue = bk$(event.target).find('option:selected').text();
+            this.selectVariationOption(changedOptionName, selectedValue);
+            this.rerender();
+        },
+
+        selectVariationOption: function (name, value) {
+            var matchingVariations = this.findVariations(this.getCurrentOptionChoices()),
+                selectedVariation = matchingVariations[0];
+
+            this.set('variationExists', typeof selectedVariation !== 'undefined', true);
+            this.set('variationRef', null, true);
+            this.set('price', null, true);
+            this.set('soldOut', null, true);
+            this.set('disableButton', true, true);
+
+            this.get('options')[name].selectedValue = value;
+            if (this.get('variationExists')) {
+                this.selectVariation(selectedVariation);
+            }
+        },
+
+        selectVariation: function (variation) {
+            var that = this,
+                product = this.get('product');
+            this.set('variationExists', true, true);
+            this.set('variationRef', variation.ref, true);
+            this.set('price', variation.formattedPrice, true);
+            this.set('soldOut', (
+                product.stockUnlimited !== 1
+                && product.stockTrack !== 0
+                && variation.stock < 1
+            ), true);
+            this.set('disableButton', this.get('soldOut'), true);
+            bk$.each(variation.options, function (i, option) {
+                bk$.each(option, function (name, value) {
+                    that.get('options')[name].selectedValue = value;
+                });
+            });
+        },
+
+        findVariations: function (searchCriteria) {
+            var matchingVariations = [];
+            bk$.each(this.get('variations'), function (i, variation) {
+                var isMatch = true;
+                bk$.each(variation.options, function (j, option) {
+                    var name = null,
+                        value = null;
+                    for (name in option) {
+                        if (option.hasOwnProperty()) {
+                            break;
+                        }
+                    }
+                    value = option[name];
+                    if (typeof searchCriteria[name] !== 'undefined' && searchCriteria[name] !== value) {
+                        isMatch = false;
+                        return false;
+                    }
+                });
+                if (isMatch) {
+                    matchingVariations.push(variation);
+                }
+            });
+            return matchingVariations;
         },
 
         addToCartButtonClicked: function (event) {
@@ -1940,7 +2069,7 @@
     BaseKit.Widget.Facebooklike = null;
 
     BaseKit.Widget.FacebooklikeProperties = {
-        showFaces: 'true',
+        showFaces: true,
         action: 'like',
         colorscheme: 'light',
         layout: 'standard',
@@ -4086,6 +4215,37 @@
         });
     };
 }());(function () {
+    BaseKit.Widget.Soundcloud = {};
+
+    BaseKit.Widget.SoundcloudProperties = {
+    };
+
+    BaseKit.Widget.SoundcloudMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+        },
+        load: function () {
+            // do something if the widget needs to be loaded
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Soundcloud = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.SoundcloudProperties,
+            methods: BaseKit.Widget.SoundcloudMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    bk$.fn.basekitWidgetSoundcloud = function (options) {
+        this.each(function (index, el) {
+            bk$(el).data('bkob', new BaseKit.Widget.Soundcloud(el, options));
+        });
+    };
+}());(function () {
     BaseKit.Widget.Space = {};
 
     BaseKit.Widget.SpaceProperties = {
@@ -4675,6 +4835,82 @@
     bk$.fn.basekitWidgetUserregistration = function (options) {
         this.each(function (index, el) {
             bk$(el).data('bkob', new BaseKit.Widget.Userregistration(el, options));
+        });
+    };
+}());
+(function () {
+    BaseKit.Widget.Yelpreview = null;
+
+    BaseKit.Widget.YelpreviewProperties = {
+        reviews: [],
+        count: 10,
+        refreshTime: '3600000'
+    };
+
+    BaseKit.Widget.YelpreviewMethods = {
+        construct: function () {
+            this.refreshInterval = '';
+            this.load();
+        },
+
+        load: function () {
+            this.refreshTimeline();
+            this.getUpdateReviews();
+        },
+
+        refreshTimeline: function () {
+            var that = this,
+                refreshTime = (this.get('refreshTime') > 0 ? parseInt(this.get('refreshTime'), 10) : 3600000);
+
+            if (this.refreshInterval !== '') {
+                window.clearInterval(this.refreshInterval);
+                this.refreshInterval = '';
+            }
+
+            this.refreshInterval = window.setInterval(function () {
+                try {
+                    that.getUpdateReviews();
+                } catch (err) {
+                    clearInterval(that.refreshInterval);
+                }
+            }, refreshTime);
+        },
+
+        getUpdateReviews: function () {
+            var that = this,
+                url = '/site/fetch-yelp-reviews',
+                data = {
+                    'count': this.get('count') > 0 ? this.get('count') : 3,
+                    'businessID': Profile.get('yelpbusinessid')
+                };
+
+            bk$.ajax({
+                url: url,
+                type: "POST",
+                data: data,
+                beforeSend: function () {
+                    that.el.find('.yelpreview').html('<li>' + App.t('widgets.yelp.retrieving_reviews', 'Retrieving Reviews') + '</li>');
+                }
+            }).done(function (response, status) {
+                that.set('reviews', response, true);
+                that.rerender();
+            }).fail(function () {
+                that.set('reviews', [], true);
+                that.rerender();
+            });
+        }
+    };
+
+    BaseKit.Widget.Yelpreview = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.YelpreviewProperties,
+            methods: BaseKit.Widget.YelpreviewMethods
+        });
+    };
+
+    bk$.fn.basekitWidgetYelpreview = function (options) {
+        this.each(function () {
+            bk$(this).data('bkob', new BaseKit.Widget.Yelpreview(this, options));
         });
     };
 }());

@@ -3,7 +3,7 @@
 	<div class="profile-details">
 		<script type="IN/MemberProfile" data-id="{{ profile.linkedin }}" data-related="false" data-width="320" data-format="inline"></script>
 	</div>
-{% elseif app.mode != 'published' %}
+{% elseif app.mode != 'published' and app.mode != 'site-preview' %}
 	<span class="no-profile">No Linkedin profile set</span>
 {% endif %}
 </div>

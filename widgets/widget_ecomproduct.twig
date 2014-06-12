@@ -34,17 +34,24 @@
                 {% set price = data.price %}
             {% endif %}
 
-            {% if product.options|length %}
-                <span itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">
-                    <p class="ecom-product-price" itemprop="lowPrice">{{ price }}</p>
-                </span>
-            {% else %}
-                <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                    <p class="ecom-product-price" itemprop="price">{{ price }}</p>
-                </span>
-            {% endif %}
 
-            {% if data.notAvailable %}
+            {% if data.variationExists is not defined or data.variationExists %}
+
+                {% if product.options|length %}
+                    <span itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">
+                        <p class="ecom-product-price" itemprop="lowPrice">{{ price }}</p>
+                    </span>
+                {% else %}
+                    <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                        <p class="ecom-product-price" itemprop="price">{{ price }}</p>
+                    </span>
+                {% endif %}
+
+                {% if data.soldOut %}
+                    <p>Sold out</p>
+                {% endif %}
+
+            {% else %}
                 <p>Currently unavailable</p>
             {% endif %}
 
@@ -52,9 +59,11 @@
                 <div class="ecom-product-variation">
                 {% for option in product.options %}
                     <span class="ecom-product-vartitle">{{option.title}}</span>
-                    <select data-option-name="{{option.title}}">
+                    <select name="{{option.title}}">
                         {% for value in option.values %}
-                            <option value="{{value.ref}}" {% if value.disabled or option.disabled %} disabled {% endif %}{% if option.valueRef == value.ref %} selected {% endif %}>{{value.title}}</option>
+                            <option {% if option.selectedValue == value.title %} selected {% endif %}>
+                                {{value.title}}
+                            </option>
                         {% endfor %}
                     </select>
                 {% endfor %}
@@ -101,6 +110,6 @@
 
         <p class="ecom-product-long-description" itemprop="description">{{product.longDescription}}</p>
     </article>
-{% elseif app.mode != 'published' %}
+{% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <p>There aren't any products to display.</p>
 {% endif %}
