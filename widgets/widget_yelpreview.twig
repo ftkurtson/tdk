@@ -1,0 +1,21 @@
+{% if data.reviews|length > 0 %}
+<ul class="yelpreview">
+{% for review in data.reviews %}
+    <li>
+        <dl class="review-body">
+            <dt class="rating">
+                <img src="{{ review.rating_image_url }}" alt="{{ 'widgets.yelpreview.rating'|translate('%1 stars', review.rating) }}" title="{{ 'widgets.yelpreview.rating'|translate('%1 stars', review.rating) }}">
+            </dt>
+            <dd class="created">{{ review.time_created }}</dd>
+            <dd class="review">{{ review.review }}</dd>
+            <dd class="reviewer">{{ review.reviewer_name }}</dd>
+        </dl>
+    </li>
+{% endfor %}
+</ul>
+{% endif %}
+{% if data.reviews|length == 0 and app.mode != 'published' and app.mode != 'site-preview' %}
+    <p class="yelpreview-nobusinessid">
+        {{ 'widgets.yelpreview.no_business_id'|translate('Enter your Yelp business ID to show your top rated review.') }}
+    </p>
+{% endif %}

@@ -11,7 +11,7 @@
 	<div class="profile-details">
 		<script type="IN/CompanyProfile" data-id="{{ data.linkedinID }}" data-related="false" data-width="320" data-format="inline"></script>
 	</div>
-{% elseif app.mode != 'published' %}
+{% elseif app.mode != 'published' and app.mode != 'site-preview' %}
 	<span class="no-profile">No Linkedin business profile set</span>
 {% endif %}
 </div>

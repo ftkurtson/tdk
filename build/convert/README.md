@@ -145,8 +145,23 @@ There could be number of reasons that your template doesn't load. Usually, this 
 @import "@{templateLocal}/css/colors/color-red.less";
 </pre>
 
-- LESS is very sensitive to CSS semantic errors. If you are using the TDK, Check your browser's Developer console bar as LESS.js will most likely return back a parse error. From this, you will be able to see the offending file and line number of the syntax error.
+- LESS is very sensitive to CSS semantic errors. If you are using the TDK, Check your browser's Developer console bar as LESS.js will most likely return back a parse error. From this, you will be able to see the offending file and line number of the syntax error. ***If your template isn't rendering, please check the Developer Tools console of your Browser. There'll be clues in there regarding the issue.***
 
+##Running the convertor locally
+
+Requirements:
+
+ - PHP 5.4 or greater
+ - php-zip extension enabled 
+
+Common issues:
+
+ - Make sure you can read from the ```$htmlDir``` (location of the HTML template)
+ - Make sure you have write permissions to the ```$templatesDir```  (location where the BaseKit Template will be written to) and ```$workingDirectory```  (unzipping folder and general working dir)
+ - ```screenshot.png``` has the correct read permissions
+ 
+ 
+ 
 
 ##More information about BaseKit Template Development
 

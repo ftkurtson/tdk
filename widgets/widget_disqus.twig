@@ -18,7 +18,7 @@
         <p>{{ 'widgets.disqus.no_script'|translate('Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>')|raw }}</p>
     </noscript>
     <a href="http://disqus.com" class="dsq-brlink">{{ 'widgets.disqus.footer'|translate('blog comments powered by <span class="logo-disqus">Disqus</span>')|raw }}</a>
-{% elseif app.mode != 'published' %}
+{% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <p class="empty-message">{{ 'widgets.disqus.no_shortname'|translate('To setup Disqus comments on your site, please follow the instructions in the widget settings.')|raw }}</p>
 {% endif %}
 

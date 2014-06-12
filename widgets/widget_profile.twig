@@ -30,7 +30,7 @@
         {% set noPostalcode = true %}
     {% endif %}
 
-    {% if noAddress and noAddress1 and noAddress2 and noCountry and noPostalcode and app.mode != 'published' %}
+    {% if noAddress and noAddress1 and noAddress2 and noCountry and noPostalcode and app.mode != 'published' and app.mode != 'site-preview' %}
         <p class="no-address">No address</p>
     {% endif %}
 {% endif %}
@@ -40,7 +40,7 @@
 <div class='bk-profile-email'>
   {% if (data.email != 'profile' and data.email|length > 0) or (profile.email|length > 0) %}
     <a href="mailto:{% if data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}}{% endif %}">{% if data.email|length > 0 and data.email != 'profile' %}{{ data.email }}{% else %}{{profile.email}}{% endif %}</a>
-  {% elseif app.mode != 'published' %}
+  {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <span>No email</span>
   {% endif %}
 </div>
@@ -50,7 +50,7 @@
 {% if data.profileType == 'headline' %}
   {% if (data.headline != 'profile' and data.headline|length > 0) or (profile.headline|length > 0) %}
     <span>{% if data.headline|length > 0 and data.headline != 'profile' %}{{ data.headline }}{% else %}{{profile.headline}} {% endif %}</span>
-  {% elseif app.mode != 'published' %}
+  {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <span>No headline</span>
   {% endif %}
 {% endif %}
@@ -59,7 +59,7 @@
 {% if data.profileType == 'strapline' %}
   {% if (data.strapline != 'profile' and data.strapline|length > 0) or (profile.strapline|length > 0) %}
     <span>{% if data.strapline|length > 0 and data.strapline != 'profile' %}{{ data.strapline }}{% else %}{{profile.strapline}} {% endif %}</span>
-  {% elseif app.mode != 'published' %}
+  {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <span>No strapline</span>
   {% endif %}
 {% endif %}
@@ -68,7 +68,7 @@
 {% if data.profileType == 'companydescription' %}
   {% if (data.companydescription != 'profile' and data.companydescription|length > 0) or (profile.companydescription|length > 0) %}
     <span>{% if data.companydescription|length > 0 and data.companydescription != 'profile' %}{{ data.companydescription }}{% else %}{{profile.companydescription}} {% endif %}</span>
-  {% elseif app.mode != 'published' %}
+  {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <span>No company description</span>
   {% endif %}
 {% endif %}
@@ -77,7 +77,7 @@
 {% if data.profileType == 'phone' %}
   {% if (data.phone != 'profile' and data.phone|length > 0) or (profile.phone|length > 0) %}
     <span>{% if data.phone|length > 0 and data.phone != 'profile' %}{{ data.phone }}{% else %}{{profile.phone}} {% endif %}</span>
-  {% elseif app.mode != 'published' %}
+  {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <span>No phone number</span>
   {% endif %}
 {% endif %}
@@ -86,7 +86,7 @@
 {% if data.profileType == 'business' %}
   {% if (data.business != 'profile' and data.business|length > 0) or (profile.business|length > 0) %}
     <span>{% if data.business|length > 0 and data.business != 'profile' %}{{ data.business }}{% else %}{{profile.business}} {% endif %}</span>
-  {% elseif app.mode != 'published' %}
+  {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <span>No business</span>
   {% endif %}
 {% endif %}
@@ -95,7 +95,7 @@
 {% if data.profileType == 'copyright' %}
   {% if (data.copyright != 'profile' and data.copyright|length > 0) or (profile.copyright|length > 0) %}
     <span>{% if data.copyright|length > 0 and data.copyright != 'profile' %}{{ data.copyright }}{% else %}{{profile.copyright}} {% endif %}</span>
-  {% elseif app.mode != 'published' %}
+  {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <span>No copyright</span>
   {% endif %}
 {% endif %}
@@ -206,7 +206,7 @@
       {% set noYoutube = true %}
     {% endif %}
 
-    {% if noLinkedIn and noTwitter and noFacebook and noRss and noGoogleplus and noYoutube and app.mode != 'published' %}
+    {% if noLinkedIn and noTwitter and noFacebook and noRss and noGoogleplus and noYoutube and app.mode != 'published' and app.mode != 'site-preview' %}
     <span>No social icons</span>
     {% endif %}
 
@@ -214,6 +214,6 @@
 {% endif %}
 
 
-{% if (data.profileType|length == 0 or (data.profileType != 'address' and data.profileType != 'email' and data.profileType != 'headline' and data.profileType != 'strapline' and data.profileType != 'companydescription' and data.profileType != 'phone' and data.profileType != 'business' and data.profileType != 'copyright' and data.profileType != 'twitter' and data.profileType != 'map' and data.profileType != 'form' and data.profileType != 'socialicons')) and app.mode != 'published' %}
+{% if (data.profileType|length == 0 or (data.profileType != 'address' and data.profileType != 'email' and data.profileType != 'headline' and data.profileType != 'strapline' and data.profileType != 'companydescription' and data.profileType != 'phone' and data.profileType != 'business' and data.profileType != 'copyright' and data.profileType != 'twitter' and data.profileType != 'map' and data.profileType != 'form' and data.profileType != 'socialicons')) and app.mode != 'published' and app.mode != 'site-preview' %}
 <p> Sorry, something is wrong with this widget </p>
 {% endif %}
