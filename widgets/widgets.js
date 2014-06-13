@@ -1058,7 +1058,8 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                data: sendingData
+                data: sendingData,
+                dataType:'json'
             }).done(function (response) {
                 that.setBasketData(response);
                 that.rerender();
@@ -1346,7 +1347,8 @@
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
                 method: 'POST',
-                data: sendingData
+                data: sendingData,
+                dataType:'json'
             }).done(function (response) {
                 that.setCheckoutTotal(response);
                 that.updateCheckoutUI();
