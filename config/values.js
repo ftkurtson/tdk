@@ -1656,6 +1656,7 @@ var plugins = function(template) {
                         "timezone_type":3,
                         "timezone":"Europe/London"
                      },
+                    "inactiveVariations": [],
                      "variations":[
                         {
                            "ref":1,
@@ -1664,11 +1665,9 @@ var plugins = function(template) {
                            "price":"32.00",
                            "formattedPrice":"£32.00",
                            "stock":3,
-                           "values":[
+                           "options":[
                               {
-                                 "ref":92,
-                                 "optionTitle":"Colour",
-                                 "valueTitle":"blue"
+                                 "Colour": "blue"
                               }
                            ]
                         },
@@ -1679,11 +1678,9 @@ var plugins = function(template) {
                            "price":"32.00",
                            "formattedPrice":"£32.00",
                            "stock":8,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":93,
-                                 "optionTitle":"Colour",
-                                 "valueTitle":"turquoise"
+                                 "Colour": "turquoise"
                               }
                            ]
                         },
@@ -1694,11 +1691,9 @@ var plugins = function(template) {
                            "price":"32.00",
                            "formattedPrice":"£32.00",
                            "stock":9,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":94,
-                                 "optionTitle":"Colour",
-                                 "valueTitle":"pink"
+                                 "Colour": "turquoise"
                               }
                            ]
                         },
@@ -1709,11 +1704,9 @@ var plugins = function(template) {
                            "price":"30.00",
                            "formattedPrice":"£32.00",
                            "stock":7,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":95,
-                                 "optionTitle":"Colour",
-                                 "valueTitle":"brown"
+                                 "Colour": "turquoise"
                               }
                            ]
                         }
@@ -1780,6 +1773,7 @@ var plugins = function(template) {
                         "timezone_type":3,
                         "timezone":"Europe/London"
                      },
+                     "inactiveVariations": [],
                      "variations":[
                         {
                            "ref":2,
@@ -1788,11 +1782,9 @@ var plugins = function(template) {
                            "price":"32.00",
                            "formattedPrice":"£32.00",
                            "stock":3,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":92,
-                                 "optionTitle":"Colour",
-                                 "valueTitle":"blue"
+                                 "Colour": "turquoise"
                               }
                            ]
                         },
@@ -1803,11 +1795,9 @@ var plugins = function(template) {
                            "price":"32.00",
                            "formattedPrice":"£32.00",
                            "stock":8,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":93,
-                                 "optionTitle":"Colour",
-                                 "valueTitle":"turquoise"
+                                 "Colour": "turquoise"
                               }
                            ]
                         },
@@ -1818,11 +1808,9 @@ var plugins = function(template) {
                            "price":"32.00",
                            "formattedPrice":"£32.00",
                            "stock":9,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":94,
-                                 "optionTitle":"Colour",
-                                 "valueTitle":"pink"
+                                 "Colour": "turquoise"
                               }
                            ]
                         },
@@ -1833,11 +1821,9 @@ var plugins = function(template) {
                            "price":"30.00",
                            "formattedPrice":"£32.00",
                            "stock":7,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":95,
-                                 "optionTitle":"Colour",
-                                 "valueTitle":"brown"
+                                 "Colour": "turquoise"
                               }
                            ]
                         }
@@ -1896,6 +1882,7 @@ var plugins = function(template) {
                         "timezone_type":3,
                         "timezone":"Europe/London"
                      },
+                     "inactiveVariations": [],
                      "variations":[
                         {
                            "ref":11,
@@ -1904,11 +1891,9 @@ var plugins = function(template) {
                            "price":"42.00",
                            "formattedPrice":"£42.00",
                            "stock":4,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":96,
-                                 "optionTitle":"Size",
-                                 "valueTitle":"small"
+                                 "Colour": "turquoise"
                               }
                            ]
                         },
@@ -1919,11 +1904,9 @@ var plugins = function(template) {
                            "price":"58.00",
                            "formattedPrice":"£58.00",
                            "stock":15,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":97,
-                                 "optionTitle":"Size",
-                                 "valueTitle":"large"
+                                 "Colour": "turquoise"
                               }
                            ]
                         }
@@ -1986,6 +1969,7 @@ var plugins = function(template) {
                         "timezone_type":3,
                         "timezone":"Europe/London"
                     },
+                    "inactiveVariations": [],
                     "variations":[
                         {
                            "ref":10,
@@ -1994,11 +1978,9 @@ var plugins = function(template) {
                            "price":"42.00",
                            "formattedPrice":"£42.00",
                            "stock":4,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":96,
-                                 "optionTitle":"Size",
-                                 "valueTitle":"small"
+                                 "Colour": "turquoise"
                               }
                            ]
                         },
@@ -2009,11 +1991,9 @@ var plugins = function(template) {
                            "price":"58.00",
                            "formattedPrice":"£58.00",
                            "stock":15,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":97,
-                                 "optionTitle":"Size",
-                                 "valueTitle":"large"
+                                 "Colour": "turquoise"
                               }
                            ]
                         }
@@ -2076,6 +2056,7 @@ var plugins = function(template) {
                         "timezone_type":3,
                         "timezone":"Europe/London"
                      },
+                     "inactiveVariations": [],
                     "variations":[
                         {
                            "ref":22,
@@ -2084,11 +2065,9 @@ var plugins = function(template) {
                            "price":"42.00",
                            "formattedPrice":"£42.00",
                            "stock":4,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":96,
-                                 "optionTitle":"Size",
-                                 "valueTitle":"small"
+                                 "Colour": "turquoise"
                               }
                            ]
                         },
@@ -2098,11 +2077,9 @@ var plugins = function(template) {
                            "sku":"1234",
                            "price":"58.00",
                            "stock":15,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":97,
-                                 "optionTitle":"Size",
-                                 "valueTitle":"large"
+                                 "Colour": "turquoise"
                               }
                            ]
                         }
@@ -2165,6 +2142,7 @@ var plugins = function(template) {
                         "timezone_type":3,
                         "timezone":"Europe/London"
                     },
+                    "inactiveVariations": [],
                     "variations":[
                         {
                            "ref":21,
@@ -2173,11 +2151,9 @@ var plugins = function(template) {
                            "price":"67.00",
                            "formattedPrice":"£67.00",
                            "stock":3,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":90,
-                                 "optionTitle":"Colour",
-                                 "valueTitle":"brown"
+                                 "Colour": "turquoise"
                               }
                            ]
                         },
@@ -2188,11 +2164,9 @@ var plugins = function(template) {
                            "price":"67.00",
                            "formattedPrice":"£67.00",
                            "stock":1,
-                           "values":[
+                            "options":[
                               {
-                                 "ref":91,
-                                 "optionTitle":"Colour",
-                                 "valueTitle":"red"
+                                 "Colour": "turquoise"
                               }
                            ]
                         }
@@ -2244,6 +2218,17 @@ var plugins = function(template) {
                 "timezone": "Europe/London",
                 "timezone_type": 3
               },
+              "options": {
+                  "Colour": {
+                      "selectedValue": "Red",
+                      "title": "Colour",
+                      "values": [
+                          {
+                              "title": "Red"
+                          }
+                      ]
+                  }
+              },
               "variations": [
                 {
                   "formattedPrice": "£34.00",
@@ -2251,10 +2236,13 @@ var plugins = function(template) {
                   "productRef": 1,
                   "ref": 1,
                   "sku": "",
-                  "stock": 0,
+                  "stock": 10,
                   "title": "Donec id elit non sapien tincidunt",
                   "values": [],
-                  "weight": "0.000"
+                  "weight": "0.000",
+                  "options": [{
+                      "Colour": "Red"
+                  }]
                 }
               ],
               "visibility": 1
@@ -2332,11 +2320,9 @@ var plugins = function(template) {
                        "price":"32.00",
                        "formattedPrice":"£32.00",
                        "stock":3,
-                       "values":[
+                       "options":[
                           {
-                             "ref":92,
-                             "optionTitle":"Colour",
-                             "valueTitle":"blue"
+                             "Colour": "Blue"
                           }
                        ]
                     },
@@ -2347,11 +2333,9 @@ var plugins = function(template) {
                        "price":"32.00",
                        "formattedPrice":"£32.00",
                        "stock":8,
-                       "values":[
+                       "options":[
                           {
-                             "ref":93,
-                             "optionTitle":"Colour",
-                             "valueTitle":"turquoise"
+                             "Colour": "turquoise"
                           }
                        ]
                     },
@@ -2362,11 +2346,9 @@ var plugins = function(template) {
                        "price":"32.00",
                        "formattedPrice":"£32.00",
                        "stock":9,
-                       "values":[
+                       "options":[
                           {
-                             "ref":94,
-                             "optionTitle":"Colour",
-                             "valueTitle":"pink"
+                             "Colour": "pink"
                           }
                        ]
                     },
@@ -2377,11 +2359,9 @@ var plugins = function(template) {
                        "price":"30.00",
                        "formattedPrice":"£32.00",
                        "stock":7,
-                       "values":[
+                       "options":[
                           {
-                             "ref":95,
-                             "optionTitle":"Colour",
-                             "valueTitle":"brown"
+                             "Colour": "brown"
                           }
                        ]
                     }
@@ -2454,62 +2434,54 @@ var plugins = function(template) {
                  "inactiveVariations": [],
                  "variations":[
                     {
-                       "ref":2,
+                       "ref":1,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
                        "formattedPrice":"£32.00",
                        "stock":3,
-                       "values":[
+                       "options":[
                           {
-                             "ref":92,
-                             "optionTitle":"Colour",
-                             "valueTitle":"blue"
+                             "Colour": "Blue"
                           }
                        ]
                     },
                     {
-                       "ref":4,
+                       "ref":3,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
                        "formattedPrice":"£32.00",
                        "stock":8,
-                       "values":[
+                       "options":[
                           {
-                             "ref":93,
-                             "optionTitle":"Colour",
-                             "valueTitle":"turquoise"
+                             "Colour": "turquoise"
                           }
                        ]
                     },
                     {
-                       "ref":6,
+                       "ref":5,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"32.00",
                        "formattedPrice":"£32.00",
                        "stock":9,
-                       "values":[
+                       "options":[
                           {
-                             "ref":94,
-                             "optionTitle":"Colour",
-                             "valueTitle":"pink"
+                             "Colour": "pink"
                           }
                        ]
                     },
                     {
-                       "ref":8,
+                       "ref":7,
                        "title":"productVariation",
                        "sku":"1234",
                        "price":"30.00",
                        "formattedPrice":"£32.00",
                        "stock":7,
-                       "values":[
+                       "options":[
                           {
-                             "ref":95,
-                             "optionTitle":"Colour",
-                             "valueTitle":"brown"
+                             "Colour": "brown"
                           }
                        ]
                     }
@@ -2580,11 +2552,9 @@ var plugins = function(template) {
                        "price":"42.00",
                        "formattedPrice":"£42.00",
                        "stock":4,
-                       "values":[
+                       "options":[
                           {
-                             "ref":96,
-                             "optionTitle":"Size",
-                             "valueTitle":"small"
+                             "Size": "small"
                           }
                        ]
                     },
@@ -2595,11 +2565,9 @@ var plugins = function(template) {
                        "price":"58.00",
                        "formattedPrice":"£58.00",
                        "stock":15,
-                       "values":[
+                       "options":[
                           {
-                             "ref":97,
-                             "optionTitle":"Size",
-                             "valueTitle":"large"
+                             "Size": "large"
                           }
                        ]
                     }
@@ -2670,11 +2638,9 @@ var plugins = function(template) {
                        "price":"42.00",
                        "formattedPrice":"£42.00",
                        "stock":4,
-                       "values":[
+                       "options":[
                           {
-                             "ref":96,
-                             "optionTitle":"Size",
-                             "valueTitle":"small"
+                             "Size": "small"
                           }
                        ]
                     },
@@ -2685,11 +2651,9 @@ var plugins = function(template) {
                        "price":"58.00",
                        "formattedPrice":"£58.00",
                        "stock":15,
-                       "values":[
+                       "options":[
                           {
-                             "ref":97,
-                             "optionTitle":"Size",
-                             "valueTitle":"large"
+                             "Size": "large"
                           }
                        ]
                     }
@@ -2760,11 +2724,9 @@ var plugins = function(template) {
                        "price":"42.00",
                        "formattedPrice":"£42.00",
                        "stock":4,
-                       "values":[
+                       "options":[
                           {
-                             "ref":96,
-                             "optionTitle":"Size",
-                             "valueTitle":"small"
+                             "Size": "small"
                           }
                        ]
                     },
@@ -2774,11 +2736,9 @@ var plugins = function(template) {
                        "sku":"1234",
                        "price":"58.00",
                        "stock":15,
-                       "values":[
+                       "options":[
                           {
-                             "ref":97,
-                             "optionTitle":"Size",
-                             "valueTitle":"large"
+                             "Size": "large"
                           }
                        ]
                     }
@@ -2849,11 +2809,9 @@ var plugins = function(template) {
                        "price":"67.00",
                        "formattedPrice":"£67.00",
                        "stock":3,
-                       "values":[
+                       "options":[
                           {
-                             "ref":90,
-                             "optionTitle":"Colour",
-                             "valueTitle":"brown"
+                             "Colour": "Blue"
                           }
                        ]
                     },
@@ -2864,11 +2822,9 @@ var plugins = function(template) {
                        "price":"67.00",
                        "formattedPrice":"£67.00",
                        "stock":1,
-                       "values":[
+                       "options":[
                           {
-                             "ref":91,
-                             "optionTitle":"Colour",
-                             "valueTitle":"red"
+                             "Colour": "Red"
                           }
                        ]
                     }
