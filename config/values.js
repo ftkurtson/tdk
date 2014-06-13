@@ -2323,6 +2323,7 @@ var plugins = function(template) {
                     "timezone_type":3,
                     "timezone":"Europe/London"
                  },
+                 "inactiveVariations": [],
                  "variations":[
                     {
                        "ref":1,
@@ -2450,6 +2451,7 @@ var plugins = function(template) {
                     "timezone_type":3,
                     "timezone":"Europe/London"
                  },
+                 "inactiveVariations": [],
                  "variations":[
                     {
                        "ref":2,
@@ -2569,6 +2571,7 @@ var plugins = function(template) {
                     "timezone_type":3,
                     "timezone":"Europe/London"
                  },
+                 "inactiveVariations": [],
                  "variations":[
                     {
                        "ref":11,
@@ -2658,6 +2661,7 @@ var plugins = function(template) {
                     "timezone_type":3,
                     "timezone":"Europe/London"
                 },
+                "inactiveVariations": [],
                 "variations":[
                     {
                        "ref":10,
@@ -2747,6 +2751,7 @@ var plugins = function(template) {
                     "timezone_type":3,
                     "timezone":"Europe/London"
                  },
+                "inactiveVariations": [],
                 "variations":[
                     {
                        "ref":22,
@@ -2835,6 +2840,7 @@ var plugins = function(template) {
                     "timezone_type":3,
                     "timezone":"Europe/London"
                 },
+                "inactiveVariations": [],
                 "variations":[
                     {
                        "ref":21,
