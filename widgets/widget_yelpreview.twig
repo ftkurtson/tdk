@@ -1,6 +1,7 @@
-{% if data.reviews|length > 0 %}
+{% if data.reviews.reviews is defined and data.reviews.reviews|length > 0 %}
+{% if data.title|length > 0 %}<h2 class="yelp-title">{{ data.title }}</h2>{% endif %}
 <ul class="yelpreview">
-{% for review in data.reviews %}
+{% for review in data.reviews.reviews %}
     <li>
         <dl class="review-body">
             <dt class="rating">
@@ -9,13 +10,15 @@
             <dd class="created">{{ review.time_created }}</dd>
             <dd class="review">{{ review.review }}</dd>
             <dd class="reviewer">{{ review.reviewer_name }}</dd>
+            <dd class="review-link"><a href="{{ data.reviews.url }}" target="_blank">{{ 'widgets.yelpreview.more_info'|translate('Read more...') }}</a></dd>
         </dl>
     </li>
 {% endfor %}
 </ul>
 {% endif %}
-{% if data.reviews|length == 0 and app.mode != 'published' and app.mode != 'site-preview' %}
+
+{% if data.reviews.reviews|length == 0 and app.mode != 'published' and app.mode != 'site-preview' %}
     <p class="yelpreview-nobusinessid">
-        {{ 'widgets.yelpreview.no_business_id'|translate('Enter your Yelp business ID to show your top rated review.') }}
+        Enter your Yelp business ID to show your top rated review.
     </p>
 {% endif %}

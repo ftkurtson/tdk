@@ -4880,7 +4880,7 @@
 
         getUpdateReviews: function () {
             var that = this,
-                url = '/site/fetch-yelp-reviews',
+                url = '/site/12345/fetch-yelp-reviews.js',
                 data = {
                     'count': this.get('count') > 0 ? this.get('count') : 3,
                     'businessID': Profile.get('yelpbusinessid')
@@ -4890,6 +4890,7 @@
                 url: url,
                 type: "POST",
                 data: data,
+                dataType:'json',
                 beforeSend: function () {
                     that.el.find('.yelpreview').html('<li>' + App.t('widgets.yelp.retrieving_reviews', 'Retrieving Reviews') + '</li>');
                 }

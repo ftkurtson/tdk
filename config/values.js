@@ -20,7 +20,8 @@ var profile = function(template) {
         youtube: "youtube.com",
         googleplus: "googleplus.com",
         rss: "rss.com",
-        copyright: "Copyright 2013. All Rights Reserved."
+        copyright: "Copyright 2013. All Rights Reserved.",
+        yelpbusinessid: "mft-bbq-and-vegan-food-boise"
     };
 };
 
@@ -196,6 +197,11 @@ var properties = {
         return bk$.extend({
             selectedTag: 'summer',
             title: 'Featured Products'
+        }, templateValues);
+    },
+    yelpreview: function(templateName, templateValues) {
+        return bk$.extend({
+            title: 'Yelp Reviews'
         }, templateValues);
     }
 };
