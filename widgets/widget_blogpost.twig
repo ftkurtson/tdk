@@ -46,6 +46,21 @@
             </div>
         {% endif %}
     </footer>
+
+    {% if data.showSharingIcons %}
+        <aside class="blog-post-sharing">
+            <button class="btn facebook">
+                <span>Facebook</span>
+            </button>
+            <button class="btn twitter">
+                <span>Twitter</span>
+            </button>
+            <button class="btn googleplus">
+                <span>Google+</span>
+            </button>
+        </aside>
+    {% endif %}
+
 </article>
 {% else %}
     <p>You haven’t added any posts yet.</p>

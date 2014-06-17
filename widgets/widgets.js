@@ -8,7 +8,28 @@
         },
 
         load: function () {
-            //do something if the widget needs to be loaded!
+            if (Server.app.mode === 'published') {
+                this.attachPopupEvents();
+            }
+        },
+
+        attachPopupEvents: function () {
+            var thisEl = bk$(this.el),
+                specs = 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600',
+                currentUrl = encodeURIComponent(window.location.href),
+                blogSummary = Server.plugins.blog && Server.plugins.blog.posts ? Server.plugins.blog.posts[0].summary : '';
+
+            thisEl.find('button.facebook').on('click', function () {
+                window.open('https://www.facebook.com/sharer/sharer.php?u=' + currentUrl, '', specs);
+            });
+
+            thisEl.find('button.twitter').on('click', function () {
+                window.open('https://twitter.com/share?text=' + blogSummary + '&url=' + currentUrl, '', specs);
+            });
+
+            thisEl.find('button.googleplus').on('click', function () {
+                window.open('https://plus.google.com/share?url=' + currentUrl, '', specs);
+            });
         }
     };
 
@@ -1260,12 +1281,12 @@
 
                 if (variation !== null) {
                     that.items.push({
-                        ref: ref,
-                        title: variation.title,
-                        productRef: variation.productRef,
-                        assetUrl: variation.assetUrl,
-                        quantity: parseInt(cart[ref], 10),
-                        pricePU: variation.formattedPrice
+                        ref        : ref,
+                        title      : variation.title,
+                        productRef : variation.productRef,
+                        assetUrl   : variation.assetUrl,
+                        quantity   : parseInt(cart[ref], 10),
+                        pricePU    : variation.formattedPrice
                     });
 
                     variations[ref] = parseInt(cart[ref], 10);
@@ -1384,24 +1405,22 @@
         },
 
         updateTax: function () {
-
             var thisEl = bk$(this.el),
-            taxData = {
-                countryCode:       this.getCountryCode(),
-                tax:        Server.plugins.ecommerce.taxes
-            },
-            taxHtml = this.rerenderPartial('widget_ecomcheckout_tax', taxData);
+                taxData = {
+                    countryCode : this.getCountryCode(),
+                    tax         : Server.plugins.ecommerce.taxes
+                },
+                taxHtml = this.rerenderPartial('widget_ecomcheckout_tax', taxData);
 
-            if (this.el.find('[name="taxRef"]').length > 0) {
-                this.el.find('[name="taxRef"]').remove();
+            if (thisEl.find('[name="taxRef"]').length > 0) {
+                thisEl.find('[name="taxRef"]').remove();
             }
 
             thisEl.find('.js-checkout-form').append(taxHtml);
 
-            if(!this.el.find('[name="taxRef"]').val()){
-                this.el.find('[name="taxRef"]').remove();
+            if (!thisEl.find('[name="taxRef"]').val()) {
+                thisEl.find('[name="taxRef"]').remove();
             }
-
         },
 
         updateEmptyUI: function () {
@@ -1506,6 +1525,11 @@
             } else {
                 btnEl.prop('disabled', false);
             }
+
+            // HC: always disable the paymentbutton from preview and edit modes
+            if (Server.app.mode !== 'published') {
+                btnEl.prop('disabled', true);
+            }
         },
 
         findVariationByRef: function (ref) {
@@ -1515,8 +1539,8 @@
             bk$.each(products, function (key, product) {
                 var variations = bk$.merge(product.variations, product.inactiveVariations),
                     result = bk$.grep(variations, function (variation) {
-                    return parseInt(variation.ref, 10) === parseInt(ref, 10);
-                });
+                        return parseInt(variation.ref, 10) === parseInt(ref, 10);
+                    });
 
                 if (result.length === 1) {
                     variation = result[0];
@@ -1725,6 +1749,20 @@
         attachEvents: function () {
             bk$(this.el).find('select').on('change', this.dropdownChanged.bind(this));
             bk$(this.el).find('.ecom-product-add-to-cart-btn').on('click', this.addToCartButtonClicked.bind(this));
+
+            this.previewImageEvent();
+        },
+
+        previewImageEvent: function () {
+            var thisEl = bk$(this.el),
+                previewWrapper = thisEl.find('.ecom-product-preview-image-wrap'),
+                previewImg = thisEl.find('.ecom-product-preview-image');
+
+            thisEl.find('.ecom-product-image-wrap').on('click', function () {
+                var src = bk$(this).find('img').attr('src');
+                previewImg.attr('src', src);
+                previewWrapper.css('background-image', 'url(' + src + ')');
+            });
         },
 
         chooseSensibleDefaultVariation: function () {
@@ -4844,6 +4882,7 @@
     BaseKit.Widget.Yelpreview = null;
 
     BaseKit.Widget.YelpreviewProperties = {
+        title: App.t('widgets.yelpreview.title', 'Yelp reviews'),
         reviews: [],
         count: 10,
         refreshTime: '3600000'

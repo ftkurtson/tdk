@@ -1,7 +1,7 @@
 {% if plugins.ecommerce.product is not null %}
     {% set product = plugins.ecommerce.product %}
     <article class="ecom-product" itemscope itemtype="http://schema.org/Product">
-        {% if product.assets is not null %}
+        {% if product.assets|length > 0 %}
         <div class="ecom-product-images-container">
             {% if product.featureImageAssetRef %}
                 {% set imageSrcPreview = plugins.assets.images[product.featureImageAssetRef].url %}
@@ -37,7 +37,7 @@
 
             {% if data.variationExists is not defined or data.variationExists %}
 
-                {% if product.options|length %}
+                {% if product.options|length > 0 %}
                     <span itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer">
                         <p class="ecom-product-price" itemprop="lowPrice">{{ price }}</p>
                     </span>

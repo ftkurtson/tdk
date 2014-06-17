@@ -87,6 +87,7 @@
 
                     // HC: store the plugin data
                     properties.plugins = {};
+                    properties.app = {};
 
                     if (typeof Server !== 'undefined' && Server.hasOwnProperty('plugins')) {
                         // HC: get the plugin data from the server
@@ -99,6 +100,12 @@
                                 }
                             }
                         }
+                    }
+
+                    if (typeof Server !== 'undefined' && Server.hasOwnProperty('app')) {
+                        bk$.extend(properties.app, {
+                            'mode': Server.app.mode
+                        });
                     }
 
                     // HC: make profile available for the published site widgets

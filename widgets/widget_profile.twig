@@ -1,5 +1,6 @@
 {# ADDRESS #}
 {% if data.profileType == 'address' %}
+<div class='bk-profile-address'>
     {% if (data.address != 'profile' and data.address|length > 0) or (profile.address|length > 0) %}
         <p class="address">{% if data.address|length > 0 and data.address != 'profile' %}{{ data.address }}{% else %}{{profile.address}} {% endif %}</p>
     {% else %}
@@ -33,6 +34,7 @@
     {% if noAddress and noAddress1 and noAddress2 and noCountry and noPostalcode and app.mode != 'published' and app.mode != 'site-preview' %}
         <p class="no-address">No address</p>
     {% endif %}
+</div>
 {% endif %}
 
 {# EMAIL #}

@@ -126,7 +126,7 @@ bk$(function() {
                 html += renderWidget('menu', 'menu1');
                 html += renderWidget('signupform', 'mainsignupform1');
                 html += renderWidget('blogpostlist', 'blogpostlist1');
-                html += renderWidget('blogpost', 'blogpost1');
+                html += renderWidget('blogpost', 'blogpost1', {'showSharingIcons': true});
                 html += renderWidget('blogsearch', 'blogsearch1');
                 html += renderWidget('menusections', 'menusections1');
                 html += renderWidget('menu', 'menu1');

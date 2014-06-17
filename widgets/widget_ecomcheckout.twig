@@ -85,7 +85,7 @@
 
                 <div class="checkout-payment-paypal">
                     <input id="paywithpaypal" type="radio" name="paymentMethod" value="paypal">
-                    <label for="paywithpaypal">{{ "widgets.ecomcheckout.paywithpaypal"|translate("Pay with Paypal") }}</label>
+                    <label for="paywithpaypal">{{ "widgets.ecomcheckout.paywithpaypal"|translate("Pay with PayPal") }}</label>
                 </div>
             </div>
         {% elseif plugins.ecommerce.store.stripePublishableKey != null %}
@@ -94,7 +94,7 @@
             <input id="paywithpaypal" type="hidden" name="paymentMethod" value="paypal">
         {% endif %}
 
-        <button class="checkout-order-button btn js-create-order" type="submit">{{ 'widgets.ecomcheckout.proceed_payment'|translate('Continue to payment') }}</button>
+        <button class="checkout-order-button btn js-create-order" type="submit" {% if app.mode != 'published' %}disabled{% endif %}>{{ 'widgets.ecomcheckout.proceed_payment'|translate('Continue to payment') }}</button>
 
         {# widget_ecomcheckout_itemsinput #}
     </form>

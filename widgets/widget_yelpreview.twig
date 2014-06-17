@@ -19,6 +19,6 @@
 
 {% if data.reviews.reviews|length == 0 and app.mode != 'published' and app.mode != 'site-preview' %}
     <p class="yelpreview-nobusinessid">
-        Enter your Yelp business ID to show your top rated review.
+        {{ 'widgets.yelpreview.no_business_id'|translate('Enter your Yelp business ID to show your top rated review.') }}
     </p>
 {% endif %}
