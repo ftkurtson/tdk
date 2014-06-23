@@ -51,54 +51,54 @@
 {# HEADLINE #}
 {% if data.profileType == 'headline' %}
   {% if (data.headline != 'profile' and data.headline|length > 0) or (profile.headline|length > 0) %}
-    <span>{% if data.headline|length > 0 and data.headline != 'profile' %}{{ data.headline }}{% else %}{{profile.headline}} {% endif %}</span>
+    <span class="bk-profile-headline">{% if data.headline|length > 0 and data.headline != 'profile' %}{{ data.headline }}{% else %}{{profile.headline}} {% endif %}</span>
   {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
-    <span>No headline</span>
+    <span class="bk-profile-headline">No headline</span>
   {% endif %}
 {% endif %}
 
 {# STRAP LINE #}
 {% if data.profileType == 'strapline' %}
   {% if (data.strapline != 'profile' and data.strapline|length > 0) or (profile.strapline|length > 0) %}
-    <span>{% if data.strapline|length > 0 and data.strapline != 'profile' %}{{ data.strapline }}{% else %}{{profile.strapline}} {% endif %}</span>
+    <span class="bk-profile-strapline">{% if data.strapline|length > 0 and data.strapline != 'profile' %}{{ data.strapline }}{% else %}{{profile.strapline}} {% endif %}</span>
   {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
-    <span>No strapline</span>
+    <span class="bk-profile-strapline">No strapline</span>
   {% endif %}
 {% endif %}
 
 {# COMPANY DESCRIPTION #}
 {% if data.profileType == 'companydescription' %}
   {% if (data.companydescription != 'profile' and data.companydescription|length > 0) or (profile.companydescription|length > 0) %}
-    <span>{% if data.companydescription|length > 0 and data.companydescription != 'profile' %}{{ data.companydescription }}{% else %}{{profile.companydescription}} {% endif %}</span>
+    <span class="bk-profile-companydescription">{% if data.companydescription|length > 0 and data.companydescription != 'profile' %}{{ data.companydescription }}{% else %}{{profile.companydescription}} {% endif %}</span>
   {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
-    <span>No company description</span>
+    <span class="bk-profile-companydescription">No company description</span>
   {% endif %}
 {% endif %}
 
 {# PHONE NUMBER #}
 {% if data.profileType == 'phone' %}
   {% if (data.phone != 'profile' and data.phone|length > 0) or (profile.phone|length > 0) %}
-    <span>{% if data.phone|length > 0 and data.phone != 'profile' %}{{ data.phone }}{% else %}{{profile.phone}} {% endif %}</span>
+    <span class="bk-profile-phone">{% if data.phone|length > 0 and data.phone != 'profile' %}{{ data.phone }}{% else %}{{profile.phone}} {% endif %}</span>
   {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
-    <span>No phone number</span>
+    <span class="bk-profile-phone">No phone number</span>
   {% endif %}
 {% endif %}
 
 {# BUSINESS NAME #}
 {% if data.profileType == 'business' %}
   {% if (data.business != 'profile' and data.business|length > 0) or (profile.business|length > 0) %}
-    <span>{% if data.business|length > 0 and data.business != 'profile' %}{{ data.business }}{% else %}{{profile.business}} {% endif %}</span>
+    <span class="bk-profile-business">{% if data.business|length > 0 and data.business != 'profile' %}{{ data.business }}{% else %}{{profile.business}} {% endif %}</span>
   {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
-    <span>No business</span>
+    <span class="bk-profile-business">No business</span>
   {% endif %}
 {% endif %}
 
 {# COPYRIGHT #}
 {% if data.profileType == 'copyright' %}
   {% if (data.copyright != 'profile' and data.copyright|length > 0) or (profile.copyright|length > 0) %}
-    <span>{% if data.copyright|length > 0 and data.copyright != 'profile' %}{{ data.copyright }}{% else %}{{profile.copyright}} {% endif %}</span>
+    <span  class="bk-profile-copyright">{% if data.copyright|length > 0 and data.copyright != 'profile' %}{{ data.copyright }}{% else %}{{profile.copyright}} {% endif %}</span>
   {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
-    <span>No copyright</span>
+    <span class="bk-profile-copyright">No copyright</span>
   {% endif %}
 {% endif %}
 
