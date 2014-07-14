@@ -75,6 +75,19 @@
 * Slideshow buttons and captions
 * YouTube embed (just make sure its visible, no design work required)
 * Feature section design and styling
+* Test Profile Widget areas with all variations
+  * Address
+  * Email
+  * Headline
+  * Strapline
+  * Company description
+  * Phone
+  * Business
+  * Copyright
+  * Latest Tweet
+  * Map
+  * Single Email Form
+  * Social Icons
 
 ###Menu Checklist
 * Menu item and promoted item design
