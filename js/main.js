@@ -48,7 +48,8 @@ var availableGoogleFonts = {
     "\"Pacifico\", \"Lobster\", Verdana, sans-serif":'Pacifico:400:latin',
     "\"Oxygen\", \"Helvetica\", Arial, sans-serif":'Oxygen:300,400,700:latin',
     "\"Vampiro One\", \"Courier New\", serif":'Vampiro+One:400:latin',
-    "\"Bree Serif\", \"Merriweather\", Georgia, serif":'Bree+Serif:400:latin'
+    "\"Bree Serif\", \"Merriweather\", Georgia, serif":'Bree+Serif:400:latin',
+    "\"Alfa Slab One\", \"Oswald\", Arial, sans-serif": 'Alfa+Slab+One:700:latin'
 }
 
 bk$(function() {
