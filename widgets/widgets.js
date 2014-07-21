@@ -769,24 +769,41 @@
 
         showMessageBox: function () {
             var thisEl = bk$(this.el),
-                overlay = bk$('<div class="overlay"></div>');
+                overlay = bk$('<div class="overlay"></div>'),
+                formEl = null;
 
             if (thisEl.find('.overlay').length === 0) {
                 thisEl.append(overlay);
+            }
+
+            formEl = thisEl.find('form');
+
+            // Add add class to form element
+            if (formEl.length > 0) {
+                formEl.addClass('submitting');
             }
         },
 
         removeMessageBox: function () {
             var thisEl = bk$(this.el),
-                t = null;
+                t = null,
+                formEl = null;
+
+            formEl = thisEl.find('form');
+
+            // Add remove class to form element
+            if (formEl.length > 0) {
+                formEl.removeClass('submitting');
+            }
+
+            thisEl.find('.email, .message').val('');
 
             t = setTimeout(function () {
                 clearTimeout(t);
                 thisEl.find('.overlay').fadeOut(function () {
-                    thisEl.find('.email, .message').val('');
                     bk$(this).remove();
                 });
-            }, 15000);
+            }, 10000);
         }
     };
 
@@ -1213,8 +1230,6 @@
                 that.updateCheckout();
             });
 
-            this.handleCountryAutoFill();
-            this.updateTax();
             this.updateCheckout();
         },
 
@@ -1248,7 +1263,8 @@
                 try {
 
                     // HC: autofill does not fire change on country select so manually check it's value
-                    if (that.el.find('[name="delivery[countryCode]"]').val() !== that.countryCode) {
+                    if (that.el.find('[name="delivery[countryCode]"]').length > 0
+                            && that.el.find('[name="delivery[countryCode]"]').val() !== that.countryCode) {
 
                         // HC: resets the delivery ref value
                         that.el.find('[name="deliveryRef"]').val("");
@@ -1303,6 +1319,7 @@
                 this.updateEmptyUI();
             } else {
                 this.updateCheckoutTotal();
+                this.handleCountryAutoFill();
             }
         },
 
@@ -1361,9 +1378,11 @@
                     storeRef: Server.plugins.ecommerce.store.ref,
                     productVariationRefs: this.variations,
                     countryCode: this.getCountryCode(),
-                    deliveryRef: this.getDeliveryRef(),
-                    taxRef: this.getTaxRef()
+                    deliveryRef: this.getDeliveryRef()
                 };
+
+            that.updateTax();
+            sendingData.taxRef = that.getTaxRef();
 
             bk$.ajax({
                 url: Server.plugins.ecommerce.store.calculateUrl,
@@ -1406,9 +1425,10 @@
 
         updateTax: function () {
             var thisEl = bk$(this.el),
+                countryCode = this.getCountryCode(),
                 taxData = {
-                    countryCode : this.getCountryCode(),
-                    tax         : Server.plugins.ecommerce.taxes
+                    countryCode : countryCode,
+                    taxRef      : this.findTaxRef(countryCode)
                 },
                 taxHtml = this.rerenderPartial('widget_ecomcheckout_tax', taxData);
 
@@ -1421,6 +1441,17 @@
             if (!thisEl.find('[name="taxRef"]').val()) {
                 thisEl.find('[name="taxRef"]').remove();
             }
+        },
+
+        findTaxRef: function (countryCode) {
+            var taxRef = Server.plugins.ecommerce.store.defaultTaxRef;
+            bk$.each(Server.plugins.ecommerce.taxes, function (key, tax) {
+                if (tax !== null && tax.deleted === 0 && tax.countryCode === countryCode) {
+                    taxRef = tax.ref;
+                }
+            });
+
+            return taxRef;
         },
 
         updateEmptyUI: function () {
@@ -1806,8 +1837,7 @@
             this.set('price', null, true);
             this.set('soldOut', null, true);
             this.set('disableButton', true, true);
-
-            this.get('options')[name].selectedValue = value;
+            this.get('options')[name].selectedValue = bk$.trim(value);
             if (this.get('variationExists')) {
                 this.selectVariation(selectedVariation);
             }
@@ -2054,6 +2084,7 @@
 
         attachEvents: function () {
             this.menuDropdownEvent();
+            this.addClassToCurrentPage();
         },
 
         menuDropdownEvent: function () {
@@ -2066,9 +2097,9 @@
                 e.preventDefault();
                 if (!bk$('body').hasClass('edit')) {
                     if (menuEl.is(':visible')) {
-                        menuEl.hide();
+                        menuEl.removeClass('open');
                     } else {
-                        menuEl.show();
+                        menuEl.addClass('open');
                     }
                 }
             });
@@ -2085,7 +2116,25 @@
                 menuEl = bk$(this.el).find('.extendednavigation ul');
 
             if (w > 320 && menuEl.is(':hidden')) {
-                menuEl.removeAttr('style');
+                menuEl.removeClass('open');
+            }
+        },
+
+        addClassToCurrentPage: function () {
+            var pageLiEls = bk$(this.el).find('li'),
+                folderLiEl = null;
+
+            if (pageLiEls.length > 0) {
+                pageLiEls.each(function () {
+                    if (parseInt(bk$(this).attr('id').replace('menu-item_', ''), 10) === parseInt(Server.page.ref, 10)) {
+                        bk$(this).addClass('selected');
+
+                        folderLiEl = bk$(this).parents('li');
+                        if (folderLiEl.length > 0 && folderLiEl.hasClass('folder')) {
+                            folderLiEl.addClass('selected');
+                        }
+                    }
+                });
             }
         }
     };
@@ -2103,6 +2152,44 @@
     bk$.fn.basekitWidgetExtendednavigation = function (options) {
         this.each(function (index, el) {
             bk$(el).data('bkob', new BaseKit.Widget.Extendednavigation(el, options));
+        });
+    };
+}());(function () {
+    BaseKit.Widget.Facebookcomments = null;
+
+    BaseKit.Widget.FacebookcommentsProperties = {
+        url: '',
+        numPosts: 5,
+        colorScheme: 'light',
+        orderBy: 'social',
+        appId: ''
+    };
+
+    BaseKit.Widget.FacebookcommentsMethods = {
+        construct: function (el, options) {
+            this.options = options;
+            this.load();
+            this.fbEl = el;
+        },
+
+        load: function () {
+            //do something if the widget needs to be loaded!
+        }
+    };
+
+    // Base Widget Functionality - What ever is required
+    // to get the widget working in normal mode goes in here.
+    BaseKit.Widget.Facebookcomments = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.FacebookcommentsProperties,
+            methods: BaseKit.Widget.FacebookcommentsMethods
+        });
+    };
+
+    // JQuery plugin so that a widget can be attached to an element
+    bk$.fn.basekitWidgetFacebookcomments = function (options) {
+        this.each(function (index, el) {
+            bk$(el).data('bkob', new BaseKit.Widget.Facebookcomments(el, options));
         });
     };
 }());(function () {
@@ -3050,6 +3137,32 @@
         });
     };
 }());(function () {
+
+    BaseKit.Widget.Parkinglogin = null;
+
+    BaseKit.Widget.ParkingloginProperties = {
+    };
+
+    BaseKit.Widget.ParkingloginMethods = {
+        construct: function (el, options) {
+            this.options = options;
+        }
+    };
+
+    BaseKit.Widget.Parkinglogin = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.ParkingloginProperties,
+            methods: BaseKit.Widget.ParkingloginMethods
+        });
+    };
+
+    bk$.fn.basekitWidgetParkinglogin = function (options) {
+        this.each(function (index, el) {
+            bk$(el).data('bkob', new BaseKit.Widget.Parkinglogin(el, options));
+        });
+    };
+}());
+(function () {
     BaseKit.Widget.Paypalbuynow = null;
 
     BaseKit.Widget.PaypalbuynowProperties = {
@@ -4900,6 +5013,7 @@
         },
 
         refreshTimeline: function () {
+            console.log(1);
             var that = this,
                 refreshTime = (this.get('refreshTime') > 0 ? parseInt(this.get('refreshTime'), 10) : 3600000);
 
@@ -4934,6 +5048,7 @@
                     that.el.find('.yelpreview').html('<li>' + App.t('widgets.yelp.retrieving_reviews', 'Retrieving Reviews') + '</li>');
                 }
             }).done(function (response, status) {
+                console.log('don');
                 that.set('reviews', response, true);
                 that.rerender();
             }).fail(function () {

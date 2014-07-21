@@ -12,9 +12,8 @@
     {% set logo = data.defaultlogo %}
 {% endif %}
 
-{% if url|length>0 %}<a href='{{ relativeUrlPrefix }}/{{ url }}'>{% endif %}
+<a href='{{ relativeUrlPrefix }}/'>
 <div class="logo">
-    <img src="{% if logo and logo|length > 0 %}{{logo}}{% else %}{{'/images/mobile/default-logo.png'|expandAssetUrl}}{% endif %}" {% if data.width and data.width != '' and profile.logo and profile.logo != '' and data.useTemplate != 1 %}style="width: {{data.width}}" {% endif %}></img>
+    <img alt="{% if profile.business and profile.business != '' %}{{profile.business}}{% else %}logo{% endif %}" src="{% if logo and logo|length > 0 %}{{logo}}{% else %}{{'/images/mobile/default-logo.png'|expandAssetUrl}}{% endif %}" {% if data.width and data.width != '' and profile.logo and profile.logo != '' and data.useTemplate != 1 %}style="width: {{data.width}}" {% endif %} />
 </div>
-
-{% if url|length>0 %}</a>{% endif %}
+</a>

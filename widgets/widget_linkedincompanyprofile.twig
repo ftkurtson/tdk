@@ -1,11 +1,13 @@
 <div class='linkedincompanyprofile'>
 {% if data.source == 'companyName' and (data.companyName|length > 0 or profile.business|length > 0) %}
 	<div class="profile-details">
-		{% if(data.companyName and data.companyName|length > 0) %}
-			<script type="IN/CompanyProfile" data-id="http://www.linkedin.com/company/{{ data.companyName|url_encode }}" data-related="false" data-width="320" data-format="inline"></script>
+		{% if (data.companyName and data.companyName|length > 0) %}
+			{% set search = data.companyName|lower|replace({' ': '-'})|url_encode %}
+			<script type="IN/CompanyProfile" data-id="http://www.linkedin.com/company/{{ search }}" data-related="false" data-width="320" data-format="inline"></script>
 		{% else %}
+			{% set search = profile.business|lower|replace({' ': '-'})|url_encode %}
 			<script type="IN/CompanyProfile" data-id="http://www.linkedin.com/company/{{ profile.business|url_encode }}" data-related="false" data-width="320" data-format="inline"></script>
-		{% endif%}
+		{% endif %}
 	</div>
 {% elseif data.source == 'id' and data.linkedinID|length > 0 %}
 	<div class="profile-details">

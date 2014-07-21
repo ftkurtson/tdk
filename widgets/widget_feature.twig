@@ -6,7 +6,7 @@
 
 <div class="feature-bgimg" {% if data.defaultBgImg|length > 0 or  data.bgImg|length > 0 %} style="background-image: url('{{bgImg}}'); background-position: center {{data.positionTopPercentage}}%" {% endif %}>
 	<div class="content">
-		<span class="spare wrapper">
+		<div class="spare wrapper">
 
 			{% if data.header|length > 0 or profile.headline|length > 0 %}
 				{% if data.header and data.header !='profile' and data.header !=''%}
@@ -37,8 +37,7 @@
 				<button class="btn {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %}" {% if data.showBtn == false %}style='display: none'{% endif %} >{% if data.icon|length > 0 %}<i class="{{data.icon}} {% if data.color %}icon-{{data.color}}{% endif %}"></i> {% endif %}<span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.buttonText}}</span></button>
 			</span>
 			{% endif %}
-		</span>
-
+		</div>
 	</div>
 </div>
 

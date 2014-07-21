@@ -2,6 +2,6 @@
 <p class="order-confirmation-blurb">{{ 'widgets.ecomconfirmation.blurb'|translate('Your payment has been taken and your purchase will soon be on its way.') }}</p>
 <dl>
     <dt class="order-confirmation-ref-label">{{ 'widgets.ecomconfirmation.ref_label'|translate('Order reference') }}</dt>
-    <dd class="order-confirmation-ref">{{ (request.query.orderRef is not null) ? request.query.orderRef : 'widgets.ecomconfirmation.ref_placeholder'|translate('ORDER REF') }}</dd>
+    <dd class="order-confirmation-ref">{{ (request.query.orderCode is not null) ? request.query.orderCode : 'widgets.ecomconfirmation.ref_placeholder'|translate('ORDER REF') }}</dd>
 </dl>
 <p class="order-confirmation-gratitude">{{ 'widgets.ecomconfirmation.gratitude'|translate('Thank you for shopping with %1, please visit us again!', profile.business) }}</p>

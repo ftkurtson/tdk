@@ -96,7 +96,7 @@
     </div>
 
     {% if data.buttonText|length > 0 %}
-        <button class="widget-buynow-make-payment" title="{{buttonText}}" type="submit" {% if noPaymentMethods or noPackageInfo %} disabled {% endif %}>{{data.buttonText}}</button>
+        <button class="widget-buynow-make-payment" title="{{ data.buttonText }}" type="submit" {% if noPaymentMethods or noPackageInfo %} disabled {% endif %}>{{data.buttonText}}</button>
     {% elseif freePackage == false %}
         <button class="widget-buynow-make-payment" title="{{'widgets.buynow.submit'|translate('Make a payment using your selected package options')}}" type="submit" {% if noPaymentMethods or noPackageInfo %} disabled {% endif %}>Buy now</button>
     {% else %}

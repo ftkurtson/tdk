@@ -18,7 +18,7 @@
 
 <a {% if data.action and data.action != 'none' %} href="{{ data.linkUrl }}" target="{{ data.target }}" {% else %} href="#" image-href="{{data.src}}" rel="lightbox" {% endif %} title="{{ title }}">
  	<span class="image-img">
-		<img class="image{% if data.align %} {{data.align}}{% endif %}" src="{{ data.src }}" alt="{{ alt }}" title="{{ title }}" data-filename="{{ data.fileName }}" data-filesize="{{ data.fileSize }}" data-imagesize="{{ data.imageSize }}" {% if data.imageWidth|length > 0 and data.imageWidth != 'auto' %}width= "{{ data.imageWidth}}" {% endif %}></img>
+		<img class="image{% if data.align %} {{data.align}}{% endif %}" src="{{ data.src }}" alt="{{ alt }}" title="{{ title }}" data-filename="{{ data.fileName }}" data-filesize="{{ data.fileSize }}" data-imagesize="{{ data.imageSize }}" {% if data.imageWidth|length > 0 and data.imageWidth != 'auto' %}width= "{{ data.imageWidth}}" {% endif %} />
 	</span>
 	{% if title %}
 	<span class="image-title">{{ title }}</span>

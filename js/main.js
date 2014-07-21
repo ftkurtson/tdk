@@ -125,7 +125,6 @@ bk$(function() {
                 html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1', {'crop':1, 'showButtons':true, 'showBullets':true, 'allowPause':true});
                 html += renderWidget('content', 'maincontent2');
                 html += renderWidget('menusections', 'menusections1');
-                html += renderWidget('menu', 'menu1');
                 html += renderWidget('signupform', 'mainsignupform1');
                 html += renderWidget('blogpostlist', 'blogpostlist1');
                 html += renderWidget('blogpost', 'blogpost1', {'showSharingIcons': true});
@@ -135,11 +134,12 @@ bk$(function() {
                 html += renderWidget('ecombasket', 'ecombasket1');
                 html += renderWidget('ecomproductslist', 'ecomproductslist1');
                 html += renderWidget('ecomproduct', 'ecomproduct1');
-                html += renderWidget('ecomcheckout', 'ecomecomcheckout1');
                 html += renderWidget('ecomcategorieslist', 'ecomcategorieslist1');
                 html += renderWidget('ecomfeaturedproducts', 'ecomfeaturedproducts');
                 html += renderWidget('soundcloud', 'soundcloud1', {'iframeCode': '<iframe width="100%" height="200" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/151493449&amp;auto_play=false"></iframe>'});
                 html += renderWidget('yelpreview', 'yelpreview1');
+                html += renderWidget('ecomcheckout', 'ecomecomcheckout1');
+                
                 break;
         }
 
