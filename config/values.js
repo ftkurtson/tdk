@@ -2929,7 +2929,8 @@ var page = {
     description: "BaseKit Template SDK",
     backgroundClass: "default",
     request: "home",
-    templateType: 'default'
+    templateType: 'default',
+    ref: 1
 };
 
 /**

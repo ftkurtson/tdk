@@ -5013,7 +5013,6 @@
         },
 
         refreshTimeline: function () {
-            console.log(1);
             var that = this,
                 refreshTime = (this.get('refreshTime') > 0 ? parseInt(this.get('refreshTime'), 10) : 3600000);
 
@@ -5048,7 +5047,6 @@
                     that.el.find('.yelpreview').html('<li>' + App.t('widgets.yelp.retrieving_reviews', 'Retrieving Reviews') + '</li>');
                 }
             }).done(function (response, status) {
-                console.log('don');
                 that.set('reviews', response, true);
                 that.rerender();
             }).fail(function () {

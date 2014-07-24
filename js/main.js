@@ -123,8 +123,6 @@ bk$(function() {
                 html += renderWidget('clicktocall', 'mainclicktocall1');
                 html += renderWidget('gallery', 'maingallery1');
                 html += renderWidget('responsiveslideshow', 'mainresponsiveslideshow1', {'crop':1, 'showButtons':true, 'showBullets':true, 'allowPause':true});
-                html += renderWidget('content', 'maincontent2');
-                html += renderWidget('menusections', 'menusections1');
                 html += renderWidget('signupform', 'mainsignupform1');
                 html += renderWidget('blogpostlist', 'blogpostlist1');
                 html += renderWidget('blogpost', 'blogpost1', {'showSharingIcons': true});
@@ -534,7 +532,7 @@ bk$(function() {
             }
             overlay = bk$('<div class="overlay"><div class="message-box"><span class="overlay-close">x</span><span class="message-text">' + message + errors + '</span></div></div>');
             iFrame.append(overlay);
-            iFrame.find('.overlay-close').off('.click').on('click', function() {
+            iFrame.find('.overlay-close').off('click').on('click', function() {
                 bk$("#iframe").find('.overlay').remove();
             });
         }).fail(function (response) {
