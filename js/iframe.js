@@ -2,7 +2,9 @@ bk$(function() {
     Server.plugins = sdkPlugins;
     Server.app = {
         'mode': 'published'
-    }
+    };
+    Server.page = page;
+
     // only choose selected widgets to be functional, most will be just static with no need of any JS capabilities
     var functionalWidgets = ['extendednavigation', 'map', 'gallery', 'responsiveslideshow','blogpost', 'ecombasket', 'ecomproduct', 'ecomcheckout', 'yelpreview'];
     sdkWidgets.forEach(function(widget) {
