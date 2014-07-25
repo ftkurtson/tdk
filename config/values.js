@@ -87,7 +87,7 @@ var properties = {
         return bk$.extend({
             tweets: [
                 {
-                    "text": "How To Get Big-Brand Search Visibility",
+                    "text": "How To Get Big-Brand Search Visibility <a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">this is a link</a>",
                     "createdAt": "Thu Aug 01 11:30:49 +0000 2013",
                     "source": "<a href=\"http://www.tweetdeck.com\" rel=\"nofollow\">TweetDeck</a>",
                     "fullName": "BaseKit.Com",
@@ -221,11 +221,15 @@ var plugins = function(template) {
             images: {
                 1: {
                     url: "http://placehold.it/2250x800",
-                    fileType: "image"
+                    fileType: "image",
+                    title: "Test Title Goes Here",
+                    description: "This is the description for the image gallery"
                 },
                 2: {
                     url: "http://placehold.it/300x100",
-                    fileType: "image"
+                    fileType: "image",
+                    title: "Test Title Goes Here",
+                    description: "This is the description for the image gallery"
                 },
                 3: {
                     url: "http://placehold.it/250x250",
@@ -237,7 +241,9 @@ var plugins = function(template) {
                 },
                 5: {
                     url: "http://placehold.it/600x200",
-                    fileType: "image"
+                    fileType: "image",
+                    title: "Test Title Goes Here",
+                    description: "This is the description for the image gallery"
                 },
                 6: {
                     url: "http://placehold.it/250x250",
