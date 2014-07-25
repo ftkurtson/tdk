@@ -1564,6 +1564,44 @@ var plugins = function(template) {
             }]
         },
         "ecommerce": {
+            "uaCountryCode": "GB",
+            "taxes":[
+                {
+                    "ref":20,
+                    "store":1,
+                    "rate":3,
+                    "countryCode":"AX",
+                    "deleted":0,
+                    "storeDefault":0,
+                    "taxRegion":null
+                },{
+                    "ref":23,
+                    "store":1,
+                    "rate":3,
+                    "countryCode":"AO",
+                    "deleted":0,
+                    "storeDefault":1,
+                    "taxRegion":null
+                },{
+                    "ref":27,
+                    "store":1,
+                    "rate":4,
+                    "countryCode":"AT",
+                    "deleted":0,
+                    "storeDefault":0,
+                    "taxRegion":null
+                },{
+                    "ref":28,
+                    "store":1,
+                    "rate":3,
+                    "countryCode":"AL",
+                    "deleted":0,
+                    "storeDefault":0,
+                    "taxRegion":null
+                }],
+            "countries":{
+                "GB": "United Kingdom"
+            },
             "store":{
                 "ref":"18",
                 "currency":{
@@ -1572,6 +1610,7 @@ var plugins = function(template) {
                     "alphaCode":"GBP",
                     "htmlCode":"&#163;"
                 },
+                "defaultTaxRef": 23,
                 "stripePublishableKey":'',
                 "paypal":'',
                 "chargeUrl":"/",
