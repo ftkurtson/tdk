@@ -1,25 +1,22 @@
 {% if data.selectedTag|length > 0 %}
-    {% set products = [] %}
-    {% if plugins.ecommerce.products|length > 0 %}
-        {% if plugins.ecommerce.store.tags|length > 0 %}
+    {% set products = plugins.ecommerce.products %}
+    {% if products|length > 0 %}
+
+        {% set tags = plugins.ecommerce.store.tags %}
+        {% if tags|length > 0 %}
         {% set productFound = false %}
 
         {% set count = 0 %}
         {% set numClass = 'odd' %}
 
-        {% for product in plugins.ecommerce.products %}
+        {% for product in products %}
             {% if product.visibility == 1 %}
-                {% set match = false %}
                 {% for tag in product.tags %}
                     {% if tag.slug == data.selectedTag %}
-                        {% set match = true %}
                         {% set productFound = true %}
                         {% set count = count + 1 %}
                     {% endif %}
                 {% endfor %}
-                {% if match == true %}
-                    {% set products = products|merge([product]) %}
-                {% endif %}
             {% endif %}
         {% endfor %}
 
@@ -36,51 +33,56 @@
         <section class="ecom-featuredproducts-wrap {{ numClass }} products-{{ count }}">
 
             {% for product in products %}
-            <article class="ecom-featuredproducts-product">
-                <a href="{{ requestBase }}/store/product/{{ product.slug }}">
-                    {% if product.assets is not null %}
-                        {% if product.featureImageAssetRef %}
-                            {% set assetRef = product.featureImageAssetRef %}
-                        {% else %}
-                            {% set assetRef = product.assets[0].assetRef %}
-                        {% endif %}
-                        {% set asset = plugins.assets.images[assetRef] %}
-                        {% if asset.fileType == 'image' %}
-                            {% set imageSrc = asset.url %}
-                            <div class="ecom-featuredproducts-image-wrap" style="background-image:url('{{ imageSrc }}')">
-                                <img class="ecom-featuredproducts-image" src="{{ imageSrc }}" alt="">
-                            </div>
-                        {% endif %}
-                    {% endif %}
+                {% if product.visibility == 1 %}
+                    {% for tag in product.tags %}
+                        {% if tag.slug == data.selectedTag %}
+                            <article class="ecom-featuredproducts-product">
+                                <a href="{{ requestBase }}/store/product/{{ product.slug }}">
+                                    {% if product.assets is not null %}
+                                        {% if product.featureImageAssetRef %}
+                                            {% set assetRef = product.featureImageAssetRef %}
+                                        {% else %}
+                                            {% set assetRef = product.assets[0].assetRef %}
+                                        {% endif %}
+                                        {% set asset = plugins.assets.images[assetRef] %}
+                                        {% if asset.fileType == 'image' %}
+                                            {% set imageSrc = asset.url %}
+                                            <div class="ecom-featuredproducts-image-wrap" style="background-image:url('{{ imageSrc }}')">
+                                                <img class="ecom-featuredproducts-image" src="{{ imageSrc }}" alt="">
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
 
-                    <div class="ecom-featuredproducts-info">
-                        <h2 class="ecom-featuredproducts-title">{{ product.title }}</h2>
-                        <span class="ecom-featuredproducts-price">
-                            {% if product.multiplePrices %}
-                                {{ "widgets.ecomfeaturedproducts.minimum_price"|translate("From %1", product.formattedPrice) }}
-                            {% else %}
-                                {{ product.formattedPrice }}
-                            {% endif %}
-                        </span>
-                    </div>
-                </a>
-            </article>
+                                    <div class="ecom-featuredproducts-info">
+                                        <h2 class="ecom-featuredproducts-title">{{ product.title }}</h2>
+                                        <span class="ecom-featuredproducts-price">
+                                            {% if product.multiplePrices %}
+                                                {{ "widgets.ecomfeaturedproducts.minimum_price"|translate("From %1", product.formattedPrice) }}
+                                            {% else %}
+                                                {{ product.formattedPrice }}
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </a>
+                            </article>
+                        {% endif %}
+                    {% endfor %} {# end tags loop #}
+                {% endif %}
             {% endfor %} {# end products loop #}
         </section>
-
         {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
-            <p class='empty-info'>{{"widgets.ecomfeaturedproducts.notags"|translate("This widget uses product tags to display specific groups of products. Add tags to your products to use this widget."|raw)}}</p>
+            <p>{{"widgets.ecomfeaturedproducts.notags"|translate("This widget uses product tags to display specific groups of products. Add tags to your products to use this widget."|raw)}}</p>
         {% endif %} {# end tags check #}
     {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
-        <p class='empty-info'>{{"widgets.ecomfeaturedproducts.noproducts"|translate("This widget uses product tags to display specific groups of products. Add products to your store to use this widget. "|raw)}}</p>
+        <p>{{"widgets.ecomfeaturedproducts.noproducts"|translate("This widget uses product tags to display specific groups of products. Add products to your store to use this widget. "|raw)}}</p>
     {% endif %} {# end products check #}
 
 
 {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
-    <p class='empty-info'><b>No tags selected</b></p>
-    <p class='empty-info'>{{"widgets.ecomfeaturedproducts.notag_selected_text"|translate("This widget uses product tags to display specific groups of products. Select a tag in the widget settings panel to show all products with that tag.")|raw}}</p>
+    <p><b>{{"widgets.ecomfeaturedproducts.notag_selected"|translate("No tags selected")}}</b></p>
+    <p>{{"widgets.ecomfeaturedproducts.notag_selected_text"|translate("This widget uses product tags to display specific groups of products. Select a tag in the widget settings panel to show all products with that tag.")|raw}}</p>
 {% endif %}
 
 {% if productFound == false and app.mode != 'published' and app.mode != 'site-preview' %}
-    <p class='empty-info'>{{"widgets.ecomfeaturedproducts.no_products_available"|translate("There are no products in the store that use the tag - <b>%1</b>. Choose another tag.", data.selectedTag)|raw}}</p>
+    <p>{{"widgets.ecomfeaturedproducts.no_products_available"|translate("There are no products in the store that use the tag - <b>%1</b>. Choose another tag.", data.selectedTag)|raw}}</p>
 {% endif %}
