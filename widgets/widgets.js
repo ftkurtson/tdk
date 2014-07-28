@@ -2096,11 +2096,7 @@
             pullEl.off('click').on('click', function (e) {
                 e.preventDefault();
                 if (!bk$('body').hasClass('edit')) {
-                    if (menuEl.is(':visible')) {
-                        menuEl.removeClass('open');
-                    } else {
-                        menuEl.addClass('open');
-                    }
+                    menuEl.toggleClass('open');
                 }
             });
 
