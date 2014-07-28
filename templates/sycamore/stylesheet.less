@@ -188,8 +188,6 @@ header.bk-header {
 /* COMPANY NAME */
 
 .widget.companyname {
-  display: block;
-  float: left;
   margin-top: 10px;
   a {
     font-size: @font-swatch10-font-size;
@@ -208,9 +206,14 @@ header.bk-header {
 /* LOGO */
 
 .widget.logo {
-  display: block;
-  float: left;
   margin-right: 10px;
+}
+
+.widget {
+    &.logo, &.companyname {
+        display: inline-block;
+        vertical-align: middle;
+    }
 }
 
 /* ===============================
@@ -1089,7 +1092,8 @@ hr.line.align-right {
     width: 32px;
     height: 32px;
     text-decoration: none;
-    text-indent: -99999px;
+    text-indent: 99999px;
+    overflow: hidden;
     white-space: nowrap;
 }
 
