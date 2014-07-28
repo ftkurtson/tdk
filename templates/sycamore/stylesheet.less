@@ -1171,10 +1171,7 @@ hr.line.align-right {
 }
 
 
-
-/* ===============================
-   SLIDESHOW WIDGET
-   =============================== */
+// Responsive Slideshow
 
 .widget.responsiveslideshow {
     .slideshow-image-list,
@@ -1207,7 +1204,7 @@ hr.line.align-right {
             -webkit-border-radius: 50%;
             -moz-border-radius: 50%;
             border-radius: 50%;
-            @media @tablet {
+            @media @mobile {
                 width: 30px;
                 height: 30px;
             }
@@ -1217,8 +1214,8 @@ hr.line.align-right {
                 content: "\2190";
                 color: #fff;
                 top: 7px;
-                @media @tablet {
-                    top: 1px!important;
+                @media @mobile {
+                    top: 1px;
                 }
             }
         }
@@ -1227,16 +1224,13 @@ hr.line.align-right {
                 content: "\2192";
                 color: #fff;
                 top: 7px;
-                @media @tablet {
-                    top: 1px!important;
+                @media @mobile {
+                    top: 1px;
                 }
             }
         }
         /* Play Button */
         .btn-play {
-            top: 40%;
-            width: 50px;
-            height: 50px;
             background: rgba(0,0,0,0.5);
             -webkit-border-radius: 4px;
             -moz-border-radius: 4px;
@@ -1244,17 +1238,7 @@ hr.line.align-right {
             &:after {
                 color: #fff;
                 letter-spacing: -4px;
-                top: 2px;
-                line-height: 45px;
-            }
-            @media @tablet {
-                top: 43%;
-                width: 40px;
-                height: 40px;
-                &:after {
-                    line-height: 38px;
-                    font-size: 26px;
-                }
+                top: 0;
             }
         }
     }
@@ -1267,11 +1251,40 @@ hr.line.align-right {
             -moz-border-radius: 50%;
             border-radius: 50%;
             &.selected {
-                background-color: @color-swatch3;
-                width: 11px;
-                height: 11px;
+                background-color: @color-swatch5;
             }
         }
+    }
+}
+
+.widget.responsiveslideshow .btn-play:after {
+    font-size:20px;
+}
+
+.widget.responsiveslideshow .slideshow-widget .btn-play {
+    background: rgba(0,0,0,0.5);
+    font-size: 0;
+    text-indent: -99999px;
+    position: absolute;
+    cursor: pointer;
+    z-index: 12;
+    width: 42px;
+    height: 42px;
+    top: -5%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    @media @mobile {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.widget.responsiveslideshow .slideshow-widget .btn-play:after {
+    top:-7px;
+    @media @mobile {
+        top: -15px;
     }
 }
 
