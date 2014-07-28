@@ -3,8 +3,8 @@
  */
 var templates = [
     {
-        name: "Test",
-        directory: "test"
+        name: "Sycamore",
+        directory: "sycamore"
     },
     {
         name: "Basekit Baseplate",
