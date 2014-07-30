@@ -4865,7 +4865,7 @@
                 thisEl.find("p.error").empty().hide();
 
                 // basic js validation before sending to the api
-                if (postData.password !== undefined && (postData.password.trim().length < 7 || postData.password.trim().length > 19)) {
+                if (postData.password !== undefined && (postData.password.trim().length < 7)) {
                     errors.push({
                         'element' : 'password',
                         'error' : App.t('widgets.userregistration.error.invalid_password', 'Please provide a password greater than 7 characters but less than 19.')

@@ -32,9 +32,9 @@
 				{% endif %}
 			{% endif %}
 
-			{% if data.buttonText|length > 0 %}
+			{% if data.buttonText|length > 0 and data.showBtn %}
 			<span class="feature-btn{% if data.align %} {{data.align}}{% endif %}">
-				<button class="btn {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %}" {% if data.showBtn == false %}style='display: none'{% endif %} >{% if data.icon|length > 0 %}<i class="{{data.icon}} {% if data.color %}icon-{{data.color}}{% endif %}"></i> {% endif %}<span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.buttonText}}</span></button>
+				<button class="btn {% if data.italic %}italic{% endif %} {% if data.bold %}bold{% endif %}"><span class="btnText" {% if data.fontSize|length > 0 %}style="font-size: {{data.fontSize}}px"{% endif %}>{{data.buttonText}}</span></button>
 			</span>
 			{% endif %}
 		</div>
