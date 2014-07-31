@@ -142,10 +142,14 @@
 {% if data.profileType == 'form' %}
 <form action="" method="post">
   <fieldset>
-    <label for="email">Your email:</label>
-    <input type="email" class="email" placeholder="Type your email">
 
-    <button class="btn btnText {% if data.formItalic %}italic{% endif %} {% if data.formBold %}bold{% endif %} {{data.formAlign}}" type="submit" {% if data.formFontSize|length > 0 %}style="font-size: {{data.formFontSize}}px"{% endif %}>{% if data.formText %}{{data.formText}}{% else %}Send{% endif %}</button>
+    <div class="form-group"> {#    ****    ADDED WRAPPER   ****     #}
+
+      <label for="email">Your email:</label>
+      <input type="email" class="email" placeholder="Type your email">
+
+      <button class="btn btnText {% if data.formItalic %}italic{% endif %} {% if data.formBold %}bold{% endif %} {{data.formAlign}}" type="submit" {% if data.formFontSize|length > 0 %}style="font-size: {{data.formFontSize}}px"{% endif %}>{% if data.formText %}{{data.formText}}{% else %}Send{% endif %}</button>
+    </div>
   </fieldset>
 </form>
 {% endif %}
