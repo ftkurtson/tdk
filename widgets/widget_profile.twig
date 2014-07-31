@@ -145,8 +145,8 @@
 
     <div class="form-group"> {#    ****    ADDED WRAPPER   ****     #}
 
-      <label for="email">Your email:</label>
-      <input type="email" class="email" placeholder="Type your email">
+      <label for="profileform-email">Your email:</label>
+      <input type="email" class="email" placeholder="Type your email" id="profileform-email" name="profileform-email">
 
       <button class="btn btnText {% if data.formItalic %}italic{% endif %} {% if data.formBold %}bold{% endif %} {{data.formAlign}}" type="submit" {% if data.formFontSize|length > 0 %}style="font-size: {{data.formFontSize}}px"{% endif %}>{% if data.formText %}{{data.formText}}{% else %}Send{% endif %}</button>
     </div>
