@@ -1,32 +1,41 @@
 <div class="ecombasket-pull js-pull">
     <p>{{ 'widgets.ecombasket.basket'|translate('Basket') }}:
-        <span class="basket-count">{{data.items.quantity}}</span>
+        <span class="basket-count">{{ data.itemCount is defined ? data.itemCount : plugins.ecommerce.cart.itemCount }}</span>
     </p>
 </div>
 
 <div class="ecombasket-list-container">
     <ul>
-        {% for item in data.items %}
+        {% set items = (data.items is defined) ? data.items : plugins.ecommerce.cart.items %}
+        {% for item in items %}
             <li data-ref="{{ item.ref }}">
                 <a class="ecombasket-item-title" href="{{ requestBase }}/store/product/{{ item.slug }}">
-                    <div class="ecombasket-item-image" style="background-image:url({{ item.assetUrl }});">
-                        <img src="{{ item.assetUrl }}">
-                    </div>
+                    {% if item.featureImageAssetRef %}
+                        {% set assetUrl = plugins.assets.images[item.featureImageAssetRef].url %}
+                        <div class="ecombasket-item-image" style="background-image:url({{ assetUrl }});">
+                            <img src="{{ assetUrl }}">
+                        </div>
+                    {% endif %}
                 </a>
 
                 <div class="ecombasket-item-info">
-                    <a class="ecombasket-item-title" href="{{ requestBase }}/store/product/{{ item.slug }}">{{item.title}}</a>
+                    <a class="ecombasket-item-title" href="{{ requestBase }}/store/product/{{ item.slug }}">{{ item.title }}</a>
                     <div class="ecombasket-item-count-wrapper">
-                        <span class="ecombasket-item-count-label">{{'widgets.ecombasket.quantity'|translate('Quantity:')}}</span>
-                        <span class="ecombasket-item-count">{{item.quantity}}</span>
+                        <p class="ecombasket-item-count-label">
+                            {{ 'widgets.ecombasket.quantity'|translate('Quantity: %1', '<span class="ecombasket-item-count">' ~ item.quantity ~ '</span>')|raw }}
+                        </p>
                     </div>
-                    <span class="ecombasket-item-price">{{item.price}}</span>
-                    <span class="ecombasket-remove-button js-remove" data-ref="{{item.ref}}">{{ 'widgets.ecombasket.remove'|translate('Remove') }}</span>
+                    <p class="ecombasket-item-price">{{ item.formattedPriceTotal }}</p>
+                    <button class="ecombasket-remove-button js-remove" data-ref="{{ item.ref }}" type="button">{{ 'widgets.ecombasket.remove'|translate('Remove') }}</button>
                 </div>
             </li>
         {% endfor %}
     </ul>
 
-    <div class="ecombasket-total-wrap"><p>{{ 'widgets.ecombasket.total'|translate('Total') }}: <span class="ecombasket-total">{{ data.subTotalPrice }}</span></p></div>
-    <div class="ecombasket-checkout-wrap"><a class="ecombasket-checkout-link" href="{{ requestBase }}/store/checkout">{{ 'widgets.ecombasket.checkout_link'|translate('Checkout') }}</a></div>
+    <div class="ecombasket-total-wrap">
+        <p>{{ 'widgets.ecombasket.total'|translate('Total') }}: <span class="ecombasket-total">{{ (data.subTotal is defined) ? data.subTotal : plugins.ecommerce.cart.subTotal }}</span></p>
+    </div>
+    <div class="ecombasket-summary-wrap">
+        <a class="btn ecombasket-summary-link" href="{{ requestBase }}/store/cart">{{ 'widgets.ecombasket.summary_link'|translate('View basket') }}</a>
+    </div>
 </div>

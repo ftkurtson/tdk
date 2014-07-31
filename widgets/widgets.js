@@ -1016,20 +1016,17 @@
                 return;
             }
 
-            this.storeRef = Server.plugins.ecommerce ? Server.plugins.ecommerce.store.ref : null;
-
             this.load();
         },
 
         load: function () {
             var that = this;
 
-            // HC: just want to add hook once
-            Globals.addHook('ecom.basket.changed', this, function () {
-                that.updateBasket();
+            Globals.addHook('ecom.basket.changed', this, function (cart) {
+                that.updateBasket(cart);
             });
 
-            this.updateBasket();
+            this.attachEvents();
         },
 
         attachEvents: function () {
@@ -1039,7 +1036,7 @@
             thisEl.find('.js-pull').on('click', function () {
                 thisEl.toggleClass('show-content');
                 bk$(document).on('click', function(evt) {
-                    if (!bk$(evt.target).parents('.ecombasket').length){
+                    if (!bk$(evt.target).parents('.ecombasket').length) {
                         thisEl.toggleClass('show-content');
                         bk$(document).off('click');
                     }
@@ -1051,110 +1048,24 @@
             });
         },
 
-        getCart: function () {
-            return JSON.parse(localStorage.getItem('cart')) || {};
-        },
+        updateBasket: function (cart) {
+            this.set('items', cart.items, true);
+            this.set('itemCount', cart.itemCount, true);
+            this.set('subTotal', cart.subTotal, true);
 
-        updateBasket: function () {
-            var that = this,
-                cart = this.getCart(),
-                quantity = 0,
-                items = [],
-                variations = {};
-
-            bk$.each(cart, function (ref, key) {
-                var variation = that.findVariationByRef(ref);
-
-                if (variation !== null) {
-                    items.push({
-                        productRef: variation.productRef,
-                        ref: parseInt(ref, 10),
-                        title: variation.title,
-                        slug: variation.slug,
-                        quantity: cart[ref],
-                        assetUrl: variation.assetUrl
-                    });
-
-                    variations[ref] = parseInt(cart[ref], 10);
-
-                    quantity = quantity + cart[ref];
-                }
-            });
-
-            items.quantity = quantity;
-            this.set('items', items, true);
-            this.getBasketTotal(variations);
-        },
-
-        getBasketTotal: function (variations) {
-            var that = this,
-                sendingData = {
-                    storeRef: this.storeRef,
-                    productVariationRefs: variations
-                };
-
-            bk$.ajax({
-                url: Server.plugins.ecommerce.store.calculateUrl,
-                method: 'POST',
-                data: sendingData,
-                dataType:'json'
-            }).done(function (response) {
-                that.setBasketData(response);
-                that.rerender();
-            });
-        },
-
-        setBasketData: function (response) {
-            var itemRef = null,
-                currentItems = this.get('items'); // store the reference
-
-            bk$.each(currentItems, function (index, product) {
-                itemRef = product.ref;
-                product.price = response.productVariationSubTotals[itemRef];
-            });
-
-            this.set('subTotalPrice', response.productVariationsTotal, true);
+            this.rerender();
         },
 
         removeItem: function (ref) {
-            var cart = this.getCart();
-
-            if (cart[ref] === 1) {
-                delete cart[ref];
-            } else if (cart[ref] > 0) {
-                cart[ref] = cart[ref] - 1;
-            }
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // HC: this will update both basket and checkout widgets
-            Globals.notifyHooks('ecom.basket.changed', {});
-        },
-
-        findVariationByRef: function (ref) {
-            var variation = null,
-                products = Server.plugins.ecommerce.products;
-
-            bk$.each(products, function (key, product) {
-                var variations = bk$.merge(product.variations, product.inactiveVariations),
-                    result = bk$.grep(variations, function (variation) {
-                        return parseInt(variation.ref, 10) === parseInt(ref, 10);
-                    }),
-                    assetRef = null;
-
-                if (typeof result === 'object' && result.length === 1) {
-                    variation = result[0];
-                    variation.productRef = product.ref;
-                    variation.slug = product.slug;
-
-                    if (typeof product === 'object' && typeof product.assets === 'object' && product.assets.length > 0) {
-                        assetRef = product.featureImageAssetRef ? product.featureImageAssetRef : product.assets[0].assetRef;
-                        variation.assetUrl = Server.plugins.assets.images[assetRef].url;
-                    }
+            bk$.ajax({
+                method: 'POST',
+                url: '/store/cart/remove-item',
+                data: {
+                    productVariationRef: ref
                 }
+            }).done(function (response) {
+                Globals.notifyHooks('ecom.basket.changed', response);
             });
-
-            return variation || null;
         }
     };
 
@@ -1168,6 +1079,92 @@
     bk$.fn.basekitWidgetEcombasket = function (options) {
         this.each(function (index, el) {
             bk$(el).data('bkob', new BaseKit.Widget.Ecombasket(el, options));
+        });
+    };
+}());
+(function () {
+
+    BaseKit.Widget.Ecombasketsummary = null;
+
+    BaseKit.Widget.EcombasketsummaryProperties = {
+    };
+
+    BaseKit.Widget.EcombasketsummaryMethods = {
+        construct: function (el, options) {
+            this.options = options;
+
+            if (!Server.plugins.ecommerce) {
+                return;
+            }
+
+            this.load();
+        },
+
+        load: function () {
+            var that = this;
+
+            Globals.addHook('ecom.basket.changed', this, function (cart) {
+                that.updateBasketSummary(cart);
+            });
+
+            this.attachEvents();
+        },
+
+        attachEvents: function () {
+            var that = this;
+
+            bk$(this.el).find('.js-add').off('click').on('click', function (e) {
+                that.addItem(bk$(this).data('ref'));
+            });
+
+            bk$(this.el).find('.js-remove').off('click').on('click', function (e) {
+                that.removeItem(bk$(this).data('ref'));
+            });
+        },
+
+        updateBasketSummary: function (cart) {
+            this.set('items', cart.items, true);
+            this.set('itemCount', cart.itemCount, true);
+            this.set('subTotal', cart.subTotal, true);
+
+            this.rerender();
+        },
+
+        removeItem: function (ref) {
+            bk$.ajax({
+                method: 'POST',
+                url: '/store/cart/remove-item',
+                data: {
+                    productVariationRef: ref
+                }
+            }).done(function (response) {
+                Globals.notifyHooks('ecom.basket.changed', response);
+            });
+        },
+
+        addItem: function (ref) {
+            bk$.ajax({
+                method: 'POST',
+                url: '/store/cart/add-item',
+                data: {
+                    productVariationRef: ref
+                }
+            }).done(function (response) {
+                Globals.notifyHooks('ecom.basket.changed', response);
+            });
+        }
+    };
+
+    BaseKit.Widget.Ecombasketsummary = function () {
+        var o = new BaseKit.WidgetCore(this, arguments, {
+            properties: BaseKit.Widget.EcombasketsummaryProperties,
+            methods: BaseKit.Widget.EcombasketsummaryMethods
+        });
+    };
+
+    bk$.fn.basekitWidgetEcombasketsummary = function (options) {
+        this.each(function (index, el) {
+            bk$(el).data('bkob', new BaseKit.Widget.Ecombasketsummary(el, options));
         });
     };
 }());
@@ -1219,6 +1216,7 @@
                 return;
             }
 
+            this.storeRef = Server.plugins.ecommerce.store.ref;
             this.load();
         },
 
@@ -1280,47 +1278,49 @@
             }, refreshTime);
         },
 
-        getCart: function () {
-            return JSON.parse(localStorage.getItem('cart')) || {};
-        },
-
         updateCheckout: function () {
             var that = this,
-                cart = this.getCart(),
+                cart = null,
                 variations = {},
                 store = Server.plugins.ecommerce.store;
 
             this.items = [];
 
-            bk$.each(cart, function (ref, key) {
-                var variation = that.findVariationByRef(ref);
+            bk$.ajax({
+                method: 'GET',
+                url: '/store/cart/get'
+            }).done(function (response) {
+                cart = response;
 
-                if (variation !== null) {
-                    that.items.push({
-                        ref        : ref,
-                        title      : variation.title,
-                        productRef : variation.productRef,
-                        assetUrl   : variation.assetUrl,
-                        quantity   : parseInt(cart[ref], 10),
-                        pricePU    : variation.formattedPrice
-                    });
+                bk$.each(cart, function (ref, key) {
+                    var variation = that.findVariationByRef(ref);
 
-                    variations[ref] = parseInt(cart[ref], 10);
+                    if (variation !== null) {
+                        that.items.push({
+                            ref: ref,
+                            title: variation.title,
+                            productRef: variation.productRef,
+                            assetUrl: variation.assetUrl,
+                            quantity: parseInt(cart[ref], 10),
+                            pricePU: variation.formattedPrice
+                        });
+
+                        variations[ref] = parseInt(cart[ref], 10);
+                    }
+                });
+
+                that.variations = variations;
+
+                if (store.stripePublishableKey === null && !store.paypal) {
+                    return;
+                }
+
+                if (that.items.length === 0) {
+                    that.updateEmptyUI();
+                } else {
+                    that.updateCheckoutTotal();
                 }
             });
-
-            this.variations = variations;
-
-            if (store.stripePublishableKey === null && !store.paypal) {
-                return;
-            }
-
-            if (this.items.length === 0) {
-                this.updateEmptyUI();
-            } else {
-                this.updateCheckoutTotal();
-                this.handleCountryAutoFill();
-            }
         },
 
         getCountryCode: function () {
@@ -1348,28 +1348,28 @@
         },
 
         removeItem: function (ref) {
-            var cart = this.getCart();
-
-            if (cart[ref] === 1) {
-                delete cart[ref];
-            } else if (cart[ref] > 0) {
-                cart[ref] = cart[ref] - 1;
-            }
-
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // HC: this will update both basket and checkout widgets
-            Globals.notifyHooks('ecom.basket.changed', {});
+            bk$.ajax({
+                method: 'POST',
+                url: '/store/cart/remove-item',
+                data: {
+                    productVariationRef: ref
+                }
+            }).done(function (response) {
+                Globals.notifyHooks('ecom.basket.changed', response);
+            });
         },
 
         addItem: function (ref) {
-            var cart = this.getCart();
+            bk$.ajax({
+                method: 'POST',
+                url: '/store/cart/add-item',
+                data: {
+                    productVariationRef: ref
+                }
+            }).done(function (response) {
+                Globals.notifyHooks('ecom.basket.changed', response);
+            });
 
-            cart[ref] = cart[ref] + 1;
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // HC: this will update both basket and checkout widgets
-            Globals.notifyHooks('ecom.basket.changed', {});
         },
 
         updateCheckoutTotal: function () {
@@ -1756,6 +1756,12 @@
     BaseKit.Widget.EcomproductMethods = {
         construct: function (el, options) {
             this.options = options;
+
+            if (!Server.plugins.ecommerce) {
+                return;
+            }
+
+            this.storeRef = Server.plugins.ecommerce.store.ref;
             this.load();
         },
 
@@ -1893,25 +1899,19 @@
             setTimeout(this.switchBackToAddToCartButton.bind(this), 2000);
         },
 
-        getCart: function () {
-            return JSON.parse(localStorage.getItem('cart')) || {};
-        },
-
-        setCart: function (cart) {
-            localStorage.setItem('cart', JSON.stringify(cart));
-        },
-
         addToCart: function (variationRef) {
-            var cart = this.getCart();
+            var cart = null,
+                that = this;
 
-            if (cart[variationRef] !== undefined) {
-                cart[variationRef] = cart[variationRef] + 1;
-            } else {
-                cart[variationRef] = 1;
-            }
-
-            this.setCart(cart);
-            Globals.notifyHooks('ecom.basket.changed', {});
+            bk$.ajax({
+                method: 'POST',
+                url: '/store/cart/add-item',
+                data: {
+                    productVariationRef: variationRef
+                }
+            }).done(function (response) {
+                Globals.notifyHooks('ecom.basket.changed', response);
+            });
         },
 
         switchToCheckoutButton: function () {
@@ -1973,8 +1973,7 @@
         },
 
         attachEvents: function () {
-            var that = this,
-                displayControl = bk$(this.el).find('.js-display-control'),
+            var displayControl = bk$(this.el).find('.js-display-control'),
                 form = bk$(this.el).find('.productlist-display-form');
 
             displayControl.on('change', function () {
@@ -1982,12 +1981,12 @@
             });
 
             form.on('submit', function (e) {
-                var orderBy = bk$(e.currentTarget).find('[name="orderBy"] option[value="score-desc"]'),
-                    search = bk$(e.currentTarget).find('[name="search"]');
+                var orderBy = bk$(e.currentTarget).find('[name="productlist-sort"] option[value="score-desc"]'),
+                    search = bk$(e.currentTarget).find('[name="productlist-search"]');
 
                 if (!orderBy.length && search.val().length) {
-                    bk$(e.currentTarget).find('[name="orderBy"]').append('<option value="score-desc"></option>');
-                    bk$(e.currentTarget).find('[name="orderBy"]').val('score-desc');
+                    bk$(e.currentTarget).find('[name="productlist-sort"]').append('<option value="score-desc"></option>');
+                    bk$(e.currentTarget).find('[name="productlist-sort"]').val('score-desc');
                 }
             });
         }
@@ -3343,21 +3342,32 @@
 
         showMessageBox: function () {
             var thisEl = bk$(this.el),
-                overlay = bk$('<div class="overlay"></div>');
+                overlay = bk$('<div class="overlay"></div>'),
+                formEl = thisEl.find('form');
 
             if (thisEl.find('.overlay').length === 0) {
                 thisEl.append(overlay);
+            }
+
+            if (formEl.length > 0) {
+                formEl.addClass('submitting');
             }
         },
 
         removeMessageBox: function () {
             var thisEl = bk$(this.el),
-                t = null;
+                t = null,
+                formEl = thisEl.find('form');
+
+            if (formEl.length > 0) {
+                formEl.removeClass('submitting');
+            }
+
+            thisEl.find('.email').val('');
 
             t = setTimeout(function () {
                 clearTimeout(t);
                 thisEl.find('.overlay').fadeOut(function () {
-                    thisEl.find('.email').val('');
                     bk$(this).remove();
                 });
             }, 3000);
@@ -3430,7 +3440,6 @@
         setupMap: function () {
             // map options
             var mapOptions = {
-                draggable: false,
                 zoom: parseInt(this.get('mapZoom'), 10),
                 center: new google.maps.LatLng(parseFloat(this.get('latitude'), 10),
                     parseFloat(this.get('longitude'), 10)),
@@ -3456,7 +3465,7 @@
         /**
          * Centres the map on the new coordinates
          */
-        resetMap: function () {
+        resetMap: function (markerDraggable) {
             var newCenter = null;
 
             // make sure the maps has been loaded
@@ -3464,16 +3473,21 @@
                 bk$(this.el).find('.map').height(this.get('mapHeight'));
 
                 // NOTE: Google Maps is fussy - needs parseFloat calls!
-                newCenter = new google.maps.LatLng(parseFloat(this.get('latitude'), 10),
-                    parseFloat(this.get('longitude'), 10));
+                newCenter = new google.maps.LatLng(
+                    parseFloat(this.get('latitude'), 10),
+                    parseFloat(this.get('longitude'), 10)
+                );
 
                 // reset the map
                 this.gmap.setZoom(parseInt(this.get('mapZoom'), 10));
                 this.gmap.setCenter(newCenter);
 
-                // create  an new map marker at this point
-                this.createMapMarker(parseFloat(this.get('latitude'), 10),
-                    parseFloat(this.get('longitude'), 10));
+                // create an new map marker at this point
+                this.createMapMarker(
+                    parseFloat(this.get('latitude'), 10),
+                    parseFloat(this.get('longitude'), 10),
+                    markerDraggable || false
+                );
             }
         },
 
@@ -3481,8 +3495,9 @@
          * createMapMarker: creates a marker on the map at the passed co-ordinates
          * @param <integer> latitude - the latitude to position the marker
          * @param <integer> longitude - the longitude to position the marker
+         * @param <boolean> draggable - can the marker be dragged
          */
-        createMapMarker: function (latitude, longitude) {
+        createMapMarker: function (latitude, longitude, draggable) {
             var icon = new google.maps.MarkerImage(App.session.get('assetBaseUrl') + '/apps/images/mobile/map-marker.png',
                     new google.maps.Size(32, 32), null,
                     new google.maps.Point(16, 32),
@@ -3494,7 +3509,7 @@
                 this.marker = new google.maps.Marker({
                     icon: icon,
                     bouncy: true,
-                    draggable: true,
+                    draggable: false,
                     autoPan: true,
                     position: new google.maps.LatLng(latitude, longitude)
                 });
@@ -3504,6 +3519,7 @@
             } else {
                 // remove it from the current map and update the pos
                 this.marker.setMap(null);
+                this.marker.draggable = draggable || false;
                 this.marker.setPosition(new google.maps.LatLng(latitude, longitude));
 
                 // assign it to the current map
@@ -4288,21 +4304,32 @@
 
         showMessageBox: function () {
             var thisEl = bk$(this.el),
-                overlay = bk$('<div class="overlay"></div>');
+                overlay = bk$('<div class="overlay"></div>'),
+                formEl = thisEl.find('form');
 
             if (thisEl.find('.overlay').length === 0) {
                 thisEl.append(overlay);
+            }
+
+            if (formEl.length > 0) {
+                formEl.addClass('submitting');
             }
         },
 
         removeMessageBox: function () {
             var thisEl = bk$(this.el),
-                t = null;
+                t = null,
+                formEl = thisEl.find('form');
+
+            if (formEl.length > 0) {
+                formEl.removeClass('submitting');
+            }
+
+            thisEl.find('.email').val('');
 
             t = setTimeout(function () {
                 clearTimeout(t);
                 thisEl.find('.overlay').fadeOut(function () {
-                    thisEl.find('.email').val('');
                     bk$(this).remove();
                 });
             }, 3000);
@@ -4662,7 +4689,7 @@
                             'element' : 'password',
                             'error' : App.t('widgets.userlogin.error.missing_password', 'Please provide a password.')
                         });
-                    } else if (postData.password.trim().length < 7 || postData.password.trim().length > 19) {
+                    } else if (postData.password.trim().length < 7) {
                         errors.push({
                             'element' : 'password',
                             'error' : App.t('widgets.userlogin.error.invalid_password', 'Please provide a password greater than 7 characters but less than 19.')

@@ -1,0 +1,9 @@
+{% if widget.type in ["widget.ecombasketsummary"] and allowEsi and not forceRender %}
+    <!-- esi start -->
+    <esi:include src="{{ fragmentBasePath }}?ref={{ widget.ref }}" />
+    <!-- esi end -->
+{% else %}
+    <div id="{{ widget.getFullId() }}" class="widget {{ widget.className }}{% if widget.templateData.data.preset != "" %} {{widget.templateData.data.preset}}{% endif %}">
+    {% include widget.templateName with widget.templateData only %}
+    </div>
+{% endif %}

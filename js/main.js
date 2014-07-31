@@ -133,6 +133,7 @@ bk$(function() {
                 html += renderWidget('ecombasket', 'ecombasket1');
                 html += renderWidget('ecomproductslist', 'ecomproductslist1');
                 html += renderWidget('ecomproduct', 'ecomproduct1');
+                html += renderWidget('ecombasketsummary', 'ecombasketsummary1');
                 html += renderWidget('ecomcategorieslist', 'ecomcategorieslist1');
                 html += renderWidget('ecomfeaturedproducts', 'ecomfeaturedproducts');
                 html += renderWidget('soundcloud', 'soundcloud1', {'iframeCode': '<iframe width="100%" height="200" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/151493449&amp;auto_play=false"></iframe>'});

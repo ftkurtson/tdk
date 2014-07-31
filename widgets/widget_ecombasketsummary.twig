@@ -1,0 +1,74 @@
+{% if plugins.ecommerce.store.stripePublishableKey != null or plugins.ecommerce.store.paypal != false %}
+
+    <h2 class="basket-summary-title">{{ 'widgets.ecombasketsummary.title'|translate('Basket summary') }}</h2>
+    {% set items = data.items ? '': plugins.ecommerce.cart.items %}
+    {% if items|length %}
+        <table class="basket-summary-items-table">
+            <tbody>
+                <tr>
+                    <th>{{ 'widgets.ecombasketsummary.item_items'|translate('Items') }} </th>
+                    <th></th>
+                    <th>{{ 'widgets.ecombasketsummary.item_description'|translate('Amount') }}</th>
+                </tr>
+                {% for item in items %}
+                    <tr class="basket-summary-items">
+                        <td>
+                            {% if item.featureImageAssetRef is not null %}
+                                {% set assetUrl = plugins.assets.images[item.featureImageAssetRef].url %}
+                                <div class="image-wrap" style="background-repeat: no-repeat;background-image:url('{{ assetUrl }}')">
+                                    <img class="image" style="max-width: 150px" src="{{ assetUrl }}">
+                                </div>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a class="basket-summary-productname" href="{{ requestBase }}/store/product/{{ item.slug }}">{{ item.title }}</a>
+                            <span class="basket-summary-pricepu">{{ item.formattedPriceUnit }}</span>
+                            <span class="basket-summary-quantity">{{ 'widgets.ecombasketsummary.quantity'|translate('Quantity:') }}</span>
+                            <div class="basket-summary-quantitybtn">
+                                <button class="js-remove" data-ref="{{ item.ref }}">-</button>
+                                <span>{{ item.quantity }}</span>
+                                <button class="js-add" data-ref="{{ item.ref }}">+</button>
+                            </div>
+                        </td>
+                        <td class="basket-summary-amount">{{ item.formattedPriceTotal }}</td>
+                    </tr>
+                {% endfor %}
+                {% set subTotal = data.subTotal ? '' : plugins.ecommerce.cart.subTotal %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="basket-summary-subtotal">{{ 'widgets.ecombasketsummary.subtotal'|translate('Subtotal: %1', subTotal) }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form action="{{ plugins.ecommerce.cart.checkoutUrl }}" method="POST">
+            <input type="hidden" name="cartId" value="{{ plugins.ecommerce.cart.id }}">
+            <input type="hidden" name="storeRef" value="{{ plugins.ecommerce.store.ref }}">
+            <input type="hidden" name="storeUrl" value="http://{{ sitePrimaryDomain }}">
+
+            <button class="btn basket-summary-submit" type="submit"{% if app.mode != 'published' %} disabled{% endif %}>
+                {{ 'widgets.ecombasketsummary.submit'|translate('Proceed to checkout') }}
+            </button>
+        </form>
+    {% else %}
+        <p class="basket-summary-empty-copy">{{ 'widgets.ecombasketsummary.empty'|translate('Your basket is empty!') }}</p>
+        <a class="basket-summary-empty-cta btn" href="{{ requestBase }}/store">{{ 'widgets.ecombasketsummary.empty_cta'|translate('Continue shopping') }}</a>
+    {% endif %}
+
+    {% if plugins.ecommerce.store.termsAndConditions %}
+        <ul class="basket-summary-legal-links">
+            <li><a href="/terms-and-conditions">{{ 'widgets.ecombasketsummary.legal_menu_tandc'|translate("Terms and conditions") }}</a></li>
+        </ul>
+    {% endif %}
+
+{% else %}
+
+    {% if plugins.ecommerce.store.email|length > 0 %}
+        <p>{{ 'widgets.ecombasketsummary.nopayment_available'|translate("This store doesn't currently support taking payments. Please contact the store owner at %1.", plugins.ecommerce.store.email)}}</p>
+    {% else %}
+        <p>{{ 'widgets.ecombasketsummary.nopayment_available_general'|translate("This store doesn't currently support taking payments.")}}</p>
+    {% endif %}
+
+{% endif %}

@@ -75,7 +75,7 @@
 
             {% if data.productFiltering == 1 %}
             <div class="form-group productlist-search">
-                <label for="productlist-search">Search Products</label>
+                <label for="productlist-search">{{ 'widgets.ecomproductlist.search_products'|translate('Search Products') }}</label>
                 <input id="productlist-search" class="js-display-control" name="productlist-search" type="search" value="{{ request.query['search'] }}"/>
                 <button type="submit" class="btn">{{ 'widgets.ecomproductlist.search_submit'|translate('Search') }}</button>
             </div>
