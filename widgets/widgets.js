@@ -1916,24 +1916,26 @@
 
         switchToCheckoutButton: function () {
             var addButton = bk$(this.el).find('.ecom-product-add-to-cart-btn'),
-                checkoutButton = bk$(this.el).find('.ecom-product-go-to-checkout-btn');
+                checkoutWrapper = bk$(this.el).find('.ecom-product-go-to-checkout-btn-wrapper');
+
             addButton
                 .attr('disabled', 'disabled')
                 .addClass('added')
                 .find('.text')
                 .text(this.get('translations')['Added']);
-            checkoutButton.attr('hidden', true);
+            checkoutWrapper.attr('hidden', true);
         },
 
         switchBackToAddToCartButton: function () {
             var addButton = bk$(this.el).find('.ecom-product-add-to-cart-btn'),
-                checkoutButton = bk$(this.el).find('.ecom-product-go-to-checkout-btn');
+                checkoutWrapper = bk$(this.el).find('.ecom-product-go-to-checkout-btn-wrapper');
+
             addButton
                 .removeAttr('disabled')
                 .removeClass('added')
                 .find('.text')
                 .text(this.get('translations')['Add to cart']);
-            checkoutButton.removeAttr('hidden');
+            checkoutWrapper.removeAttr('hidden');
         }
 
     };

@@ -8,7 +8,7 @@
 
 	<ul class="{{ data.align ? ' align-' : ''}}{{ data.align }} {{i}}-items">
 		{% for page in pages %}
-            {% set pageRequest = (page.type == 'home') ? '' : page.request %}
+            {% set pageRequest = (page.type == 'home' and app.mode != 'site-preview') ? '' : page.request %}
 			{% if (page.type == 'home' or page.type == 'page' or page.type == 'index' or page.type == 'folder') and page.status != 'inactive' and page.hiddenFromNavigation != '1' %}
 				<li id="menu-item_{{ page.ref }}" class="{{ page.type }}" {% if page.type == 'folder' %}aria-haspopup="true"{% endif %}>
 				{% if (page.type != 'folder') %} <a href="{{ relativeUrlPrefix }}/{{ pageRequest }}">{% endif %}

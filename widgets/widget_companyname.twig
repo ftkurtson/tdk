@@ -1,4 +1,11 @@
-<a href='{{ relativeUrlPrefix }}/'>
+{% set url = '' %}
+{% for page in pages %}
+    {% if page.type == 'home' and app.mode == 'site-preview' %}
+        {% set url = page.request %}
+    {% endif %}
+{% endfor %}
+
+<a href="{{ relativeUrlPrefix }}/{{ url }}">
 
 {% if data.business and data.business !='profile' and data.business !=''%}
     {{data.business}}

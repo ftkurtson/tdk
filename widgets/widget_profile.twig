@@ -106,7 +106,7 @@
 {% if data.profileType == 'twitter' %}
 <ul class="twitter">
 
-{% if data.tweets.length > 0 %}
+{% if data.tweets|length > 0 %}
   {% set tweet = data.tweets[0] %}
   <li>
     <div class="twitter-profile-pic">

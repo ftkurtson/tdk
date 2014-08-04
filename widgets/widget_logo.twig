@@ -1,6 +1,6 @@
-{% set url = null %}
+{% set url = '' %}
 {% for page in pages %}
-    {% if page.type == 'home' %}
+    {% if page.type == 'home' and app.mode == 'site-preview' %}
         {% set url = page.request %}
     {% endif %}
 {% endfor %}
@@ -12,7 +12,8 @@
     {% set logo = data.defaultlogo %}
 {% endif %}
 
-<a href='{{ relativeUrlPrefix }}/'>
+<a href="{{ relativeUrlPrefix }}/{{ url }}">
+
 <div class="logo">
     <img alt="{% if profile.business and profile.business != '' %}{{profile.business}}{% else %}logo{% endif %}" src="{% if logo and logo|length > 0 %}{{logo}}{% else %}{{'/images/mobile/default-logo.png'|expandAssetUrl}}{% endif %}" {% if data.width and data.width != '' and profile.logo and profile.logo != '' and data.useTemplate != 1 %}style="width: {{data.width}}" {% endif %} />
 </div>
