@@ -91,7 +91,7 @@
                 {% if product.category is not null and product.category|length > 0 %}
                 <span class="ecom-product-category">
                     Category
-                    <a href="{{ requestBase }}/store?category={{ product.category.slug }}" class="store-category-link">{{ product.category.name }}</a>
+                    <a href="{{ requestBase }}/store?productlist-categories={{ product.category.slug }}" class="store-category-link">{{ product.category.name }}</a>
                 </span>
                 {% endif %}
 
@@ -99,7 +99,7 @@
                     <span class="ecom-product-tag">
                         Tags 
                         {% for tag in product.tags %}
-                            <a href="{{ requestBase }}/store?tag={{ tag.slug }}" class="ecom-product-tag-link">{{ tag.title }}</a>
+                            <a href="{{ requestBase }}/store?productlist-tags={{ tag.slug }}" class="ecom-product-tag-link">{{ tag.title }}</a>
                         {% endfor %}
                     </span>
                 {% endif %}

@@ -25,7 +25,7 @@
             <div class="blog-post-category">
                 <p class="blog-post-category-label">Category</p>
                 <p class="blog-post-category">
-                    <a href="/{{ plugins.blog.directory }}/categories/{{ plugins.blog.posts[0].category|url_encode }}">{{ plugins.blog.posts[0].category }}</a>
+                    <a href="{{ requestBase }}/{{ plugins.blog.directory }}/categories/{{ plugins.blog.posts[0].category|url_encode }}">{{ plugins.blog.posts[0].category }}</a>
                 </p>
             </div>
         {% endif %}
@@ -39,7 +39,7 @@
                     {% for tag in tags %}
                         {% set count = count + 1 %}
                         <li class="blog-post-tag">
-                            <a href="/{{ plugins.blog.directory }}/tags/{{ tag|url_encode }}">{{ tag }}</a>
+                            <a href="{{ requestBase }}/{{ plugins.blog.directory }}/tags/{{ tag|url_encode }}">{{ tag }}</a>
                         </li>
                     {% endfor %}
                 </ol>

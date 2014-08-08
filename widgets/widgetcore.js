@@ -115,6 +115,10 @@
                         properties.profile = Profile.profile;
                     }
 
+                    if (Server.hasOwnProperty('requestBase') && Server.requestBase !== 'undefined') {
+                        properties.requestBase = Server.requestBase;
+                    }
+
                     this.el.html('');
                     this.renderTemplate(properties.type, properties, true);
                 },

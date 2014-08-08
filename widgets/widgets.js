@@ -687,7 +687,8 @@
                     'message': thisEl.find('.message').val(),
                     'useProfile': that.get('email') === "profile" ? 1 : 0,
                     'formTitle': that.get('formTitle'),
-                    'widgetId': thisEl.attr('id')
+                    'widgetId': thisEl.attr('id'),
+                    'hostname': window.location.hostname
                 };
 
                 if (thisEl.find('.overlay').length > 0) {

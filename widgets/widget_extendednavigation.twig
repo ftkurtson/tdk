@@ -6,7 +6,7 @@
 	{% endif %}
 {% endfor %}
 
-	<ul class="{{ data.align ? ' align-' : ''}}{{ data.align }} {{i}}-items">
+	<ul class="{{ data.align|length > 0 and data.align != 'none' ? ' align-' ~ data.align ~ ' ' : ''}}{{i}}-items">
 		{% for page in pages %}
             {% set pageRequest = (page.type == 'home' and app.mode != 'site-preview') ? '' : page.request %}
 			{% if (page.type == 'home' or page.type == 'page' or page.type == 'index' or page.type == 'folder') and page.status != 'inactive' and page.hiddenFromNavigation != '1' %}
