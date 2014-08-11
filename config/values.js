@@ -2225,6 +2225,25 @@ var plugins = function(template) {
                 }],
                 "totalCount": 6
             },
+            "cart": {
+                "items": [{
+                    "featureImageAssetRef": 1,
+                    "formattedPriceTotal":"£12.00",
+                    "formattedPriceUnit": "£12.00",
+                    "quantity": 1,
+                    "ref":1,
+                    "slug": "Bag",
+                    "title": "Donec id elit non sapien tincidunt"
+                },{
+                    "featureImageAssetRef": 2,
+                    "formattedPriceTotal":"£11.00",
+                    "formattedPriceUnit": "£11.00",
+                    "quantity": 1,
+                    "ref":2,
+                    "slug": "Bag",
+                    "title": "Donec id elit non sapien tincidunt"
+                }]
+            },
             "product": {
               "assets": [
                 {
