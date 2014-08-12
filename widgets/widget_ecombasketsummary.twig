@@ -6,9 +6,9 @@
         <table class="basket-summary-items-table">
             <tbody>
                 <tr>
-                    <th>{{ 'widgets.ecombasketsummary.item_items'|translate('Items') }} </th>
-                    <th></th>
-                    <th>{{ 'widgets.ecombasketsummary.item_description'|translate('Amount') }}</th>
+                    <th class="basket-summary-items-column">{{ 'widgets.ecombasketsummary.item_items'|translate('Items') }} </th>
+                    <th class="basket-summary-details-column"></th>
+                    <th class="basket-summary-amount-column">{{ 'widgets.ecombasketsummary.item_description'|translate('Amount') }}</th>
                 </tr>
                 {% for item in items %}
                     <tr class="basket-summary-items">
@@ -16,7 +16,7 @@
                             {% if item.featureImageAssetRef is not null %}
                                 {% set assetUrl = plugins.assets.images[item.featureImageAssetRef].url %}
                                 <div class="image-wrap" style="background-repeat: no-repeat;background-image:url('{{ assetUrl }}')">
-                                    <img class="image" style="max-width: 150px" src="{{ assetUrl }}">
+                                    <img class="image" src="{{ assetUrl }}">
                                 </div>
                             {% endif %}
                         </td>
