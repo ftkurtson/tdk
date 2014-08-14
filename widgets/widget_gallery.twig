@@ -34,7 +34,7 @@
 
         <li class="{{aspectClass}}">
         {% if image is not null %}
-            <span class="inner" style="background-image:url('{% if image.url|length > 0 %}{{image.url}}{% else %}//{{ resizerDomain }}/{{image.path}}?w=960{% endif %}');">
+            <span class="inner" aria-haspopup="true" style="background-image:url('{% if image.url|length > 0 %}{{image.url}}{% else %}//{{ resizerDomain }}/{{image.path}}?w=960{% endif %}');">
                 <a class="" href="#" image-href="{% if image.url|length > 0 %}{{image.url}}{% else %}//{{ resizerDomain }}/{{image.path}}?w=960{% endif %}" data-lightbox="set-{{ref}}" title="{{image.title}}">
                     <img src="{% if image.url|length > 0 %}{{image.url}}{% else %}//{{ resizerDomain }}/{{image.path}}?w=960{% endif %}"/>
                      {% if image.title|length > 0 and data.showTitle == 1 or image.description|length > 0 and data.showDescription == 1 %}
