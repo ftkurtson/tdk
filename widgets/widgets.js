@@ -622,7 +622,8 @@
     BaseKit.Widget.Companyname = null;
 
     BaseKit.Widget.CompanynameProperties = {
-        business: 'profile'
+        business: 'profile',
+        align: 'align-left'
     };
 
     BaseKit.Widget.CompanynameMethods = {
@@ -1897,7 +1898,6 @@
         addToCartButtonClicked: function (event) {
             this.switchToCheckoutButton();
             this.addToCart(this.get('variationRef'));
-            setTimeout(this.switchBackToAddToCartButton.bind(this), 2000);
         },
 
         addToCart: function (variationRef) {
@@ -1911,6 +1911,7 @@
                     productVariationRef: variationRef
                 }
             }).done(function (response) {
+                that.switchBackToAddToCartButton();
                 Globals.notifyHooks('ecom.basket.changed', response);
             });
         },
@@ -1920,23 +1921,34 @@
                 checkoutWrapper = bk$(this.el).find('.ecom-product-go-to-checkout-btn-wrapper');
 
             addButton
-                .attr('disabled', 'disabled')
-                .addClass('added')
-                .find('.text')
-                .text(this.get('translations')['Added']);
+                    .attr('disabled', 'disabled')
+                    .addClass('submitting')
             checkoutWrapper.attr('hidden', true);
         },
 
         switchBackToAddToCartButton: function () {
+            var addButton = bk$(this.el).find('.ecom-product-add-to-cart-btn');
+
+            addButton
+                .removeClass('submitting')
+                .addClass('added')
+                .find('.text')
+                .text(this.get('translations')['Added']);
+
+            setTimeout(bk$.proxy(this.backToCart, this), 500);
+            
+        },
+
+        backToCart: function () {
             var addButton = bk$(this.el).find('.ecom-product-add-to-cart-btn'),
                 checkoutWrapper = bk$(this.el).find('.ecom-product-go-to-checkout-btn-wrapper');
 
+            checkoutWrapper.removeAttr('hidden');
             addButton
                 .removeAttr('disabled')
                 .removeClass('added')
                 .find('.text')
                 .text(this.get('translations')['Add to cart']);
-            checkoutWrapper.removeAttr('hidden');
         }
 
     };

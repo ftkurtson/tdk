@@ -60,12 +60,6 @@
         <a class="basket-summary-empty-cta btn" href="{{ requestBase }}/store">{{ 'widgets.ecombasketsummary.empty_cta'|translate('Continue shopping') }}</a>
     {% endif %}
 
-    {% if plugins.ecommerce.store.termsAndConditions %}
-        <ul class="basket-summary-legal-links">
-            <li><a href="/terms-and-conditions">{{ 'widgets.ecombasketsummary.legal_menu_tandc'|translate("Terms and conditions") }}</a></li>
-        </ul>
-    {% endif %}
-
 {% else %}
 
     {% if plugins.ecommerce.store.email|length > 0 %}

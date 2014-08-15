@@ -5,14 +5,14 @@
     {% endif %}
 {% endfor %}
 
-<a href="{{ relativeUrlPrefix }}/{{ url }}">
-
-{% if data.business and data.business !='profile' and data.business !=''%}
-    {{data.business}}
-{% elseif profile.business and profile.business != '' %}
-    {{profile.business}}
-{% else %}
-    My Website
-{% endif %}
-
-</a>
+<div class="companyname-wrap {{ data.align }}">
+    <a href="{{ relativeUrlPrefix }}/{{ url }}">
+    {% if data.business and data.business !='profile' and data.business !=''%}
+        {{data.business}}
+    {% elseif profile.business and profile.business != '' %}
+        {{profile.business}}
+    {% else %}
+        My Website
+    {% endif %}
+    </a>
+</div>

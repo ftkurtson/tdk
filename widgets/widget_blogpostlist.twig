@@ -24,7 +24,7 @@
                 </h2>
 
                 {% if post.summary|length > 0 %}
-                    {% if data.postDisplayType == 'summary' %}
+                    {% if data.postDisplayType|default('summary') == 'summary' %}
                         <p class="blog-post-summary">{{ post.summary }}</p>
                         <p class="blog-post-more-link">
                             <a href="{{ requestBase }}{{ postPermalink }}">{{ 'widgets.blogpostlist.read_more'|translate('Read more') }}</a>
