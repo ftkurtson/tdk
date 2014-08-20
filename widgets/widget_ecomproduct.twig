@@ -108,7 +108,7 @@
 
         </div>
 
-        <p class="ecom-product-long-description" itemprop="description">{{product.longDescription}}</p>
+        <div class="ecom-product-long-description" itemprop="description">{{ product.content|raw }}</div>
     </article>
 {% elseif app.mode != 'published' and app.mode != 'site-preview' %}
     <p>There aren't any products to display.</p>

@@ -392,7 +392,6 @@ var plugins = function(template) {
                "description":"Served until 12",
                "displayOrder":1,
                "availability":null,
-               "note":null,
                "active":1,
                "category":null,
                "menuType":"section",
@@ -1635,6 +1634,7 @@ var plugins = function(template) {
                     "alphaCode":"GBP",
                     "htmlCode":"&#163;"
                 },
+                "live": 1,
                 "defaultTaxRef": 23,
                 "stripePublishableKey":'',
                 "paypal":'',
